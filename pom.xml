@@ -22,4 +22,13 @@
   <groupId>org.greenbytes.https</groupId>
   <artifactId>structured-field-values</artifactId>
   <version>0.1-SNAPSHOT</version>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
