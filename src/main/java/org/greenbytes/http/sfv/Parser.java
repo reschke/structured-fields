@@ -35,9 +35,10 @@ public class Parser {
                 type = "decimal";
             } else {
                 consumed -= 1;
-                if (inputNumber.length() > ("integer".equals(type) ? 15 : 16)) {
-                    throw new IllegalArgumentException(type + " too long: " + inputNumber.length());
-                }
+                break;
+            }
+            if (inputNumber.length() > ("integer".equals(type) ? 15 : 16)) {
+                throw new IllegalArgumentException(type + " too long: " + inputNumber.length());
             }
         }
 
