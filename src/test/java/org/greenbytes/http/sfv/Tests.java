@@ -20,7 +20,8 @@ public class Tests {
 
     @Test
     public void testInvalidIntegers() {
-        String tests[] = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2", "3 4" };
+        String tests[] = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2",
+                "3 4" };
 
         for (String s : tests) {
             try {
@@ -44,12 +45,36 @@ public class Tests {
 
     @Test
     public void testInvalidDecimals() {
-        String tests[] = new String[] {" 0.1", "1.3453", "-1.56.7", "99999999999999.90", "-99999999999999.90" };
+        String tests[] = new String[] { " 0.1", "1.3453", "-1.56.7", "99999999999999.90", "-99999999999999.90" };
 
         for (String s : tests) {
             try {
                 Parser.parseDecimal(s);
                 org.junit.Assert.fail("should not parse as decimal: " + s);
+            } catch (IllegalArgumentException expected) {
+            }
+        }
+    }
+
+    @Test
+    public void testValidStrings() {
+        String tests[] = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"" };
+
+        for (String s : tests) {
+            Item i = Parser.parseString(s);
+            assertTrue(i instanceof StringItem);
+            assertEquals("should round-trip", s, i.serialize());
+        }
+    }
+
+    @Test
+    public void testInvalidStrings() {
+        String tests[] = new String[] { "\"abc", "\"\\g\"" };
+
+        for (String s : tests) {
+            try {
+                Parser.parseString(s);
+                org.junit.Assert.fail("should not parse as string: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }

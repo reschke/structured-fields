@@ -53,7 +53,8 @@ public class Parser {
             if (dotPos == len - 1) {
                 throw new IllegalArgumentException("decimal number must not end in '.'");
             } else if (len - dotPos > 4) {
-                throw new IllegalArgumentException("maximum number of fractional digits is 3, found: " + (len - dotPos) + ", in: " + inputNumber);
+                throw new IllegalArgumentException(
+                        "maximum number of fractional digits is 3, found: " + (len - dotPos) + ", in: " + inputNumber);
             }
             if (sign == -1) {
                 inputNumber.insert(0, '-');
@@ -87,6 +88,49 @@ public class Parser {
             }
             return (DecimalItem) result;
         }
+    }
+
+    private static Item parseString(StringBuilder inputString) {
+        int consumed = 0;
+        StringBuilder outputString = new StringBuilder(inputString.length());
+
+        if (inputString.length() > 0 && inputString.charAt(consumed++) != '"') {
+            throw new IllegalArgumentException("must start with double quote");
+        }
+
+        while (inputString.length() != consumed) {
+            char c = inputString.charAt(consumed++);
+            if (c == '\\') {
+                if (inputString.length() == consumed) {
+                    throw new IllegalArgumentException("incomplete escape sequence at " + inputString.length());
+                }
+                c = inputString.charAt(consumed++);
+                if (c != '"' && c != '\\') {
+                    throw new IllegalArgumentException("invalid escape sequence at " + inputString.length());
+                }
+                outputString.append(c);
+            } else {
+                if (c == '"') {
+                    inputString.delete(0, consumed);
+                    return new StringItem(outputString.toString());
+                } else if (c < 0x20 || c >= 0x7f) {
+                    throw new IllegalArgumentException("invalid character at " + inputString.length());
+                } else {
+                    outputString.append(c);
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("closing double quote missing");
+    }
+
+    public static StringItem parseString(String input) {
+        StringBuilder sb = new StringBuilder(input);
+        Item result = parseString(sb);
+        if (sb.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as integer: '" + sb + "'");
+        }
+        return (StringItem) result;
     }
 
     private static boolean isDigit(char c) {
