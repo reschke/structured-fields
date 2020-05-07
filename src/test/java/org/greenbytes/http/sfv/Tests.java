@@ -30,4 +30,28 @@ public class Tests {
             }
         }
     }
+
+    @Test
+    public void testValidDecimals() {
+        String tests[] = new String[] { "0.1", "1.345", "-1.567", "999999999999.999", "-999999999999.999" };
+
+        for (String s : tests) {
+            Item i = Parser.parseDecimal(s);
+            assertTrue(i instanceof DecimalItem);
+            assertEquals("should round-trip", i.serialize(), s);
+        }
+    }
+
+    @Test
+    public void testInvalidDecimals() {
+        String tests[] = new String[] {" 0.1", "1.3453", "-1.56.7", "99999999999999.90", "-99999999999999.90" };
+
+        for (String s : tests) {
+            try {
+                Parser.parseDecimal(s);
+                org.junit.Assert.fail("should not parse as decimal: " + s);
+            } catch (IllegalArgumentException expected) {
+            }
+        }
+    }
 }

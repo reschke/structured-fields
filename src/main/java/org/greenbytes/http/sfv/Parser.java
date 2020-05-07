@@ -52,8 +52,8 @@ public class Parser {
             int dotPos = inputNumber.indexOf(".");
             if (dotPos == len - 1) {
                 throw new IllegalArgumentException("decimal number must not end in '.'");
-            } else if (len - dotPos > 3) {
-                throw new IllegalArgumentException("maximum number of fractional digits is 3, found: " + (len - dotPos));
+            } else if (len - dotPos > 4) {
+                throw new IllegalArgumentException("maximum number of fractional digits is 3, found: " + (len - dotPos) + ", in: " + inputNumber);
             }
             if (sign == -1) {
                 inputNumber.insert(0, '-');
