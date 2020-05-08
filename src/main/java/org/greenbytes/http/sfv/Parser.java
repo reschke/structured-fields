@@ -1,6 +1,5 @@
 package org.greenbytes.http.sfv;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class Parser {
         String type = "integer";
         int sign = 1;
         int consumed = 0;
-        StringBuilder inputNumber = new StringBuilder(32);
+        StringBuilder inputNumber = new StringBuilder(20);
 
         if (input.length() > 0 && input.charAt(consumed) == '-') {
             sign = -1;
@@ -50,19 +49,23 @@ public class Parser {
             long l = Long.parseLong(inputNumber.toString());
             return new IntegerItem(sign * l);
         } else {
-            int len = inputNumber.length();
             int dotPos = inputNumber.indexOf(".");
-            if (dotPos == len - 1) {
+            int fracLen = inputNumber.length() - inputNumber.indexOf(".") - 1;
+
+            if (fracLen < 1) {
                 throw new IllegalArgumentException("decimal number must not end in '.'");
-            } else if (len - dotPos > 4) {
+            } else if (fracLen == 1) {
+                inputNumber.append("00");
+            } else if (fracLen == 2) {
+                inputNumber.append("0");
+            } else if (fracLen > 3) {
                 throw new IllegalArgumentException(
-                        "maximum number of fractional digits is 3, found: " + (len - dotPos) + ", in: " + inputNumber);
+                        "maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
             }
-            if (sign == -1) {
-                inputNumber.insert(0, '-');
-            }
-            BigDecimal bd = new BigDecimal(inputNumber.toString());
-            return new DecimalItem(bd);
+
+            inputNumber.deleteCharAt(dotPos);
+            long l = Long.parseLong(inputNumber.toString());
+            return new DecimalItem(sign * l);
         }
     }
 
