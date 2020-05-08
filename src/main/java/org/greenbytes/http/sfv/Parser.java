@@ -1,6 +1,8 @@
 package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
 
@@ -131,6 +133,59 @@ public class Parser {
             throw new IllegalArgumentException("extra characters in string parsed as integer: '" + sb + "'");
         }
         return (StringItem) result;
+    }
+
+    private static Item parseBareItem(StringBuilder sb) {
+        if (sb.length() == 0) {
+            throw new IllegalArgumentException("empty string");
+        }
+
+        char c = sb.charAt(0);
+        if (isDigit(c) || c == '-') {
+            return parseIntegerOrDecimal(sb);
+        } else if (c == '"') {
+            return parseString(sb);
+        } else {
+            throw new IllegalArgumentException("unknown type: " + sb);
+        }
+    }
+
+    private static List<Item> parseList(StringBuilder sb) {
+        List<Item> result = new ArrayList<>();
+
+        while (sb.length() != 0) {
+            result.add(parseBareItem(sb));
+            removeLeadingSP(sb);
+            if (sb.length() == 0) {
+                return result;
+            }
+            if (sb.charAt(0) != ',') {
+                throw new IllegalArgumentException("expected COMMA, got: " + sb);
+            }
+            sb.deleteCharAt(0);
+            removeLeadingSP(sb);
+            if (sb.length() == 0) {
+                throw new IllegalArgumentException("found trailing COMMA in list");
+            }
+        }
+
+        // Won't get here
+        return result;
+    }
+
+    public static ListItem parseList(String input) {
+        StringBuilder sb = new StringBuilder(input);
+        List<Item> result = parseList(sb);
+        if (sb.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as list: '" + sb + "'");
+        }
+        return new ListItem(result);
+    }
+
+    private static void removeLeadingSP(StringBuilder sb) {
+        while (sb.length() != 0 && sb.charAt(0) == ' ') {
+            sb.deleteCharAt(0);
+        }
     }
 
     private static boolean isDigit(char c) {

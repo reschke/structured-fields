@@ -3,6 +3,8 @@ package org.greenbytes.http.sfv;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class Tests {
@@ -77,6 +79,17 @@ public class Tests {
                 org.junit.Assert.fail("should not parse as string: " + s);
             } catch (IllegalArgumentException expected) {
             }
+        }
+    }
+
+    @Test
+    public void testValidLists() {
+        String tests[] = new String[] { "1, 2", "1, 1.1, \"foo\"" };
+
+        for (String s : tests) {
+            ListItem i = Parser.parseList(s);
+            assertTrue(i instanceof ListItem);
+            assertEquals("should round-trip", s, i.serialize());
         }
     }
 }
