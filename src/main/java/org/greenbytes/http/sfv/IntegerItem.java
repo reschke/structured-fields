@@ -1,6 +1,6 @@
 package org.greenbytes.http.sfv;
 
-public class IntegerItem implements Item {
+public class IntegerItem implements Item<Long> {
 
     private final long value;
 
@@ -23,5 +23,10 @@ public class IntegerItem implements Item {
     @Override
     public String serialize() {
         return Long.toString(value);
+    }
+
+    @Override
+    public Long get() {
+        return value;
     }
 }

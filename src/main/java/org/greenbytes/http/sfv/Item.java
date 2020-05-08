@@ -1,6 +1,8 @@
 package org.greenbytes.http.sfv;
 
-public interface Item {
+import java.util.function.Supplier;
+
+public interface Item<T> extends Supplier<T> {
 
     public StringBuilder appendTo(StringBuilder sb);
 

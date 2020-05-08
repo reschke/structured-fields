@@ -1,6 +1,6 @@
 package org.greenbytes.http.sfv;
 
-public class StringItem implements Item {
+public class StringItem implements Item<String> {
 
     private final String value;
 
@@ -25,5 +25,10 @@ public class StringItem implements Item {
     @Override
     public String serialize() {
         return appendTo(new StringBuilder(2 + value.length())).toString();
+    }
+
+    @Override
+    public String get() {
+        return this.value;
     }
 }

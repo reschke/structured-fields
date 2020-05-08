@@ -1,6 +1,8 @@
 package org.greenbytes.http.sfv;
 
-public class DecimalItem implements Item {
+import java.math.BigDecimal;
+
+public class DecimalItem implements Item<BigDecimal> {
 
     private final long value;
 
@@ -36,5 +38,10 @@ public class DecimalItem implements Item {
     @Override
     public String serialize() {
         return appendTo(new StringBuilder(20)).toString();
+    }
+
+    @Override
+    public BigDecimal get() {
+        return BigDecimal.valueOf(this.value, 3);
     }
 }

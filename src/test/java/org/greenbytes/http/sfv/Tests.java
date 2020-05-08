@@ -3,6 +3,10 @@ package org.greenbytes.http.sfv;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 public class Tests {
@@ -12,8 +16,7 @@ public class Tests {
         String tests[] = new String[] { "0", "1", "-1", "999999999999", "-999999999999" };
 
         for (String s : tests) {
-            Item i = Parser.parseInteger(s);
-            assertTrue(i instanceof IntegerItem);
+            IntegerItem i = Parser.parseInteger(s);
             assertEquals("should round-trip", i.serialize(), s);
         }
     }
@@ -37,8 +40,7 @@ public class Tests {
         String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0" };
 
         for (String s : tests) {
-            Item i = Parser.parseDecimal(s);
-            assertTrue(i instanceof DecimalItem);
+            DecimalItem i = Parser.parseDecimal(s);
             assertEquals("should round-trip", s, i.serialize());
         }
     }
@@ -61,8 +63,7 @@ public class Tests {
         String tests[] = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"" };
 
         for (String s : tests) {
-            Item i = Parser.parseString(s);
-            assertTrue(i instanceof StringItem);
+            StringItem i = Parser.parseString(s);
             assertEquals("should round-trip", s, i.serialize());
         }
     }
@@ -82,12 +83,19 @@ public class Tests {
 
     @Test
     public void testValidLists() {
-        String tests[] = new String[] { "1, 2", "1, 1.1, \"foo\"" };
+        Map<String, Object[]> tests = new HashMap<>();
 
-        for (String s : tests) {
-            ListItem i = Parser.parseList(s);
-            assertTrue(i instanceof ListItem);
-            assertEquals("should round-trip", s, i.serialize());
+        tests.put("1, 2", new Object[] { 1L, 2L });
+        tests.put("1, 1.1, \"foo\"", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo" });
+
+        for (Map.Entry<String, Object[]> e : tests.entrySet()) {
+            ListItem list = Parser.parseList(e.getKey());
+            Object[] expected = e.getValue();
+            assertTrue(list instanceof ListItem);
+            assertEquals(list.get().size(), expected.length);
+            for (int i = 0; i < expected.length; i++) {
+                assertEquals(expected[i], list.get().get(i).get());
+            }
         }
     }
 }

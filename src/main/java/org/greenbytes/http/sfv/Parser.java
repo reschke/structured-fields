@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Parser {
 
-    public static Item parseIntegerOrDecimal(CharBuffer input) {
+    public static Item<? extends Object> parseIntegerOrDecimal(CharBuffer input) {
         String type = "integer";
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -68,7 +68,7 @@ public class Parser {
 
     public static IntegerItem parseInteger(String input) {
         CharBuffer sb = CharBuffer.wrap(input);
-        Item result = parseIntegerOrDecimal(sb);
+        Item<? extends Object> result = parseIntegerOrDecimal(sb);
         if (!(result instanceof IntegerItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
         } else {
@@ -81,7 +81,7 @@ public class Parser {
 
     public static DecimalItem parseDecimal(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item result = parseIntegerOrDecimal(buffer);
+        Item<? extends Object> result = parseIntegerOrDecimal(buffer);
         if (!(result instanceof DecimalItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
         } else {
@@ -92,7 +92,7 @@ public class Parser {
         }
     }
 
-    private static Item parseString(CharBuffer inputString) {
+    private static StringItem parseString(CharBuffer inputString) {
         StringBuilder outputString = new StringBuilder(inputString.length());
 
         if (!inputString.hasRemaining() || inputString.get() != '"') {
@@ -126,14 +126,14 @@ public class Parser {
 
     public static StringItem parseString(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item result = parseString(buffer);
+        Item<String> result = parseString(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as integer: '" + buffer + "'");
         }
         return (StringItem) result;
     }
 
-    private static Item parseBareItem(CharBuffer buffer) {
+    private static Item<? extends Object> parseBareItem(CharBuffer buffer) {
         if (!buffer.hasRemaining()) {
             throw new IllegalArgumentException("empty string");
         }
@@ -148,8 +148,8 @@ public class Parser {
         }
     }
 
-    private static List<Item> parseList(CharBuffer sb) {
-        List<Item> result = new ArrayList<>();
+    private static List<Item<? extends Object>> parseList(CharBuffer sb) {
+        List<Item<? extends Object>> result = new ArrayList<>();
 
         while (sb.hasRemaining()) {
             result.add(parseBareItem(sb));
@@ -172,7 +172,7 @@ public class Parser {
 
     public static ListItem parseList(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        List<Item> result = parseList(buffer);
+        List<Item<? extends Object>> result = parseList(buffer);
         if (buffer.hasRemaining()) {
             throw new IllegalArgumentException("extra characters in string parsed as list: '" + buffer + "'");
         }
