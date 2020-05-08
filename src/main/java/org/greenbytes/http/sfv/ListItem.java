@@ -11,15 +11,20 @@ public class ListItem implements Item {
     }
 
     @Override
-    public String serialize() {
-        StringBuilder result = new StringBuilder();
+    public StringBuilder appendTo(StringBuilder sb) {
         String separator = "";
 
         for (Item i : value) {
-            result.append(separator);
+            sb.append(separator);
             separator = ", ";
-            result.append(i.serialize());
+            i.appendTo(sb);
         }
-        return result.toString();
+
+        return sb;
+    }
+
+    @Override
+    public String serialize() {
+        return appendTo(new StringBuilder()).toString();
     }
 }

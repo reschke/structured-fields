@@ -11,6 +11,12 @@ public class DecimalItem implements Item {
     }
 
     @Override
+    public StringBuilder appendTo(StringBuilder sb) {
+        sb.append(value.toPlainString());
+        return sb;
+    }
+
+    @Override
     public String serialize() {
         return value.toPlainString();
     }

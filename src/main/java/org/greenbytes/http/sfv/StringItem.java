@@ -9,17 +9,21 @@ public class StringItem implements Item {
     }
 
     @Override
-    public String serialize() {
-        StringBuilder result = new StringBuilder(2 + value.length());
-        result.append('"');
+    public StringBuilder appendTo(StringBuilder sb) {
+        sb.append('"');
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
             if (c == '\\' || c == '"') {
-                result.append('\\');
+                sb.append('\\');
             }
-            result.append(c);
+            sb.append(c);
         }
-        result.append('"');
-        return result.toString();
+        sb.append('"');
+        return sb;
+    }
+
+    @Override
+    public String serialize() {
+        return appendTo(new StringBuilder(2 + value.length())).toString();
     }
 }

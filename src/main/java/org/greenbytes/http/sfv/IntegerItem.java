@@ -15,6 +15,12 @@ public class IntegerItem implements Item {
     }
 
     @Override
+    public StringBuilder appendTo(StringBuilder sb) {
+        sb.append(Long.toString(value));
+        return sb;
+    }
+
+    @Override
     public String serialize() {
         return Long.toString(value);
     }
