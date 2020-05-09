@@ -11,15 +11,13 @@ public class Parser {
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
 
-        if (input.hasRemaining() && input.charAt(0) == '-') {
+        if (checkNextChar(input, '-')) {
             sign = -1;
-            input.position(1 + input.position());
+            advance(input);
         }
 
-        if (!input.hasRemaining()) {
-            throw new IllegalArgumentException("empty Integer or Decimal");
-        } else if (!isDigit(input.charAt(0))) {
-            throw new IllegalArgumentException("illegal start character for Integer or Decimal: '" + input.charAt(0) + "'");
+        if (!checkNextChar(input, "0123456789")) {
+            throw new IllegalArgumentException("illegal start for Integer or Decimal: '" + input + "'");
         }
 
         while (input.hasRemaining()) {
@@ -95,17 +93,14 @@ public class Parser {
     private static StringItem parseString(CharBuffer inputString) {
         StringBuilder outputString = new StringBuilder(inputString.length());
 
-        if (!inputString.hasRemaining() || inputString.get() != '"') {
-            throw new IllegalArgumentException("must start with double quote");
+        if (getOrEOF(inputString) != '"') {
+            throw new IllegalArgumentException("must start with double quote: " + inputString);
         }
 
         while (inputString.hasRemaining()) {
             char c = inputString.get();
             if (c == '\\') {
-                if (!inputString.hasRemaining()) {
-                    throw new IllegalArgumentException("incomplete escape sequence at " + inputString.position());
-                }
-                c = inputString.get();
+                c = getOrEOF(inputString);
                 if (c != '"' && c != '\\') {
                     throw new IllegalArgumentException("invalid escape sequence at " + inputString.position());
                 }
@@ -180,12 +175,30 @@ public class Parser {
     }
 
     private static void removeLeadingSP(CharBuffer sb) {
-        while (sb.hasRemaining() && sb.charAt(0) == ' ') {
-            sb.position(1 + sb.position());
+        while (checkNextChar(sb, ' ')) {
+            advance(sb);
         }
     }
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
+    }
+
+    // utility methods on CharBuffer
+
+    private static boolean checkNextChar(CharBuffer buffer, char c) {
+        return buffer.hasRemaining() && buffer.charAt(0) == c;
+    }
+
+    private static boolean checkNextChar(CharBuffer buffer, String valid) {
+        return buffer.hasRemaining() && valid.indexOf(buffer.charAt(0)) >= 0;
+    }
+
+    private static void advance(CharBuffer buffer) {
+        buffer.position(1 + buffer.position());
+    }
+
+    private static char getOrEOF(CharBuffer buffer) {
+        return buffer.hasRemaining() ? buffer.get() : (char)-1;
     }
 }
