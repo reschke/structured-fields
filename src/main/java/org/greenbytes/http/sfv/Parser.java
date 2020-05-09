@@ -3,10 +3,8 @@ package org.greenbytes.http.sfv;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Parser {
 
@@ -70,9 +68,15 @@ public class Parser {
         }
     }
 
+    private static Item<? extends Object> parseIntegerOrDecimalWithParams(CharBuffer sb) {
+        Item<? extends Object> result = parseIntegerOrDecimal(sb);
+        Parameters params = parseParameters(sb);
+        return result.withParams(params);
+    }
+
     public static IntegerItem parseInteger(String input) {
         CharBuffer sb = CharBuffer.wrap(input);
-        Item<? extends Object> result = parseIntegerOrDecimal(sb);
+        Item<? extends Object> result = parseIntegerOrDecimalWithParams(sb);
         if (!(result instanceof IntegerItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
         } else {
@@ -85,7 +89,7 @@ public class Parser {
 
     public static DecimalItem parseDecimal(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item<? extends Object> result = parseIntegerOrDecimal(buffer);
+        Item<? extends Object> result = parseIntegerOrDecimalWithParams(buffer);
         if (!(result instanceof DecimalItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
         } else {
@@ -126,9 +130,15 @@ public class Parser {
         throw new IllegalArgumentException("closing double quote missing");
     }
 
+    private static StringItem parseStringWithParameters(CharBuffer buffer) {
+        StringItem result = parseString(buffer);
+        Parameters params = parseParameters(buffer);
+        return result.withParams(params);
+    }
+
     public static StringItem parseString(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        StringItem result = parseString(buffer);
+        StringItem result = parseStringWithParameters(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as integer: '" + buffer + "'");
         }
@@ -160,9 +170,15 @@ public class Parser {
         return new TokenItem(outputString.toString());
     }
 
+    private static TokenItem parseTokenWithParams(CharBuffer buffer) {
+        TokenItem result = parseToken(buffer);
+        Parameters params = parseParameters(buffer);
+        return result.withParams(params);
+    }
+
     public static TokenItem parseToken(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        TokenItem result = parseToken(buffer);
+        TokenItem result = parseTokenWithParams(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as token: '" + buffer + "'");
         }
@@ -195,9 +211,15 @@ public class Parser {
         return new ByteSequenceItem(BASE64DECODER.decode(outputString.toString()));
     }
 
+    private static ByteSequenceItem parseByteSequenceWithParams(CharBuffer buffer) {
+        ByteSequenceItem result = parseByteSequence(buffer);
+        Parameters params = parseParameters(buffer);
+        return result.withParams(params);
+    }
+
     public static ByteSequenceItem parseByteSequence(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        ByteSequenceItem result = parseByteSequence(buffer);
+        ByteSequenceItem result = parseByteSequenceWithParams(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as byte sequence: '" + buffer + "'");
         }
@@ -219,9 +241,15 @@ public class Parser {
         return BooleanItem.valueOf(c == '1');
     }
 
+    private static BooleanItem parseBooleanWithParams(CharBuffer buffer) {
+        BooleanItem result = parseBoolean(buffer);
+        Parameters params = parseParameters(buffer);
+        return result.withParams(params);
+    }
+
     public static BooleanItem parseBoolean(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        BooleanItem result = parseBoolean(buffer);
+        BooleanItem result = parseBooleanWithParams(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as boolean: '" + buffer + "'");
         }

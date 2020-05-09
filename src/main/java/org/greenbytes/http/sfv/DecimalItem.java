@@ -5,15 +5,30 @@ import java.math.BigDecimal;
 public class DecimalItem implements Item<BigDecimal> {
 
     private final long value;
+    private final Parameters params;
 
     private static final long MIN = -999999999999999L;
     private static final long MAX = 999999999999999L;
 
-    public DecimalItem(long value) {
+    public DecimalItem(long value, Parameters params) {
         if (value < MIN || value > MAX) {
             throw new IllegalArgumentException("value must be in the range from " + MIN + " to " + MAX);
         }
         this.value = value;
+        this.params = params;
+    }
+
+    public DecimalItem(long value) {
+        this(value, null);
+    }
+
+    @Override
+    public DecimalItem withParams(Parameters params) {
+        if (params.get().isEmpty()) {
+            return this;
+        } else {
+            return new DecimalItem(this.value, params);
+        }
     }
 
     @Override
@@ -31,6 +46,10 @@ public class DecimalItem implements Item<BigDecimal> {
         }
 
         sb.append(sign).append(Long.toString(left)).append('.').append(Long.toString(right));
+
+        if (params != null) {
+            params.appendTo(sb);
+        }
 
         return sb;
     }

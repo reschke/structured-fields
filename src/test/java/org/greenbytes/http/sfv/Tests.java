@@ -13,7 +13,7 @@ public class Tests {
 
     @Test
     public void testValidIntegers() {
-        String tests[] = new String[] { "0", "1", "-1", "999999999999", "-999999999999" };
+        String tests[] = new String[] { "0", "1", "-1", "999999999999", "-999999999999", "3;a=b" };
 
         for (String s : tests) {
             IntegerItem i = Parser.parseInteger(s);
@@ -37,7 +37,7 @@ public class Tests {
 
     @Test
     public void testValidDecimals() {
-        String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0" };
+        String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0", "3.14;this-is-pi" };
 
         for (String s : tests) {
             DecimalItem i = Parser.parseDecimal(s);
@@ -60,7 +60,7 @@ public class Tests {
 
     @Test
     public void testValidStrings() {
-        String tests[] = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"" };
+        String tests[] = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"", "\"a\";c=2" };
 
         for (String s : tests) {
             StringItem i = Parser.parseString(s);
@@ -83,7 +83,7 @@ public class Tests {
 
     @Test
     public void testValidTokens() {
-        String tests[] = new String[] { "x", "a2", "C", "text/plain", "foo:bar" };
+        String tests[] = new String[] { "x", "a2", "C", "text/plain;q=0.123", "foo:bar" };
 
         for (String s : tests) {
             TokenItem i = Parser.parseToken(s);
@@ -106,7 +106,7 @@ public class Tests {
 
     @Test
     public void testValidBooleans() {
-        String tests[] = new String[] { "?0", "?1" };
+        String tests[] = new String[] { "?0", "?1", "?0;maybe" };
 
         for (String s : tests) {
             BooleanItem i = Parser.parseBoolean(s);
@@ -129,7 +129,7 @@ public class Tests {
 
     @Test
     public void testValidByteSequences() {
-        String tests[] = new String[] { ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:" };
+        String tests[] = new String[] { ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:;foo=bar" };
 
         for (String s : tests) {
             ByteSequenceItem i = Parser.parseByteSequence(s);
