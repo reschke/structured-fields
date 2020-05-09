@@ -4,14 +4,20 @@ public class BooleanItem implements Item<Boolean> {
 
     private final boolean value;
 
+    private static final BooleanItem TRUE = new BooleanItem(true);
+    private static final BooleanItem FALSE = new BooleanItem(false);
 
-    public BooleanItem(boolean value) {
+    private BooleanItem(boolean value) {
         this.value = value;
+    }
+
+    public static BooleanItem valueOf(boolean value) {
+        return value ? TRUE : FALSE;
     }
 
     @Override
     public StringBuilder appendTo(StringBuilder sb) {
-        sb.append(value ? "?1" : "?0");
+        sb.append(serialize());
         return sb;
     }
 

@@ -213,7 +213,7 @@ public class Parser {
             throw new IllegalArgumentException("expected 0 or 1 in boolean: " + inputString);
         }
 
-        return new BooleanItem(c == '1');
+        return BooleanItem.valueOf(c == '1');
     }
 
     public static BooleanItem parseBoolean(String input) {
