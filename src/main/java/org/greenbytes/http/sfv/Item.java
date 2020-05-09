@@ -6,7 +6,7 @@ public interface Item<T> extends Supplier<T> {
 
     public Item<T> withParams(Parameters params);
 
-    public StringBuilder appendTo(StringBuilder sb);
+    public StringBuilder serializeTo(StringBuilder sb);
 
     public String serialize();
 }

@@ -24,7 +24,7 @@ public class StringItem implements Item<String> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         sb.append('"');
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
@@ -36,7 +36,7 @@ public class StringItem implements Item<String> {
         sb.append('"');
 
         if (params != null) {
-            params.appendTo(sb);
+            params.serializeTo(sb);
         }
 
         return sb;
@@ -44,7 +44,7 @@ public class StringItem implements Item<String> {
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder(2 + value.length())).toString();
+        return serializeTo(new StringBuilder(2 + value.length())).toString();
     }
 
     @Override

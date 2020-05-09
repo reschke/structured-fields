@@ -15,19 +15,19 @@ public class Parameters {
         return this.value;
     }
 
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         for (Map.Entry<String, Item<? extends Object>> e : this.value.entrySet()) {
             sb.append(';').append(e.getKey());
             if (!(e.getValue().get().equals(Boolean.TRUE))) {
                 sb.append('=');
-                e.getValue().appendTo(sb);
+                e.getValue().serializeTo(sb);
             }
         }
         return sb;
     }
 
     public String serialize() {
-        return appendTo(new StringBuilder()).toString();
+        return serializeTo(new StringBuilder()).toString();
     }
 
 }

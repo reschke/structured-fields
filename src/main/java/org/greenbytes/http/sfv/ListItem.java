@@ -11,13 +11,19 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public Item<List<Item<? extends Object>>> withParams(Parameters params) {
+        // TODO Auto-generated method stub
+        return this;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
         for (Item<? extends Object> i : value) {
             sb.append(separator);
             separator = ", ";
-            i.appendTo(sb);
+            i.serializeTo(sb);
         }
 
         return sb;
@@ -25,7 +31,7 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder()).toString();
+        return serializeTo(new StringBuilder()).toString();
     }
 
     @Override

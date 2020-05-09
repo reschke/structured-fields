@@ -24,18 +24,18 @@ public class TokenItem implements Item<String> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(this.value);
 
         if (params != null) {
-            params.appendTo(sb);
+            params.serializeTo(sb);
         }
         return sb;
     }
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder()).toString();
+        return serializeTo(new StringBuilder()).toString();
     }
 
     @Override

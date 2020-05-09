@@ -30,11 +30,11 @@ public class IntegerItem implements Item<Long> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(Long.toString(value));
 
         if (params != null) {
-            params.appendTo(sb);
+            params.serializeTo(sb);
         }
 
         return sb;
@@ -42,7 +42,7 @@ public class IntegerItem implements Item<Long> {
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder()).toString();
+        return serializeTo(new StringBuilder()).toString();
     }
 
     @Override

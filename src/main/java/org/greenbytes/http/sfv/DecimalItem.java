@@ -32,7 +32,7 @@ public class DecimalItem implements Item<BigDecimal> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         String sign = value < 0 ? "-" : "";
         long abs = Math.abs(value);
         long left = abs / 1000;
@@ -48,7 +48,7 @@ public class DecimalItem implements Item<BigDecimal> {
         sb.append(sign).append(Long.toString(left)).append('.').append(Long.toString(right));
 
         if (params != null) {
-            params.appendTo(sb);
+            params.serializeTo(sb);
         }
 
         return sb;
@@ -56,7 +56,7 @@ public class DecimalItem implements Item<BigDecimal> {
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder(20)).toString();
+        return serializeTo(new StringBuilder(20)).toString();
     }
 
     @Override

@@ -31,11 +31,11 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     @Override
-    public StringBuilder appendTo(StringBuilder sb) {
+    public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(value ? "?1" : "?0");
 
         if (params != null) {
-            params.appendTo(sb);
+            params.serializeTo(sb);
         }
 
         return sb;
@@ -43,7 +43,7 @@ public class BooleanItem implements Item<Boolean> {
 
     @Override
     public String serialize() {
-        return appendTo(new StringBuilder()).toString();
+        return serializeTo(new StringBuilder()).toString();
     }
 
     @Override
