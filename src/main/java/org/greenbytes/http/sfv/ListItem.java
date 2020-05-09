@@ -12,8 +12,7 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
 
     @Override
     public Item<List<Item<? extends Object>>> withParams(Parameters params) {
-        // TODO Auto-generated method stub
-        return this;
+        throw new UnsupportedOperationException();
     }
 
     @Override
