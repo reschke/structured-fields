@@ -82,6 +82,29 @@ public class Tests {
     }
 
     @Test
+    public void testValidTokens() {
+        String tests[] = new String[] { "x", "a2", "C", "text/plain", "foo:bar" };
+
+        for (String s : tests) {
+            TokenItem i = Parser.parseToken(s);
+            assertEquals("should round-trip", s, i.serialize());
+        }
+    }
+
+    @Test
+    public void testInvalidTokens() {
+        String tests[] = new String[] { "", "1", "a(b)" };
+
+        for (String s : tests) {
+            try {
+                Parser.parseToken(s);
+                org.junit.Assert.fail("should not parse as token: " + s);
+            } catch (IllegalArgumentException expected) {
+            }
+        }
+    }
+
+    @Test
     public void testValidBooleans() {
         String tests[] = new String[] { "?0", "?1" };
 
@@ -109,7 +132,7 @@ public class Tests {
         Map<String, Object[]> tests = new HashMap<>();
 
         tests.put("1, 2", new Object[] { 1L, 2L });
-        tests.put("1, 1.1, \"foo\", ?0", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo", Boolean.FALSE });
+        tests.put("1, 1.1, \"foo\", ?0, a2", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo", Boolean.FALSE, "a2" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseList(e.getKey());

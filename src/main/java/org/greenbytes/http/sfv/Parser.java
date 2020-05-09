@@ -91,11 +91,12 @@ public class Parser {
     }
 
     private static StringItem parseString(CharBuffer inputString) {
-        StringBuilder outputString = new StringBuilder(inputString.length());
 
         if (getOrEOF(inputString) != '"') {
             throw new IllegalArgumentException("must start with double quote: " + inputString);
         }
+
+        StringBuilder outputString = new StringBuilder(inputString.length());
 
         while (inputString.hasRemaining()) {
             char c = inputString.get();
@@ -126,6 +127,36 @@ public class Parser {
             throw new IllegalArgumentException("extra characters in string parsed as integer: '" + buffer + "'");
         }
         return (StringItem) result;
+    }
+
+    private static TokenItem parseToken(CharBuffer inputString) {
+
+        char c = getOrEOF(inputString);
+        if (c != '*' && !isAlpha(c)) {
+                throw new IllegalArgumentException("must start with ALPHA or *: " + inputString);
+        }
+
+        StringBuilder outputString = new StringBuilder(inputString.length());
+        outputString.append(c);
+
+        while (inputString.hasRemaining()) {
+            c = inputString.get();
+            if (c < ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
+                throw new IllegalArgumentException("not allowed in token: " + inputString);
+            }
+            outputString.append(c);
+        }
+
+        return new TokenItem(outputString.toString());
+    }
+
+    public static TokenItem parseToken(String input) {
+        CharBuffer buffer = CharBuffer.wrap(input);
+        Item<String> result = parseToken(buffer);
+        if (buffer.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as token: '" + buffer + "'");
+        }
+        return (TokenItem) result;
     }
 
     private static BooleanItem parseBoolean(CharBuffer inputString) {
@@ -164,6 +195,8 @@ public class Parser {
             return parseString(buffer);
         } else if (c == '?') {
             return parseBoolean(buffer);
+        } else if (c == '*' || isAlpha(c)) {
+            return parseToken(buffer);
         } else {
             throw new IllegalArgumentException("unknown type: " + buffer);
         }
@@ -208,6 +241,10 @@ public class Parser {
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
+    }
+
+    private static boolean isAlpha(char c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
     // utility methods on CharBuffer
