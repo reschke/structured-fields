@@ -152,6 +152,19 @@ public class Tests {
     }
 
     @Test
+    public void testValidParameters() {
+        Map<String, String> tests = new HashMap<>();
+
+        tests.put("; a=b;c=1;d=?1;s=\"foo\"", ";a=b;c=1;d;s=\"foo\"");
+        tests.put(";a=1;b=2;a=3", ";a=3;b=2");
+
+        for (Map.Entry<String, String> e : tests.entrySet()) {
+            Parameters i = Parser.parseParameters(e.getKey());
+            assertEquals("should round-trip as ", e.getValue(), i.serialize());
+        }
+    }
+
+    @Test
     public void testValidLists() {
         Map<String, Object[]> tests = new HashMap<>();
 

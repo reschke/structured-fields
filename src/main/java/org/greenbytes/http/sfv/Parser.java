@@ -3,7 +3,10 @@ package org.greenbytes.http.sfv;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Parser {
 
@@ -225,6 +228,64 @@ public class Parser {
         return result;
     }
 
+    private static String parseKey(CharBuffer buffer) {
+
+        char c = getOrEOF(buffer);
+        if (c != '*' && !isLcAlpha(c)) {
+            throw new IllegalArgumentException("must start with LCALPHA or *: " + buffer);
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append(c);
+
+        boolean done = false;
+        while (buffer.hasRemaining() && !done) {
+            c = buffer.charAt(0);
+            if (isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
+                result.append(c);
+                advance(buffer);
+            } else {
+                done = true;
+            }
+        }
+
+        return result.toString();
+    }
+
+    private static Parameters parseParameters(CharBuffer buffer) {
+
+        LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
+
+        boolean done = false;
+        while (buffer.hasRemaining() && !done) {
+            char c = buffer.charAt(0);
+            if (c != ';') {
+                done = true;
+            } else {
+                advance(buffer);
+                removeLeadingSP(buffer);
+                String name = parseKey(buffer);
+                Item<? extends Object> value = BooleanItem.valueOf(true);
+                if (buffer.hasRemaining() && buffer.charAt(0) == '=') {
+                    advance(buffer);
+                    value = parseBareItem(buffer);
+                }
+                result.put(name, value);
+            }
+        }
+
+        return new Parameters(result);
+    }
+
+    public static Parameters parseParameters(String input) {
+        CharBuffer buffer = CharBuffer.wrap(input);
+        Parameters result = parseParameters(buffer);
+        if (buffer.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as parameters: '" + buffer + "'");
+        }
+        return result;
+    }
+
     private static Item<? extends Object> parseBareItem(CharBuffer buffer) {
         if (!buffer.hasRemaining()) {
             throw new IllegalArgumentException("empty string");
@@ -285,6 +346,10 @@ public class Parser {
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
+    }
+
+    private static boolean isLcAlpha(char c) {
+        return (c >= 'a' && c <= 'z');
     }
 
     private static boolean isAlpha(char c) {
