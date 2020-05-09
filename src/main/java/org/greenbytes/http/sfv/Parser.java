@@ -128,6 +128,30 @@ public class Parser {
         return (StringItem) result;
     }
 
+    private static BooleanItem parseBoolean(CharBuffer inputString) {
+
+        if (getOrEOF(inputString) != '?') {
+            throw new IllegalArgumentException("must start with question mark: " + inputString);
+        }
+
+        char c = getOrEOF(inputString);
+
+        if (c != '0' && c != '1') {
+            throw new IllegalArgumentException("expected 0 or 1 in boolean: " + inputString);
+        }
+
+        return new BooleanItem(c == '1');
+    }
+
+    public static BooleanItem parseBoolean(String input) {
+        CharBuffer buffer = CharBuffer.wrap(input);
+        Item<Boolean> result = parseBoolean(buffer);
+        if (buffer.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as boolean: '" + buffer + "'");
+        }
+        return (BooleanItem) result;
+    }
+
     private static Item<? extends Object> parseBareItem(CharBuffer buffer) {
         if (!buffer.hasRemaining()) {
             throw new IllegalArgumentException("empty string");
@@ -138,6 +162,8 @@ public class Parser {
             return parseIntegerOrDecimal(buffer);
         } else if (c == '"') {
             return parseString(buffer);
+        } else if (c == '?') {
+            return parseBoolean(buffer);
         } else {
             throw new IllegalArgumentException("unknown type: " + buffer);
         }
@@ -199,6 +225,6 @@ public class Parser {
     }
 
     private static char getOrEOF(CharBuffer buffer) {
-        return buffer.hasRemaining() ? buffer.get() : (char)-1;
+        return buffer.hasRemaining() ? buffer.get() : (char) -1;
     }
 }
