@@ -2,9 +2,12 @@ package org.greenbytes.http.sfv;
 
 import java.nio.CharBuffer;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class Parser {
+
+    private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
 
     public static Item<? extends Object> parseIntegerOrDecimal(CharBuffer input) {
         String type = "integer";
@@ -122,29 +125,33 @@ public class Parser {
 
     public static StringItem parseString(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item<String> result = parseString(buffer);
+        StringItem result = parseString(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as integer: '" + buffer + "'");
         }
-        return (StringItem) result;
+        return result;
     }
 
     private static TokenItem parseToken(CharBuffer inputString) {
 
         char c = getOrEOF(inputString);
         if (c != '*' && !isAlpha(c)) {
-                throw new IllegalArgumentException("must start with ALPHA or *: " + inputString);
+            throw new IllegalArgumentException("must start with ALPHA or *: " + inputString);
         }
 
         StringBuilder outputString = new StringBuilder(inputString.length());
         outputString.append(c);
+        boolean done = false;
 
-        while (inputString.hasRemaining()) {
-            c = inputString.get();
+        while (inputString.hasRemaining() && !done) {
+            c = inputString.charAt(0);
             if (c < ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
-                throw new IllegalArgumentException("not allowed in token: " + inputString);
+                done = true;
             }
-            outputString.append(c);
+            else {
+                advance(inputString);
+                outputString.append(c);
+            }
         }
 
         return new TokenItem(outputString.toString());
@@ -152,11 +159,46 @@ public class Parser {
 
     public static TokenItem parseToken(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item<String> result = parseToken(buffer);
+        TokenItem result = parseToken(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as token: '" + buffer + "'");
         }
-        return (TokenItem) result;
+        return result;
+    }
+
+    private static ByteSequenceItem parseByteSequence(CharBuffer inputString) {
+        if (getOrEOF(inputString) != ':') {
+            throw new IllegalArgumentException("must start with colon: " + inputString);
+        }
+
+        StringBuilder outputString = new StringBuilder(inputString.length());
+        boolean done = false;
+
+        while (inputString.hasRemaining() && !done) {
+            char c = inputString.get();
+            if (c == ':') {
+                done = true;
+            } else {
+                // TODO: check validity here?
+                outputString.append(c);
+            }
+        }
+
+        if (!done) {
+            throw new IllegalArgumentException("must end with colon: :" + outputString);
+        }
+
+        // should throw on invalid input
+        return new ByteSequenceItem(BASE64DECODER.decode(outputString.toString()));
+    }
+
+    public static ByteSequenceItem parseByteSequence(String input) {
+        CharBuffer buffer = CharBuffer.wrap(input);
+        ByteSequenceItem result = parseByteSequence(buffer);
+        if (buffer.length() != 0) {
+            throw new IllegalArgumentException("extra characters in string parsed as byte sequence: '" + buffer + "'");
+        }
+        return result;
     }
 
     private static BooleanItem parseBoolean(CharBuffer inputString) {
@@ -176,11 +218,11 @@ public class Parser {
 
     public static BooleanItem parseBoolean(String input) {
         CharBuffer buffer = CharBuffer.wrap(input);
-        Item<Boolean> result = parseBoolean(buffer);
+        BooleanItem result = parseBoolean(buffer);
         if (buffer.length() != 0) {
             throw new IllegalArgumentException("extra characters in string parsed as boolean: '" + buffer + "'");
         }
-        return (BooleanItem) result;
+        return result;
     }
 
     private static Item<? extends Object> parseBareItem(CharBuffer buffer) {
@@ -197,6 +239,8 @@ public class Parser {
             return parseBoolean(buffer);
         } else if (c == '*' || isAlpha(c)) {
             return parseToken(buffer);
+        } else if (c == ':') {
+            return parseByteSequence(buffer);
         } else {
             throw new IllegalArgumentException("unknown type: " + buffer);
         }

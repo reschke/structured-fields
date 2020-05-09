@@ -93,7 +93,7 @@ public class Tests {
 
     @Test
     public void testInvalidTokens() {
-        String tests[] = new String[] { "", "1", "a(b)" };
+        String tests[] = new String[] { "", "1", "a(b)", "3, ::" };
 
         for (String s : tests) {
             try {
@@ -128,11 +128,36 @@ public class Tests {
     }
 
     @Test
+    public void testValidByteSequences() {
+        String tests[] = new String[] { ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:" };
+
+        for (String s : tests) {
+            ByteSequenceItem i = Parser.parseByteSequence(s);
+            assertEquals("should round-trip", i.serialize(), s);
+        }
+    }
+
+    @Test
+    public void testInvalidByteSequences() {
+        String tests[] = new String[] { "cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==",
+                ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==", "cHJld\nGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:" };
+
+        for (String s : tests) {
+            try {
+                Parser.parseByteSequence(s);
+                org.junit.Assert.fail("should not parse as byte sequence: " + s);
+            } catch (IllegalArgumentException expected) {
+            }
+        }
+    }
+
+    @Test
     public void testValidLists() {
         Map<String, Object[]> tests = new HashMap<>();
 
         tests.put("1, 2", new Object[] { 1L, 2L });
-        tests.put("1, 1.1, \"foo\", ?0, a2", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo", Boolean.FALSE, "a2" });
+        tests.put("1, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo", Boolean.FALSE, "a2",
+                new ByteSequenceItem("f".getBytes()).get() });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseList(e.getKey());
