@@ -28,6 +28,12 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
         return sb;
     }
 
+
+    @Override
+    public Parameters getParams() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();

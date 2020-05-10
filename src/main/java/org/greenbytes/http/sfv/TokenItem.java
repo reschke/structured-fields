@@ -24,6 +24,11 @@ public class TokenItem implements Item<String> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(this.value);
 

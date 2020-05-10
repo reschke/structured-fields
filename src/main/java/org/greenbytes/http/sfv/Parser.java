@@ -335,11 +335,17 @@ public class Parser {
         }
     }
 
+    private static Item<? extends Object> parseBareItemWithParams(CharBuffer buffer) {
+        Item<? extends Object> result = parseBareItem(buffer);
+        Parameters params = parseParameters(buffer);
+        return result.withParams(params);
+    }
+
     private static List<Item<? extends Object>> parseList(CharBuffer sb) {
         List<Item<? extends Object>> result = new ArrayList<>();
 
         while (sb.hasRemaining()) {
-            result.add(parseBareItem(sb));
+            result.add(parseBareItemWithParams(sb));
             removeLeadingSP(sb);
             if (!sb.hasRemaining()) {
                 return result;

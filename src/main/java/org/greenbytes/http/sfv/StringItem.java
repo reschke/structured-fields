@@ -24,6 +24,11 @@ public class StringItem implements Item<String> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append('"');
         for (int i = 0; i < value.length(); i++) {

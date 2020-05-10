@@ -29,6 +29,11 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(':');
         sb.append(ENCODER.encodeToString(this.value));

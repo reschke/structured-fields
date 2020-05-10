@@ -22,6 +22,11 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public BooleanItem withParams(Parameters params) {
         if (params.get().isEmpty()) {
             return this;

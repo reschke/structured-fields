@@ -32,6 +32,11 @@ public class DecimalItem implements Item<BigDecimal> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         String sign = value < 0 ? "-" : "";
         long abs = Math.abs(value);

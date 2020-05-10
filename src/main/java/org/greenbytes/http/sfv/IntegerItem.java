@@ -30,6 +30,11 @@ public class IntegerItem implements Item<Long> {
     }
 
     @Override
+    public Parameters getParams() {
+        return params;
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(Long.toString(value));
 

@@ -168,17 +168,20 @@ public class Tests {
     public void testValidLists() {
         Map<String, Object[]> tests = new HashMap<>();
 
-        tests.put("1, 2", new Object[] { 1L, 2L });
-        tests.put("1, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, BigDecimal.valueOf(1100, 3), "foo", Boolean.FALSE, "a2",
-                new ByteSequenceItem("f".getBytes()).get() });
+        tests.put("1, 2", new Object[] { 1L, null, 2L, null });
+        tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:",
+                new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), null,
+                        "foo", null, Boolean.FALSE, null, "a2", null, new ByteSequenceItem("f".getBytes()).get(), null });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseList(e.getKey());
             Object[] expected = e.getValue();
             assertTrue(list instanceof ListItem);
-            assertEquals(list.get().size(), expected.length);
-            for (int i = 0; i < expected.length; i++) {
-                assertEquals(expected[i], list.get().get(i).get());
+            assertEquals(list.get().size(), expected.length / 2);
+            for (int i = 0; i < expected.length / 2; i++) {
+                assertEquals(expected[i * 2], list.get().get(i).get());
+                Parameters p = list.get().get(i).getParams();
+                assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
         }
     }

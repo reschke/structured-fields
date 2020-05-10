@@ -12,11 +12,15 @@ public class Parameters {
     }
 
     public Map<String, Item<? extends Object>> get() {
-        return this.value;
+        return value;
+    }
+
+    public LinkedHashMap<String, Item<? extends Object>> getMap() {
+        return value;
     }
 
     public StringBuilder serializeTo(StringBuilder sb) {
-        for (Map.Entry<String, Item<? extends Object>> e : this.value.entrySet()) {
+        for (Map.Entry<String, Item<? extends Object>> e : value.entrySet()) {
             sb.append(';').append(e.getKey());
             if (!(e.getValue().get().equals(Boolean.TRUE))) {
                 sb.append('=');
@@ -29,5 +33,4 @@ public class Parameters {
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
     }
-
 }
