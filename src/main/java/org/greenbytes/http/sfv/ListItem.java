@@ -4,25 +4,52 @@ import java.util.List;
 
 public class ListItem implements Item<List<Item<? extends Object>>> {
 
+    private final boolean isInner;
     private final List<Item<? extends Object>> value;
+    private final Parameters params;
 
-    public ListItem(List<Item<? extends Object>> value) {
+    public ListItem(boolean isInner, List<Item<? extends Object>> value, Parameters params) {
+        this.isInner = isInner;
         this.value = value;
+        this.params = params;
+        if (!isInner && params != null) {
+            throw new IllegalArgumentException("only inner lists can have parameters");
+        }
+    }
+
+    public ListItem(boolean isInner, List<Item<? extends Object>> value) {
+        this(isInner, value, null);
     }
 
     @Override
-    public Item<List<Item<? extends Object>>> withParams(Parameters params) {
-        throw new UnsupportedOperationException();
+    public ListItem withParams(Parameters params) {
+        if (params.get().isEmpty()) {
+            return this;
+        } else {
+            return new ListItem(this.isInner, this.value, params);
+        }
     }
 
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
+        if (isInner) {
+            sb.append('(');
+        }
+
         for (Item<? extends Object> i : value) {
             sb.append(separator);
-            separator = ", ";
+            separator = isInner ? " " :", ";
             i.serializeTo(sb);
+        }
+
+        if (isInner) {
+            sb.append(')');
+        }
+
+        if (params != null) {
+            params.serializeTo(sb);
         }
 
         return sb;
@@ -31,7 +58,7 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
 
     @Override
     public Parameters getParams() {
-        throw new UnsupportedOperationException();
+        return params;
     }
 
     @Override

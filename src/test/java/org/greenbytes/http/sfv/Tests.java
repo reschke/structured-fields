@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +38,8 @@ public class Tests {
 
     @Test
     public void testValidDecimals() {
-        String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0", "3.14;this-is-pi" };
+        String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0",
+                "3.14;this-is-pi" };
 
         for (String s : tests) {
             DecimalItem i = Parser.parseDecimal(s);
@@ -169,9 +171,9 @@ public class Tests {
         Map<String, Object[]> tests = new HashMap<>();
 
         tests.put("1, 2", new Object[] { 1L, null, 2L, null });
-        tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:",
-                new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), null,
-                        "foo", null, Boolean.FALSE, null, "a2", null, new ByteSequenceItem("f".getBytes()).get(), null });
+        tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), null, "foo", null,
+                Boolean.FALSE, null, "a2", null, new ByteSequenceItem("f".getBytes()).get(), null });
+        tests.put("1, ();a", new Object[] { 1L, null, Collections.emptyList(), ";a" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseList(e.getKey());
@@ -183,6 +185,26 @@ public class Tests {
                 Parameters p = list.get().get(i).getParams();
                 assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
+        }
+    }
+
+    @Test
+    public void testValidInnerLists() {
+        Map<String, Object[]> tests = new HashMap<>();
+
+        tests.put("(1;foo=bar 2);a;b=1", new Object[] { 1L, ";foo=bar", 2L, null, ";a;b=1" });
+
+        for (Map.Entry<String, Object[]> e : tests.entrySet()) {
+            ListItem list = Parser.parseInnerList(e.getKey());
+            Object[] expected = e.getValue();
+            assertTrue(list instanceof ListItem);
+            assertEquals(list.get().size(), (expected.length - 1)/ 2);
+            for (int i = 0; i < (expected.length - 1) / 2; i++) {
+                assertEquals(expected[i * 2], list.get().get(i).get());
+                Parameters p = list.get().get(i).getParams();
+                assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
+            }
+            assertEquals(list.getParams().serialize(), expected[expected.length - 1]);
         }
     }
 }

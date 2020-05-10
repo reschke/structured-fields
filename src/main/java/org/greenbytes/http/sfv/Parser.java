@@ -158,7 +158,7 @@ public class Parser {
 
         while (inputString.hasRemaining() && !done) {
             c = inputString.charAt(0);
-            if (c < ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
+            if (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
                 done = true;
             }
             else {
@@ -335,17 +335,22 @@ public class Parser {
         }
     }
 
-    private static Item<? extends Object> parseBareItemWithParams(CharBuffer buffer) {
+    private static Item<? extends Object> parseItem(CharBuffer buffer) {
         Item<? extends Object> result = parseBareItem(buffer);
         Parameters params = parseParameters(buffer);
         return result.withParams(params);
+    }
+
+    private static Item<? extends Object> parseItemOrInnerList(CharBuffer buffer) {
+        char c = buffer.hasRemaining() ? buffer.charAt(0) : 1;
+        return  c == '(' ? parseInnerListWithParams(buffer) : parseItem(buffer);
     }
 
     private static List<Item<? extends Object>> parseList(CharBuffer sb) {
         List<Item<? extends Object>> result = new ArrayList<>();
 
         while (sb.hasRemaining()) {
-            result.add(parseBareItemWithParams(sb));
+            result.add(parseItemOrInnerList(sb));
             removeLeadingSP(sb);
             if (!sb.hasRemaining()) {
                 return result;
@@ -369,7 +374,52 @@ public class Parser {
         if (buffer.hasRemaining()) {
             throw new IllegalArgumentException("extra characters in string parsed as list: '" + buffer + "'");
         }
-        return new ListItem(result);
+        return new ListItem(false, result);
+    }
+
+    private static List<Item<? extends Object>> parseInnerList(CharBuffer sb) {
+
+        char c = getOrEOF(sb);
+        if (c != '(') {
+            throw new IllegalArgumentException("inner list must start with '(': " + sb);
+        }
+
+        List<Item<? extends Object>> result = new ArrayList<>();
+
+        boolean done = false;
+        while (sb.hasRemaining() && !done) {
+            removeLeadingSP(sb);
+
+            c = sb.charAt(0);
+            if (c == ')') {
+                advance(sb);
+                done = true;
+            } else {
+                Item<? extends Object> item = parseItem(sb);
+                result.add(item);
+            }
+        }
+
+        if (!done) {
+            throw new IllegalArgumentException("inner list must end with ')': " + sb);
+        }
+
+        return result;
+    }
+
+    private static ListItem parseInnerListWithParams(CharBuffer buffer) {
+        List<Item<? extends Object>> result = parseInnerList(buffer);
+        Parameters params = parseParameters(buffer);
+        return new ListItem(true, result).withParams(params);
+    }
+
+    public static ListItem parseInnerList(String input) {
+        CharBuffer buffer = CharBuffer.wrap(input);
+        ListItem result = parseInnerListWithParams(buffer);
+        if (buffer.hasRemaining()) {
+            throw new IllegalArgumentException("extra characters in string parsed as inner list: '" + buffer + "'");
+        }
+        return result;
     }
 
     private static void removeLeadingSP(CharBuffer sb) {
