@@ -10,14 +10,24 @@ public class Parser {
 
     private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
 
-    public static Item<? extends Object> parseIntegerOrDecimal(CharBuffer input) {
+    private final CharBuffer input;
+
+    public Parser(CharBuffer input) {
+        this.input = input;
+    }
+
+    public Parser(String input) {
+        this(CharBuffer.wrap(input));
+    }
+
+    public Item<? extends Object> parseIntegerOrDecimal() {
         String type = "integer";
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
 
-        if (checkNextChar(input, '-')) {
+        if (checkNextChar('-')) {
             sign = -1;
-            advance(input);
+            advance();
         }
 
         if (!checkNextChar(input, "0123456789")) {
@@ -68,59 +78,55 @@ public class Parser {
         }
     }
 
-    private static Item<? extends Object> parseIntegerOrDecimalWithParams(CharBuffer sb) {
-        Item<? extends Object> result = parseIntegerOrDecimal(sb);
-        Parameters params = parseParameters(sb);
+    private Item<? extends Object> parseIntegerOrDecimalWithParams() {
+        Item<? extends Object> result = parseIntegerOrDecimal();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
     public static IntegerItem parseInteger(String input) {
-        CharBuffer sb = CharBuffer.wrap(input);
-        Item<? extends Object> result = parseIntegerOrDecimalWithParams(sb);
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
         if (!(result instanceof IntegerItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
         } else {
-            if (sb.hasRemaining()) {
-                throw new IllegalArgumentException("extra characters in string parsed as integer: '" + sb + "'");
-            }
+            p.assertEmpty("extra characters in string parsed as integer");
             return (IntegerItem) result;
         }
     }
 
     public static DecimalItem parseDecimal(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        Item<? extends Object> result = parseIntegerOrDecimalWithParams(buffer);
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
         if (!(result instanceof DecimalItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
         } else {
-            if (buffer.hasRemaining()) {
-                throw new IllegalArgumentException("extra characters in string parsed as decimal: '" + buffer + "'");
-            }
+            p.assertEmpty("extra characters in string parsed as decimal");
             return (DecimalItem) result;
         }
     }
 
-    private static StringItem parseString(CharBuffer inputString) {
+    private StringItem parseString() {
 
-        if (getOrEOF(inputString) != '"') {
-            throw new IllegalArgumentException("must start with double quote: " + inputString);
+        if (getOrEOF() != '"') {
+            throw new IllegalArgumentException("must start with double quote: '" + input + "'");
         }
 
-        StringBuilder outputString = new StringBuilder(inputString.length());
+        StringBuilder outputString = new StringBuilder(input.length());
 
-        while (inputString.hasRemaining()) {
-            char c = inputString.get();
+        while (input.hasRemaining()) {
+            char c = input.get();
             if (c == '\\') {
-                c = getOrEOF(inputString);
+                c = getOrEOF();
                 if (c != '"' && c != '\\') {
-                    throw new IllegalArgumentException("invalid escape sequence at " + inputString.position());
+                    throw new IllegalArgumentException("invalid escape sequence at " + input.position());
                 }
                 outputString.append(c);
             } else {
                 if (c == '"') {
                     return new StringItem(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
-                    throw new IllegalArgumentException("invalid character at " + inputString.length());
+                    throw new IllegalArgumentException("invalid character at " + input.length());
                 } else {
                     outputString.append(c);
                 }
@@ -130,39 +136,36 @@ public class Parser {
         throw new IllegalArgumentException("closing double quote missing");
     }
 
-    private static StringItem parseStringWithParameters(CharBuffer buffer) {
-        StringItem result = parseString(buffer);
-        Parameters params = parseParameters(buffer);
+    private StringItem parseStringWithParameters() {
+        StringItem result = parseString();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
     public static StringItem parseString(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        StringItem result = parseStringWithParameters(buffer);
-        if (buffer.length() != 0) {
-            throw new IllegalArgumentException("extra characters in string parsed as integer: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        StringItem result = p.parseStringWithParameters();
+        p.assertEmpty("extra characters in string parsed as string");
         return result;
     }
 
-    private static TokenItem parseToken(CharBuffer inputString) {
+    private TokenItem parseToken() {
 
-        char c = getOrEOF(inputString);
+        char c = getOrEOF();
         if (c != '*' && !isAlpha(c)) {
-            throw new IllegalArgumentException("must start with ALPHA or *: " + inputString);
+            throw new IllegalArgumentException("must start with ALPHA or *: '" + input + "'");
         }
 
-        StringBuilder outputString = new StringBuilder(inputString.length());
+        StringBuilder outputString = new StringBuilder(input.length());
         outputString.append(c);
-        boolean done = false;
 
-        while (inputString.hasRemaining() && !done) {
-            c = inputString.charAt(0);
+        boolean done = false;
+        while (input.hasRemaining() && !done) {
+            c = input.charAt(0);
             if (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
                 done = true;
-            }
-            else {
-                advance(inputString);
+            } else {
+                advance();
                 outputString.append(c);
             }
         }
@@ -170,31 +173,29 @@ public class Parser {
         return new TokenItem(outputString.toString());
     }
 
-    private static TokenItem parseTokenWithParams(CharBuffer buffer) {
-        TokenItem result = parseToken(buffer);
-        Parameters params = parseParameters(buffer);
+    private TokenItem parseTokenWithParams() {
+        TokenItem result = parseToken();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
     public static TokenItem parseToken(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        TokenItem result = parseTokenWithParams(buffer);
-        if (buffer.length() != 0) {
-            throw new IllegalArgumentException("extra characters in string parsed as token: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        TokenItem result = p.parseTokenWithParams();
+        p.assertEmpty("extra characters in string parsed as token");
         return result;
     }
 
-    private static ByteSequenceItem parseByteSequence(CharBuffer inputString) {
-        if (getOrEOF(inputString) != ':') {
-            throw new IllegalArgumentException("must start with colon: " + inputString);
+    private ByteSequenceItem parseByteSequence() {
+        if (getOrEOF() != ':') {
+            throw new IllegalArgumentException("must start with colon: " + input);
         }
 
-        StringBuilder outputString = new StringBuilder(inputString.length());
-        boolean done = false;
+        StringBuilder outputString = new StringBuilder(input.length());
 
-        while (inputString.hasRemaining() && !done) {
-            char c = inputString.get();
+        boolean done = false;
+        while (input.hasRemaining() && !done) {
+            char c = input.get();
             if (c == ':') {
                 done = true;
             } else {
@@ -211,67 +212,63 @@ public class Parser {
         return new ByteSequenceItem(BASE64DECODER.decode(outputString.toString()));
     }
 
-    private static ByteSequenceItem parseByteSequenceWithParams(CharBuffer buffer) {
-        ByteSequenceItem result = parseByteSequence(buffer);
-        Parameters params = parseParameters(buffer);
+    private ByteSequenceItem parseByteSequenceWithParams() {
+        ByteSequenceItem result = parseByteSequence();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
     public static ByteSequenceItem parseByteSequence(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        ByteSequenceItem result = parseByteSequenceWithParams(buffer);
-        if (buffer.length() != 0) {
-            throw new IllegalArgumentException("extra characters in string parsed as byte sequence: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        ByteSequenceItem result = p.parseByteSequenceWithParams();
+        p.assertEmpty("extra characters in string parsed as byte sequence");
         return result;
     }
 
-    private static BooleanItem parseBoolean(CharBuffer inputString) {
+    private BooleanItem parseBoolean() {
 
-        if (getOrEOF(inputString) != '?') {
-            throw new IllegalArgumentException("must start with question mark: " + inputString);
+        if (getOrEOF() != '?') {
+            throw new IllegalArgumentException("must start with question mark: " + input);
         }
 
-        char c = getOrEOF(inputString);
+        char c = getOrEOF();
 
         if (c != '0' && c != '1') {
-            throw new IllegalArgumentException("expected 0 or 1 in boolean: " + inputString);
+            throw new IllegalArgumentException("expected 0 or 1 in boolean: " + input);
         }
 
         return BooleanItem.valueOf(c == '1');
     }
 
-    private static BooleanItem parseBooleanWithParams(CharBuffer buffer) {
-        BooleanItem result = parseBoolean(buffer);
-        Parameters params = parseParameters(buffer);
+    private BooleanItem parseBooleanWithParams() {
+        BooleanItem result = parseBoolean();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
     public static BooleanItem parseBoolean(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        BooleanItem result = parseBooleanWithParams(buffer);
-        if (buffer.length() != 0) {
-            throw new IllegalArgumentException("extra characters in string parsed as boolean: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        BooleanItem result = p.parseBooleanWithParams();
+        p.assertEmpty("extra characters in string parsed as boolean");
         return result;
     }
 
-    private static String parseKey(CharBuffer buffer) {
+    private String parseKey() {
 
-        char c = getOrEOF(buffer);
+        char c = getOrEOF();
         if (c != '*' && !isLcAlpha(c)) {
-            throw new IllegalArgumentException("must start with LCALPHA or *: " + buffer);
+            throw new IllegalArgumentException("must start with LCALPHA or *: " + input);
         }
 
         StringBuilder result = new StringBuilder();
         result.append(c);
 
         boolean done = false;
-        while (buffer.hasRemaining() && !done) {
-            c = buffer.charAt(0);
+        while (input.hasRemaining() && !done) {
+            c = input.charAt(0);
             if (isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
                 result.append(c);
-                advance(buffer);
+                advance();
             } else {
                 done = true;
             }
@@ -280,23 +277,23 @@ public class Parser {
         return result.toString();
     }
 
-    private static Parameters parseParameters(CharBuffer buffer) {
+    private Parameters parseParameters() {
 
         LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
 
         boolean done = false;
-        while (buffer.hasRemaining() && !done) {
-            char c = buffer.charAt(0);
+        while (input.hasRemaining() && !done) {
+            char c = input.charAt(0);
             if (c != ';') {
                 done = true;
             } else {
-                advance(buffer);
-                removeLeadingSP(buffer);
-                String name = parseKey(buffer);
+                advance();
+                removeLeadingSP();
+                String name = parseKey();
                 Item<? extends Object> value = BooleanItem.valueOf(true);
-                if (buffer.hasRemaining() && buffer.charAt(0) == '=') {
-                    advance(buffer);
-                    value = parseBareItem(buffer);
+                if (input.hasRemaining() && input.charAt(0) == '=') {
+                    advance();
+                    value = parseBareItem();
                 }
                 result.put(name, value);
             }
@@ -306,60 +303,58 @@ public class Parser {
     }
 
     public static Parameters parseParameters(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        Parameters result = parseParameters(buffer);
-        if (buffer.length() != 0) {
-            throw new IllegalArgumentException("extra characters in string parsed as parameters: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        Parameters result = p.parseParameters();
+        p.assertEmpty("extra characters in string parsed as parameters");
         return result;
     }
 
-    private static Item<? extends Object> parseBareItem(CharBuffer buffer) {
-        if (!buffer.hasRemaining()) {
+    private Item<? extends Object> parseBareItem() {
+        if (!input.hasRemaining()) {
             throw new IllegalArgumentException("empty string");
         }
 
-        char c = buffer.charAt(0);
+        char c = input.charAt(0);
         if (isDigit(c) || c == '-') {
-            return parseIntegerOrDecimal(buffer);
+            return parseIntegerOrDecimal();
         } else if (c == '"') {
-            return parseString(buffer);
+            return parseString();
         } else if (c == '?') {
-            return parseBoolean(buffer);
+            return parseBoolean();
         } else if (c == '*' || isAlpha(c)) {
-            return parseToken(buffer);
+            return parseToken();
         } else if (c == ':') {
-            return parseByteSequence(buffer);
+            return parseByteSequence();
         } else {
-            throw new IllegalArgumentException("unknown type: " + buffer);
+            throw new IllegalArgumentException("unknown type: " + input);
         }
     }
 
-    private static Item<? extends Object> parseItem(CharBuffer buffer) {
-        Item<? extends Object> result = parseBareItem(buffer);
-        Parameters params = parseParameters(buffer);
+    private Item<? extends Object> parseItem() {
+        Item<? extends Object> result = parseBareItem();
+        Parameters params = parseParameters();
         return result.withParams(params);
     }
 
-    private static Item<? extends Object> parseItemOrInnerList(CharBuffer buffer) {
-        char c = buffer.hasRemaining() ? buffer.charAt(0) : 1;
-        return  c == '(' ? parseInnerListWithParams(buffer) : parseItem(buffer);
+    private Item<? extends Object> parseItemOrInnerList() {
+        char c = input.hasRemaining() ? input.charAt(0) : 1;
+        return c == '(' ? parseInnerListWithParams() : parseItem();
     }
 
-    private static List<Item<? extends Object>> parseList(CharBuffer sb) {
+    private List<Item<? extends Object>> parseList() {
         List<Item<? extends Object>> result = new ArrayList<>();
 
-        while (sb.hasRemaining()) {
-            result.add(parseItemOrInnerList(sb));
-            removeLeadingSP(sb);
-            if (!sb.hasRemaining()) {
+        while (input.hasRemaining()) {
+            result.add(parseItemOrInnerList());
+            removeLeadingSP();
+            if (!input.hasRemaining()) {
                 return result;
             }
-            if (sb.get() != ',') {
-                throw new IllegalArgumentException("expected COMMA, got: " + sb);
+            if (input.get() != ',') {
+                throw new IllegalArgumentException("expected COMMA, got: " + input);
             }
-            removeLeadingSP(sb);
-            if (!sb.hasRemaining()) {
+            removeLeadingSP();
+            if (!input.hasRemaining()) {
                 throw new IllegalArgumentException("found trailing COMMA in list");
             }
         }
@@ -369,62 +364,58 @@ public class Parser {
     }
 
     public static ListItem parseList(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        List<Item<? extends Object>> result = parseList(buffer);
-        if (buffer.hasRemaining()) {
-            throw new IllegalArgumentException("extra characters in string parsed as list: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        List<Item<? extends Object>> result = p.parseList();
+        p.assertEmpty("extra characters in string parsed as list");
         return new ListItem(false, result);
     }
 
-    private static List<Item<? extends Object>> parseInnerList(CharBuffer sb) {
+    private List<Item<? extends Object>> parseInnerList() {
 
-        char c = getOrEOF(sb);
+        char c = getOrEOF();
         if (c != '(') {
-            throw new IllegalArgumentException("inner list must start with '(': " + sb);
+            throw new IllegalArgumentException("inner list must start with '(': " + input);
         }
 
         List<Item<? extends Object>> result = new ArrayList<>();
 
         boolean done = false;
-        while (sb.hasRemaining() && !done) {
-            removeLeadingSP(sb);
+        while (input.hasRemaining() && !done) {
+            removeLeadingSP();
 
-            c = sb.charAt(0);
+            c = input.charAt(0);
             if (c == ')') {
-                advance(sb);
+                advance();
                 done = true;
             } else {
-                Item<? extends Object> item = parseItem(sb);
+                Item<? extends Object> item = parseItem();
                 result.add(item);
             }
         }
 
         if (!done) {
-            throw new IllegalArgumentException("inner list must end with ')': " + sb);
+            throw new IllegalArgumentException("inner list must end with ')': " + input);
         }
 
         return result;
     }
 
-    private static ListItem parseInnerListWithParams(CharBuffer buffer) {
-        List<Item<? extends Object>> result = parseInnerList(buffer);
-        Parameters params = parseParameters(buffer);
+    private ListItem parseInnerListWithParams() {
+        List<Item<? extends Object>> result = parseInnerList();
+        Parameters params = parseParameters();
         return new ListItem(true, result).withParams(params);
     }
 
     public static ListItem parseInnerList(String input) {
-        CharBuffer buffer = CharBuffer.wrap(input);
-        ListItem result = parseInnerListWithParams(buffer);
-        if (buffer.hasRemaining()) {
-            throw new IllegalArgumentException("extra characters in string parsed as inner list: '" + buffer + "'");
-        }
+        Parser p = new Parser(input);
+        ListItem result = p.parseInnerListWithParams();
+        p.assertEmpty("extra characters in string parsed as inner list");
         return result;
     }
 
-    private static void removeLeadingSP(CharBuffer sb) {
-        while (checkNextChar(sb, ' ')) {
-            advance(sb);
+    private void removeLeadingSP() {
+        while (checkNextChar(' ')) {
+            advance();
         }
     }
 
@@ -442,19 +433,25 @@ public class Parser {
 
     // utility methods on CharBuffer
 
-    private static boolean checkNextChar(CharBuffer buffer, char c) {
-        return buffer.hasRemaining() && buffer.charAt(0) == c;
+    private boolean checkNextChar(char c) {
+        return input.hasRemaining() && input.charAt(0) == c;
     }
 
     private static boolean checkNextChar(CharBuffer buffer, String valid) {
         return buffer.hasRemaining() && valid.indexOf(buffer.charAt(0)) >= 0;
     }
 
-    private static void advance(CharBuffer buffer) {
-        buffer.position(1 + buffer.position());
+    private void advance() {
+        input.position(1 + input.position());
     }
 
-    private static char getOrEOF(CharBuffer buffer) {
-        return buffer.hasRemaining() ? buffer.get() : (char) -1;
+    private void assertEmpty(String message) {
+        if (input.hasRemaining()) {
+            throw new IllegalArgumentException(message + ": '" + input + "'");
+        }
+    }
+
+    private char getOrEOF() {
+        return input.hasRemaining() ? input.get() : (char) -1;
     }
 }
