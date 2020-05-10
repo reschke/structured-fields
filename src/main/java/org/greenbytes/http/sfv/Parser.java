@@ -84,28 +84,6 @@ public class Parser {
         return result.withParams(params);
     }
 
-    public static IntegerItem parseInteger(String input) {
-        Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
-        if (!(result instanceof IntegerItem)) {
-            throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
-        } else {
-            p.assertEmpty("extra characters in string parsed as integer");
-            return (IntegerItem) result;
-        }
-    }
-
-    public static DecimalItem parseDecimal(String input) {
-        Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
-        if (!(result instanceof DecimalItem)) {
-            throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
-        } else {
-            p.assertEmpty("extra characters in string parsed as decimal");
-            return (DecimalItem) result;
-        }
-    }
-
     private StringItem parseString() {
 
         if (getOrEOF() != '"') {
@@ -142,13 +120,6 @@ public class Parser {
         return result.withParams(params);
     }
 
-    public static StringItem parseString(String input) {
-        Parser p = new Parser(input);
-        StringItem result = p.parseStringWithParameters();
-        p.assertEmpty("extra characters in string parsed as string");
-        return result;
-    }
-
     private TokenItem parseToken() {
 
         char c = getOrEOF();
@@ -177,13 +148,6 @@ public class Parser {
         TokenItem result = parseToken();
         Parameters params = parseParameters();
         return result.withParams(params);
-    }
-
-    public static TokenItem parseToken(String input) {
-        Parser p = new Parser(input);
-        TokenItem result = p.parseTokenWithParams();
-        p.assertEmpty("extra characters in string parsed as token");
-        return result;
     }
 
     private ByteSequenceItem parseByteSequence() {
@@ -218,13 +182,6 @@ public class Parser {
         return result.withParams(params);
     }
 
-    public static ByteSequenceItem parseByteSequence(String input) {
-        Parser p = new Parser(input);
-        ByteSequenceItem result = p.parseByteSequenceWithParams();
-        p.assertEmpty("extra characters in string parsed as byte sequence");
-        return result;
-    }
-
     private BooleanItem parseBoolean() {
 
         if (getOrEOF() != '?') {
@@ -244,13 +201,6 @@ public class Parser {
         BooleanItem result = parseBoolean();
         Parameters params = parseParameters();
         return result.withParams(params);
-    }
-
-    public static BooleanItem parseBoolean(String input) {
-        Parser p = new Parser(input);
-        BooleanItem result = p.parseBooleanWithParams();
-        p.assertEmpty("extra characters in string parsed as boolean");
-        return result;
     }
 
     private String parseKey() {
@@ -300,13 +250,6 @@ public class Parser {
         }
 
         return new Parameters(result);
-    }
-
-    public static Parameters parseParameters(String input) {
-        Parser p = new Parser(input);
-        Parameters result = p.parseParameters();
-        p.assertEmpty("extra characters in string parsed as parameters");
-        return result;
     }
 
     private Item<? extends Object> parseBareItem() {
@@ -363,13 +306,6 @@ public class Parser {
         return result;
     }
 
-    public static ListItem parseList(String input) {
-        Parser p = new Parser(input);
-        List<Item<? extends Object>> result = p.parseList();
-        p.assertEmpty("extra characters in string parsed as list");
-        return new ListItem(false, result);
-    }
-
     private List<Item<? extends Object>> parseInnerList() {
 
         char c = getOrEOF();
@@ -406,6 +342,72 @@ public class Parser {
         return new ListItem(true, result).withParams(params);
     }
 
+    // static convenience methods
+
+    public static IntegerItem parseInteger(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
+        if (!(result instanceof IntegerItem)) {
+            throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
+        } else {
+            p.assertEmpty("extra characters in string parsed as integer");
+            return (IntegerItem) result;
+        }
+    }
+
+    public static DecimalItem parseDecimal(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
+        if (!(result instanceof DecimalItem)) {
+            throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
+        } else {
+            p.assertEmpty("extra characters in string parsed as decimal");
+            return (DecimalItem) result;
+        }
+    }
+
+    public static ByteSequenceItem parseByteSequence(String input) {
+        Parser p = new Parser(input);
+        ByteSequenceItem result = p.parseByteSequenceWithParams();
+        p.assertEmpty("extra characters in string parsed as byte sequence");
+        return result;
+    }
+
+    public static StringItem parseString(String input) {
+        Parser p = new Parser(input);
+        StringItem result = p.parseStringWithParameters();
+        p.assertEmpty("extra characters in string parsed as string");
+        return result;
+    }
+
+    public static TokenItem parseToken(String input) {
+        Parser p = new Parser(input);
+        TokenItem result = p.parseTokenWithParams();
+        p.assertEmpty("extra characters in string parsed as token");
+        return result;
+    }
+
+    public static BooleanItem parseBoolean(String input) {
+        Parser p = new Parser(input);
+        BooleanItem result = p.parseBooleanWithParams();
+        p.assertEmpty("extra characters in string parsed as boolean");
+        return result;
+    }
+
+    public static Parameters parseParameters(String input) {
+        Parser p = new Parser(input);
+        Parameters result = p.parseParameters();
+        p.assertEmpty("extra characters in string parsed as parameters");
+        return result;
+    }
+
+    public static ListItem parseList(String input) {
+        Parser p = new Parser(input);
+        List<Item<? extends Object>> result = p.parseList();
+        p.assertEmpty("extra characters in string parsed as list");
+        return new ListItem(false, result);
+    }
+
     public static ListItem parseInnerList(String input) {
         Parser p = new Parser(input);
         ListItem result = p.parseInnerListWithParams();
@@ -413,11 +415,7 @@ public class Parser {
         return result;
     }
 
-    private void removeLeadingSP() {
-        while (checkNextChar(' ')) {
-            advance();
-        }
-    }
+    // character types
 
     private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
@@ -432,6 +430,12 @@ public class Parser {
     }
 
     // utility methods on CharBuffer
+
+    private void removeLeadingSP() {
+        while (checkNextChar(' ')) {
+            advance();
+        }
+    }
 
     private boolean checkNextChar(char c) {
         return input.hasRemaining() && input.charAt(0) == c;
