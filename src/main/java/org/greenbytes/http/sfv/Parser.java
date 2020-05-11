@@ -432,6 +432,13 @@ public class Parser {
         return result;
     }
 
+    public static Item<? extends Object> parseItem(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseItem();
+        p.assertEmpty("extra characters in string parsed as item");
+        return result;
+    }
+
     public static Parameters parseParameters(String input) {
         Parser p = new Parser(input);
         Parameters result = p.parseParameters();
