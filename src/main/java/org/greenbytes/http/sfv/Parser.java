@@ -21,7 +21,7 @@ public class Parser {
     }
 
     public Item<? extends Object> parseIntegerOrDecimal() {
-        String type = "integer";
+        boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
 
@@ -34,27 +34,28 @@ public class Parser {
             throw new IllegalArgumentException("illegal start for Integer or Decimal: '" + input + "'");
         }
 
-        while (hasRemaining()) {
-            input.mark();
-            char c = input.get();
+        boolean done = false;
+        while (hasRemaining() && !done) {
+            char c = peek();
             if (isDigit(c)) {
                 inputNumber.append(c);
-            } else if ("integer".equals(type) && c == '.') {
+                advance();
+            } else if (!isDecimal && c == '.') {
                 if (inputNumber.length() > 12) {
                     throw new IllegalArgumentException("illegal position for decimal point in Decimal at " + inputNumber.length());
                 }
                 inputNumber.append(c);
-                type = "decimal";
+                isDecimal = true;
+                advance();
             } else {
-                input.reset();
-                break;
+                done = true;
             }
-            if (inputNumber.length() > ("integer".equals(type) ? 15 : 16)) {
-                throw new IllegalArgumentException(type + " too long: " + inputNumber.length());
+            if (inputNumber.length() > (isDecimal ? 16 : 15)) {
+                throw new IllegalArgumentException((isDecimal ? "Decimal" : "Integer") + " too long: " + inputNumber.length());
             }
         }
 
-        if ("integer".equals(type)) {
+        if (!isDecimal) {
             long l = Long.parseLong(inputNumber.toString());
             return new IntegerItem(sign * l);
         } else {
