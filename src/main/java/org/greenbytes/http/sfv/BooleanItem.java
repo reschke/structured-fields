@@ -8,7 +8,7 @@ public class BooleanItem implements Item<Boolean> {
     private static final BooleanItem TRUE = new BooleanItem(true);
     private static final BooleanItem FALSE = new BooleanItem(false);
 
-    private BooleanItem(boolean value, Parameters params) {
+    public BooleanItem(boolean value, Parameters params) {
         this.value = value;
         this.params = params;
     }

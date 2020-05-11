@@ -94,7 +94,7 @@ public class Parser {
         StringBuilder outputString = new StringBuilder(input.length());
 
         while (hasRemaining()) {
-            char c = input.get();
+            char c = get();
             if (c == '\\') {
                 c = getOrEOF();
                 if (c != '"' && c != '\\') {
@@ -160,7 +160,7 @@ public class Parser {
 
         boolean done = false;
         while (hasRemaining() && !done) {
-            char c = input.get();
+            char c = get();
             if (c == ':') {
                 done = true;
             } else {
@@ -293,7 +293,7 @@ public class Parser {
             if (!hasRemaining()) {
                 return result;
             }
-            if (input.get() != ',') {
+            if (get() != ',') {
                 throw new IllegalArgumentException("expected COMMA, got: " + input);
             }
             removeLeadingSP();
@@ -340,6 +340,44 @@ public class Parser {
         List<Item<? extends Object>> result = parseInnerList();
         Parameters params = parseParameters();
         return new ListItem(true, result).withParams(params);
+    }
+
+    private DictionaryItem parseDictionary() {
+
+        LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
+
+        boolean done = false;
+        while (hasRemaining() && !done) {
+
+            Item<? extends Object> member;
+
+            String name = parseKey();
+
+            if (peek() == '=') {
+                advance();
+                member = parseItemOrInnerList();
+            } else {
+                member = new BooleanItem(true, parseParameters());
+            }
+
+            result.put(name, member);
+
+            removeLeadingSP();
+            if (hasRemaining()) {
+                char c = get();
+                if (c != ',') {
+                    throw new IllegalArgumentException("Expected COMMA in dictionary, found: '" + c + "'");
+                }
+                removeLeadingSP();
+                if (!hasRemaining()) {
+                    throw new IllegalArgumentException("Trailing COMMA in dictionary");
+                }
+            } else {
+                done = true;
+            }
+        }
+
+        return new DictionaryItem(result);
     }
 
     // static convenience methods
@@ -415,6 +453,13 @@ public class Parser {
         return result;
     }
 
+    public static DictionaryItem parseDictionary(String input) {
+        Parser p = new Parser(input);
+        DictionaryItem result = p.parseDictionary();
+        p.assertEmpty("extra characters in string parsed as dictionary");
+        return result;
+    }
+
     // character types
 
     private static boolean isDigit(char c) {
@@ -449,8 +494,12 @@ public class Parser {
         return hasRemaining() && valid.indexOf(input.charAt(0)) >= 0;
     }
 
+    private char get() {
+        return input.get();
+    }
+
     private char getOrEOF() {
-        return hasRemaining() ? input.get() : (char) -1;
+        return hasRemaining() ? get() : (char) -1;
     }
 
     private boolean hasRemaining() {

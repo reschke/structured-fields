@@ -198,13 +198,24 @@ public class Tests {
             ListItem list = Parser.parseInnerList(e.getKey());
             Object[] expected = e.getValue();
             assertTrue(list instanceof ListItem);
-            assertEquals(list.get().size(), (expected.length - 1)/ 2);
+            assertEquals(list.get().size(), (expected.length - 1) / 2);
             for (int i = 0; i < (expected.length - 1) / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
                 Parameters p = list.get().get(i).getParams();
                 assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
             assertEquals(list.getParams().serialize(), expected[expected.length - 1]);
+        }
+    }
+
+    @Test
+    public void testParseValidDictionary() {
+        String tests[] = new String[] { "en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", "a=?0, b, c;foo=bar",
+                "rating=1.5, feelings=(joy sadness)", "a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid" };
+
+        for (String s : tests) {
+            DictionaryItem i = Parser.parseDictionary(s);
+            assertEquals("should round-trip", i.serialize(), s);
         }
     }
 }
