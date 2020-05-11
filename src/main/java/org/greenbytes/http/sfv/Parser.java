@@ -30,11 +30,11 @@ public class Parser {
             advance();
         }
 
-        if (!checkNextChar(input, "0123456789")) {
+        if (!checkNextChar("0123456789")) {
             throw new IllegalArgumentException("illegal start for Integer or Decimal: '" + input + "'");
         }
 
-        while (input.hasRemaining()) {
+        while (hasRemaining()) {
             input.mark();
             char c = input.get();
             if (isDigit(c)) {
@@ -92,7 +92,7 @@ public class Parser {
 
         StringBuilder outputString = new StringBuilder(input.length());
 
-        while (input.hasRemaining()) {
+        while (hasRemaining()) {
             char c = input.get();
             if (c == '\\') {
                 c = getOrEOF();
@@ -131,7 +131,7 @@ public class Parser {
         outputString.append(c);
 
         boolean done = false;
-        while (input.hasRemaining() && !done) {
+        while (hasRemaining() && !done) {
             c = input.charAt(0);
             if (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
                 done = true;
@@ -158,7 +158,7 @@ public class Parser {
         StringBuilder outputString = new StringBuilder(input.length());
 
         boolean done = false;
-        while (input.hasRemaining() && !done) {
+        while (hasRemaining() && !done) {
             char c = input.get();
             if (c == ':') {
                 done = true;
@@ -214,7 +214,7 @@ public class Parser {
         result.append(c);
 
         boolean done = false;
-        while (input.hasRemaining() && !done) {
+        while (hasRemaining() && !done) {
             c = input.charAt(0);
             if (isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
                 result.append(c);
@@ -232,7 +232,7 @@ public class Parser {
         LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
 
         boolean done = false;
-        while (input.hasRemaining() && !done) {
+        while (hasRemaining() && !done) {
             char c = input.charAt(0);
             if (c != ';') {
                 done = true;
@@ -241,7 +241,7 @@ public class Parser {
                 removeLeadingSP();
                 String name = parseKey();
                 Item<? extends Object> value = BooleanItem.valueOf(true);
-                if (input.hasRemaining() && input.charAt(0) == '=') {
+                if (peek() == '=') {
                     advance();
                     value = parseBareItem();
                 }
@@ -253,7 +253,7 @@ public class Parser {
     }
 
     private Item<? extends Object> parseBareItem() {
-        if (!input.hasRemaining()) {
+        if (!hasRemaining()) {
             throw new IllegalArgumentException("empty string");
         }
 
@@ -280,24 +280,23 @@ public class Parser {
     }
 
     private Item<? extends Object> parseItemOrInnerList() {
-        char c = input.hasRemaining() ? input.charAt(0) : 1;
-        return c == '(' ? parseInnerListWithParams() : parseItem();
+        return peek() == '(' ? parseInnerListWithParams() : parseItem();
     }
 
     private List<Item<? extends Object>> parseList() {
         List<Item<? extends Object>> result = new ArrayList<>();
 
-        while (input.hasRemaining()) {
+        while (hasRemaining()) {
             result.add(parseItemOrInnerList());
             removeLeadingSP();
-            if (!input.hasRemaining()) {
+            if (!hasRemaining()) {
                 return result;
             }
             if (input.get() != ',') {
                 throw new IllegalArgumentException("expected COMMA, got: " + input);
             }
             removeLeadingSP();
-            if (!input.hasRemaining()) {
+            if (!hasRemaining()) {
                 throw new IllegalArgumentException("found trailing COMMA in list");
             }
         }
@@ -316,7 +315,7 @@ public class Parser {
         List<Item<? extends Object>> result = new ArrayList<>();
 
         boolean done = false;
-        while (input.hasRemaining() && !done) {
+        while (hasRemaining() && !done) {
             removeLeadingSP();
 
             c = input.charAt(0);
@@ -431,31 +430,40 @@ public class Parser {
 
     // utility methods on CharBuffer
 
-    private void removeLeadingSP() {
-        while (checkNextChar(' ')) {
-            advance();
+    private void assertEmpty(String message) {
+        if (hasRemaining()) {
+            throw new IllegalArgumentException(message + ": '" + input + "'");
         }
-    }
-
-    private boolean checkNextChar(char c) {
-        return input.hasRemaining() && input.charAt(0) == c;
-    }
-
-    private static boolean checkNextChar(CharBuffer buffer, String valid) {
-        return buffer.hasRemaining() && valid.indexOf(buffer.charAt(0)) >= 0;
     }
 
     private void advance() {
         input.position(1 + input.position());
     }
 
-    private void assertEmpty(String message) {
-        if (input.hasRemaining()) {
-            throw new IllegalArgumentException(message + ": '" + input + "'");
-        }
+    private boolean checkNextChar(char c) {
+        return hasRemaining() && input.charAt(0) == c;
+    }
+
+    private boolean checkNextChar(String valid) {
+        return hasRemaining() && valid.indexOf(input.charAt(0)) >= 0;
     }
 
     private char getOrEOF() {
-        return input.hasRemaining() ? input.get() : (char) -1;
+        return hasRemaining() ? input.get() : (char) -1;
     }
+
+    private boolean hasRemaining() {
+        return input.hasRemaining();
+    }
+
+    private char peek() {
+        return hasRemaining() ? input.charAt(0) : (char) -1;
+    }
+
+    private void removeLeadingSP() {
+        while (checkNextChar(' ')) {
+            advance();
+        }
+    }
+
 }
