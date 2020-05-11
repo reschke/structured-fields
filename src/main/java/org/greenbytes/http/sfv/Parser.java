@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Parser {
 
-    private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
-
     private final CharBuffer input;
 
     public Parser(CharBuffer input) {
@@ -20,7 +18,7 @@ public class Parser {
         this(CharBuffer.wrap(input));
     }
 
-    public Item<? extends Object> parseIntegerOrDecimal() {
+    public Item<? extends Object> parseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -79,13 +77,13 @@ public class Parser {
         }
     }
 
-    private Item<? extends Object> parseIntegerOrDecimalWithParams() {
-        Item<? extends Object> result = parseIntegerOrDecimal();
+    private Item<? extends Object> parseIntegerOrDecimal() {
+        Item<? extends Object> result = parseBareIntegerOrDecimal();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
 
-    private StringItem parseString() {
+    private StringItem parseBareString() {
 
         if (getOrEOF() != '"') {
             throw new IllegalArgumentException("must start with double quote: '" + input + "'");
@@ -115,13 +113,13 @@ public class Parser {
         throw new IllegalArgumentException("closing double quote missing");
     }
 
-    private StringItem parseStringWithParameters() {
-        StringItem result = parseString();
+    private StringItem parseString() {
+        StringItem result = parseBareString();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
 
-    private TokenItem parseToken() {
+    private TokenItem parseBareToken() {
 
         char c = getOrEOF();
         if (c != '*' && !isAlpha(c)) {
@@ -133,7 +131,7 @@ public class Parser {
 
         boolean done = false;
         while (hasRemaining() && !done) {
-            c = input.charAt(0);
+            c = peek();
             if (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0) {
                 done = true;
             } else {
@@ -145,13 +143,15 @@ public class Parser {
         return new TokenItem(outputString.toString());
     }
 
-    private TokenItem parseTokenWithParams() {
-        TokenItem result = parseToken();
+    private TokenItem parseToken() {
+        TokenItem result = parseBareToken();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
 
-    private ByteSequenceItem parseByteSequence() {
+    private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
+
+    private ByteSequenceItem parseBareByteSequence() {
         if (getOrEOF() != ':') {
             throw new IllegalArgumentException("must start with colon: " + input);
         }
@@ -177,13 +177,13 @@ public class Parser {
         return new ByteSequenceItem(BASE64DECODER.decode(outputString.toString()));
     }
 
-    private ByteSequenceItem parseByteSequenceWithParams() {
-        ByteSequenceItem result = parseByteSequence();
+    private ByteSequenceItem parseByteSequence() {
+        ByteSequenceItem result = parseBareByteSequence();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
 
-    private BooleanItem parseBoolean() {
+    private BooleanItem parseBareBoolean() {
 
         if (getOrEOF() != '?') {
             throw new IllegalArgumentException("must start with question mark: " + input);
@@ -198,8 +198,8 @@ public class Parser {
         return BooleanItem.valueOf(c == '1');
     }
 
-    private BooleanItem parseBooleanWithParams() {
-        BooleanItem result = parseBoolean();
+    private BooleanItem parseBoolean() {
+        BooleanItem result = parseBareBoolean();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
@@ -216,7 +216,7 @@ public class Parser {
 
         boolean done = false;
         while (hasRemaining() && !done) {
-            c = input.charAt(0);
+            c = peek();
             if (isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
                 result.append(c);
                 advance();
@@ -234,7 +234,7 @@ public class Parser {
 
         boolean done = false;
         while (hasRemaining() && !done) {
-            char c = input.charAt(0);
+            char c = peek();
             if (c != ';') {
                 done = true;
             } else {
@@ -258,17 +258,17 @@ public class Parser {
             throw new IllegalArgumentException("empty string");
         }
 
-        char c = input.charAt(0);
+        char c = peek();
         if (isDigit(c) || c == '-') {
-            return parseIntegerOrDecimal();
+            return parseBareIntegerOrDecimal();
         } else if (c == '"') {
-            return parseString();
+            return parseBareString();
         } else if (c == '?') {
-            return parseBoolean();
+            return parseBareBoolean();
         } else if (c == '*' || isAlpha(c)) {
-            return parseToken();
+            return parseBareToken();
         } else if (c == ':') {
-            return parseByteSequence();
+            return parseBareByteSequence();
         } else {
             throw new IllegalArgumentException("unknown type: " + input);
         }
@@ -281,7 +281,7 @@ public class Parser {
     }
 
     private Item<? extends Object> parseItemOrInnerList() {
-        return peek() == '(' ? parseInnerListWithParams() : parseItem();
+        return peek() == '(' ? parseInnerList() : parseItem();
     }
 
     private List<Item<? extends Object>> parseList() {
@@ -306,7 +306,7 @@ public class Parser {
         return result;
     }
 
-    private List<Item<? extends Object>> parseInnerList() {
+    private List<Item<? extends Object>> parseBareInnerList() {
 
         char c = getOrEOF();
         if (c != '(') {
@@ -336,8 +336,8 @@ public class Parser {
         return result;
     }
 
-    private ListItem parseInnerListWithParams() {
-        List<Item<? extends Object>> result = parseInnerList();
+    private ListItem parseInnerList() {
+        List<Item<? extends Object>> result = parseBareInnerList();
         Parameters params = parseParameters();
         return new ListItem(true, result).withParams(params);
     }
@@ -384,7 +384,7 @@ public class Parser {
 
     public static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
+        Item<? extends Object> result = p.parseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
         } else {
@@ -395,7 +395,7 @@ public class Parser {
 
     public static DecimalItem parseDecimal(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimalWithParams();
+        Item<? extends Object> result = p.parseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
             throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
         } else {
@@ -406,28 +406,28 @@ public class Parser {
 
     public static ByteSequenceItem parseByteSequence(String input) {
         Parser p = new Parser(input);
-        ByteSequenceItem result = p.parseByteSequenceWithParams();
+        ByteSequenceItem result = p.parseByteSequence();
         p.assertEmpty("extra characters in string parsed as byte sequence");
         return result;
     }
 
     public static StringItem parseString(String input) {
         Parser p = new Parser(input);
-        StringItem result = p.parseStringWithParameters();
+        StringItem result = p.parseString();
         p.assertEmpty("extra characters in string parsed as string");
         return result;
     }
 
     public static TokenItem parseToken(String input) {
         Parser p = new Parser(input);
-        TokenItem result = p.parseTokenWithParams();
+        TokenItem result = p.parseToken();
         p.assertEmpty("extra characters in string parsed as token");
         return result;
     }
 
     public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
-        BooleanItem result = p.parseBooleanWithParams();
+        BooleanItem result = p.parseBoolean();
         p.assertEmpty("extra characters in string parsed as boolean");
         return result;
     }
@@ -448,7 +448,7 @@ public class Parser {
 
     public static ListItem parseInnerList(String input) {
         Parser p = new Parser(input);
-        ListItem result = p.parseInnerListWithParams();
+        ListItem result = p.parseInnerList();
         p.assertEmpty("extra characters in string parsed as inner list");
         return result;
     }
