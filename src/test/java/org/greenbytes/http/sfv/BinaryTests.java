@@ -51,7 +51,10 @@ public class BinaryTests extends AbstractSpecificationTests {
             byte expectedBytes[] = new Base32().decode(expected.get("value").toString());
             byte actualBytes[] = ((ByteBuffer) (number.get())).array();
             assertArrayEquals(expectedBytes, actualBytes);
-            assertEquals(p.canonical, number.serialize());
+
+            if (p.canonical != null) {
+                assertEquals(p.canonical, number.serialize());
+            }
         }
     }
 }

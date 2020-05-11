@@ -46,7 +46,10 @@ public class BooleanTests extends AbstractSpecificationTests {
             Item<? extends Object> b = parse();
             Boolean expected = Boolean.valueOf((((JsonValue) p.expected_value)).toString());
             assertEquals(expected, b.get());
-            assertEquals(p.canonical, b.serialize());
+
+            if (p.canonical != null) {
+                assertEquals(p.canonical, b.serialize());
+            }
         }
     }
 }

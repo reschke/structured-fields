@@ -46,7 +46,10 @@ public class NumberTests extends AbstractSpecificationTests {
             Item<? extends Object> number = parse();
             String expected = ((((JsonValue) p.expected_value)).toString());
             assertEquals(expected, number.serialize());
-            assertEquals(p.canonical, number.serialize());
+
+            if (p.canonical != null) {
+                assertEquals(p.canonical, number.serialize());
+            }
         }
     }
 }
