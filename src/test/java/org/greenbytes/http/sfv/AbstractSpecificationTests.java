@@ -97,6 +97,13 @@ public abstract class AbstractSpecificationTests {
                 } else {
                     fail("unexpected type: " + type);
                 }
+            } else if (p.expected_value instanceof JsonValue) {
+                if (JsonValue.TRUE.equals(p.expected_value) || JsonValue.FALSE.equals(p.expected_value)) {
+                    Boolean expected = Boolean.valueOf(((JsonValue) p.expected_value).toString());
+                    assertEquals(expected, item.get());
+                } else {
+                    fail("unexpected JsonValue: " + p.expected_value);
+                }
             } else {
                 fail("unexpected type: " + p.expected_value.getClass());
             }
