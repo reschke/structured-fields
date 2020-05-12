@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.ByteBuffer;
@@ -29,6 +30,7 @@ public abstract class AbstractSpecificationTests {
         public String header_type;
         public boolean must_fail;
         public JsonValue expected_value;
+        public JsonValue expected_params; // TODO
         public String canonical;
     }
 
@@ -48,8 +50,17 @@ public abstract class AbstractSpecificationTests {
             p.raw = p.raw.trim();
             p.header_type = ((JsonObject) v).getString("header_type");
             p.must_fail = ((JsonObject) v).getBoolean("must_fail", false);
-            JsonArray testExpected = ((JsonObject) v).getJsonArray("expected");
-            p.expected_value = testExpected == null ? null : testExpected.get(0);
+            JsonArray array = ((JsonObject) v).getJsonArray("expected");
+            if (array == null) {
+                p.expected_value = null;
+                p.expected_params = null;
+            } else if (array.size() == 2) {
+                p.expected_value = array.get(0);
+                p.expected_params = array.get(1);
+            } else {
+                p.expected_value = array;
+                p.expected_params = null;
+            }
             p.canonical = ((JsonObject) v).getString("canonical", null);
             result.add(new Object[] { p.name, p });
         }
@@ -68,6 +79,42 @@ public abstract class AbstractSpecificationTests {
         }
     }
 
+    private static void match(JsonValue value, JsonValue params, Item<? extends Object> item) {
+        if (value instanceof JsonString) {
+            CharSequence expected = ((((JsonString) value)).getChars());
+            assertEquals(expected, item.get());
+        } else if (value instanceof JsonNumber) {
+            JsonNumber num = (JsonNumber) value;
+            if (num.isIntegral()) {
+                assertEquals(num.longValueExact(), item.get());
+            } else {
+                assertEquals(num.toString(), item.serialize());
+            }
+        } else if (value instanceof JsonObject) {
+            JsonObject container = (JsonObject) value;
+            String type = container.getString("__type");
+            if ("binary".equals(type)) {
+                byte expectedBytes[] = new Base32().decode(container.get("value").toString());
+                byte actualBytes[] = ((ByteBuffer) (item.get())).array();
+                assertArrayEquals(expectedBytes, actualBytes);
+            } else if ("token".equals(type)) {
+                CharSequence expectedString = ((JsonString) container.get("value")).getChars();
+                assertEquals(expectedString, item.get());
+            } else {
+                fail("unexpected type: " + type);
+            }
+        } else if (value instanceof JsonValue) {
+            if (JsonValue.TRUE.equals(value) || JsonValue.FALSE.equals(value)) {
+                Boolean expected = Boolean.valueOf(((JsonValue) value).toString());
+                assertEquals(expected, item.get());
+            } else {
+                fail("unexpected JsonValue: " + value);
+            }
+        } else {
+            fail("unexpected type: " + value.getClass());
+        }
+    }
+
     public void executeTest() {
         if (p.must_fail) {
             try {
@@ -77,35 +124,17 @@ public abstract class AbstractSpecificationTests {
             }
         } else {
             Item<? extends Object> item = parse();
-            if (p.expected_value instanceof JsonString) {
-                CharSequence expected = ((((JsonString) p.expected_value)).getChars());
-                assertEquals(expected, item.get());
-            } else if (p.expected_value instanceof JsonNumber) {
-                JsonNumber num = (JsonNumber) p.expected_value;
-                if (num.isIntegral()) {
-                    assertEquals(num.longValueExact(), item.get());
-                } else {
-                    assertEquals(num.toString(), item.serialize());
-                }
-            } else if (p.expected_value instanceof JsonObject) {
-                JsonObject container = (JsonObject) p.expected_value;
-                String type = container.getString("__type");
-                if ("binary".equals(type)) {
-                    byte expectedBytes[] = new Base32().decode(container.get("value").toString());
-                    byte actualBytes[] = ((ByteBuffer) (item.get())).array();
-                    assertArrayEquals(expectedBytes, actualBytes);
-                } else {
-                    fail("unexpected type: " + type);
-                }
-            } else if (p.expected_value instanceof JsonValue) {
-                if (JsonValue.TRUE.equals(p.expected_value) || JsonValue.FALSE.equals(p.expected_value)) {
-                    Boolean expected = Boolean.valueOf(((JsonValue) p.expected_value).toString());
-                    assertEquals(expected, item.get());
-                } else {
-                    fail("unexpected JsonValue: " + p.expected_value);
+            if (p.expected_value instanceof JsonArray) {
+                // assume list for now
+                JsonArray array = (JsonArray) p.expected_value;
+                for (int i = 0; i < array.size(); i++) {
+                    JsonValue m = array.get(i);
+                    assertTrue(item instanceof ListItem);
+                    assertTrue(m instanceof JsonArray);
+                    match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((ListItem) item).get().get(i));
                 }
             } else {
-                fail("unexpected type: " + p.expected_value.getClass());
+                match(p.expected_value, p.expected_params, item);
             }
 
             if (p.canonical != null) {
