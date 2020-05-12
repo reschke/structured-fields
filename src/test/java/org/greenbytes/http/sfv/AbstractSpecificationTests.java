@@ -38,34 +38,35 @@ public abstract class AbstractSpecificationTests {
     public static Collection<Object[]> makeParameters(String filename) {
         List<Object[]> result = new ArrayList<>();
         JsonReader reader = Json.createReader(BooleanTests.class.getClassLoader().getResourceAsStream(filename));
-        for (JsonValue v : reader.readArray()) {
+        for (JsonValue vt : reader.readArray()) {
+            JsonObject v = (JsonObject) vt;
             TestParams p = new TestParams();
             p.name = ((JsonObject) v).getString("name");
             p.raw = "";
-            for (JsonValue raw : ((JsonObject) v).getJsonArray("raw")) {
+            for (JsonValue raw : v.getJsonArray("raw")) {
                 if (p.raw.length() != 0) {
                     p.raw += ",";
                 }
                 p.raw += ((JsonString) raw).getString();
             }
             p.raw = p.raw.trim();
-            p.header_type = ((JsonObject) v).getString("header_type");
-            p.must_fail = ((JsonObject) v).getBoolean("must_fail", false);
+            p.header_type = v.getString("header_type");
+            p.must_fail = v.getBoolean("must_fail", false);
             p.expected_params = null;
-            if (((JsonObject) v).get("expected") instanceof JsonArray) {
-                JsonArray array = ((JsonObject) v).getJsonArray("expected");
+            if (v.get("expected") instanceof JsonArray) {
+                JsonArray array = v.getJsonArray("expected");
                 if (array == null) {
                     p.expected_value = null;
-                } else if (array.size() == 2) {
+                } else if (array.size() == 2 && "item".equals(p.header_type)) {
                     p.expected_value = array.get(0);
                     p.expected_params = array.get(1);
                 } else {
                     p.expected_value = array;
                 }
             } else {
-                p.expected_value = ((JsonObject) v).getJsonObject("expected");
+                p.expected_value = v.getJsonObject("expected");
             }
-            p.canonical = ((JsonObject) v).getString("canonical", null);
+            p.canonical = v.getString("canonical", null);
             result.add(new Object[] { p.name, p });
         }
 
@@ -125,10 +126,10 @@ public abstract class AbstractSpecificationTests {
             }
         } else if (value instanceof JsonArray) {
             JsonArray array = (JsonArray) value;
-            List<Item<? extends Object>> result = (List<Item<? extends Object>>)item.get();
+            List<Item<? extends Object>> result = (List<Item<? extends Object>>) item.get();
             assertEquals(array.size(), result.size());
             for (int i = 0; i < array.size(); i++) {
-                JsonArray t = (JsonArray)array.get(i);
+                JsonArray t = (JsonArray) array.get(i);
                 assertEquals(2, t.size());
                 match(t.get(0), t.get(1), result.get(i));
             }
@@ -155,11 +156,10 @@ public abstract class AbstractSpecificationTests {
             Item<? extends Object> item = parse();
             if (p.expected_value instanceof JsonArray) {
                 // assume list for now
+                assertTrue(item instanceof ListItem);
                 JsonArray array = (JsonArray) p.expected_value;
                 for (int i = 0; i < array.size(); i++) {
                     JsonValue m = array.get(i);
-                    assertTrue(item instanceof ListItem);
-                    assertTrue(m instanceof JsonArray);
                     match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((ListItem) item).get().get(i));
                 }
             } else {
