@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public abstract class AbstractSpecificationTests {
                 while (t.startsWith(" ")) {
                     t = t.substring(1);
                 }
-                while (t.length() > 1 && t.lastIndexOf(' ') == t.length() -1) {
+                while (t.length() > 1 && t.lastIndexOf(' ') == t.length() - 1) {
                     t = t.substring(0, t.length() - 1);
                 }
                 if (p.raw.length() != 0) {
@@ -157,6 +158,20 @@ public abstract class AbstractSpecificationTests {
             }
         } else {
             fail("unexpected type: " + value.getClass());
+        }
+        if (params != null) {
+            JsonObject expected = (JsonObject) params;
+            Map<String, Item<? extends Object>> result = item.getParams() != null ? item.getParams().get() : Collections.emptyMap();
+            assertEquals(expected.size(), result.size());
+            for (Map.Entry<String, JsonValue> e : expected.entrySet()) {
+                if (e.getValue() instanceof JsonArray) {
+                    JsonArray array = (JsonArray) e.getValue();
+                    assertEquals(2, array.size());
+                    match(array.get(0), array.get(1), result.get(e.getKey()));
+                } else {
+                    match(e.getValue(), null, result.get(e.getKey()));
+                }
+            }
         }
     }
 
