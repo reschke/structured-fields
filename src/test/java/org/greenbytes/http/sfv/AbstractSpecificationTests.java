@@ -32,7 +32,7 @@ public abstract class AbstractSpecificationTests {
         public String header_type;
         public boolean must_fail;
         public JsonValue expected_value;
-        public JsonValue expected_params; // TODO
+        public JsonValue expected_params;
         public String canonical;
     }
 
@@ -81,7 +81,8 @@ public abstract class AbstractSpecificationTests {
             } else {
                 p.expected_value = v.getJsonObject("expected");
             }
-            p.canonical = v.getString("canonical", null);
+            JsonArray canarr = v.getJsonArray("canonical");
+            p.canonical = canarr == null || canarr.size() == 0 ? null: canarr.getString(0);
             String basename = filename.substring(0, filename.length() - ".json".length());
             result.add(new Object[] { basename + ": " + p.name, p });
         }
