@@ -14,8 +14,6 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class NumberTests extends AbstractSpecificationTests {
 
-    private TestParams p;
-
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> parameters() {
         return AbstractSpecificationTests.makeParameters("number.json");
@@ -23,15 +21,6 @@ public class NumberTests extends AbstractSpecificationTests {
 
     public NumberTests(Object x, Object y) {
         this.p = (TestParams) y;
-    }
-
-    private Item<? extends Object> parse() {
-        if (p.header_type.equals("item")) {
-            return Parser.parseItem(p.raw);
-        } else {
-            fail("unsupported header type");
-            return null;
-        }
     }
 
     @Test

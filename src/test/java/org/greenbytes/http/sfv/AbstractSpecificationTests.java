@@ -1,5 +1,7 @@
 package org.greenbytes.http.sfv;
 
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +15,8 @@ import javax.json.JsonValue;
 
 public abstract class AbstractSpecificationTests {
 
+    public TestParams p;
+
     public static class TestParams {
         public String name;
         public String raw;
@@ -20,6 +24,17 @@ public abstract class AbstractSpecificationTests {
         public boolean must_fail;
         public JsonValue expected_value;
         public String canonical;
+    }
+
+    public Item<? extends Object> parse() {
+        if (p.header_type.equals("item")) {
+            return Parser.parseItem(p.raw);
+        } else if (p.header_type.equals("list")) {
+            return Parser.parseList(p.raw);
+        } else {
+            fail("unsupported header type");
+            return null;
+        }
     }
 
     public static Collection<Object[]> makeParameters(String filename) {
