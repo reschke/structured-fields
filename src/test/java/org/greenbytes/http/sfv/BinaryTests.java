@@ -1,15 +1,7 @@
 package org.greenbytes.http.sfv;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.nio.ByteBuffer;
 import java.util.Collection;
 
-import javax.json.JsonObject;
-
-import org.apache.commons.codec.binary.Base32;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -28,22 +20,6 @@ public class BinaryTests extends AbstractSpecificationTests {
 
     @Test
     public void runTest() {
-        if (p.must_fail) {
-            try {
-                parse();
-                fail("should fail");
-            } catch (IllegalArgumentException expected) {
-            }
-        } else {
-            Item<? extends Object> number = parse();
-            JsonObject expected = (JsonObject) p.expected_value;
-            byte expectedBytes[] = new Base32().decode(expected.get("value").toString());
-            byte actualBytes[] = ((ByteBuffer) (number.get())).array();
-            assertArrayEquals(expectedBytes, actualBytes);
-
-            if (p.canonical != null) {
-                assertEquals(p.canonical, number.serialize());
-            }
-        }
+        executeTest();
     }
 }

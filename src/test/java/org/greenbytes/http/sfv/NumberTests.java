@@ -1,11 +1,6 @@
 package org.greenbytes.http.sfv;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.util.Collection;
-
-import javax.json.JsonValue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,20 +20,6 @@ public class NumberTests extends AbstractSpecificationTests {
 
     @Test
     public void runTest() {
-        if (p.must_fail) {
-            try {
-                parse();
-                fail("should fail");
-            } catch (IllegalArgumentException expected) {
-            }
-        } else {
-            Item<? extends Object> number = parse();
-            String expected = ((((JsonValue) p.expected_value)).toString());
-            assertEquals(expected, number.serialize());
-
-            if (p.canonical != null) {
-                assertEquals(p.canonical, number.serialize());
-            }
-        }
+        executeTest();
     }
 }
