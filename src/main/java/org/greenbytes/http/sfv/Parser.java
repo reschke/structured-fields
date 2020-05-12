@@ -326,7 +326,13 @@ public class Parser {
             } else {
                 Item<? extends Object> item = parseItem();
                 result.add(item);
+
+                c = peek();
+                if (c != ' ' && c!= ')') {
+                    throw new IllegalArgumentException("expected SP or ')': " + input);
+                }
             }
+
         }
 
         if (!done) {

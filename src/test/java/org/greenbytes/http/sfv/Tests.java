@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -30,7 +31,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseInteger(s);
-                org.junit.Assert.fail("should not parse as integer: " + s);
+                fail("should not parse as integer: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -54,7 +55,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseDecimal(s);
-                org.junit.Assert.fail("should not parse as decimal: " + s);
+                fail("should not parse as decimal: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -77,7 +78,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseString(s);
-                org.junit.Assert.fail("should not parse as string: " + s);
+                fail("should not parse as string: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -100,7 +101,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseToken(s);
-                org.junit.Assert.fail("should not parse as token: " + s);
+                fail("should not parse as token: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -123,7 +124,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseBoolean(s);
-                org.junit.Assert.fail("should not parse as boolean: " + s);
+                fail("should not parse as boolean: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -147,7 +148,7 @@ public class Tests {
         for (String s : tests) {
             try {
                 Parser.parseByteSequence(s);
-                org.junit.Assert.fail("should not parse as byte sequence: " + s);
+                fail("should not parse as byte sequence: " + s);
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -205,6 +206,19 @@ public class Tests {
                 assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
             assertEquals(list.getParams().serialize(), expected[expected.length - 1]);
+        }
+    }
+
+    @Test
+    public void testInvalidLists() {
+        String tests[] = new String[] { "(abc\"def\"?0123*dXZ3*xyz)" };
+
+        for (String s : tests) {
+            try {
+                Parser.parseList(s);
+                fail("should not parse as list sequence: " + s);
+            } catch (IllegalArgumentException expected) {
+            }
         }
     }
 

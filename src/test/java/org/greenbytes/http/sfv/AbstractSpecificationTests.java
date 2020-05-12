@@ -179,8 +179,8 @@ public abstract class AbstractSpecificationTests {
     public void executeTest() {
         if (p.must_fail) {
             try {
-                parse();
-                fail("should fail");
+                Item<? extends Object> parsed = parse();
+                fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (IllegalArgumentException expected) {
             }
         } else {
