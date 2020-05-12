@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -50,16 +51,19 @@ public abstract class AbstractSpecificationTests {
             p.raw = p.raw.trim();
             p.header_type = ((JsonObject) v).getString("header_type");
             p.must_fail = ((JsonObject) v).getBoolean("must_fail", false);
-            JsonArray array = ((JsonObject) v).getJsonArray("expected");
-            if (array == null) {
-                p.expected_value = null;
-                p.expected_params = null;
-            } else if (array.size() == 2) {
-                p.expected_value = array.get(0);
-                p.expected_params = array.get(1);
+            p.expected_params = null;
+            if (((JsonObject) v).get("expected") instanceof JsonArray) {
+                JsonArray array = ((JsonObject) v).getJsonArray("expected");
+                if (array == null) {
+                    p.expected_value = null;
+                } else if (array.size() == 2) {
+                    p.expected_value = array.get(0);
+                    p.expected_params = array.get(1);
+                } else {
+                    p.expected_value = array;
+                }
             } else {
-                p.expected_value = array;
-                p.expected_params = null;
+                p.expected_value = ((JsonObject) v).getJsonObject("expected");
             }
             p.canonical = ((JsonObject) v).getString("canonical", null);
             result.add(new Object[] { p.name, p });
@@ -73,6 +77,8 @@ public abstract class AbstractSpecificationTests {
             return Parser.parseItem(p.raw);
         } else if (p.header_type.equals("list")) {
             return Parser.parseList(p.raw);
+        } else if (p.header_type.equals("dictionary")) {
+            return Parser.parseDictionary(p.raw);
         } else {
             fail("unsupported header type");
             return null;
@@ -92,23 +98,46 @@ public abstract class AbstractSpecificationTests {
             }
         } else if (value instanceof JsonObject) {
             JsonObject container = (JsonObject) value;
-            String type = container.getString("__type");
-            if ("binary".equals(type)) {
-                byte expectedBytes[] = new Base32().decode(container.get("value").toString());
-                byte actualBytes[] = ((ByteBuffer) (item.get())).array();
-                assertArrayEquals(expectedBytes, actualBytes);
-            } else if ("token".equals(type)) {
-                CharSequence expectedString = ((JsonString) container.get("value")).getChars();
-                assertEquals(expectedString, item.get());
+            if (container.containsKey("__type")) {
+                String type = container.getString("__type");
+                if ("binary".equals(type)) {
+                    byte expectedBytes[] = new Base32().decode(container.get("value").toString());
+                    byte actualBytes[] = ((ByteBuffer) (item.get())).array();
+                    assertArrayEquals(expectedBytes, actualBytes);
+                } else if ("token".equals(type)) {
+                    CharSequence expectedString = ((JsonString) container.get("value")).getChars();
+                    assertEquals(expectedString, item.get());
+                } else {
+                    fail("unexpected type: " + type);
+                }
             } else {
-                fail("unexpected type: " + type);
+                Map<String, Item<? extends Object>> result = (Map<String, Item<? extends Object>>) item.get();
+                assertEquals(container.size(), result.size());
+                for (Map.Entry<String, JsonValue> e : container.entrySet()) {
+                    if (e.getValue() instanceof JsonArray) {
+                        JsonArray array = (JsonArray) e.getValue();
+                        assertEquals(2, array.size());
+                        match(array.get(0), array.get(1), result.get(e.getKey()));
+                    } else {
+                        match(e.getValue(), null, result.get(e.getKey()));
+                    }
+                }
+            }
+        } else if (value instanceof JsonArray) {
+            JsonArray array = (JsonArray) value;
+            List<Item<? extends Object>> result = (List<Item<? extends Object>>)item.get();
+            assertEquals(array.size(), result.size());
+            for (int i = 0; i < array.size(); i++) {
+                JsonArray t = (JsonArray)array.get(i);
+                assertEquals(2, t.size());
+                match(t.get(0), t.get(1), result.get(i));
             }
         } else if (value instanceof JsonValue) {
             if (JsonValue.TRUE.equals(value) || JsonValue.FALSE.equals(value)) {
                 Boolean expected = Boolean.valueOf(((JsonValue) value).toString());
                 assertEquals(expected, item.get());
             } else {
-                fail("unexpected JsonValue: " + value);
+                fail("unexpected JsonValue: " + value + " (" + value.getClass() + ")");
             }
         } else {
             fail("unexpected type: " + value.getClass());
