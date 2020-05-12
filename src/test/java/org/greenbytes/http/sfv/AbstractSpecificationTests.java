@@ -52,12 +52,18 @@ public abstract class AbstractSpecificationTests {
             p.name = ((JsonObject) v).getString("name");
             p.raw = "";
             for (JsonValue raw : v.getJsonArray("raw")) {
+                String t = ((JsonString) raw).getString();
+                while (t.startsWith(" ")) {
+                    t = t.substring(1);
+                }
+                while (t.length() > 1 && t.lastIndexOf(' ') == t.length() -1) {
+                    t = t.substring(0, t.length() - 1);
+                }
                 if (p.raw.length() != 0) {
                     p.raw += ",";
                 }
-                p.raw += ((JsonString) raw).getString();
+                p.raw += t;
             }
-            p.raw = p.raw.trim();
             p.header_type = v.getString("header_type");
             p.must_fail = v.getBoolean("must_fail", false);
             p.expected_params = null;

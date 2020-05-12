@@ -12,8 +12,9 @@ public class SpecificationTests extends AbstractSpecificationTests {
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> parameters() {
-        return AbstractSpecificationTests.makeParameters(Arrays.asList(new String[] { "binary.json", "boolean.json",
-                "dictionary.json", "examples.json", "item.json", "number.json", "string.json", "token.json" }));
+        return AbstractSpecificationTests
+                .makeParameters(Arrays.asList(new String[] { "binary.json", "boolean.json", "dictionary.json", "examples.json",
+                        "item.json", "key-generated.json", "number.json", "string.json", "token.json" }));
     }
 
     public SpecificationTests(Object x, Object y) {
