@@ -14,7 +14,7 @@ public class SpecificationTests extends AbstractSpecificationTests {
     public static Collection<Object[]> parameters() {
         return AbstractSpecificationTests
                 .makeParameters(Arrays.asList(new String[] { "binary.json", "boolean.json", "dictionary.json", "examples.json",
-                        "item.json", "key-generated.json", "number.json", "string.json", "token.json" }));
+                        "item.json", "key-generated.json", "number.json", "param-list.json", "string.json", "token.json" }));
     }
 
     public SpecificationTests(Object x, Object y) {
