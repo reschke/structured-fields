@@ -35,6 +35,7 @@ public abstract class AbstractSpecificationTests {
                 }
                 p.raw += ((JsonString) raw).getString();
             }
+            p.raw = p.raw.trim();
             p.header_type = ((JsonObject) v).getString("header_type");
             p.must_fail = ((JsonObject) v).getBoolean("must_fail", false);
             JsonArray testExpected = ((JsonObject) v).getJsonArray("expected");
