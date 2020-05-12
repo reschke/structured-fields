@@ -35,9 +35,17 @@ public abstract class AbstractSpecificationTests {
         public String canonical;
     }
 
-    public static Collection<Object[]> makeParameters(String filename) {
+    public static Collection<Object[]> makeParameters(List<String> filenames) {
         List<Object[]> result = new ArrayList<>();
-        JsonReader reader = Json.createReader(BooleanTests.class.getClassLoader().getResourceAsStream(filename));
+        for (String filename : filenames) {
+            result.addAll(makeParameters(filename));
+        }
+        return result;
+    }
+
+    private static Collection<Object[]> makeParameters(String filename) {
+        List<Object[]> result = new ArrayList<>();
+        JsonReader reader = Json.createReader(AbstractSpecificationTests.class.getClassLoader().getResourceAsStream(filename));
         for (JsonValue vt : reader.readArray()) {
             JsonObject v = (JsonObject) vt;
             TestParams p = new TestParams();
@@ -67,7 +75,8 @@ public abstract class AbstractSpecificationTests {
                 p.expected_value = v.getJsonObject("expected");
             }
             p.canonical = v.getString("canonical", null);
-            result.add(new Object[] { p.name, p });
+            String basename = filename.substring(0, filename.length() - ".json".length());
+            result.add(new Object[] { basename + ": " + p.name, p });
         }
 
         return result;
