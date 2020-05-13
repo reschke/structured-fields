@@ -8,7 +8,7 @@ public class IntegerItem implements Item<Long> {
     private static final long MIN = -999999999999999L;
     private static final long MAX = 999999999999999L;
 
-    public IntegerItem(long value, Parameters params) {
+    private IntegerItem(long value, Parameters params) {
         if (value < MIN || value > MAX) {
             throw new IllegalArgumentException("value must be in the range from " + MIN + " to " + MAX);
         }
@@ -16,8 +16,8 @@ public class IntegerItem implements Item<Long> {
         this.params = params;
     }
 
-    public IntegerItem(long value) {
-        this(value, Parameters.EMPTY);
+    public static IntegerItem valueOf(long value) {
+        return new IntegerItem(value, Parameters.EMPTY);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class Parser {
 
         if (!isDecimal) {
             long l = Long.parseLong(inputNumber.toString());
-            return new IntegerItem(sign * l);
+            return IntegerItem.valueOf(sign * l);
         } else {
             int dotPos = inputNumber.indexOf(".");
             int fracLen = inputNumber.length() - inputNumber.indexOf(".") - 1;
@@ -328,7 +328,7 @@ public class Parser {
                 result.add(item);
 
                 c = peek();
-                if (c != ' ' && c!= ')') {
+                if (c != ' ' && c != ')') {
                     throw new IllegalArgumentException("expected SP or ')': " + input);
                 }
             }
