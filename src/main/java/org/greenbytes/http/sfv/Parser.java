@@ -140,7 +140,7 @@ public class Parser {
             }
         }
 
-        return new TokenItem(outputString.toString());
+        return TokenItem.valueOf(outputString.toString());
     }
 
     private TokenItem parseToken() {

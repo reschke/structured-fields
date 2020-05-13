@@ -1,13 +1,15 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Objects;
+
 public class StringItem implements Item<String> {
 
     private final String value;
     private final Parameters params;
 
     public StringItem(String value, Parameters params) {
-        this.value = checkParam(value);;
-        this.params = params;
+        this.value = checkParam(Objects.requireNonNull(value, "value must not be null"));
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
     public static StringItem valueOf(String value) {

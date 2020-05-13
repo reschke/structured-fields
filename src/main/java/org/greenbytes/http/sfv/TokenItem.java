@@ -1,22 +1,24 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Objects;
+
 public class TokenItem implements Item<String> {
 
     private final String value;
     private final Parameters params;
 
-    public TokenItem(String value, Parameters params) {
-        this.value = value;
-        this.params = params;
+    private TokenItem(String value, Parameters params) {
+        this.value = checkParam(Objects.requireNonNull(value, "value must not be null"));
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
-    public TokenItem(String value) {
-        this(value, Parameters.EMPTY);
+    public static TokenItem valueOf(String value) {
+        return new TokenItem(value, Parameters.EMPTY);
     }
 
     @Override
     public TokenItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new TokenItem(this.value, params);
@@ -43,5 +45,23 @@ public class TokenItem implements Item<String> {
     @Override
     public String get() {
         return this.value;
+    }
+
+    private static boolean isAlpha(char c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+    }
+
+    private static String checkParam(String value) {
+        if (value.length() == 0) {
+            throw new IllegalArgumentException("Token can not be empty");
+        }
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if ((i == 0 && (c != '*' && !isAlpha(c))) || (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0)) {
+                throw new IllegalArgumentException(
+                        String.format("Invalid character in Token at position %d: '%c' (0x%04x)", i, c, (int) c));
+            }
+        }
+        return value;
     }
 }

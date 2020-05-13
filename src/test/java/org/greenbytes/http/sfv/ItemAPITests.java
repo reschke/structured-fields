@@ -76,8 +76,6 @@ public class ItemAPITests {
             assertEquals(s, item.get());
             // TODO: figure out how to check the serialization without copying
             // the actual impl code
-            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(),
-            // item.serialize());
         }
     }
 
@@ -89,6 +87,33 @@ public class ItemAPITests {
         for (String s : tests) {
             try {
                 StringItem item = StringItem.valueOf(s);
+                fail("should fail for '" + s + "' but got' " + item.get() + "'");
+            } catch (IllegalArgumentException expected) {
+            }
+        }
+    }
+
+    @Test
+    public void testToken() {
+
+        String tests[] = new String[] { "*", "x", "*-/", "foo.bar-qux" };
+
+        for (String s : tests) {
+            TokenItem item = TokenItem.valueOf(s);
+            assertEquals(s, item.get());
+            // TODO: figure out how to check the serialization without copying
+            // the actual impl code
+        }
+    }
+
+    @Test
+    public void testTokenInvalid() {
+
+        String tests[] = new String[] { "123", ".x", "a(b)", "\u0000foo" };
+
+        for (String s : tests) {
+            try {
+                TokenItem item = TokenItem.valueOf(s);
                 fail("should fail for '" + s + "' but got' " + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
