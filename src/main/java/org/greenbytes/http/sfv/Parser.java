@@ -250,7 +250,7 @@ public class Parser {
             }
         }
 
-        return new Parameters(result);
+        return Parameters.valueOf(result);
     }
 
     private Item<? extends Object> parseBareItem() {
