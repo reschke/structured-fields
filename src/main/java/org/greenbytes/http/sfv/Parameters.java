@@ -13,6 +13,7 @@ public class Parameters implements Supplier<Map<String, Item<? extends Object>>>
 
     private Parameters(Map<String, Item<? extends Object>> value) {
         this.value = Collections.unmodifiableMap(Objects.requireNonNull(value, "value must not be null"));
+        checkKeys(this.value);
     }
 
     public static Parameters valueOf(Map<String, Item<? extends Object>> value) {
@@ -37,5 +38,33 @@ public class Parameters implements Supplier<Map<String, Item<? extends Object>>>
 
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
+    }
+
+    private static void checkKeys(Map<String, Item<? extends Object>> map) {
+        for (String key : map.keySet()) {
+            checkKey(key);
+        }
+    }
+
+    private static void checkKey(String value) {
+        if (value.length() == 0) {
+            throw new IllegalArgumentException("Key can not be empty");
+        }
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if ((i == 0 && (c != '*' && !isLcAlpha(c)))
+                    || !(isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*')) {
+                throw new IllegalArgumentException(
+                        String.format("Invalid character in key at position %d: '%c' (0x%04x)", i, c, (int) c));
+            }
+        }
+    }
+
+    private static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private static boolean isLcAlpha(char c) {
+        return (c >= 'a' && c <= 'z');
     }
 }

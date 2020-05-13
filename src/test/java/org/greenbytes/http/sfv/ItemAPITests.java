@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -43,7 +45,7 @@ public class ItemAPITests {
         for (Long l : tests) {
             try {
                 IntegerItem item = IntegerItem.valueOf(l);
-                fail("should fail for " + l + " but got " + item.get());
+                fail("should fail for " + l + " but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -87,7 +89,7 @@ public class ItemAPITests {
         for (String s : tests) {
             try {
                 StringItem item = StringItem.valueOf(s);
-                fail("should fail for '" + s + "' but got' " + item.get() + "'");
+                fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -114,7 +116,7 @@ public class ItemAPITests {
         for (String s : tests) {
             try {
                 TokenItem item = TokenItem.valueOf(s);
-                fail("should fail for '" + s + "' but got' " + item.get() + "'");
+                fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
         }
@@ -141,8 +143,33 @@ public class ItemAPITests {
         for (byte[] ba : tests) {
             try {
                 ByteSequenceItem item = ByteSequenceItem.valueOf(ba);
-                fail("should fail for '" + item + "' but got' " + item.get() + "'");
+                fail("should fail for '" + item + "' but got '" + item.get() + "'");
             } catch (NullPointerException | IllegalArgumentException expected) {
+            }
+        }
+    }
+
+    @Test
+    public void testParameters() {
+
+        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
+        m.put("*", IntegerItem.valueOf(1));
+        Parameters p = Parameters.valueOf(m);
+        assertEquals(m, p.get());
+    }
+
+    @Test
+    public void testInvalidParameters() {
+
+        String tests[] = { "Aa", "-a", "/a", "", " ", "1" };
+        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
+        for (String key : tests) {
+            m.clear();
+            m.put(key, IntegerItem.valueOf(1));
+            try {
+                Parameters p = Parameters.valueOf(m);
+                fail("should fail for key '" + key + "' but got: " + p.get());
+            } catch (IllegalArgumentException ex) {
             }
         }
     }
