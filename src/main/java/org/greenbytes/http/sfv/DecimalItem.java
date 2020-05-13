@@ -3,7 +3,7 @@ package org.greenbytes.http.sfv;
 import java.math.BigDecimal;
 import java.util.function.LongSupplier;
 
-public class DecimalItem implements Item<BigDecimal>, LongSupplier {
+public class DecimalItem implements NumberItem<BigDecimal>, LongSupplier {
 
     private final long value;
     private final Parameters params;
@@ -72,5 +72,10 @@ public class DecimalItem implements Item<BigDecimal>, LongSupplier {
     @Override
     public long getAsLong() {
         return value;
+    }
+
+    @Override
+    public int getDivisor() {
+        return 1000;
     }
 }

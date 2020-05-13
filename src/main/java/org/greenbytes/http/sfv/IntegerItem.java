@@ -2,7 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.util.function.LongSupplier;
 
-public class IntegerItem implements Item<Long>, LongSupplier {
+public class IntegerItem implements NumberItem<Long>, LongSupplier {
 
     private final long value;
     private final Parameters params;
@@ -56,5 +56,10 @@ public class IntegerItem implements Item<Long>, LongSupplier {
     @Override
     public long getAsLong() {
         return value;
+    }
+
+    @Override
+    public int getDivisor() {
+        return 1;
     }
 }

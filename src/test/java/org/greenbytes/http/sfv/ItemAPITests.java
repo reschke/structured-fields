@@ -31,6 +31,7 @@ public class ItemAPITests {
             assertEquals(Long.valueOf(l), item.get());
             assertEquals(l, item.getAsLong());
             assertEquals(Long.valueOf(l).toString(), item.serialize());
+            assertEquals(1, item.getDivisor());
         }
     }
 
@@ -57,6 +58,7 @@ public class ItemAPITests {
             DecimalItem item = DecimalItem.valueOf(l);
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
             assertEquals(l, item.getAsLong());
+            assertEquals(1000, item.getDivisor());
             // TODO: figure out how to check the serialization without copying the actual impl code
             // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(), item.serialize());
         }
