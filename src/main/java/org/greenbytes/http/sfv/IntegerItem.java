@@ -1,6 +1,8 @@
 package org.greenbytes.http.sfv;
 
-public class IntegerItem implements Item<Long> {
+import java.util.function.LongSupplier;
+
+public class IntegerItem implements Item<Long>, LongSupplier {
 
     private final long value;
     private final Parameters params;
@@ -48,6 +50,11 @@ public class IntegerItem implements Item<Long> {
 
     @Override
     public Long get() {
+        return value;
+    }
+
+    @Override
+    public long getAsLong() {
         return value;
     }
 }

@@ -22,11 +22,12 @@ public class ItemAPITests {
     @Test
     public void testInteger() {
 
-        Long tests[] = new Long[] { 0L, -0L, 999999999999999L, -999999999999999L };
+        long tests[] = new long[] { 0L, -0L, 999999999999999L, -999999999999999L };
 
-        for (Long l : tests) {
+        for (long l : tests) {
             IntegerItem item = IntegerItem.valueOf(l);
             assertEquals(Long.valueOf(l), item.get());
+            assertEquals(l, item.getAsLong());
         }
     }
 
