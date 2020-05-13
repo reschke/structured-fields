@@ -28,6 +28,7 @@ public class ItemAPITests {
             IntegerItem item = IntegerItem.valueOf(l);
             assertEquals(Long.valueOf(l), item.get());
             assertEquals(l, item.getAsLong());
+            assertEquals(Long.valueOf(l).toString(), item.serialize());
         }
     }
 
