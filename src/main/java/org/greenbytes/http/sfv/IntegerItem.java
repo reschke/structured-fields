@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Objects;
 import java.util.function.LongSupplier;
 
 public class IntegerItem implements NumberItem<Long>, LongSupplier {
@@ -15,7 +16,7 @@ public class IntegerItem implements NumberItem<Long>, LongSupplier {
             throw new IllegalArgumentException("value must be in the range from " + MIN + " to " + MAX);
         }
         this.value = value;
-        this.params = params;
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
     public static IntegerItem valueOf(long value) {
@@ -24,7 +25,7 @@ public class IntegerItem implements NumberItem<Long>, LongSupplier {
 
     @Override
     public IntegerItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new IntegerItem(this.value, params);

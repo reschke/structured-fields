@@ -18,7 +18,7 @@ public class StringItem implements Item<String> {
 
     @Override
     public StringItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new StringItem(this.value, params);

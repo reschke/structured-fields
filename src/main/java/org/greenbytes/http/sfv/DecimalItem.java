@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.function.LongSupplier;
 
 public class DecimalItem implements NumberItem<BigDecimal>, LongSupplier {
@@ -16,7 +17,7 @@ public class DecimalItem implements NumberItem<BigDecimal>, LongSupplier {
             throw new IllegalArgumentException("value must be in the range from " + MIN + " to " + MAX);
         }
         this.value = value;
-        this.params = params;
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
     public static DecimalItem valueOf(long value) {
@@ -25,7 +26,7 @@ public class DecimalItem implements NumberItem<BigDecimal>, LongSupplier {
 
     @Override
     public DecimalItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new DecimalItem(this.value, params);

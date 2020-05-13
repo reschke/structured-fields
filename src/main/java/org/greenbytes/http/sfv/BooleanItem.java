@@ -1,5 +1,7 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Objects;
+
 public class BooleanItem implements Item<Boolean> {
 
     private final boolean value;
@@ -10,7 +12,7 @@ public class BooleanItem implements Item<Boolean> {
 
     public BooleanItem(boolean value, Parameters params) {
         this.value = value;
-        this.params = params;
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
     private BooleanItem(boolean value) {
@@ -28,7 +30,7 @@ public class BooleanItem implements Item<Boolean> {
 
     @Override
     public BooleanItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new BooleanItem(this.value, params);
