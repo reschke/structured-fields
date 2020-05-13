@@ -3,6 +3,8 @@ package org.greenbytes.http.sfv;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class ItemAPITests {
@@ -43,6 +45,20 @@ public class ItemAPITests {
                 fail("should fail for " + l + " but got " + item.get());
             } catch (IllegalArgumentException expected) {
             }
+        }
+    }
+
+    @Test
+    public void testDecimal() {
+
+        long tests[] = new long[] { 0L, -0L, 999999999999999L, -999999999999999L, -123, 1000, 500, 10, -1 };
+
+        for (long l : tests) {
+            DecimalItem item = DecimalItem.valueOf(l);
+            assertEquals(BigDecimal.valueOf(l, 3), item.get());
+            assertEquals(l, item.getAsLong());
+            // TODO: figure out how to check the serialization without copying the actual impl code
+            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(), item.serialize());
         }
     }
 }

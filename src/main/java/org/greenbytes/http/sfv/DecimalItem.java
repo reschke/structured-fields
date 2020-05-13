@@ -1,8 +1,9 @@
 package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
+import java.util.function.LongSupplier;
 
-public class DecimalItem implements Item<BigDecimal> {
+public class DecimalItem implements Item<BigDecimal>, LongSupplier {
 
     private final long value;
     private final Parameters params;
@@ -18,8 +19,8 @@ public class DecimalItem implements Item<BigDecimal> {
         this.params = params;
     }
 
-    public DecimalItem(long value) {
-        this(value, Parameters.EMPTY);
+    public static DecimalItem valueOf(long value) {
+        return new DecimalItem(value, Parameters.EMPTY);
     }
 
     @Override
@@ -38,7 +39,9 @@ public class DecimalItem implements Item<BigDecimal> {
 
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
+
         String sign = value < 0 ? "-" : "";
+
         long abs = Math.abs(value);
         long left = abs / 1000;
         long right = abs % 1000;
@@ -63,6 +66,11 @@ public class DecimalItem implements Item<BigDecimal> {
 
     @Override
     public BigDecimal get() {
-        return BigDecimal.valueOf(this.value, 3);
+        return BigDecimal.valueOf(value, 3);
+    }
+
+    @Override
+    public long getAsLong() {
+        return value;
     }
 }

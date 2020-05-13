@@ -73,7 +73,7 @@ public class Parser {
 
             inputNumber.deleteCharAt(dotPos);
             long l = Long.parseLong(inputNumber.toString());
-            return new DecimalItem(sign * l);
+            return DecimalItem.valueOf(sign * l);
         }
     }
 
