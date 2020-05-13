@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.nio.ByteBuffer;
 import java.util.Base64;
+import java.util.Objects;
 
 public class ByteSequenceItem implements Item<ByteBuffer> {
 
@@ -11,17 +12,17 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     private static Base64.Encoder ENCODER = Base64.getEncoder();
 
     public ByteSequenceItem(byte[] value, Parameters params) {
-        this.value = value;
-        this.params = params;
+        this.value = Objects.requireNonNull(value, "value must not be null");
+        this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
-    public ByteSequenceItem(byte[] value) {
-        this(value, Parameters.EMPTY);
+    public static ByteSequenceItem valueOf(byte[] value) {
+        return new ByteSequenceItem(value, Parameters.EMPTY);
     }
 
     @Override
     public ByteSequenceItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
             return new ByteSequenceItem(this.value, params);
@@ -49,6 +50,7 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
 
     @Override
     public ByteBuffer get() {
+        // TODO: this makes the value mutable; maybe duplicate?
         return ByteBuffer.wrap(this.value);
     }
 }

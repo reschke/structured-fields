@@ -174,7 +174,7 @@ public class Parser {
         }
 
         // should throw on invalid input
-        return new ByteSequenceItem(BASE64DECODER.decode(outputString.toString()));
+        return ByteSequenceItem.valueOf(BASE64DECODER.decode(outputString.toString()));
     }
 
     private ByteSequenceItem parseByteSequence() {

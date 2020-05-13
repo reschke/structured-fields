@@ -175,7 +175,7 @@ public class Tests {
 
         tests.put("1, 2", new Object[] { 1L, EMPTY, 2L, EMPTY });
         tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), EMPTY, "foo", EMPTY,
-                Boolean.FALSE, EMPTY, "a2", EMPTY, new ByteSequenceItem("f".getBytes()).get(), EMPTY });
+                Boolean.FALSE, EMPTY, "a2", EMPTY, ByteSequenceItem.valueOf("f".getBytes()).get(), EMPTY });
         tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {

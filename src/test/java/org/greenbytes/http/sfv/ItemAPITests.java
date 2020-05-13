@@ -119,4 +119,31 @@ public class ItemAPITests {
             }
         }
     }
+
+    @Test
+    public void testByteSequence() {
+
+        byte tests[][] = new byte[][] { new byte[0], "x".getBytes() };
+        String results[] = new String[] { "::", ":eA==:" };
+
+        for (int i = 0; i < tests.length; i++) {
+            ByteSequenceItem item = ByteSequenceItem.valueOf(tests[i]);
+            assertEquals(tests[i], item.get().array());
+            assertEquals(results[i], item.serialize());
+        }
+    }
+
+    @Test
+    public void testByteSequenceInvalid() {
+
+        byte tests[][] = new byte[][] { null };
+
+        for (byte[] ba : tests) {
+            try {
+                ByteSequenceItem item = ByteSequenceItem.valueOf(ba);
+                fail("should fail for '" + item + "' but got' " + item.get() + "'");
+            } catch (NullPointerException | IllegalArgumentException expected) {
+            }
+        }
+    }
 }
