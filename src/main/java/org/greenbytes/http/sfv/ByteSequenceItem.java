@@ -12,11 +12,11 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
 
     public ByteSequenceItem(byte[] value, Parameters params) {
         this.value = value;
-        this.params= params;
+        this.params = params;
     }
 
     public ByteSequenceItem(byte[] value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     @Override
@@ -38,11 +38,7 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         sb.append(':');
         sb.append(ENCODER.encodeToString(this.value));
         sb.append(':');
-
-        if (params != null) {
-            params.serializeTo(sb);
-        }
-
+        params.serializeTo(sb);
         return sb;
     }
 

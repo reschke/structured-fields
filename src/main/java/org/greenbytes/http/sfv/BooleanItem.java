@@ -14,7 +14,7 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     private BooleanItem(boolean value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     public static BooleanItem valueOf(boolean value) {
@@ -38,11 +38,7 @@ public class BooleanItem implements Item<Boolean> {
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(value ? "?1" : "?0");
-
-        if (params != null) {
-            params.serializeTo(sb);
-        }
-
+        params.serializeTo(sb);
         return sb;
     }
 

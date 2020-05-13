@@ -17,7 +17,7 @@ public class IntegerItem implements Item<Long> {
     }
 
     public IntegerItem(long value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     @Override
@@ -37,11 +37,7 @@ public class IntegerItem implements Item<Long> {
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(Long.toString(value));
-
-        if (params != null) {
-            params.serializeTo(sb);
-        }
-
+        params.serializeTo(sb);
         return sb;
     }
 

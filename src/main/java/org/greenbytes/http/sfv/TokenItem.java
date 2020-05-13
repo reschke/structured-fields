@@ -11,7 +11,7 @@ public class TokenItem implements Item<String> {
     }
 
     public TokenItem(String value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     @Override
@@ -31,10 +31,7 @@ public class TokenItem implements Item<String> {
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(this.value);
-
-        if (params != null) {
-            params.serializeTo(sb);
-        }
+        params.serializeTo(sb);
         return sb;
     }
 

@@ -11,7 +11,7 @@ public class StringItem implements Item<String> {
     }
 
     public StringItem(String value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     @Override
@@ -39,11 +39,7 @@ public class StringItem implements Item<String> {
             sb.append(c);
         }
         sb.append('"');
-
-        if (params != null) {
-            params.serializeTo(sb);
-        }
-
+        params.serializeTo(sb);
         return sb;
     }
 

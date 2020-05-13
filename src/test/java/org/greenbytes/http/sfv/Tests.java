@@ -167,14 +167,16 @@ public class Tests {
         }
     }
 
+    private static final String EMPTY = "";
+
     @Test
     public void testValidLists() {
         Map<String, Object[]> tests = new HashMap<>();
 
-        tests.put("1, 2", new Object[] { 1L, null, 2L, null });
-        tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), null, "foo", null,
-                Boolean.FALSE, null, "a2", null, new ByteSequenceItem("f".getBytes()).get(), null });
-        tests.put("1, ();a", new Object[] { 1L, null, Collections.emptyList(), ";a" });
+        tests.put("1, 2", new Object[] { 1L, EMPTY, 2L, EMPTY });
+        tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), EMPTY, "foo", EMPTY,
+                Boolean.FALSE, EMPTY, "a2", EMPTY, new ByteSequenceItem("f".getBytes()).get(), EMPTY });
+        tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseList(e.getKey());
@@ -184,7 +186,7 @@ public class Tests {
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
                 Parameters p = list.get().get(i).getParams();
-                assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
+                assertEquals(expected[i * 2 + 1], p.serialize());
             }
         }
     }
@@ -193,7 +195,7 @@ public class Tests {
     public void testValidInnerLists() {
         Map<String, Object[]> tests = new HashMap<>();
 
-        tests.put("(1;foo=bar 2);a;b=1", new Object[] { 1L, ";foo=bar", 2L, null, ";a;b=1" });
+        tests.put("(1;foo=bar 2);a;b=1", new Object[] { 1L, ";foo=bar", 2L, EMPTY, ";a;b=1" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             ListItem list = Parser.parseInnerList(e.getKey());

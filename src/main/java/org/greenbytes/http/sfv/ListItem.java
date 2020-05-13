@@ -12,13 +12,13 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
         this.isInner = isInner;
         this.value = value;
         this.params = params;
-        if (!isInner && params != null) {
+        if (!isInner && !(params.getMap().isEmpty())) {
             throw new IllegalArgumentException("only inner lists can have parameters");
         }
     }
 
     public ListItem(boolean isInner, List<Item<? extends Object>> value) {
-        this(isInner, value, null);
+        this(isInner, value, Parameters.EMPTY);
     }
 
     @Override
@@ -48,9 +48,7 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
             sb.append(')');
         }
 
-        if (params != null) {
-            params.serializeTo(sb);
-        }
+        params.serializeTo(sb);
 
         return sb;
     }

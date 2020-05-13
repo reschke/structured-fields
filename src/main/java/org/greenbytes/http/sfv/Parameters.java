@@ -1,13 +1,15 @@
 package org.greenbytes.http.sfv;
 
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.Map;
 
 public class Parameters {
 
-    private final LinkedHashMap<String, Item<? extends Object>> value;
+    private final Map<String, Item<? extends Object>> value;
 
-    public Parameters(LinkedHashMap<String, Item<? extends Object>> value) {
+    public static final Parameters EMPTY = new Parameters(Collections.emptyMap());
+
+    public Parameters(Map<String, Item<? extends Object>> value) {
         this.value = value;
     }
 
@@ -15,7 +17,7 @@ public class Parameters {
         return value;
     }
 
-    public LinkedHashMap<String, Item<? extends Object>> getMap() {
+    public Map<String, Item<? extends Object>> getMap() {
         return value;
     }
 

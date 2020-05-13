@@ -162,7 +162,7 @@ public abstract class AbstractSpecificationTests {
         }
         if (params != null) {
             JsonObject expected = (JsonObject) params;
-            Map<String, Item<? extends Object>> result = item.getParams() != null ? item.getParams().get() : Collections.emptyMap();
+            Map<String, Item<? extends Object>> result = item.getParams().get();
             assertEquals(expected.size(), result.size());
             for (Map.Entry<String, JsonValue> e : expected.entrySet()) {
                 if (e.getValue() instanceof JsonArray) {

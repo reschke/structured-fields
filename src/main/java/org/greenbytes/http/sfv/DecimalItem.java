@@ -19,7 +19,7 @@ public class DecimalItem implements Item<BigDecimal> {
     }
 
     public DecimalItem(long value) {
-        this(value, null);
+        this(value, Parameters.EMPTY);
     }
 
     @Override
@@ -49,12 +49,9 @@ public class DecimalItem implements Item<BigDecimal> {
         if (right % 10 == 0) {
             right /= 10;
         }
-
         sb.append(sign).append(Long.toString(left)).append('.').append(Long.toString(right));
 
-        if (params != null) {
-            params.serializeTo(sb);
-        }
+        params.serializeTo(sb);
 
         return sb;
     }
