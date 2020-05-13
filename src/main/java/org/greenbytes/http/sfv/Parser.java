@@ -345,7 +345,7 @@ public class Parser {
     private ListItem parseInnerList() {
         List<Item<? extends Object>> result = parseBareInnerList();
         Parameters params = parseParameters();
-        return new ListItem(true, result).withParams(params);
+        return InnerListItem.valueOf(result).withParams(params);
     }
 
     private DictionaryItem parseDictionary() {
@@ -456,7 +456,7 @@ public class Parser {
         Parser p = new Parser(input);
         List<Item<? extends Object>> result = p.parseList();
         p.assertEmpty("extra characters in string parsed as list");
-        return new ListItem(false, result);
+        return ListItem.valueOf(result);
     }
 
     public static ListItem parseInnerList(String input) {

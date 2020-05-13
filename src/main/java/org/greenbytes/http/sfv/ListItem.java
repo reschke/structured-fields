@@ -1,24 +1,18 @@
 package org.greenbytes.http.sfv;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListItem implements Item<List<Item<? extends Object>>> {
 
-    private final boolean isInner;
-    private final List<Item<? extends Object>> value;
-    private final Parameters params;
+    protected final List<Item<? extends Object>> value;
 
-    public ListItem(boolean isInner, List<Item<? extends Object>> value, Parameters params) {
-        this.isInner = isInner;
-        this.value = value;
-        this.params = params;
-        if (!isInner && !(params.getMap().isEmpty())) {
-            throw new IllegalArgumentException("only inner lists can have parameters");
-        }
+    protected ListItem(List<Item<? extends Object>> value) {
+        this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
-    public ListItem(boolean isInner, List<Item<? extends Object>> value) {
-        this(isInner, value, Parameters.EMPTY);
+    public static ListItem valueOf(List<Item<? extends Object>> value) {
+        return new ListItem(value);
     }
 
     @Override
@@ -26,7 +20,7 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
         if (params.get().isEmpty()) {
             return this;
         } else {
-            return new ListItem(this.isInner, this.value, params);
+            throw new IllegalArgumentException("only inner lists can have parameters");
         }
     }
 
@@ -34,29 +28,18 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
-        if (isInner) {
-            sb.append('(');
-        }
-
         for (Item<? extends Object> i : value) {
             sb.append(separator);
-            separator = isInner ? " " :", ";
+            separator = ", ";
             i.serializeTo(sb);
         }
-
-        if (isInner) {
-            sb.append(')');
-        }
-
-        params.serializeTo(sb);
 
         return sb;
     }
 
-
     @Override
     public Parameters getParams() {
-        return params;
+        throw new UnsupportedOperationException("only inner lists can have parameters");
     }
 
     @Override
