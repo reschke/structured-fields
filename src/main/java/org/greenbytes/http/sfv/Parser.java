@@ -58,7 +58,7 @@ public class Parser {
             return IntegerItem.valueOf(sign * l);
         } else {
             int dotPos = inputNumber.indexOf(".");
-            int fracLen = inputNumber.length() - inputNumber.indexOf(".") - 1;
+            int fracLen = inputNumber.length() - dotPos - 1;
 
             if (fracLen < 1) {
                 throw new IllegalArgumentException("decimal number must not end in '.'");
