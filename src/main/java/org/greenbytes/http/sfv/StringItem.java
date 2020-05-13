@@ -6,12 +6,12 @@ public class StringItem implements Item<String> {
     private final Parameters params;
 
     public StringItem(String value, Parameters params) {
-        this.value = value;
+        this.value = checkParam(value);;
         this.params = params;
     }
 
-    public StringItem(String value) {
-        this(value, Parameters.EMPTY);
+    public static StringItem valueOf(String value) {
+        return new StringItem(value, Parameters.EMPTY);
     }
 
     @Override
@@ -53,4 +53,13 @@ public class StringItem implements Item<String> {
         return this.value;
     }
 
+    private static String checkParam(String value) {
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if (c < 0x20 || c >= 0x7f) {
+                throw new IllegalArgumentException(String.format("Invalid character in String at position %d: '%c' (0x%04x)", i, c, (int)c));
+            }
+        }
+        return value;
+    }
 }

@@ -59,8 +59,39 @@ public class ItemAPITests {
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
             assertEquals(l, item.getAsLong());
             assertEquals(1000, item.getDivisor());
-            // TODO: figure out how to check the serialization without copying the actual impl code
-            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(), item.serialize());
+            // TODO: figure out how to check the serialization without copying
+            // the actual impl code
+            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(),
+            // item.serialize());
+        }
+    }
+
+    @Test
+    public void testString() {
+
+        String tests[] = new String[] { "", "'", "\"", "\\" };
+
+        for (String s : tests) {
+            StringItem item = StringItem.valueOf(s);
+            assertEquals(s, item.get());
+            // TODO: figure out how to check the serialization without copying
+            // the actual impl code
+            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(),
+            // item.serialize());
+        }
+    }
+
+    @Test
+    public void testStringInvalid() {
+
+        String tests[] = new String[] { "\n", "\u0080", "\u007f", "\u0000" };
+
+        for (String s : tests) {
+            try {
+                StringItem item = StringItem.valueOf(s);
+                fail("should fail for '" + s + "' but got' " + item.get() + "'");
+            } catch (IllegalArgumentException expected) {
+            }
         }
     }
 }

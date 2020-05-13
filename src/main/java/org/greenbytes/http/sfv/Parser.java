@@ -101,7 +101,7 @@ public class Parser {
                 outputString.append(c);
             } else {
                 if (c == '"') {
-                    return new StringItem(outputString.toString());
+                    return StringItem.valueOf(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw new IllegalArgumentException("invalid character at " + input.length());
                 } else {
