@@ -348,7 +348,7 @@ public class Parser {
         return InnerListItem.valueOf(result).withParams(params);
     }
 
-    private DictionaryItem parseDictionary() {
+    private Dictionary parseDictionary() {
 
         LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
 
@@ -383,7 +383,7 @@ public class Parser {
             }
         }
 
-        return new DictionaryItem(result);
+        return new Dictionary(result);
     }
 
     // static convenience methods
@@ -466,9 +466,9 @@ public class Parser {
         return result;
     }
 
-    public static DictionaryItem parseDictionary(String input) {
+    public static Dictionary parseDictionary(String input) {
         Parser p = new Parser(input);
-        DictionaryItem result = p.parseDictionary();
+        Dictionary result = p.parseDictionary();
         p.assertEmpty("extra characters in string parsed as dictionary");
         return result;
     }

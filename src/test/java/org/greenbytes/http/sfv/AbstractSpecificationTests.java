@@ -90,7 +90,7 @@ public abstract class AbstractSpecificationTests {
         return result;
     }
 
-    public Item<? extends Object> parse() {
+    public Type<? extends Object> parse() {
         if (p.header_type.equals("item")) {
             return Parser.parseItem(p.raw);
         } else if (p.header_type.equals("list")) {
@@ -103,7 +103,7 @@ public abstract class AbstractSpecificationTests {
         }
     }
 
-    private static void match(JsonValue value, JsonValue params, Item<? extends Object> item) {
+    private static void match(JsonValue value, JsonValue params, Type<? extends Object> item) {
         if (value instanceof JsonString) {
             CharSequence expected = ((((JsonString) value)).getChars());
             assertEquals(expected, item.get());
@@ -161,8 +161,9 @@ public abstract class AbstractSpecificationTests {
             fail("unexpected type: " + value.getClass());
         }
         if (params != null) {
+            assertTrue(item instanceof Item);
             JsonObject expected = (JsonObject) params;
-            Map<String, Item<? extends Object>> result = item.getParams().get();
+            Map<String, Item<? extends Object>> result = ((Item<? extends Object>)item).getParams().get();
             assertEquals(expected.size(), result.size());
             for (Map.Entry<String, JsonValue> e : expected.entrySet()) {
                 if (e.getValue() instanceof JsonArray) {
@@ -179,12 +180,12 @@ public abstract class AbstractSpecificationTests {
     public void executeTest() {
         if (p.must_fail) {
             try {
-                Item<? extends Object> parsed = parse();
+                Type<? extends Object> parsed = parse();
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (IllegalArgumentException expected) {
             }
         } else {
-            Item<? extends Object> item = parse();
+            Type<? extends Object> item = parse();
             if (p.expected_value instanceof JsonArray) {
                 // assume list for now
                 assertTrue(item instanceof ListItem);

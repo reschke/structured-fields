@@ -2,26 +2,16 @@ package org.greenbytes.http.sfv;
 
 import java.util.Map;
 
-public class DictionaryItem implements Item<Map<String, Item<? extends Object>>> {
+public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
 
     private final Map<String, Item<? extends Object>> value;
 
-    public DictionaryItem(Map<String, Item<? extends Object>> value) {
+    public Dictionary(Map<String, Item<? extends Object>> value) {
         this.value = value;
     }
 
     public Map<String, Item<? extends Object>> get() {
         return value;
-    }
-
-    @Override
-    public DictionaryItem withParams(Parameters params) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Parameters getParams() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

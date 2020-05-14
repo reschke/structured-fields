@@ -230,7 +230,7 @@ public class Tests {
                 "rating=1.5, feelings=(joy sadness)", "a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid" };
 
         for (String s : tests) {
-            DictionaryItem i = Parser.parseDictionary(s);
+            Dictionary i = Parser.parseDictionary(s);
             assertEquals("should round-trip", i.serialize(), s);
         }
     }
