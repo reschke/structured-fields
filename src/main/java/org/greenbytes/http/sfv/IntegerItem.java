@@ -2,6 +2,13 @@ package org.greenbytes.http.sfv;
 
 import java.util.Objects;
 
+/**
+ * Represents an Integer.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#integer">Section
+ *      3.3.1 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class IntegerItem implements NumberItem<Long> {
 
     private final long value;
@@ -18,6 +25,14 @@ public class IntegerItem implements NumberItem<Long> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    /**
+     * Creates an {@link IntegerItem} representing the specified {@code long}
+     * value.
+     * 
+     * @param value
+     *            a {@code long} value.
+     * @return a {@link IntegerItem} representing {@code value}.
+     */
     public static IntegerItem valueOf(long value) {
         return new IntegerItem(value, Parameters.EMPTY);
     }
