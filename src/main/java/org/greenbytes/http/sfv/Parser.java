@@ -389,7 +389,7 @@ public class Parser {
     // static public methods
 
     /**
-     * Implementation of "Parsing a List"
+     * Implementation of "Parsing a List" (assuming no extra characters left in input string) 
      *
      * @param input
      *            {@link String} to parse.
@@ -407,7 +407,7 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing a Dictionary"
+     * Implementation of "Parsing a Dictionary" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -425,14 +425,14 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing an Item"
+     * Implementation of "Parsing an Item" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item">Section
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
      *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
      */
     public static Item<? extends Object> parseItem(String input) {
@@ -442,8 +442,63 @@ public class Parser {
         return result;
     }
 
+
     /**
-     * Implementation of "Parsing an Integer or Decimal"
+     * Implementation of "Parsing a Bare Item" (assuming no extra characters left in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Item}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
+     *      4.2.3.1 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static Item<? extends Object> parseBareItem(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseBareItem();
+        p.assertEmpty("extra characters in string parsed as Bare Item");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing Parameters" (assuming no extra characters left in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Parameters}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-param">Section
+     *      4.2.3.2 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static Parameters parseParameters(String input) {
+        Parser p = new Parser(input);
+        Parameters result = p.parseParameters();
+        p.assertEmpty("extra characters in string parsed as Parameters");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a Key" (assuming no extra characters left in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link String}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-key">Section
+     *      4.2.3.3 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static String parseKey(String input) {
+        Parser p = new Parser(input);
+        String result = p.parseKey();
+        p.assertEmpty("extra characters in string parsed as Key");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing an Integer or Decimal" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -461,7 +516,7 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing a String"
+     * Implementation of "Parsing a String" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -479,7 +534,7 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing a Token"
+     * Implementation of "Parsing a Token" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -497,7 +552,7 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing a Byte Sequence"
+     * Implementation of "Parsing a Byte Sequence" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -515,7 +570,7 @@ public class Parser {
     }
 
     /**
-     * Implementation of "Parsing a Boolean"
+     * Implementation of "Parsing a Boolean" (assuming no extra characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -554,13 +609,6 @@ public class Parser {
             p.assertEmpty("extra characters in string parsed as Decimal");
             return (DecimalItem) result;
         }
-    }
-
-    public static Parameters parseParameters(String input) {
-        Parser p = new Parser(input);
-        Parameters result = p.parseParameters();
-        p.assertEmpty("extra characters in string parsed as Parameters");
-        return result;
     }
 
     public static InnerList parseInnerList(String input) {
