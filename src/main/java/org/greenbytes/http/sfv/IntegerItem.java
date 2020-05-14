@@ -1,9 +1,8 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
-import java.util.function.LongSupplier;
 
-public class IntegerItem implements NumberItem<Long>, LongSupplier {
+public class IntegerItem implements NumberItem<Long> {
 
     private final long value;
     private final Parameters params;

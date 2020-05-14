@@ -4,7 +4,7 @@
  * Field Values for HTTP</a>.
  * <p>
  * Includes a {@link Parser} and object equivalents of the defined data types
- * (see {@link Item}).
+ * (see {@link Type}).
  */
 
 package org.greenbytes.http.sfv;

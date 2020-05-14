@@ -2,9 +2,8 @@ package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.function.LongSupplier;
 
-public class DecimalItem implements NumberItem<BigDecimal>, LongSupplier {
+public class DecimalItem implements NumberItem<BigDecimal> {
 
     private final long value;
     private final Parameters params;
