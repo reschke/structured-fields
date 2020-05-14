@@ -392,9 +392,9 @@ public class Parser {
         Parser p = new Parser(input);
         Item<? extends Object> result = p.parseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
-            throw new IllegalArgumentException("string parsed as integer '" + input + "' is a Decimal");
+            throw new IllegalArgumentException("string parsed as Integer '" + input + "' is a Decimal");
         } else {
-            p.assertEmpty("extra characters in string parsed as integer");
+            p.assertEmpty("extra characters in string parsed as Integer");
             return (IntegerItem) result;
         }
     }
@@ -403,9 +403,9 @@ public class Parser {
         Parser p = new Parser(input);
         Item<? extends Object> result = p.parseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
-            throw new IllegalArgumentException("string parsed as integer '" + input + "' is an Integer");
+            throw new IllegalArgumentException("string parsed as Decimal '" + input + "' is an Integer");
         } else {
-            p.assertEmpty("extra characters in string parsed as decimal");
+            p.assertEmpty("extra characters in string parsed as Decimal");
             return (DecimalItem) result;
         }
     }
@@ -413,63 +413,63 @@ public class Parser {
     public static ByteSequenceItem parseByteSequence(String input) {
         Parser p = new Parser(input);
         ByteSequenceItem result = p.parseByteSequence();
-        p.assertEmpty("extra characters in string parsed as byte sequence");
+        p.assertEmpty("extra characters in string parsed as Byte Sequence");
         return result;
     }
 
     public static StringItem parseString(String input) {
         Parser p = new Parser(input);
         StringItem result = p.parseString();
-        p.assertEmpty("extra characters in string parsed as string");
+        p.assertEmpty("extra characters in string parsed as String");
         return result;
     }
 
     public static TokenItem parseToken(String input) {
         Parser p = new Parser(input);
         TokenItem result = p.parseToken();
-        p.assertEmpty("extra characters in string parsed as token");
+        p.assertEmpty("extra characters in string parsed as Token");
         return result;
     }
 
     public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
         BooleanItem result = p.parseBoolean();
-        p.assertEmpty("extra characters in string parsed as boolean");
+        p.assertEmpty("extra characters in string parsed as Boolean");
         return result;
     }
 
     public static Item<? extends Object> parseItem(String input) {
         Parser p = new Parser(input);
         Item<? extends Object> result = p.parseItem();
-        p.assertEmpty("extra characters in string parsed as item");
+        p.assertEmpty("extra characters in string parsed as Item");
         return result;
     }
 
     public static Parameters parseParameters(String input) {
         Parser p = new Parser(input);
         Parameters result = p.parseParameters();
-        p.assertEmpty("extra characters in string parsed as parameters");
+        p.assertEmpty("extra characters in string parsed as Parameters");
         return result;
     }
 
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
         List<Item<? extends Object>> result = p.parseOuterList();
-        p.assertEmpty("extra characters in string parsed as list");
+        p.assertEmpty("extra characters in string parsed as List");
         return OuterList.valueOf(result);
     }
 
     public static InnerList parseInnerList(String input) {
         Parser p = new Parser(input);
         InnerList result = p.parseInnerList();
-        p.assertEmpty("extra characters in string parsed as inner list");
+        p.assertEmpty("extra characters in string parsed as Inner List");
         return result;
     }
 
     public static Dictionary parseDictionary(String input) {
         Parser p = new Parser(input);
         Dictionary result = p.parseDictionary();
-        p.assertEmpty("extra characters in string parsed as dictionary");
+        p.assertEmpty("extra characters in string parsed as Dictionary");
         return result;
     }
 
