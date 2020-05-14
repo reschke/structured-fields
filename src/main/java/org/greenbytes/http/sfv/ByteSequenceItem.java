@@ -4,6 +4,13 @@ import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.Objects;
 
+/**
+ * Represents a Byte Sequence.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#binary">Section
+ *      3.3.5 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class ByteSequenceItem implements Item<ByteBuffer> {
 
     private final byte[] value;
@@ -11,11 +18,19 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
 
     private static Base64.Encoder ENCODER = Base64.getEncoder();
 
-    public ByteSequenceItem(byte[] value, Parameters params) {
+    private ByteSequenceItem(byte[] value, Parameters params) {
         this.value = Objects.requireNonNull(value, "value must not be null");
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    /**
+     * Creates a {@link ByteSequenceItem} representing the specified
+     * {@code byte[]} value.
+     * 
+     * @param value
+     *            a {@code byte[]} value.
+     * @return a {@link ByteSequenceItem} representing {@code value}.
+     */
     public static ByteSequenceItem valueOf(byte[] value) {
         return new ByteSequenceItem(value, Parameters.EMPTY);
     }

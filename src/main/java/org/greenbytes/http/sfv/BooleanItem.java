@@ -28,7 +28,7 @@ public class BooleanItem implements Item<Boolean> {
      * 
      * @param value
      *            a {@code boolean} value.
-     * @return a {@link BooleanItem} representing {code value}.
+     * @return a {@link BooleanItem} representing {@code value}.
      */
     public static BooleanItem valueOf(boolean value) {
         return value ? TRUE : FALSE;
