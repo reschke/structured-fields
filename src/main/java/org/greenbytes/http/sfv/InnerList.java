@@ -3,6 +3,13 @@ package org.greenbytes.http.sfv;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an Inner List.
+ *
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#inner-list">Section
+ *      3.1.1 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class InnerList implements Item<List<Item<? extends Object>>> {
 
     private final List<Item<? extends Object>> value;
@@ -13,6 +20,14 @@ public class InnerList implements Item<List<Item<? extends Object>>> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    /**
+     * Creates a {@link InnerList} representing the specified {@code List<Item>}
+     * value.
+     * 
+     * @param value
+     *            a {@code List<Item>} value.
+     * @return a {@link InnerList} representing {@code value}.
+     */
     public static InnerList valueOf(List<Item<? extends Object>> value) {
         return new InnerList(value, Parameters.EMPTY);
     }
