@@ -2,6 +2,13 @@ package org.greenbytes.http.sfv;
 
 import java.util.Objects;
 
+/**
+ * Represents a Token.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#token">Section
+ *      3.3.4 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class TokenItem implements Item<String> {
 
     private final String value;
@@ -12,6 +19,14 @@ public class TokenItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    /**
+     * Creates a {@link TokenItem} instance representing the specified
+     * {@code String} value.
+     * 
+     * @param value
+     *            a {@code String} value.
+     * @return a {@link TokenItem} representing {@code value}.
+     */
     public static TokenItem valueOf(String value) {
         return new TokenItem(value, Parameters.EMPTY);
     }
