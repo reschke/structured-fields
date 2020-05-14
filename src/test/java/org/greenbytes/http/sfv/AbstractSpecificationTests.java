@@ -8,7 +8,6 @@ import static org.junit.Assert.fail;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -188,11 +187,11 @@ public abstract class AbstractSpecificationTests {
             Type<? extends Object> item = parse();
             if (p.expected_value instanceof JsonArray) {
                 // assume list for now
-                assertTrue(item instanceof ListItem);
+                assertTrue(item instanceof OuterList);
                 JsonArray array = (JsonArray) p.expected_value;
                 for (int i = 0; i < array.size(); i++) {
                     JsonValue m = array.get(i);
-                    match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((ListItem) item).get().get(i));
+                    match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
                 }
             } else {
                 match(p.expected_value, p.expected_params, item);

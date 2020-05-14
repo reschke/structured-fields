@@ -3,25 +3,16 @@ package org.greenbytes.http.sfv;
 import java.util.List;
 import java.util.Objects;
 
-public class ListItem implements Item<List<Item<? extends Object>>> {
+public class OuterList implements Type<List<Item<? extends Object>>> {
 
-    protected final List<Item<? extends Object>> value;
+    private final List<Item<? extends Object>> value;
 
-    protected ListItem(List<Item<? extends Object>> value) {
+    private OuterList(List<Item<? extends Object>> value) {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
-    public static ListItem valueOf(List<Item<? extends Object>> value) {
-        return new ListItem(value);
-    }
-
-    @Override
-    public ListItem withParams(Parameters params) {
-        if (params.get().isEmpty()) {
-            return this;
-        } else {
-            throw new IllegalArgumentException("only inner lists can have parameters");
-        }
+    public static OuterList valueOf(List<Item<? extends Object>> value) {
+        return new OuterList(value);
     }
 
     @Override
@@ -35,11 +26,6 @@ public class ListItem implements Item<List<Item<? extends Object>>> {
         }
 
         return sb;
-    }
-
-    @Override
-    public Parameters getParams() {
-        throw new UnsupportedOperationException("only inner lists can have parameters");
     }
 
     @Override

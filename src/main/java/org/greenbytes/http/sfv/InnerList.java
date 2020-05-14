@@ -3,25 +3,26 @@ package org.greenbytes.http.sfv;
 import java.util.List;
 import java.util.Objects;
 
-public class InnerListItem extends ListItem {
+public class InnerList implements Item<List<Item<? extends Object>>> {
 
+    private final List<Item<? extends Object>> value;
     private final Parameters params;
 
-    private InnerListItem(List<Item<? extends Object>> value, Parameters params) {
-        super(value);
+    private InnerList(List<Item<? extends Object>> value, Parameters params) {
+        this.value = Objects.requireNonNull(value, "value must not be null");
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
-    public static InnerListItem valueOf(List<Item<? extends Object>> value) {
-        return new InnerListItem(value, Parameters.EMPTY);
+    public static InnerList valueOf(List<Item<? extends Object>> value) {
+        return new InnerList(value, Parameters.EMPTY);
     }
 
     @Override
-    public InnerListItem withParams(Parameters params) {
+    public InnerList withParams(Parameters params) {
         if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
             return this;
         } else {
-            return new InnerListItem(this.value, params);
+            return new InnerList(this.value, params);
         }
     }
 
@@ -49,4 +50,13 @@ public class InnerListItem extends ListItem {
         return params;
     }
 
+    @Override
+    public String serialize() {
+        return serializeTo(new StringBuilder()).toString();
+    }
+
+    @Override
+    public List<Item<? extends Object>> get() {
+        return value;
+    }
 }

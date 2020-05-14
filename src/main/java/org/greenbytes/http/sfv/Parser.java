@@ -284,7 +284,7 @@ public class Parser {
         return peek() == '(' ? parseInnerList() : parseItem();
     }
 
-    private List<Item<? extends Object>> parseList() {
+    private List<Item<? extends Object>> parseOuterList() {
         List<Item<? extends Object>> result = new ArrayList<>();
 
         while (hasRemaining()) {
@@ -342,10 +342,10 @@ public class Parser {
         return result;
     }
 
-    private ListItem parseInnerList() {
+    private InnerList parseInnerList() {
         List<Item<? extends Object>> result = parseBareInnerList();
         Parameters params = parseParameters();
-        return InnerListItem.valueOf(result).withParams(params);
+        return InnerList.valueOf(result).withParams(params);
     }
 
     private Dictionary parseDictionary() {
@@ -452,16 +452,16 @@ public class Parser {
         return result;
     }
 
-    public static ListItem parseList(String input) {
+    public static OuterList parseList(String input) {
         Parser p = new Parser(input);
-        List<Item<? extends Object>> result = p.parseList();
+        List<Item<? extends Object>> result = p.parseOuterList();
         p.assertEmpty("extra characters in string parsed as list");
-        return ListItem.valueOf(result);
+        return OuterList.valueOf(result);
     }
 
-    public static ListItem parseInnerList(String input) {
+    public static InnerList parseInnerList(String input) {
         Parser p = new Parser(input);
-        ListItem result = p.parseInnerList();
+        InnerList result = p.parseInnerList();
         p.assertEmpty("extra characters in string parsed as inner list");
         return result;
     }

@@ -179,9 +179,9 @@ public class Tests {
         tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
-            ListItem list = Parser.parseList(e.getKey());
+            OuterList list = Parser.parseList(e.getKey());
             Object[] expected = e.getValue();
-            assertTrue(list instanceof ListItem);
+            assertTrue(list instanceof OuterList);
             assertEquals(list.get().size(), expected.length / 2);
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
@@ -198,9 +198,9 @@ public class Tests {
         tests.put("(1;foo=bar 2);a;b=1", new Object[] { 1L, ";foo=bar", 2L, EMPTY, ";a;b=1" });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
-            ListItem list = Parser.parseInnerList(e.getKey());
+            InnerList list = Parser.parseInnerList(e.getKey());
             Object[] expected = e.getValue();
-            assertTrue(list instanceof ListItem);
+            assertTrue(list instanceof InnerList);
             assertEquals(list.get().size(), (expected.length - 1) / 2);
             for (int i = 0; i < (expected.length - 1) / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
