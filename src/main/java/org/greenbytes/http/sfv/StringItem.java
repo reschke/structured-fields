@@ -2,16 +2,31 @@ package org.greenbytes.http.sfv;
 
 import java.util.Objects;
 
+/**
+ * Represents a String.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#string">Section
+ *      3.3.3 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class StringItem implements Item<String> {
 
     private final String value;
     private final Parameters params;
 
-    public StringItem(String value, Parameters params) {
+    private StringItem(String value, Parameters params) {
         this.value = checkParam(Objects.requireNonNull(value, "value must not be null"));
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    /**
+     * Creates a {@link StringItem} instance representing the specified
+     * {@code String} value.
+     * 
+     * @param value
+     *            a {@code String} value.
+     * @return a {@link StringItem} representing {@code value}.
+     */
     public static StringItem valueOf(String value) {
         return new StringItem(value, Parameters.EMPTY);
     }
@@ -59,7 +74,8 @@ public class StringItem implements Item<String> {
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
             if (c < 0x20 || c >= 0x7f) {
-                throw new IllegalArgumentException(String.format("Invalid character in String at position %d: '%c' (0x%04x)", i, c, (int)c));
+                throw new IllegalArgumentException(
+                        String.format("Invalid character in String at position %d: '%c' (0x%04x)", i, c, (int) c));
             }
         }
         return value;
