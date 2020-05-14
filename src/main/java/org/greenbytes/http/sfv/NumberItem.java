@@ -24,4 +24,6 @@ public interface NumberItem<T> extends Item<T>, LongSupplier {
      * @return the divisor ({@code 1} for Integers, {@code 1000} for Decimals)
      */
     public int getDivisor();
+
+    public NumberItem<T> withParams(Parameters params);
 }

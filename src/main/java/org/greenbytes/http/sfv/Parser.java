@@ -18,7 +18,7 @@ public class Parser {
         this(CharBuffer.wrap(input));
     }
 
-    private Item<? extends Object> parseBareIntegerOrDecimal() {
+    private NumberItem<? extends Object> parseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -77,8 +77,8 @@ public class Parser {
         }
     }
 
-    private Item<? extends Object> parseIntegerOrDecimal() {
-        Item<? extends Object> result = parseBareIntegerOrDecimal();
+    private NumberItem<? extends Object> parseIntegerOrDecimal() {
+        NumberItem<? extends Object> result = parseBareIntegerOrDecimal();
         Parameters params = parseParameters();
         return result.withParams(params);
     }
@@ -386,7 +386,153 @@ public class Parser {
         return Dictionary.valueOf(result);
     }
 
-    // static convenience methods
+    // static public methods
+
+    /**
+     * Implementation of "Parsing a List"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link OuterList}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-list">Section
+     *      4.2.1 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static OuterList parseList(String input) {
+        Parser p = new Parser(input);
+        List<Item<? extends Object>> result = p.parseOuterList();
+        p.assertEmpty("extra characters in string parsed as List");
+        return OuterList.valueOf(result);
+    }
+
+    /**
+     * Implementation of "Parsing a Dictionary"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Dictionary}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-dictionary">Section
+     *      4.2.2 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static Dictionary parseDictionary(String input) {
+        Parser p = new Parser(input);
+        Dictionary result = p.parseDictionary();
+        p.assertEmpty("extra characters in string parsed as Dictionary");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing an Item"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Item}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item">Section
+     *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static Item<? extends Object> parseItem(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseItem();
+        p.assertEmpty("extra characters in string parsed as Item");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing an Integer or Decimal"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link NumberItem}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-number">Section
+     *      4.2.4 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static NumberItem<? extends Object> parseIntegerOrDecimal(String input) {
+        Parser p = new Parser(input);
+        NumberItem<? extends Object> result = p.parseIntegerOrDecimal();
+        p.assertEmpty("extra characters in string parsed as Integer or Decimal");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a String"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link StringItem}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-string">Section
+     *      4.2.5 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static StringItem parseString(String input) {
+        Parser p = new Parser(input);
+        StringItem result = p.parseString();
+        p.assertEmpty("extra characters in string parsed as String");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a Token"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link TokenItem}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-token">Section
+     *      4.2.6 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static TokenItem parseToken(String input) {
+        Parser p = new Parser(input);
+        TokenItem result = p.parseToken();
+        p.assertEmpty("extra characters in string parsed as Token");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a Byte Sequence"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link ByteSequenceItem}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-binary">Section
+     *      4.2.7 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static ByteSequenceItem parseByteSequence(String input) {
+        Parser p = new Parser(input);
+        ByteSequenceItem result = p.parseByteSequence();
+        p.assertEmpty("extra characters in string parsed as Byte Sequence");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a Boolean"
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link BooleanItem}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-boolean">Section
+     *      4.2.8 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static BooleanItem parseBoolean(String input) {
+        Parser p = new Parser(input);
+        BooleanItem result = p.parseBoolean();
+        p.assertEmpty("extra characters in string parsed as Boolean");
+        return result;
+    }
+
+    // TODO: javadoc below
 
     public static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);
@@ -410,41 +556,6 @@ public class Parser {
         }
     }
 
-    public static ByteSequenceItem parseByteSequence(String input) {
-        Parser p = new Parser(input);
-        ByteSequenceItem result = p.parseByteSequence();
-        p.assertEmpty("extra characters in string parsed as Byte Sequence");
-        return result;
-    }
-
-    public static StringItem parseString(String input) {
-        Parser p = new Parser(input);
-        StringItem result = p.parseString();
-        p.assertEmpty("extra characters in string parsed as String");
-        return result;
-    }
-
-    public static TokenItem parseToken(String input) {
-        Parser p = new Parser(input);
-        TokenItem result = p.parseToken();
-        p.assertEmpty("extra characters in string parsed as Token");
-        return result;
-    }
-
-    public static BooleanItem parseBoolean(String input) {
-        Parser p = new Parser(input);
-        BooleanItem result = p.parseBoolean();
-        p.assertEmpty("extra characters in string parsed as Boolean");
-        return result;
-    }
-
-    public static Item<? extends Object> parseItem(String input) {
-        Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseItem();
-        p.assertEmpty("extra characters in string parsed as Item");
-        return result;
-    }
-
     public static Parameters parseParameters(String input) {
         Parser p = new Parser(input);
         Parameters result = p.parseParameters();
@@ -452,24 +563,10 @@ public class Parser {
         return result;
     }
 
-    public static OuterList parseList(String input) {
-        Parser p = new Parser(input);
-        List<Item<? extends Object>> result = p.parseOuterList();
-        p.assertEmpty("extra characters in string parsed as List");
-        return OuterList.valueOf(result);
-    }
-
     public static InnerList parseInnerList(String input) {
         Parser p = new Parser(input);
         InnerList result = p.parseInnerList();
         p.assertEmpty("extra characters in string parsed as Inner List");
-        return result;
-    }
-
-    public static Dictionary parseDictionary(String input) {
-        Parser p = new Parser(input);
-        Dictionary result = p.parseDictionary();
-        p.assertEmpty("extra characters in string parsed as Dictionary");
         return result;
     }
 
