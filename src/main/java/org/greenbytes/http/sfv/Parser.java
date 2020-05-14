@@ -35,7 +35,7 @@ public class Parser {
         boolean done = false;
         while (hasRemaining() && !done) {
             char c = peek();
-            if (isDigit(c)) {
+            if (Utils.isDigit(c)) {
                 inputNumber.append(c);
                 advance();
             } else if (!isDecimal && c == '.') {
@@ -122,7 +122,7 @@ public class Parser {
     private TokenItem parseBareToken() {
 
         char c = getOrEOF();
-        if (c != '*' && !isAlpha(c)) {
+        if (c != '*' && !Utils.isAlpha(c)) {
             throw new IllegalArgumentException("must start with ALPHA or *: '" + input + "'");
         }
 
@@ -207,7 +207,7 @@ public class Parser {
     private String parseKey() {
 
         char c = getOrEOF();
-        if (c != '*' && !isLcAlpha(c)) {
+        if (c != '*' && !Utils.isLcAlpha(c)) {
             throw new IllegalArgumentException("must start with LCALPHA or *: " + input);
         }
 
@@ -217,7 +217,7 @@ public class Parser {
         boolean done = false;
         while (hasRemaining() && !done) {
             c = peek();
-            if (isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
+            if (Utils.isLcAlpha(c) || Utils.isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*') {
                 result.append(c);
                 advance();
             } else {
@@ -259,13 +259,13 @@ public class Parser {
         }
 
         char c = peek();
-        if (isDigit(c) || c == '-') {
+        if (Utils.isDigit(c) || c == '-') {
             return parseBareIntegerOrDecimal();
         } else if (c == '"') {
             return parseBareString();
         } else if (c == '?') {
             return parseBareBoolean();
-        } else if (c == '*' || isAlpha(c)) {
+        } else if (c == '*' || Utils.isAlpha(c)) {
             return parseBareToken();
         } else if (c == ':') {
             return parseBareByteSequence();
@@ -471,20 +471,6 @@ public class Parser {
         Dictionary result = p.parseDictionary();
         p.assertEmpty("extra characters in string parsed as dictionary");
         return result;
-    }
-
-    // character types
-
-    private static boolean isDigit(char c) {
-        return c >= '0' && c <= '9';
-    }
-
-    private static boolean isLcAlpha(char c) {
-        return (c >= 'a' && c <= 'z');
-    }
-
-    private static boolean isAlpha(char c) {
-        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
     // utility methods on CharBuffer

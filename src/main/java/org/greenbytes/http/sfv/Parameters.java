@@ -72,19 +72,11 @@ public class Parameters implements Type<Map<String, Item<? extends Object>>> {
         }
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if ((i == 0 && (c != '*' && !isLcAlpha(c)))
-                    || !(isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*')) {
+            if ((i == 0 && (c != '*' && !Utils.isLcAlpha(c)))
+                    || !(Utils.isLcAlpha(c) || Utils.isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*')) {
                 throw new IllegalArgumentException(
                         String.format("Invalid character in key at position %d: '%c' (0x%04x)", i, c, (int) c));
             }
         }
-    }
-
-    private static boolean isDigit(char c) {
-        return c >= '0' && c <= '9';
-    }
-
-    private static boolean isLcAlpha(char c) {
-        return (c >= 'a' && c <= 'z');
     }
 }
