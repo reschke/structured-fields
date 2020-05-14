@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
     private final Map<String, Item<? extends Object>> value;
 
     private Dictionary(Map<String, Item<? extends Object>> value) {
-        this.value = value;
+        this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
     /**

@@ -2,7 +2,6 @@ package org.greenbytes.http.sfv;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Represents the Parameters of an Item or an Inner List.
@@ -18,8 +17,7 @@ public class Parameters implements Type<Map<String, Item<? extends Object>>> {
     public static final Parameters EMPTY = new Parameters(Collections.emptyMap());
 
     private Parameters(Map<String, Item<? extends Object>> value) {
-        this.value = Collections.unmodifiableMap(Objects.requireNonNull(value, "value must not be null"));
-        checkKeys(this.value);
+        this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
     /**
@@ -58,25 +56,5 @@ public class Parameters implements Type<Map<String, Item<? extends Object>>> {
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
-    }
-
-    private static void checkKeys(Map<String, Item<? extends Object>> map) {
-        for (String key : map.keySet()) {
-            checkKey(key);
-        }
-    }
-
-    private static void checkKey(String value) {
-        if (value.length() == 0) {
-            throw new IllegalArgumentException("Key can not be empty");
-        }
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            if ((i == 0 && (c != '*' && !Utils.isLcAlpha(c)))
-                    || !(Utils.isLcAlpha(c) || Utils.isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*')) {
-                throw new IllegalArgumentException(
-                        String.format("Invalid character in key at position %d: '%c' (0x%04x)", i, c, (int) c));
-            }
-        }
     }
 }

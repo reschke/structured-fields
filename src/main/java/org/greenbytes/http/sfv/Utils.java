@@ -1,5 +1,8 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * Common utility methods.
  */
@@ -18,5 +21,26 @@ public class Utils {
 
     protected static boolean isAlpha(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+    }
+
+    private static void checkKey(String value) {
+        if (value.length() == 0) {
+            throw new IllegalArgumentException("Key can not be empty");
+        }
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if ((i == 0 && (c != '*' && !isLcAlpha(c)))
+                    || !(isLcAlpha(c) || isDigit(c) || c == '_' || c == '-' || c == '.' || c == '*')) {
+                throw new IllegalArgumentException(
+                        String.format("Invalid character in key at position %d: '%c' (0x%04x)", i, c, (int) c));
+            }
+        }
+    }
+
+    protected static Map<String, Item<? extends Object>> checkKeys(Map<String, Item<? extends Object>> value) {
+        for (String key : Objects.requireNonNull(value, "value must not be null").keySet()) {
+            checkKey(key);
+        }
+        return value;
     }
 }
