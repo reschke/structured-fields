@@ -383,7 +383,7 @@ public class Parser {
             }
         }
 
-        return new Dictionary(result);
+        return Dictionary.valueOf(result);
     }
 
     // static convenience methods
