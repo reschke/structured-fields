@@ -2,23 +2,34 @@ package org.greenbytes.http.sfv;
 
 import java.util.Objects;
 
+/**
+ * Represents a Boolean.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#boolean">Section
+ *      3.3.6 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class BooleanItem implements Item<Boolean> {
 
     private final boolean value;
     private final Parameters params;
 
-    private static final BooleanItem TRUE = new BooleanItem(true);
-    private static final BooleanItem FALSE = new BooleanItem(false);
+    private static final BooleanItem TRUE = new BooleanItem(true, Parameters.EMPTY);
+    private static final BooleanItem FALSE = new BooleanItem(false, Parameters.EMPTY);
 
-    public BooleanItem(boolean value, Parameters params) {
+    private BooleanItem(boolean value, Parameters params) {
         this.value = value;
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
-    private BooleanItem(boolean value) {
-        this(value, Parameters.EMPTY);
-    }
-
+    /**
+     * Creates a {@link BooleanItem} representing the specified {@code boolean}
+     * value.
+     * 
+     * @param value
+     *            a {@code boolean} value.
+     * @return a {@link BooleanItem} representing {code value}.
+     */
     public static BooleanItem valueOf(boolean value) {
         return value ? TRUE : FALSE;
     }

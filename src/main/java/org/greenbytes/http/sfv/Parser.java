@@ -363,7 +363,7 @@ public class Parser {
                 advance();
                 member = parseItemOrInnerList();
             } else {
-                member = new BooleanItem(true, parseParameters());
+                member = BooleanItem.valueOf(true).withParams(parseParameters());
             }
 
             result.put(name, member);
