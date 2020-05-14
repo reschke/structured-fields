@@ -18,7 +18,7 @@ public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
     }
 
     /**
-     * Creates a {@link Dictionary} representing the specified
+     * Creates a {@link Dictionary} instance representing the specified
      * {@code Map<String, Item>} value.
      * <p>
      * Note that the {@link Map} implementation that is used here needs to

@@ -23,8 +23,8 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     /**
-     * Creates a {@link BooleanItem} representing the specified {@code boolean}
-     * value.
+     * Creates a {@link BooleanItem} instance representing the specified
+     * {@code boolean} value.
      * 
      * @param value
      *            a {@code boolean} value.

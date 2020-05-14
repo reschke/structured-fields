@@ -36,8 +36,8 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     }
 
     /**
-     * Creates a {@link DecimalItem} representing the specified {@code long}
-     * value, where the implied divisor is {@code 1000}.
+     * Creates a {@link DecimalItem} instance representing the specified
+     * {@code long} value, where the implied divisor is {@code 1000}.
      * 
      * @param value
      *            a {@code long} value.

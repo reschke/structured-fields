@@ -24,7 +24,7 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     /**
-     * Creates a {@link ByteSequenceItem} representing the specified
+     * Creates a {@link ByteSequenceItem} instance representing the specified
      * {@code byte[]} value.
      * 
      * @param value

@@ -26,8 +26,8 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     /**
-     * Creates an {@link IntegerItem} representing the specified {@code long}
-     * value.
+     * Creates an {@link IntegerItem} instance representing the specified
+     * {@code long} value.
      * 
      * @param value
      *            a {@code long} value.

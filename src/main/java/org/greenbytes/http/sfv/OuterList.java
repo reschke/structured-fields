@@ -3,6 +3,13 @@ package org.greenbytes.http.sfv;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents a List.
+ * 
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#list">Section
+ *      3.1 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class OuterList implements Type<List<Item<? extends Object>>> {
 
     private final List<Item<? extends Object>> value;
@@ -11,6 +18,14 @@ public class OuterList implements Type<List<Item<? extends Object>>> {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
+    /**
+     * Creates an {@link OuterList} instance representing the specified
+     * {@code List<Item>} value.
+     * 
+     * @param value
+     *            a {@code List<Item>} value.
+     * @return a {@link OuterList} representing {@code value}.
+     */
     public static OuterList valueOf(List<Item<? extends Object>> value) {
         return new OuterList(value);
     }

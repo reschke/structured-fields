@@ -21,8 +21,8 @@ public class InnerList implements Item<List<Item<? extends Object>>> {
     }
 
     /**
-     * Creates a {@link InnerList} representing the specified {@code List<Item>}
-     * value.
+     * Creates an {@link InnerList} instance representing the specified
+     * {@code List<Item>} value.
      * 
      * @param value
      *            a {@code List<Item>} value.
