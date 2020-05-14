@@ -407,6 +407,42 @@ public class Parser {
     }
 
     /**
+     * Implementation of "Parsing an Item Or Inner List" (assuming no extra characters left in input string) 
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Item}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item-or-list">Section
+     *      4.2.1.1 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static Item<? extends Object> parseItemOrInnerList(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseItemOrInnerList();
+        p.assertEmpty("extra characters in string parsed as Item or Inner List");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing an Inner List" (assuming no extra characters left in input string) 
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link InnerList}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item-or-list">Section
+     *      4.2.1.2 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public static InnerList parseInnerList(String input) {
+        Parser p = new Parser(input);
+        InnerList result = p.parseInnerList();
+        p.assertEmpty("extra characters in string parsed as Inner List");
+        return result;
+    }
+
+    /**
      * Implementation of "Parsing a Dictionary" (assuming no extra characters left in input string)
      *
      * @param input
@@ -609,13 +645,6 @@ public class Parser {
             p.assertEmpty("extra characters in string parsed as Decimal");
             return (DecimalItem) result;
         }
-    }
-
-    public static InnerList parseInnerList(String input) {
-        Parser p = new Parser(input);
-        InnerList result = p.parseInnerList();
-        p.assertEmpty("extra characters in string parsed as Inner List");
-        return result;
     }
 
     // utility methods on CharBuffer
