@@ -10,15 +10,15 @@ public class Parser {
 
     private final CharBuffer input;
 
-    public Parser(CharBuffer input) {
+    private Parser(CharBuffer input) {
         this.input = input;
     }
 
-    public Parser(String input) {
+    private Parser(String input) {
         this(CharBuffer.wrap(input));
     }
 
-    public Item<? extends Object> parseBareIntegerOrDecimal() {
+    private Item<? extends Object> parseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
