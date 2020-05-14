@@ -1,14 +1,8 @@
 package org.greenbytes.http.sfv;
 
-import java.util.function.Supplier;
-
-public interface Item<T> extends Supplier<T> {
+public interface Item<T> extends Type<T> {
 
     public Item<T> withParams(Parameters params);
 
     public Parameters getParams();
-
-    public StringBuilder serializeTo(StringBuilder sb);
-
-    public String serialize();
 }
