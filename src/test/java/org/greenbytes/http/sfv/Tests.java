@@ -234,4 +234,17 @@ public class Tests {
             assertEquals("should round-trip", i.serialize(), s);
         }
     }
+
+    @Test
+    public void parserAPI() {
+        Parser p = new Parser("a=?0, b, c; foo=bar");
+        Dictionary d = p.parseDictionary();
+        for (Map.Entry<String, Item<? extends Object>> e : d.get().entrySet()) {
+            String key = e.getKey();
+            Item<? extends Object> item = e.getValue();
+            Object value = item.get();
+            Parameters params = item.getParams();
+            System.out.println(key + " -> " + value + (params.get().isEmpty() ? "" : (" (" + params.serialize() + ")")));
+        }
+    }
 }
