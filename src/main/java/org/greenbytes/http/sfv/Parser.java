@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.nio.CharBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class Parser {
 
     private final CharBuffer input;
-    // private final List<Integer> startPositions;
+    private final List<Integer> startPositions;
 
     /**
      * Creates {@link Parser} for the given input.
@@ -35,15 +36,31 @@ public class Parser {
     /**
      * Creates {@link Parser} for the given input.
      * 
+     * @param input
+     *            field lines
+     * @throws IllegalArgumentException
+     *             for non-ASCII characters
+     */
+    public Parser(String... input) {
+        this(Arrays.asList(input));
+    }
+
+    /**
+     * Creates {@link Parser} for the given input.
+     * 
      * @param fieldLines
      *            field lines
      * @throws IllegalArgumentException
      *             for non-ASCII characters or empty input
      */
     public Parser(Iterable<String> fieldLines) {
+
         StringBuilder sb = null;
         String str = null;
+        List<Integer> startPositions = Collections.emptyList();
+
         for (String s : Objects.requireNonNull(fieldLines, "fieldLines must not be null")) {
+            Objects.requireNonNull("field line must not be null", s);
             if (str == null) {
                 str = checkASCII(s);
             } else {
@@ -51,6 +68,10 @@ public class Parser {
                     sb = new StringBuilder();
                     sb.append(str);
                 }
+                if (startPositions.size() == 0) {
+                    startPositions = new ArrayList<>();
+                }
+                startPositions.add(sb.length());
                 sb.append(",").append(checkASCII(s));
             }
         }
@@ -58,7 +79,7 @@ public class Parser {
             throw new IllegalArgumentException("empty input");
         }
         this.input = CharBuffer.wrap(sb != null ? sb : str);
-        // this.startPositions = Collections.singletonList(0);
+        this.startPositions = startPositions;
     }
 
     private static String checkASCII(String value) {
@@ -143,21 +164,26 @@ public class Parser {
             throw new IllegalArgumentException("must start with double quote: '" + input + "'");
         }
 
-        StringBuilder outputString = new StringBuilder(input.length());
+        StringBuilder outputString = new StringBuilder(length());
 
         while (hasRemaining()) {
+            // TODO: we may have to back out this check or make it optional
+            if (startPositions.contains(position())) {
+                throw new IllegalArgumentException("string crosses field line boundary at " + position());
+            }
+
             char c = get();
             if (c == '\\') {
                 c = getOrEOF();
                 if (c != '"' && c != '\\') {
-                    throw new IllegalArgumentException("invalid escape sequence at " + input.position());
+                    throw new IllegalArgumentException("invalid escape sequence at " + position());
                 }
                 outputString.append(c);
             } else {
                 if (c == '"') {
                     return StringItem.valueOf(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
-                    throw new IllegalArgumentException("invalid character at " + input.length());
+                    throw new IllegalArgumentException("invalid character at " + position());
                 } else {
                     outputString.append(c);
                 }
@@ -180,7 +206,7 @@ public class Parser {
             throw new IllegalArgumentException("must start with ALPHA or *: '" + input + "'");
         }
 
-        StringBuilder outputString = new StringBuilder(input.length());
+        StringBuilder outputString = new StringBuilder(length());
         outputString.append(c);
 
         boolean done = false;
@@ -210,7 +236,7 @@ public class Parser {
             throw new IllegalArgumentException("must start with colon: " + input);
         }
 
-        StringBuilder outputString = new StringBuilder(input.length());
+        StringBuilder outputString = new StringBuilder(length());
 
         boolean done = false;
         while (hasRemaining() && !done) {
@@ -373,7 +399,7 @@ public class Parser {
         while (hasRemaining() && !done) {
             removeLeadingSP();
 
-            c = input.charAt(0);
+            c = peek();
             if (c == ')') {
                 advance();
                 done = true;
@@ -798,8 +824,16 @@ public class Parser {
         return input.hasRemaining();
     }
 
+    private int length() {
+        return input.length();
+    }
+
     private char peek() {
         return hasRemaining() ? input.charAt(0) : (char) -1;
+    }
+
+    private int position() {
+        return input.position();
     }
 
     private void removeLeadingSP() {

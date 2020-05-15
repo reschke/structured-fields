@@ -247,4 +247,14 @@ public class Tests {
             System.out.println(key + " -> " + value + (params.get().isEmpty() ? "" : (" (" + params.serialize() + ")")));
         }
     }
+
+    @Test
+    public void brokenFieldLines() {
+        Parser p = new Parser("\"foo", "bar\"");
+        try {
+            p.parseList();
+            fail("should fail");
+        } catch (IllegalArgumentException ex) {
+        }
+    }
 }
