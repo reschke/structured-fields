@@ -62,17 +62,13 @@ public class TokenItem implements Item<String> {
         return this.value;
     }
 
-    private static boolean isAlpha(char c) {
-        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
-    }
-
     private static String checkParam(String value) {
         if (value.length() == 0) {
             throw new IllegalArgumentException("Token can not be empty");
         }
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if ((i == 0 && (c != '*' && !isAlpha(c))) || (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0)) {
+            if ((i == 0 && (c != '*' && !Utils.isAlpha(c))) || (c <= ' ' || c >= 0x7f || "\"(),;<=>?@[\\]{}".indexOf(c) >= 0)) {
                 throw new IllegalArgumentException(
                         String.format("Invalid character in Token at position %d: '%c' (0x%04x)", i, c, (int) c));
             }
