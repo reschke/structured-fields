@@ -386,6 +386,30 @@ public class Parser {
         return Dictionary.valueOf(result);
     }
 
+    // protected methods unit testing
+
+    protected static IntegerItem parseInteger(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimal();
+        if (!(result instanceof IntegerItem)) {
+            throw new IllegalArgumentException("string parsed as Integer '" + input + "' is a Decimal");
+        } else {
+            p.assertEmpty("extra characters in string parsed as Integer");
+            return (IntegerItem) result;
+        }
+    }
+
+    protected static DecimalItem parseDecimal(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.parseIntegerOrDecimal();
+        if (!(result instanceof DecimalItem)) {
+            throw new IllegalArgumentException("string parsed as Decimal '" + input + "' is an Integer");
+        } else {
+            p.assertEmpty("extra characters in string parsed as Decimal");
+            return (DecimalItem) result;
+        }
+    }
+
     // static public methods
 
     /**
@@ -621,30 +645,6 @@ public class Parser {
         BooleanItem result = p.parseBoolean();
         p.assertEmpty("extra characters in string parsed as Boolean");
         return result;
-    }
-
-    // TODO: javadoc below
-
-    public static IntegerItem parseInteger(String input) {
-        Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimal();
-        if (!(result instanceof IntegerItem)) {
-            throw new IllegalArgumentException("string parsed as Integer '" + input + "' is a Decimal");
-        } else {
-            p.assertEmpty("extra characters in string parsed as Integer");
-            return (IntegerItem) result;
-        }
-    }
-
-    public static DecimalItem parseDecimal(String input) {
-        Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimal();
-        if (!(result instanceof DecimalItem)) {
-            throw new IllegalArgumentException("string parsed as Decimal '" + input + "' is an Integer");
-        } else {
-            p.assertEmpty("extra characters in string parsed as Decimal");
-            return (DecimalItem) result;
-        }
     }
 
     // utility methods on CharBuffer
