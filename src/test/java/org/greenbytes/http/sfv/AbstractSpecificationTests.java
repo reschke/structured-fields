@@ -173,6 +173,7 @@ public abstract class AbstractSpecificationTests {
             try {
                 Type<? extends Object> parsed = parse();
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
+            } catch (Parser.ParseException expected) {
             } catch (IllegalArgumentException expected) {
             }
         } else {
