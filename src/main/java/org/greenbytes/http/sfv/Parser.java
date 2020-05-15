@@ -506,7 +506,7 @@ public class Parser {
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item">Section
      *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
      */
     public Item<? extends Object> parseItem() {
