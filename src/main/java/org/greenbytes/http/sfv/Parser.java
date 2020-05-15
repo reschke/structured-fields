@@ -265,14 +265,20 @@ public class Parser {
 
     private BooleanItem internalParseBareBoolean() {
 
-        if (getOrEOF() != '?') {
-            throw new IllegalArgumentException("must start with question mark: " + input);
-        }
-
         char c = getOrEOF();
 
-        if (c != '0' && c != '1') {
-            throw new IllegalArgumentException("expected 0 or 1 in boolean: " + input);
+        if (c < 0) {
+            throw new ParseException("Missing data in Boolean");
+        } else if (c != '?') {
+            throw new ParseException(String.format("Boolean must start with question mark, got '%c'", c));
+        }
+
+        c = getOrEOF();
+
+        if (c < 0) {
+            throw new ParseException("Missing data in Boolean");
+        } else if (c != '0' && c != '1') {
+            throw new ParseException(String.format("Expected '0' or '1' in Boolean, found '%c'", c));
         }
 
         return BooleanItem.valueOf(c == '1');
@@ -788,7 +794,7 @@ public class Parser {
     public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
         BooleanItem result = p.internalParseBoolean();
-        p.assertEmpty("extra characters in string parsed as Boolean");
+        p.assertEmpty("Extra characters at position %d in string parsed as Boolean: '%s'");
         return result;
     }
 
@@ -796,7 +802,7 @@ public class Parser {
 
     private void assertEmpty(String message) {
         if (hasRemaining()) {
-            throw new IllegalArgumentException(message + ": '" + input + "'");
+            throw new ParseException(String.format(message, position(), input));
         }
     }
 
@@ -842,4 +848,41 @@ public class Parser {
         }
     }
 
+    public class ParseException extends IllegalArgumentException {
+
+        private final int position;
+        private final String data;
+
+        public ParseException(String message) {
+            super(message);
+            this.position = input.position();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < input.position() + input.remaining(); i++) {
+                sb.append(input.get(i));
+            }
+            this.data = sb.toString();
+        }
+
+        /**
+         * Gets additional diagnostics.
+         * 
+         * @return two lines of data; first contains the raw parse data enclosed
+         *         in "&gt;&gt;" and "&lt;&lt;", the second ASCII artwork with
+         *         "^" pointing to the parse position, followed by the actual
+         *         exception message.
+         */
+        public String getDiagnostics() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(">>").append(data).append("<<").append('\n');
+            sb.append("  ");
+            for (int i = 0; i < position; i++) {
+                sb.append('-');
+            }
+            sb.append("^ " + super.getMessage());
+            sb.append("\n");
+            return sb.toString();
+        }
+
+        private static final long serialVersionUID = -5222947525946866985L;
+    }
 }

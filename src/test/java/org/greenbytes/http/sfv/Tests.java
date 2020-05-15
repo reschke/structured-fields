@@ -125,6 +125,7 @@ public class Tests {
             try {
                 Parser.parseBoolean(s);
                 fail("should not parse as boolean: " + s);
+            } catch (Parser.ParseException expected) {
             } catch (IllegalArgumentException expected) {
             }
         }
