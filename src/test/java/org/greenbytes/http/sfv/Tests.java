@@ -250,11 +250,15 @@ public class Tests {
 
     @Test
     public void brokenFieldLines() {
-        Parser p = new Parser("\"foo", "bar\"");
-        try {
-            p.parseList();
-            fail("should fail");
-        } catch (IllegalArgumentException ex) {
+        String tests[][] = new String[][] { new String[] { "\"foo", "bar\"" }, new String[] { "a", "", "b" } };
+
+        for (String t[] : tests) {
+            Parser p = new Parser(t);
+            try {
+                p.parseList();
+                fail("should fail");
+            } catch (IllegalArgumentException ex) {
+            }
         }
     }
 }
