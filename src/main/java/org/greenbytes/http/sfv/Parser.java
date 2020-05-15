@@ -3,22 +3,76 @@ package org.greenbytes.http.sfv;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * Implementation of the "Structured Field Values" Parser.
+ *
+ * @see <a href=
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#text-parse">Section
+ *      4.2 of draft-ietf-httpbis-header-structure-18</a>
+ */
 public class Parser {
 
     private final CharBuffer input;
+    // private final List<Integer> startPositions;
 
-    private Parser(CharBuffer input) {
-        this.input = input;
+    /**
+     * Creates {@link Parser} for the given input.
+     * 
+     * @param input
+     *            single field line
+     * @throws IllegalArgumentException
+     *             for non-ASCII characters
+     */
+    public Parser(String input) {
+        this(Collections.singletonList(Objects.requireNonNull(input, "input must not be null")));
     }
 
-    private Parser(String input) {
-        this(CharBuffer.wrap(input));
+    /**
+     * Creates {@link Parser} for the given input.
+     * 
+     * @param fieldLines
+     *            field lines
+     * @throws IllegalArgumentException
+     *             for non-ASCII characters or empty input
+     */
+    public Parser(Iterable<String> fieldLines) {
+        StringBuilder sb = null;
+        String str = null;
+        for (String s : Objects.requireNonNull(fieldLines, "fieldLines must not be null")) {
+            if (str == null) {
+                str = checkASCII(s);
+            } else {
+                if (sb == null) {
+                    sb = new StringBuilder();
+                    sb.append(str);
+                }
+                sb.append(",").append(checkASCII(s));
+            }
+        }
+        if (str == null && sb == null) {
+            throw new IllegalArgumentException("empty input");
+        }
+        this.input = CharBuffer.wrap(sb != null ? sb : str);
+        // this.startPositions = Collections.singletonList(0);
     }
 
-    private NumberItem<? extends Object> parseBareIntegerOrDecimal() {
+    private static String checkASCII(String value) {
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if (c < 0x00 || c > 0x7f) {
+                throw new IllegalArgumentException(String
+                        .format("Invalid character in field line at position %d: '%c' (0x%04x) (input: %s)", i, c, (int) c, value));
+            }
+        }
+        return value;
+    }
+
+    private NumberItem<? extends Object> internalParseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -77,13 +131,13 @@ public class Parser {
         }
     }
 
-    private NumberItem<? extends Object> parseIntegerOrDecimal() {
-        NumberItem<? extends Object> result = parseBareIntegerOrDecimal();
-        Parameters params = parseParameters();
+    private NumberItem<? extends Object> internalParseIntegerOrDecimal() {
+        NumberItem<? extends Object> result = internalParseBareIntegerOrDecimal();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private StringItem parseBareString() {
+    private StringItem internalParseBareString() {
 
         if (getOrEOF() != '"') {
             throw new IllegalArgumentException("must start with double quote: '" + input + "'");
@@ -113,13 +167,13 @@ public class Parser {
         throw new IllegalArgumentException("closing double quote missing");
     }
 
-    private StringItem parseString() {
-        StringItem result = parseBareString();
-        Parameters params = parseParameters();
+    private StringItem internalParseString() {
+        StringItem result = internalParseBareString();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private TokenItem parseBareToken() {
+    private TokenItem internalParseBareToken() {
 
         char c = getOrEOF();
         if (c != '*' && !Utils.isAlpha(c)) {
@@ -143,15 +197,15 @@ public class Parser {
         return TokenItem.valueOf(outputString.toString());
     }
 
-    private TokenItem parseToken() {
-        TokenItem result = parseBareToken();
-        Parameters params = parseParameters();
+    private TokenItem internalParseToken() {
+        TokenItem result = internalParseBareToken();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
     private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
 
-    private ByteSequenceItem parseBareByteSequence() {
+    private ByteSequenceItem internalParseBareByteSequence() {
         if (getOrEOF() != ':') {
             throw new IllegalArgumentException("must start with colon: " + input);
         }
@@ -177,13 +231,13 @@ public class Parser {
         return ByteSequenceItem.valueOf(BASE64DECODER.decode(outputString.toString()));
     }
 
-    private ByteSequenceItem parseByteSequence() {
-        ByteSequenceItem result = parseBareByteSequence();
-        Parameters params = parseParameters();
+    private ByteSequenceItem internalParseByteSequence() {
+        ByteSequenceItem result = internalParseBareByteSequence();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private BooleanItem parseBareBoolean() {
+    private BooleanItem internalParseBareBoolean() {
 
         if (getOrEOF() != '?') {
             throw new IllegalArgumentException("must start with question mark: " + input);
@@ -198,13 +252,13 @@ public class Parser {
         return BooleanItem.valueOf(c == '1');
     }
 
-    private BooleanItem parseBoolean() {
-        BooleanItem result = parseBareBoolean();
-        Parameters params = parseParameters();
+    private BooleanItem internalParseBoolean() {
+        BooleanItem result = internalParseBareBoolean();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private String parseKey() {
+    private String internalParseKey() {
 
         char c = getOrEOF();
         if (c != '*' && !Utils.isLcAlpha(c)) {
@@ -228,7 +282,7 @@ public class Parser {
         return result.toString();
     }
 
-    private Parameters parseParameters() {
+    private Parameters internalParseParameters() {
 
         LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
 
@@ -240,11 +294,11 @@ public class Parser {
             } else {
                 advance();
                 removeLeadingSP();
-                String name = parseKey();
+                String name = internalParseKey();
                 Item<? extends Object> value = BooleanItem.valueOf(true);
                 if (peek() == '=') {
                     advance();
-                    value = parseBareItem();
+                    value = internalParseBareItem();
                 }
                 result.put(name, value);
             }
@@ -253,42 +307,42 @@ public class Parser {
         return Parameters.valueOf(result);
     }
 
-    private Item<? extends Object> parseBareItem() {
+    private Item<? extends Object> internalParseBareItem() {
         if (!hasRemaining()) {
             throw new IllegalArgumentException("empty string");
         }
 
         char c = peek();
         if (Utils.isDigit(c) || c == '-') {
-            return parseBareIntegerOrDecimal();
+            return internalParseBareIntegerOrDecimal();
         } else if (c == '"') {
-            return parseBareString();
+            return internalParseBareString();
         } else if (c == '?') {
-            return parseBareBoolean();
+            return internalParseBareBoolean();
         } else if (c == '*' || Utils.isAlpha(c)) {
-            return parseBareToken();
+            return internalParseBareToken();
         } else if (c == ':') {
-            return parseBareByteSequence();
+            return internalParseBareByteSequence();
         } else {
             throw new IllegalArgumentException("unknown type: " + input);
         }
     }
 
-    private Item<? extends Object> parseItem() {
-        Item<? extends Object> result = parseBareItem();
-        Parameters params = parseParameters();
+    private Item<? extends Object> internalParseItem() {
+        Item<? extends Object> result = internalParseBareItem();
+        Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private Item<? extends Object> parseItemOrInnerList() {
-        return peek() == '(' ? parseInnerList() : parseItem();
+    private Item<? extends Object> internalParseItemOrInnerList() {
+        return peek() == '(' ? internalParseInnerList() : internalParseItem();
     }
 
-    private List<Item<? extends Object>> parseOuterList() {
+    private List<Item<? extends Object>> internalParseOuterList() {
         List<Item<? extends Object>> result = new ArrayList<>();
 
         while (hasRemaining()) {
-            result.add(parseItemOrInnerList());
+            result.add(internalParseItemOrInnerList());
             removeLeadingSP();
             if (!hasRemaining()) {
                 return result;
@@ -306,7 +360,7 @@ public class Parser {
         return result;
     }
 
-    private List<Item<? extends Object>> parseBareInnerList() {
+    private List<Item<? extends Object>> internalParseBareInnerList() {
 
         char c = getOrEOF();
         if (c != '(') {
@@ -324,7 +378,7 @@ public class Parser {
                 advance();
                 done = true;
             } else {
-                Item<? extends Object> item = parseItem();
+                Item<? extends Object> item = internalParseItem();
                 result.add(item);
 
                 c = peek();
@@ -342,13 +396,13 @@ public class Parser {
         return result;
     }
 
-    private InnerList parseInnerList() {
-        List<Item<? extends Object>> result = parseBareInnerList();
-        Parameters params = parseParameters();
+    private InnerList internalParseInnerList() {
+        List<Item<? extends Object>> result = internalParseBareInnerList();
+        Parameters params = internalParseParameters();
         return InnerList.valueOf(result).withParams(params);
     }
 
-    private Dictionary parseDictionary() {
+    private Dictionary internalParseDictionary() {
 
         LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
 
@@ -357,13 +411,13 @@ public class Parser {
 
             Item<? extends Object> member;
 
-            String name = parseKey();
+            String name = internalParseKey();
 
             if (peek() == '=') {
                 advance();
-                member = parseItemOrInnerList();
+                member = internalParseItemOrInnerList();
             } else {
-                member = BooleanItem.valueOf(true).withParams(parseParameters());
+                member = BooleanItem.valueOf(true).withParams(internalParseParameters());
             }
 
             result.put(name, member);
@@ -390,7 +444,7 @@ public class Parser {
 
     protected static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimal();
+        Item<? extends Object> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
             throw new IllegalArgumentException("string parsed as Integer '" + input + "' is a Decimal");
         } else {
@@ -401,7 +455,7 @@ public class Parser {
 
     protected static DecimalItem parseDecimal(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseIntegerOrDecimal();
+        Item<? extends Object> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
             throw new IllegalArgumentException("string parsed as Decimal '" + input + "' is an Integer");
         } else {
@@ -410,10 +464,64 @@ public class Parser {
         }
     }
 
+    // public instance methods
+
+    /**
+     * Implementation of "Parsing a List"
+     *
+     * @return result of parse as {@link OuterList}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-list">Section
+     *      4.2.1 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public OuterList parseList() {
+        removeLeadingSP();
+        List<Item<? extends Object>> result = internalParseOuterList();
+        removeLeadingSP();
+        assertEmpty("extra characters in string parsed as List");
+        return OuterList.valueOf(result);
+    }
+
+    /**
+     * Implementation of "Parsing a Dictionary"
+     *
+     * @return result of parse as {@link Dictionary}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-dictionary">Section
+     *      4.2.2 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public Dictionary parseDictionary() {
+        removeLeadingSP();
+        Dictionary result = internalParseDictionary();
+        removeLeadingSP();
+        assertEmpty("extra characters in string parsed as Dictionary");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing an Item"
+     *
+     * @return result of parse as {@link Item}.
+     *
+     * @see <a href=
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
+     *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
+     */
+    public Item<? extends Object> parseItem() {
+        removeLeadingSP();
+        Item<? extends Object> result = internalParseItem();
+        removeLeadingSP();
+        assertEmpty("extra characters in string parsed as Item");
+        return result;
+    }
+
     // static public methods
 
     /**
-     * Implementation of "Parsing a List" (assuming no extra characters left in input string) 
+     * Implementation of "Parsing a List" (assuming no extra characters left in
+     * input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -425,13 +533,14 @@ public class Parser {
      */
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
-        List<Item<? extends Object>> result = p.parseOuterList();
+        List<Item<? extends Object>> result = p.internalParseOuterList();
         p.assertEmpty("extra characters in string parsed as List");
         return OuterList.valueOf(result);
     }
 
     /**
-     * Implementation of "Parsing an Item Or Inner List" (assuming no extra characters left in input string) 
+     * Implementation of "Parsing an Item Or Inner List" (assuming no extra
+     * characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -443,13 +552,14 @@ public class Parser {
      */
     public static Item<? extends Object> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseItemOrInnerList();
+        Item<? extends Object> result = p.internalParseItemOrInnerList();
         p.assertEmpty("extra characters in string parsed as Item or Inner List");
         return result;
     }
 
     /**
-     * Implementation of "Parsing an Inner List" (assuming no extra characters left in input string) 
+     * Implementation of "Parsing an Inner List" (assuming no extra characters
+     * left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -461,13 +571,14 @@ public class Parser {
      */
     public static InnerList parseInnerList(String input) {
         Parser p = new Parser(input);
-        InnerList result = p.parseInnerList();
+        InnerList result = p.internalParseInnerList();
         p.assertEmpty("extra characters in string parsed as Inner List");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a Dictionary" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Dictionary" (assuming no extra characters
+     * left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -479,13 +590,14 @@ public class Parser {
      */
     public static Dictionary parseDictionary(String input) {
         Parser p = new Parser(input);
-        Dictionary result = p.parseDictionary();
+        Dictionary result = p.internalParseDictionary();
         p.assertEmpty("extra characters in string parsed as Dictionary");
         return result;
     }
 
     /**
-     * Implementation of "Parsing an Item" (assuming no extra characters left in input string)
+     * Implementation of "Parsing an Item" (assuming no extra characters left in
+     * input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -502,9 +614,9 @@ public class Parser {
         return result;
     }
 
-
     /**
-     * Implementation of "Parsing a Bare Item" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Bare Item" (assuming no extra characters
+     * left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -516,13 +628,14 @@ public class Parser {
      */
     public static Item<? extends Object> parseBareItem(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseBareItem();
+        Item<? extends Object> result = p.internalParseBareItem();
         p.assertEmpty("extra characters in string parsed as Bare Item");
         return result;
     }
 
     /**
-     * Implementation of "Parsing Parameters" (assuming no extra characters left in input string)
+     * Implementation of "Parsing Parameters" (assuming no extra characters left
+     * in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -534,13 +647,14 @@ public class Parser {
      */
     public static Parameters parseParameters(String input) {
         Parser p = new Parser(input);
-        Parameters result = p.parseParameters();
+        Parameters result = p.internalParseParameters();
         p.assertEmpty("extra characters in string parsed as Parameters");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a Key" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Key" (assuming no extra characters left in
+     * input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -552,13 +666,14 @@ public class Parser {
      */
     public static String parseKey(String input) {
         Parser p = new Parser(input);
-        String result = p.parseKey();
+        String result = p.internalParseKey();
         p.assertEmpty("extra characters in string parsed as Key");
         return result;
     }
 
     /**
-     * Implementation of "Parsing an Integer or Decimal" (assuming no extra characters left in input string)
+     * Implementation of "Parsing an Integer or Decimal" (assuming no extra
+     * characters left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -570,13 +685,14 @@ public class Parser {
      */
     public static NumberItem<? extends Object> parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
-        NumberItem<? extends Object> result = p.parseIntegerOrDecimal();
+        NumberItem<? extends Object> result = p.internalParseIntegerOrDecimal();
         p.assertEmpty("extra characters in string parsed as Integer or Decimal");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a String" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a String" (assuming no extra characters left
+     * in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -588,13 +704,14 @@ public class Parser {
      */
     public static StringItem parseString(String input) {
         Parser p = new Parser(input);
-        StringItem result = p.parseString();
+        StringItem result = p.internalParseString();
         p.assertEmpty("extra characters in string parsed as String");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a Token" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Token" (assuming no extra characters left in
+     * input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -606,13 +723,14 @@ public class Parser {
      */
     public static TokenItem parseToken(String input) {
         Parser p = new Parser(input);
-        TokenItem result = p.parseToken();
+        TokenItem result = p.internalParseToken();
         p.assertEmpty("extra characters in string parsed as Token");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a Byte Sequence" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Byte Sequence" (assuming no extra characters
+     * left in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -624,13 +742,14 @@ public class Parser {
      */
     public static ByteSequenceItem parseByteSequence(String input) {
         Parser p = new Parser(input);
-        ByteSequenceItem result = p.parseByteSequence();
+        ByteSequenceItem result = p.internalParseByteSequence();
         p.assertEmpty("extra characters in string parsed as Byte Sequence");
         return result;
     }
 
     /**
-     * Implementation of "Parsing a Boolean" (assuming no extra characters left in input string)
+     * Implementation of "Parsing a Boolean" (assuming no extra characters left
+     * in input string)
      *
      * @param input
      *            {@link String} to parse.
@@ -642,7 +761,7 @@ public class Parser {
      */
     public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
-        BooleanItem result = p.parseBoolean();
+        BooleanItem result = p.internalParseBoolean();
         p.assertEmpty("extra characters in string parsed as Boolean");
         return result;
     }
