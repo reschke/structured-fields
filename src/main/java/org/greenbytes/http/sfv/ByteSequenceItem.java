@@ -37,7 +37,7 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
 
     @Override
     public ByteSequenceItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
             return this;
         } else {
             return new ByteSequenceItem(this.value, params);

@@ -34,7 +34,7 @@ public class InnerList implements Item<List<Item<? extends Object>>> {
 
     @Override
     public InnerList withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
             return this;
         } else {
             return new InnerList(this.value, params);

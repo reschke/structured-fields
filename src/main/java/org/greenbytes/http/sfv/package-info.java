@@ -15,7 +15,7 @@
  *     Item<? extends Object> item = e.getValue();
  *     Object value = item.get();
  *     Parameters params = item.getParams();
- *     System.out.println(key + " -> " + value + (params.get().isEmpty() ? "" : (" (" + params.serialize() + ")")));
+ *     System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
  *   }
  * }</pre>
  * <p>

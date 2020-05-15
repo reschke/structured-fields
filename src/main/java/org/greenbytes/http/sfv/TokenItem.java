@@ -33,7 +33,7 @@ public class TokenItem implements Item<String> {
 
     @Override
     public TokenItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
             return this;
         } else {
             return new TokenItem(this.value, params);

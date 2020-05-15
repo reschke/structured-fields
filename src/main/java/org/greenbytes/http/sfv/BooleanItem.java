@@ -41,7 +41,7 @@ public class BooleanItem implements Item<Boolean> {
 
     @Override
     public BooleanItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
             return this;
         } else {
             return new BooleanItem(this.value, params);

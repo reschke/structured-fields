@@ -39,7 +39,7 @@ public class IntegerItem implements NumberItem<Long> {
 
     @Override
     public IntegerItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").get().isEmpty()) {
+        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
             return this;
         } else {
             return new IntegerItem(this.value, params);

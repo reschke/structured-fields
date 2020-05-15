@@ -155,7 +155,7 @@ public class ItemAPITests {
         Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
         m.put("*", IntegerItem.valueOf(1));
         Parameters p = Parameters.valueOf(m);
-        assertEquals(m, p.get());
+        assertEquals(m, p);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class ItemAPITests {
             m.put(key, IntegerItem.valueOf(1));
             try {
                 Parameters p = Parameters.valueOf(m);
-                fail("should fail for key '" + key + "' but got: " + p.get());
+                fail("should fail for key '" + key + "' but got: " + p);
             } catch (IllegalArgumentException ex) {
             }
         }
