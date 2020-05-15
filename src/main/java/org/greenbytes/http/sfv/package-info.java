@@ -21,9 +21,9 @@
  * <p>
  * gives:
  * <pre>{@code
- * a -&gt; false
- * b -&gt; true
- * c -&gt; true (;foo=bar)}</pre>
+ * a -> false
+ * b -> true
+ * c -> true (;foo=bar)}</pre>
  */
 
 package org.greenbytes.http.sfv;
