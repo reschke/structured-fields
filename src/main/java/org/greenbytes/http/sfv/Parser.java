@@ -376,12 +376,12 @@ public class Parser {
         return result.withParams(params);
     }
 
-    private Parametrizable<? extends Object> internalParseItemOrInnerList() {
+    private ListElement<? extends Object> internalParseItemOrInnerList() {
         return peek() == '(' ? internalParseInnerList() : internalParseItem();
     }
 
-    private List<Parametrizable<? extends Object>> internalParseOuterList() {
-        List<Parametrizable<? extends Object>> result = new ArrayList<>();
+    private List<ListElement<? extends Object>> internalParseOuterList() {
+        List<ListElement<? extends Object>> result = new ArrayList<>();
 
         while (hasRemaining()) {
             result.add(internalParseItemOrInnerList());
@@ -450,12 +450,12 @@ public class Parser {
 
     private Dictionary internalParseDictionary() {
 
-        LinkedHashMap<String, Parametrizable<? extends Object>> result = new LinkedHashMap<>();
+        LinkedHashMap<String, ListElement<? extends Object>> result = new LinkedHashMap<>();
 
         boolean done = false;
         while (hasRemaining() && !done) {
 
-            Parametrizable<? extends Object> member;
+            ListElement<? extends Object> member;
 
             String name = internalParseKey();
 
@@ -524,7 +524,7 @@ public class Parser {
      */
     public OuterList parseList() {
         removeLeadingSP();
-        List<Parametrizable<? extends Object>> result = internalParseOuterList();
+        List<ListElement<? extends Object>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
@@ -580,7 +580,7 @@ public class Parser {
      */
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
-        List<Parametrizable<? extends Object>> result = p.internalParseOuterList();
+        List<ListElement<? extends Object>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
     }
@@ -599,7 +599,7 @@ public class Parser {
      */
     public static Parametrizable<? extends Object> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
-        Parametrizable<? extends Object> result = p.internalParseItemOrInnerList();
+        ListElement<? extends Object> result = p.internalParseItemOrInnerList();
         p.assertEmpty("Extra characters in string parsed as Item or Inner List");
         return result;
     }

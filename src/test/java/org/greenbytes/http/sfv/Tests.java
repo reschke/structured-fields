@@ -240,7 +240,7 @@ public class Tests {
     public void parserAPI() {
         Parser p = new Parser("a=?0, b, c; foo=bar");
         Dictionary d = p.parseDictionary();
-        for (Map.Entry<String, Parametrizable<? extends Object>> e : d.get().entrySet()) {
+        for (Map.Entry<String, ListElement<? extends Object>> e : d.get().entrySet()) {
             String key = e.getKey();
             Parametrizable<? extends Object> item = e.getValue();
             Object value = item.get();

@@ -1,7 +1,7 @@
 package org.greenbytes.http.sfv;
 
 /**
- * Marker interface for Items.
+ * Marker interface for things that can be elements of Outer Lists.
  * 
  * @param <T>
  *            represented Java type
@@ -9,7 +9,5 @@ package org.greenbytes.http.sfv;
  *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#item">Section
  *      3.3 of draft-ietf-httpbis-header-structure-18</a>
  */
-public interface Item<T> extends ListElement<T>, Parametrizable<T> {
-
-    public Item<T> withParams(Parameters params);
+public interface ListElement<T> extends Parametrizable<T> {
 }

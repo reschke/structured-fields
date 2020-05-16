@@ -10,11 +10,11 @@ import java.util.Objects;
  *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#list">Section
  *      3.1 of draft-ietf-httpbis-header-structure-18</a>
  */
-public class OuterList implements Type<List<Parametrizable<? extends Object>>> {
+public class OuterList implements Type<List<ListElement<? extends Object>>> {
 
-    private final List<Parametrizable<? extends Object>> value;
+    private final List<ListElement<? extends Object>> value;
 
-    private OuterList(List<Parametrizable<? extends Object>> value) {
+    private OuterList(List<ListElement<? extends Object>> value) {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
@@ -26,7 +26,7 @@ public class OuterList implements Type<List<Parametrizable<? extends Object>>> {
      *            a {@code List<Item>} value.
      * @return a {@link OuterList} representing {@code value}.
      */
-    public static OuterList valueOf(List<Parametrizable<? extends Object>> value) {
+    public static OuterList valueOf(List<ListElement<? extends Object>> value) {
         return new OuterList(value);
     }
 
@@ -34,7 +34,7 @@ public class OuterList implements Type<List<Parametrizable<? extends Object>>> {
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
-        for (Parametrizable<? extends Object> i : value) {
+        for (ListElement<? extends Object> i : value) {
             sb.append(separator);
             separator = ", ";
             i.serializeTo(sb);
@@ -49,7 +49,7 @@ public class OuterList implements Type<List<Parametrizable<? extends Object>>> {
     }
 
     @Override
-    public List<Parametrizable<? extends Object>> get() {
+    public List<ListElement<? extends Object>> get() {
         return value;
     }
 }
