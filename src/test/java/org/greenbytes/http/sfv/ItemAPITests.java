@@ -159,7 +159,7 @@ public class ItemAPITests {
     }
 
     @Test
-    public void testInvalidParameters() {
+    public void testInvalidParameterKeys() {
 
         String tests[] = { "Aa", "-a", "/a", "", " ", "1" };
         Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
@@ -171,6 +171,22 @@ public class ItemAPITests {
                 fail("should fail for key '" + key + "' but got: " + p);
             } catch (IllegalArgumentException ex) {
             }
+        }
+    }
+
+    @Test
+    public void testInvalidParameterValues() {
+
+        Map<String, Item<? extends Object>> itemParam = new LinkedHashMap<>();
+        itemParam.put("foo", IntegerItem.valueOf(2));
+        IntegerItem item = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
+
+        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
+        m.put("bar", item);
+        try {
+            Parameters test = Parameters.valueOf(m);
+            fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
+        } catch (IllegalArgumentException expected) {
         }
     }
 }

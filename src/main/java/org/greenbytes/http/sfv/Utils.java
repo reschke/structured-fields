@@ -23,9 +23,9 @@ public class Utils {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
-    private static void checkKey(String value) {
-        if (value.length() == 0) {
-            throw new IllegalArgumentException("Key can not be empty");
+    protected static void checkKey(String value) {
+        if (value == null || value.length() == 0) {
+            throw new IllegalArgumentException("Key can not be null or empty");
         }
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
