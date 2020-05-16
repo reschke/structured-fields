@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -179,13 +180,22 @@ public class ItemAPITests {
 
         Map<String, Item<? extends Object>> itemParam = new LinkedHashMap<>();
         itemParam.put("foo", IntegerItem.valueOf(2));
-        IntegerItem item = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
+        IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
 
         Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
-        m.put("bar", item);
+        m.put("bar", iitem);
         try {
             Parameters test = Parameters.valueOf(m);
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
+        } catch (IllegalArgumentException expected) {
+        }
+
+        m = new LinkedHashMap<>();
+        InnerList ilitem = InnerList.valueOf(Collections.emptyList());
+        m.put("bar", ilitem);
+        try {
+            Parameters test = Parameters.valueOf(m);
+            fail("Parameters containing Inner List value should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }
     }

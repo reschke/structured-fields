@@ -60,6 +60,9 @@ public class Parameters implements Map<String, Item<? extends Object>> {
             if (!value.getParams().isEmpty()) {
                 throw new IllegalArgumentException("Parameter value must be bare item (no parameters)");
             }
+            if (value instanceof InnerList) {
+                throw new IllegalArgumentException("Parameter value cannot be an Inner List");
+            }
         }
         return map;
     }
