@@ -10,7 +10,7 @@ import java.util.Objects;
  *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#inner-list">Section
  *      3.1.1 of draft-ietf-httpbis-header-structure-18</a>
  */
-public class InnerList implements Item<List<Item<? extends Object>>> {
+public class InnerList implements Parametrizable<List<Item<? extends Object>>> {
 
     private final List<Item<? extends Object>> value;
     private final Parameters params;

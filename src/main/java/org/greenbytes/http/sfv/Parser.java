@@ -376,12 +376,12 @@ public class Parser {
         return result.withParams(params);
     }
 
-    private Item<? extends Object> internalParseItemOrInnerList() {
+    private Parametrizable<? extends Object> internalParseItemOrInnerList() {
         return peek() == '(' ? internalParseInnerList() : internalParseItem();
     }
 
-    private List<Item<? extends Object>> internalParseOuterList() {
-        List<Item<? extends Object>> result = new ArrayList<>();
+    private List<Parametrizable<? extends Object>> internalParseOuterList() {
+        List<Parametrizable<? extends Object>> result = new ArrayList<>();
 
         while (hasRemaining()) {
             result.add(internalParseItemOrInnerList());
@@ -450,12 +450,12 @@ public class Parser {
 
     private Dictionary internalParseDictionary() {
 
-        LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
+        LinkedHashMap<String, Parametrizable<? extends Object>> result = new LinkedHashMap<>();
 
         boolean done = false;
         while (hasRemaining() && !done) {
 
-            Item<? extends Object> member;
+            Parametrizable<? extends Object> member;
 
             String name = internalParseKey();
 
@@ -524,7 +524,7 @@ public class Parser {
      */
     public OuterList parseList() {
         removeLeadingSP();
-        List<Item<? extends Object>> result = internalParseOuterList();
+        List<Parametrizable<? extends Object>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
@@ -580,7 +580,7 @@ public class Parser {
      */
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
-        List<Item<? extends Object>> result = p.internalParseOuterList();
+        List<Parametrizable<? extends Object>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
     }
@@ -597,9 +597,9 @@ public class Parser {
      *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item-or-list">Section
      *      4.2.1.1 of draft-ietf-httpbis-header-structure-18</a>
      */
-    public static Item<? extends Object> parseItemOrInnerList(String input) {
+    public static Parametrizable<? extends Object> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.internalParseItemOrInnerList();
+        Parametrizable<? extends Object> result = p.internalParseItemOrInnerList();
         p.assertEmpty("Extra characters in string parsed as Item or Inner List");
         return result;
     }

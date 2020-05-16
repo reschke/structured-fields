@@ -152,9 +152,9 @@ public abstract class AbstractSpecificationTests {
             fail("unexpected type: " + value.getClass());
         }
         if (params != null) {
-            assertTrue(item instanceof Item);
+            assertTrue(item instanceof Parametrizable);
             JsonObject expected = (JsonObject) params;
-            Map<String, Item<? extends Object>> result = ((Item<? extends Object>) item).getParams();
+            Map<String, Item<? extends Object>> result = ((Parametrizable<? extends Object>) item).getParams();
             assertEquals(expected.size(), result.size());
             for (Map.Entry<String, JsonValue> e : expected.entrySet()) {
                 if (e.getValue() instanceof JsonArray) {

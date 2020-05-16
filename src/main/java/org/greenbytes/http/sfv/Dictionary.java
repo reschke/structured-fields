@@ -10,11 +10,11 @@ import java.util.Map;
  *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#dictionary">Section
  *      3.2 of draft-ietf-httpbis-header-structure-18</a>
  */
-public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
+public class Dictionary implements Type<Map<String, Parametrizable<? extends Object>>> {
 
-    private final Map<String, Item<? extends Object>> value;
+    private final Map<String, Parametrizable<? extends Object>> value;
 
-    private Dictionary(Map<String, Item<? extends Object>> value) {
+    private Dictionary(Map<String, Parametrizable<? extends Object>> value) {
         this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
@@ -30,12 +30,12 @@ public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
      *            a {@code Map<String, Item>} value
      * @return a {@link Dictionary} representing {@code value}.
      */
-    public static Dictionary valueOf(Map<String, Item<? extends Object>> value) {
+    public static Dictionary valueOf(Map<String, Parametrizable<? extends Object>> value) {
         return new Dictionary(value);
     }
 
     @Override
-    public Map<String, Item<? extends Object>> get() {
+    public Map<String, Parametrizable<? extends Object>> get() {
         return value;
     }
 
@@ -43,12 +43,12 @@ public class Dictionary implements Type<Map<String, Item<? extends Object>>> {
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
-        for (Map.Entry<String, Item<? extends Object>> e : value.entrySet()) {
+        for (Map.Entry<String, Parametrizable<? extends Object>> e : value.entrySet()) {
             sb.append(separator);
             separator = ", ";
 
             String name = e.getKey();
-            Item<? extends Object> value = e.getValue();
+            Parametrizable<? extends Object> value = e.getValue();
 
             sb.append(name);
             if (Boolean.TRUE.equals(value.get())) {

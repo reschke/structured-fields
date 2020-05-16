@@ -240,9 +240,9 @@ public class Tests {
     public void parserAPI() {
         Parser p = new Parser("a=?0, b, c; foo=bar");
         Dictionary d = p.parseDictionary();
-        for (Map.Entry<String, Item<? extends Object>> e : d.get().entrySet()) {
+        for (Map.Entry<String, Parametrizable<? extends Object>> e : d.get().entrySet()) {
             String key = e.getKey();
-            Item<? extends Object> item = e.getValue();
+            Parametrizable<? extends Object> item = e.getValue();
             Object value = item.get();
             Parameters params = item.getParams();
             System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));

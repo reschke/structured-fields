@@ -37,7 +37,7 @@ public class Utils {
         }
     }
 
-    protected static Map<String, Item<? extends Object>> checkKeys(Map<String, Item<? extends Object>> value) {
+    protected static Map<String, Parametrizable<? extends Object>> checkKeys(Map<String, Parametrizable<? extends Object>> value) {
         for (String key : Objects.requireNonNull(value, "value must not be null").keySet()) {
             checkKey(key);
         }

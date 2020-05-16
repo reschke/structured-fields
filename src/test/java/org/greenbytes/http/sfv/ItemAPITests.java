@@ -189,14 +189,5 @@ public class ItemAPITests {
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }
-
-        m = new LinkedHashMap<>();
-        InnerList ilitem = InnerList.valueOf(Collections.emptyList());
-        m.put("bar", ilitem);
-        try {
-            Parameters test = Parameters.valueOf(m);
-            fail("Parameters containing Inner List value should fail, but got: " + test.serialize());
-        } catch (IllegalArgumentException expected) {
-        }
     }
 }

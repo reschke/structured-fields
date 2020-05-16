@@ -10,4 +10,6 @@ package org.greenbytes.http.sfv;
  *      3.3 of draft-ietf-httpbis-header-structure-18</a>
  */
 public interface Item<T> extends Parametrizable<T> {
+
+    public Item<T> withParams(Parameters params);
 }
