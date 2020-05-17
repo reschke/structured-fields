@@ -104,7 +104,7 @@ public class Parser {
         }
 
         if (!checkNextChar("0123456789")) {
-            throw new ParseException("Illegal start for Integer or Decimal: '" + input + "'");
+            throw complaint("Illegal start for Integer or Decimal: '" + input + "'");
         }
 
         boolean done = false;
@@ -115,7 +115,7 @@ public class Parser {
                 advance();
             } else if (!isDecimal && c == '.') {
                 if (inputNumber.length() > 12) {
-                    throw new ParseException("Illegal position for decimal point in Decimal at " + inputNumber);
+                    throw complaint("Illegal position for decimal point in Decimal at " + inputNumber);
                 }
                 inputNumber.append(c);
                 isDecimal = true;
@@ -124,7 +124,7 @@ public class Parser {
                 done = true;
             }
             if (inputNumber.length() > (isDecimal ? 16 : 15)) {
-                throw new ParseException((isDecimal ? "Decimal" : "Integer") + " too long: " + inputNumber.length());
+                throw complaint((isDecimal ? "Decimal" : "Integer") + " too long: " + inputNumber.length());
             }
         }
 
@@ -136,13 +136,13 @@ public class Parser {
             int fracLen = inputNumber.length() - dotPos - 1;
 
             if (fracLen < 1) {
-                throw new ParseException("Decimal must not end in '.'");
+                throw complaint("Decimal must not end in '.'");
             } else if (fracLen == 1) {
                 inputNumber.append("00");
             } else if (fracLen == 2) {
                 inputNumber.append("0");
             } else if (fracLen > 3) {
-                throw new ParseException("Maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
+                throw complaint("Maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
             }
 
             inputNumber.deleteCharAt(dotPos);
@@ -160,7 +160,7 @@ public class Parser {
     private StringItem internalParseBareString() {
 
         if (getOrEOF() != '"') {
-            throw new ParseException("String must start with double quote: '" + input + "'");
+            throw complaint("String must start with double quote: '" + input + "'");
         }
 
         StringBuilder outputString = new StringBuilder(length());
@@ -168,31 +168,31 @@ public class Parser {
         while (hasRemaining()) {
             // TODO: we may have to back out this check or make it optional
             if (startPositions.contains(position())) {
-                throw new ParseException("String crosses field line boundary at position " + position());
+                throw complaint("String crosses field line boundary at position " + position());
             }
 
             char c = get();
             if (c == '\\') {
                 c = getOrEOF();
                 if (c < 0) {
-                    throw new ParseException("Incomplete escape sequence at position " + position());
+                    throw complaint("Incomplete escape sequence at position " + position());
                 } else if (c != '"' && c != '\\') {
                     backout();
-                    throw new ParseException("Invalid escape sequence character '" + c + "' at position " + position());
+                    throw complaint("Invalid escape sequence character '" + c + "' at position " + position());
                 }
                 outputString.append(c);
             } else {
                 if (c == '"') {
                     return StringItem.valueOf(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
-                    throw new ParseException("Invalid character in Bare String at position " + position());
+                    throw complaint("Invalid character in Bare String at position " + position());
                 } else {
                     outputString.append(c);
                 }
             }
         }
 
-        throw new ParseException("Closing DQUOTE missing");
+        throw complaint("Closing DQUOTE missing");
     }
 
     private StringItem internalParseString() {
@@ -205,7 +205,7 @@ public class Parser {
 
         char c = getOrEOF();
         if (c != '*' && !Utils.isAlpha(c)) {
-            throw new ParseException("Token must start with ALPHA or *: '" + input + "'");
+            throw complaint("Token must start with ALPHA or *: '" + input + "'");
         }
 
         StringBuilder outputString = new StringBuilder(length());
@@ -235,7 +235,7 @@ public class Parser {
 
     private ByteSequenceItem internalParseBareByteSequence() {
         if (getOrEOF() != ':') {
-            throw new ParseException("Byte Sequence must start with colon: " + input);
+            throw complaint("Byte Sequence must start with colon: " + input);
         }
 
         StringBuilder outputString = new StringBuilder(length());
@@ -252,13 +252,13 @@ public class Parser {
         }
 
         if (!done) {
-            throw new ParseException("Byte Sequence must end with COLON: '" + outputString + "'");
+            throw complaint("Byte Sequence must end with COLON: '" + outputString + "'");
         }
 
         try {
             return ByteSequenceItem.valueOf(BASE64DECODER.decode(outputString.toString()));
         } catch (IllegalArgumentException ex) {
-            throw new ParseException(ex.getMessage());
+            throw complaint(ex.getMessage(), ex);
         }
     }
 
@@ -273,19 +273,19 @@ public class Parser {
         char c = getOrEOF();
 
         if (c < 0) {
-            throw new ParseException("Missing data in Boolean");
+            throw complaint("Missing data in Boolean");
         } else if (c != '?') {
             backout();
-            throw new ParseException(String.format("Boolean must start with question mark, got '%c'", c));
+            throw complaint(String.format("Boolean must start with question mark, got '%c'", c));
         }
 
         c = getOrEOF();
 
         if (c < 0) {
-            throw new ParseException("Missing data in Boolean");
+            throw complaint("Missing data in Boolean");
         } else if (c != '0' && c != '1') {
             backout();
-            throw new ParseException(String.format("Expected '0' or '1' in Boolean, found '%c'", c));
+            throw complaint(String.format("Expected '0' or '1' in Boolean, found '%c'", c));
         }
 
         return BooleanItem.valueOf(c == '1');
@@ -301,10 +301,10 @@ public class Parser {
 
         char c = getOrEOF();
         if (c < 0) {
-            throw new ParseException("Missing data in Key");
+            throw complaint("Missing data in Key");
         } else if (c != '*' && !Utils.isLcAlpha(c)) {
             backout();
-            throw new ParseException("Key must start with LCALPHA or '*': '" + c + "'");
+            throw complaint("Key must start with LCALPHA or '*': '" + c + "'");
         }
 
         StringBuilder result = new StringBuilder();
@@ -351,7 +351,7 @@ public class Parser {
 
     private Item<? extends Object> internalParseBareItem() {
         if (!hasRemaining()) {
-            throw new ParseException("Empty string found when parsing Bare Item");
+            throw complaint("Empty string found when parsing Bare Item");
         }
 
         char c = peek();
@@ -366,7 +366,7 @@ public class Parser {
         } else if (c == ':') {
             return internalParseBareByteSequence();
         } else {
-            throw new ParseException("Unknown start character in Bare Item: '" + c + "'");
+            throw complaint("Unknown start character in Bare Item: '" + c + "'");
         }
     }
 
@@ -392,11 +392,11 @@ public class Parser {
             char c = get();
             if (c != ',') {
                 backout();
-                throw new ParseException("Expected COMMA in List, got: '" + c + "'");
+                throw complaint("Expected COMMA in List, got: '" + c + "'");
             }
             removeLeadingSP();
             if (!hasRemaining()) {
-                throw new ParseException("Found trailing COMMA in List");
+                throw complaint("Found trailing COMMA in List");
             }
         }
 
@@ -408,7 +408,7 @@ public class Parser {
 
         char c = getOrEOF();
         if (c != '(') {
-            throw new ParseException("Inner List must start with '(': " + input);
+            throw complaint("Inner List must start with '(': " + input);
         }
 
         List<Item<? extends Object>> result = new ArrayList<>();
@@ -427,16 +427,16 @@ public class Parser {
 
                 c = peek();
                 if (c < 0) {
-                    throw new ParseException("Missing data in Inner List");
+                    throw complaint("Missing data in Inner List");
                 } else if (c != ' ' && c != ')') {
-                    throw new ParseException("Expected SP or ')' in Inner List, got: '" + c + "'");
+                    throw complaint("Expected SP or ')' in Inner List, got: '" + c + "'");
                 }
             }
 
         }
 
         if (!done) {
-            throw new ParseException("Inner List must end with ')': " + input);
+            throw complaint("Inner List must end with ')': " + input);
         }
 
         return result;
@@ -473,11 +473,11 @@ public class Parser {
                 char c = get();
                 if (c != ',') {
                     backout();
-                    throw new ParseException("Expected COMMA in Dictionary, found: '" + c + "'");
+                    throw complaint("Expected COMMA in Dictionary, found: '" + c + "'");
                 }
                 removeLeadingSP();
                 if (!hasRemaining()) {
-                    throw new ParseException("Found trailing COMMA in Dictionary");
+                    throw complaint("Found trailing COMMA in Dictionary");
                 }
             } else {
                 done = true;
@@ -817,7 +817,7 @@ public class Parser {
 
     private void assertEmpty(String message) {
         if (hasRemaining()) {
-            throw new ParseException(String.format(message, position(), input));
+            throw complaint(String.format(message, position(), input));
         }
     }
 
@@ -867,45 +867,11 @@ public class Parser {
         }
     }
 
-    public class ParseException extends IllegalArgumentException {
+    private ParseException complaint(String message) {
+        return new ParseException(message, input);
+    }
 
-        private final int position;
-        private final String data;
-
-        public ParseException(String message) {
-            super(message);
-            this.position = input.position();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < input.position() + input.remaining(); i++) {
-                sb.append(input.get(i));
-            }
-            this.data = sb.toString();
-        }
-
-        /**
-         * Gets additional diagnostics.
-         * 
-         * @return two lines of data; first contains the raw parse data enclosed
-         *         in "&gt;&gt;" and "&lt;&lt;", the second ASCII artwork with
-         *         "^" pointing to the parse position, followed by the actual
-         *         exception message.
-         */
-        public String getDiagnostics() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(">>").append(data).append("<<").append('\n');
-            sb.append("  ");
-            for (int i = 0; i < position; i++) {
-                sb.append('-');
-            }
-            sb.append("^ ");
-            if (position < data.length()) {
-                char c = data.charAt(position);
-                sb.append(String.format("(0x%02x) ", (int) c));
-            }
-            sb.append(super.getMessage()).append('\n');
-            return sb.toString();
-        }
-
-        private static final long serialVersionUID = -5222947525946866985L;
+    private ParseException complaint(String message, Throwable cause) {
+        return new ParseException(message, input, cause);
     }
 }
