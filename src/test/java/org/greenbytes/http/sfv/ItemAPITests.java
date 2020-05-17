@@ -61,10 +61,19 @@ public class ItemAPITests {
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
             assertEquals(l, item.getAsLong());
             assertEquals(1000, item.getDivisor());
-            // TODO: figure out how to check the serialization without copying
-            // the actual impl code
-            // assertEquals(BigDecimal.valueOf(l, 3).toPlainString(),
-            // item.serialize());
+        }
+    }
+
+    @Test
+    public void testDecimalByBigDecimal() {
+
+        BigDecimal[] tests = new BigDecimal[] { new BigDecimal(0.5), new BigDecimal(1), new BigDecimal(-1.1),
+                new BigDecimal(0.1234) };
+
+        for (BigDecimal b : tests) {
+            BigDecimal permille = b.multiply(new BigDecimal(1000));
+            DecimalItem item = DecimalItem.valueOf(b);
+            assertEquals(permille.longValue(), item.getAsLong());
         }
     }
 
@@ -158,12 +167,14 @@ public class ItemAPITests {
         m.put("l", 2l);
         m.put("b", false);
         m.put("o", new byte[0]);
+        m.put("d", new BigDecimal(0.1));
         Parameters p = Parameters.valueOf(m);
         assertEquals(p.get("*").getClass(), StringItem.class);
         assertEquals(p.get("i").getClass(), IntegerItem.class);
         assertEquals(p.get("l").getClass(), IntegerItem.class);
         assertEquals(p.get("b").getClass(), BooleanItem.class);
         assertEquals(p.get("o").getClass(), ByteSequenceItem.class);
+        assertEquals(p.get("d").getClass(), DecimalItem.class);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -82,6 +83,8 @@ public class Parameters implements Map<String, Item<? extends Object>> {
             return BooleanItem.valueOf(((Boolean) o).booleanValue());
         } else if (o instanceof byte[]) {
             return ByteSequenceItem.valueOf((byte[]) o);
+        } else if (o instanceof BigDecimal) {
+            return DecimalItem.valueOf((BigDecimal)o);
         } else {
             throw new IllegalArgumentException("Can't map value for parameter '" + key + "': " + o.getClass());
         }

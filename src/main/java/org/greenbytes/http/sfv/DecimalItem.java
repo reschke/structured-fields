@@ -26,6 +26,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
 
     private static final long MIN = -999999999999999L;
     private static final long MAX = 999999999999999L;
+    private static final BigDecimal THOUSAND = new BigDecimal(1000);
 
     private DecimalItem(long value, Parameters params) {
         if (value < MIN || value > MAX) {
@@ -45,6 +46,19 @@ public class DecimalItem implements NumberItem<BigDecimal> {
      */
     public static DecimalItem valueOf(long value) {
         return new DecimalItem(value, Parameters.EMPTY);
+    }
+
+    /**
+     * Creates a {@link DecimalItem} instance representing the specified
+     * {@code BigDecimal} value, with potential rounding.
+     * 
+     * @param value
+     *            a {@code BigDecimal} value.
+     * @return a {@link DecimalItem} representing {@code value}.
+     */
+    public static DecimalItem valueOf(BigDecimal value) {
+        BigDecimal permille = (Objects.requireNonNull(value, "value must not be null")).multiply(THOUSAND);
+        return valueOf(permille.longValue());
     }
 
     @Override
