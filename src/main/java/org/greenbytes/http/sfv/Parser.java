@@ -159,7 +159,7 @@ public class Parser {
 
     private StringItem internalParseBareString() {
 
-        if (getOrEOF() != '"') {
+        if (getOrEOD() != '"') {
             throw complaint("String must start with double quote: '" + input + "'");
         }
 
@@ -173,8 +173,8 @@ public class Parser {
 
             char c = get();
             if (c == '\\') {
-                c = getOrEOF();
-                if (c < 0) {
+                c = getOrEOD();
+                if (c == EOD) {
                     throw complaint("Incomplete escape sequence at position " + position());
                 } else if (c != '"' && c != '\\') {
                     backout();
@@ -203,7 +203,7 @@ public class Parser {
 
     private TokenItem internalParseBareToken() {
 
-        char c = getOrEOF();
+        char c = getOrEOD();
         if (c != '*' && !Utils.isAlpha(c)) {
             throw complaint("Token must start with ALPHA or *: '" + input + "'");
         }
@@ -234,7 +234,7 @@ public class Parser {
     private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
 
     private ByteSequenceItem internalParseBareByteSequence() {
-        if (getOrEOF() != ':') {
+        if (getOrEOD() != ':') {
             throw complaint("Byte Sequence must start with colon: " + input);
         }
 
@@ -270,18 +270,18 @@ public class Parser {
 
     private BooleanItem internalParseBareBoolean() {
 
-        char c = getOrEOF();
+        char c = getOrEOD();
 
-        if (c < 0) {
+        if (c == EOD) {
             throw complaint("Missing data in Boolean");
         } else if (c != '?') {
             backout();
             throw complaint(String.format("Boolean must start with question mark, got '%c'", c));
         }
 
-        c = getOrEOF();
+        c = getOrEOD();
 
-        if (c < 0) {
+        if (c == EOD) {
             throw complaint("Missing data in Boolean");
         } else if (c != '0' && c != '1') {
             backout();
@@ -299,8 +299,8 @@ public class Parser {
 
     private String internalParseKey() {
 
-        char c = getOrEOF();
-        if (c < 0) {
+        char c = getOrEOD();
+        if (c == EOD) {
             throw complaint("Missing data in Key");
         } else if (c != '*' && !Utils.isLcAlpha(c)) {
             backout();
@@ -406,7 +406,7 @@ public class Parser {
 
     private List<Item<? extends Object>> internalParseBareInnerList() {
 
-        char c = getOrEOF();
+        char c = getOrEOD();
         if (c != '(') {
             throw complaint("Inner List must start with '(': " + input);
         }
@@ -815,6 +815,8 @@ public class Parser {
 
     // utility methods on CharBuffer
 
+    private static char EOD = (char) -1;
+
     private void assertEmpty(String message) {
         if (hasRemaining()) {
             throw complaint(String.format(message, position(), input));
@@ -841,8 +843,8 @@ public class Parser {
         return input.get();
     }
 
-    private char getOrEOF() {
-        return hasRemaining() ? get() : (char) -1;
+    private char getOrEOD() {
+        return hasRemaining() ? get() : EOD;
     }
 
     private boolean hasRemaining() {
@@ -854,7 +856,7 @@ public class Parser {
     }
 
     private char peek() {
-        return hasRemaining() ? input.charAt(0) : (char) -1;
+        return hasRemaining() ? input.charAt(0) : EOD;
     }
 
     private int position() {
