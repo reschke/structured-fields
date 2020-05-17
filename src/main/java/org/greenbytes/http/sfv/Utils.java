@@ -23,7 +23,7 @@ public class Utils {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
-    protected static void checkKey(String value) {
+    protected static String checkKey(String value) {
         if (value == null || value.length() == 0) {
             throw new IllegalArgumentException("Key can not be null or empty");
         }
@@ -35,6 +35,7 @@ public class Utils {
                         String.format("Invalid character in key at position %d: '%c' (0x%04x)", i, c, (int) c));
             }
         }
+        return value;
     }
 
     protected static Map<String, ListElement<? extends Object>> checkKeys(Map<String, ListElement<? extends Object>> value) {

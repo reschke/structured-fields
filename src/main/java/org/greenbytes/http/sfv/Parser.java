@@ -326,7 +326,7 @@ public class Parser {
 
     private Parameters internalParseParameters() {
 
-        LinkedHashMap<String, Item<? extends Object>> result = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
         boolean done = false;
         while (hasRemaining() && !done) {

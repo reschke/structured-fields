@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -153,17 +152,25 @@ public class ItemAPITests {
     @Test
     public void testParameters() {
 
-        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
-        m.put("*", IntegerItem.valueOf(1));
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("*", "star");
+        m.put("i", 1);
+        m.put("l", 2l);
+        m.put("b", false);
+        m.put("o", new byte[0]);
         Parameters p = Parameters.valueOf(m);
-        assertEquals(m, p);
+        assertEquals(p.get("*").getClass(), StringItem.class);
+        assertEquals(p.get("i").getClass(), IntegerItem.class);
+        assertEquals(p.get("l").getClass(), IntegerItem.class);
+        assertEquals(p.get("b").getClass(), BooleanItem.class);
+        assertEquals(p.get("o").getClass(), ByteSequenceItem.class);
     }
 
     @Test
     public void testInvalidParameterKeys() {
 
         String tests[] = { "Aa", "-a", "/a", "", " ", "1" };
-        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
+        Map<String, Object> m = new LinkedHashMap<>();
         for (String key : tests) {
             m.clear();
             m.put(key, IntegerItem.valueOf(1));
@@ -178,11 +185,11 @@ public class ItemAPITests {
     @Test
     public void testInvalidParameterValues() {
 
-        Map<String, Item<? extends Object>> itemParam = new LinkedHashMap<>();
+        Map<String, Object> itemParam = new LinkedHashMap<>();
         itemParam.put("foo", IntegerItem.valueOf(2));
         IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
 
-        Map<String, Item<? extends Object>> m = new LinkedHashMap<>();
+        Map<String, Object> m = new LinkedHashMap<>();
         m.put("bar", iitem);
         try {
             Parameters test = Parameters.valueOf(m);
