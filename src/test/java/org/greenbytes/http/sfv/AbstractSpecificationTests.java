@@ -174,7 +174,8 @@ public abstract class AbstractSpecificationTests {
                 Type<? extends Object> parsed = parse();
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (ParseException expected) {
-            } catch (IllegalArgumentException expected) {
+//                System.out.println(p.name);
+//                System.err.println(expected.getDiagnostics());
             }
         } else {
             Type<? extends Object> item = parse();

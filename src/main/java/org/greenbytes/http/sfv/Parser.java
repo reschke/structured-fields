@@ -26,7 +26,7 @@ public class Parser {
      * 
      * @param input
      *            single field line
-     * @throws IllegalArgumentException
+     * @throws ParseException
      *             for non-ASCII characters
      */
     public Parser(String input) {
@@ -38,7 +38,7 @@ public class Parser {
      * 
      * @param input
      *            field lines
-     * @throws IllegalArgumentException
+     * @throws ParseException
      *             for non-ASCII characters
      */
     public Parser(String... input) {
@@ -50,7 +50,7 @@ public class Parser {
      * 
      * @param fieldLines
      *            field lines
-     * @throws IllegalArgumentException
+     * @throws ParseException
      *             for non-ASCII characters or empty input
      */
     public Parser(Iterable<String> fieldLines) {
@@ -72,11 +72,12 @@ public class Parser {
                     startPositions = new ArrayList<>();
                 }
                 startPositions.add(sb.length());
+                // TODO need to rethrow exception with full data
                 sb.append(",").append(checkASCII(s));
             }
         }
         if (str == null && sb == null) {
-            throw new IllegalArgumentException("Empty input");
+            throw new ParseException("Empty input", "", 0);
         }
         this.input = CharBuffer.wrap(sb != null ? sb : str);
         this.startPositions = startPositions;
@@ -86,8 +87,8 @@ public class Parser {
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
             if (c < 0x00 || c > 0x7f) {
-                throw new IllegalArgumentException(String
-                        .format("Invalid character in field line at position %d: '%c' (0x%04x) (input: %s)", i, c, (int) c, value));
+                throw new ParseException(String.format("Invalid character in field line at position %d: '%c' (0x%04x) (input: %s)",
+                        i, c, (int) c, value), value, i);
             }
         }
         return value;
@@ -493,7 +494,7 @@ public class Parser {
         Parser p = new Parser(input);
         Item<? extends Object> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
-            throw new IllegalArgumentException("String parsed as Integer '" + input + "' is a Decimal");
+            throw p.complaint("String parsed as Integer '" + input + "' is a Decimal");
         } else {
             p.assertEmpty("Extra characters in string parsed as Integer");
             return (IntegerItem) result;
@@ -504,7 +505,7 @@ public class Parser {
         Parser p = new Parser(input);
         Item<? extends Object> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
-            throw new IllegalArgumentException("String parsed as Decimal '" + input + "' is an Integer");
+            throw p.complaint("String parsed as Decimal '" + input + "' is an Integer");
         } else {
             p.assertEmpty("Extra characters in string parsed as Decimal");
             return (DecimalItem) result;

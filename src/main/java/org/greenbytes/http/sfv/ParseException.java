@@ -16,18 +16,44 @@ public class ParseException extends IllegalArgumentException {
      * @param message
      *            exception message.
      * @param input
+     *            parser input.
+     * @param position
+     *            position where parse exception occurred.
+     * @param cause
+     *            underlying exception, if any.
+     */
+    public ParseException(String message, String input, int position, Throwable cause) {
+        super(message, cause);
+        this.position = position;
+        this.data = input;
+    }
+
+    /**
+     * Create instance of {@link ParseException}.
+     * 
+     * @param message
+     *            exception message.
+     * @param input
+     *            parser input.
+     * @param position
+     *            position where parse exception occurred.
+     */
+    public ParseException(String message, String input, int position) {
+        this(message, input, position, null);
+    }
+
+    /**
+     * Create instance of {@link ParseException}.
+     * 
+     * @param message
+     *            exception message.
+     * @param input
      *            current state of input buffer.
      * @param cause
      *            underlying exception, if any.
      */
     public ParseException(String message, CharBuffer input, Throwable cause) {
-        super(message, cause);
-        this.position = input.position();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < input.position() + input.remaining(); i++) {
-            sb.append(input.get(i));
-        }
-        this.data = sb.toString();
+        this(message, asString(input), input.position(), cause);
     }
 
     /**
@@ -39,7 +65,7 @@ public class ParseException extends IllegalArgumentException {
      *            current state of input buffer.
      */
     public ParseException(String message, CharBuffer input) {
-        this(message, input, null);
+        this(message, asString(input), input.position(), null);
     }
 
     /**
@@ -81,6 +107,14 @@ public class ParseException extends IllegalArgumentException {
             sb.append(String.format("(0x%02x) ", (int) c));
         }
         sb.append(super.getMessage()).append('\n');
+        return sb.toString();
+    }
+
+    private static String asString(CharBuffer input) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < input.position() + input.remaining(); i++) {
+            sb.append(input.get(i));
+        }
         return sb.toString();
     }
 
