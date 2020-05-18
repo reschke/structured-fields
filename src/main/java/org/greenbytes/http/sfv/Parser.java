@@ -167,7 +167,6 @@ public class Parser {
         StringBuilder outputString = new StringBuilder(length());
 
         while (hasRemaining()) {
-            // TODO: we may have to back out this check or make it optional
             if (startPositions.contains(position())) {
                 throw complaint("String crosses field line boundary at position " + position());
             }
