@@ -72,7 +72,6 @@ public class Parser {
                     startPositions = new ArrayList<>();
                 }
                 startPositions.add(sb.length());
-                // TODO need to rethrow exception with full data
                 sb.append(",").append(checkASCII(s));
             }
         }
