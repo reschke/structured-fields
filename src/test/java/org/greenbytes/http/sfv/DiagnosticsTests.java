@@ -33,7 +33,13 @@ public class DiagnosticsTests {
     public void diagnostics() {
 
         TestCase[] tests = new TestCase[] { new TestCase("\u0080", null, 0, "Invalid character in field line "),
-                new TestCase("   \u0080", null, 3, "Invalid character in field line ") };
+                new TestCase("   \u0080", null, 3, "Invalid character in field line "),
+                new TestCase("-a", "item", 1, "Illegal start for Integer or Decimal:"),
+                new TestCase("1234567890123.2", "item", 13, "Illegal position for decimal point in Decimal after "),
+                new TestCase("12345678901234567", "item", 15, "Integer too long: "),
+                new TestCase("123456789012.5556", "item", 16, "Decimal too long: "),
+                new TestCase("123456789012.", "item", 12, "Decimal must not end in '.'"),
+                new TestCase("0.1234", "item", 5, "Maximum number of fractional digits is 3, found:") };
 
         for (TestCase test : tests) {
             try {
@@ -53,6 +59,8 @@ public class DiagnosticsTests {
                 }
                 fail("Should not parse: " + Arrays.asList(test.input));
             } catch (ParseException ex) {
+                // System.out.println(ex.getPosition());
+                // System.out.println(ex.getMessage());
                 Assert.assertTrue("does not start with '" + test.message + "' : '" + ex.getMessage() + "'",
                         ex.getMessage().startsWith(test.message));
                 assertEquals(test.position, ex.getPosition());

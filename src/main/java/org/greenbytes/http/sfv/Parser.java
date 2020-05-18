@@ -115,7 +115,7 @@ public class Parser {
                 advance();
             } else if (!isDecimal && c == '.') {
                 if (inputNumber.length() > 12) {
-                    throw complaint("Illegal position for decimal point in Decimal at " + inputNumber);
+                    throw complaint("Illegal position for decimal point in Decimal after '" + inputNumber + "'");
                 }
                 inputNumber.append(c);
                 isDecimal = true;
@@ -124,7 +124,8 @@ public class Parser {
                 done = true;
             }
             if (inputNumber.length() > (isDecimal ? 16 : 15)) {
-                throw complaint((isDecimal ? "Decimal" : "Integer") + " too long: " + inputNumber.length());
+                backout();
+                throw complaint((isDecimal ? "Decimal" : "Integer") + " too long: " + inputNumber.length() + " characters");
             }
         }
 
@@ -136,12 +137,14 @@ public class Parser {
             int fracLen = inputNumber.length() - dotPos - 1;
 
             if (fracLen < 1) {
+                backout();
                 throw complaint("Decimal must not end in '.'");
             } else if (fracLen == 1) {
                 inputNumber.append("00");
             } else if (fracLen == 2) {
                 inputNumber.append("0");
             } else if (fracLen > 3) {
+                backout();
                 throw complaint("Maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
             }
 
