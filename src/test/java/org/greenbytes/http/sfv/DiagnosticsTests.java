@@ -39,7 +39,12 @@ public class DiagnosticsTests {
                 new TestCase("12345678901234567", "item", 15, "Integer too long: "),
                 new TestCase("123456789012.5556", "item", 16, "Decimal too long: "),
                 new TestCase("123456789012.", "item", 12, "Decimal must not end in '.'"),
-                new TestCase("0.1234", "item", 5, "Maximum number of fractional digits is 3, found:") };
+                new TestCase("0.1234", "item", 5, "Maximum number of fractional digits is 3, found:"),
+                new TestCase(new String[] { "\"foo", "bar\"" }, "item", 4, "String crosses field line boundary "),
+                new TestCase("\"\\", "item", 2, "Incomplete escape sequence at position "),
+                new TestCase("\"\\a\"", "item", 2, "Invalid escape sequence character 'a'"),
+                new TestCase("\"\u007f\"", "item", 2, "Invalid character in String"),
+                new TestCase("\"incomplete", "item", 11, "Closing DQUOTE missing") };
 
         for (TestCase test : tests) {
             try {
@@ -59,6 +64,8 @@ public class DiagnosticsTests {
                 }
                 fail("Should not parse: " + Arrays.asList(test.input));
             } catch (ParseException ex) {
+                // System.out.println();
+                // System.out.println(Arrays.asList(test.input));
                 // System.out.println(ex.getPosition());
                 // System.out.println(ex.getMessage());
                 Assert.assertTrue("does not start with '" + test.message + "' : '" + ex.getMessage() + "'",

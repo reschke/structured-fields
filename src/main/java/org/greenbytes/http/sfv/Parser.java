@@ -187,7 +187,7 @@ public class Parser {
                 if (c == '"') {
                     return StringItem.valueOf(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
-                    throw complaint("Invalid character in Bare String at position " + position());
+                    throw complaint("Invalid character in String at position " + position());
                 } else {
                     outputString.append(c);
                 }
