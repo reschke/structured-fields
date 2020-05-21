@@ -234,6 +234,9 @@ public class Parser {
     }
 
     private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
+    private static boolean isBase64Char(char c) {
+        return Utils.isAlpha(c) || Utils.isDigit(c) || c == '+' || c == '/' || c == '=';
+    }
 
     private ByteSequenceItem internalParseBareByteSequence() {
         if (getOrEOD() != ':') {
@@ -248,7 +251,9 @@ public class Parser {
             if (c == ':') {
                 done = true;
             } else {
-                // TODO: check validity here?
+                if (!isBase64Char(c)) {
+                    throw complaint("Invalid Byte Sequence Character '" + c + "' at position " + position());
+                }
                 outputString.append(c);
             }
         }

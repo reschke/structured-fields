@@ -44,7 +44,10 @@ public class DiagnosticsTests {
                 new TestCase("\"\\", "item", 2, "Incomplete escape sequence at position "),
                 new TestCase("\"\\a\"", "item", 2, "Invalid escape sequence character 'a'"),
                 new TestCase("\"\u007f\"", "item", 2, "Invalid character in String"),
-                new TestCase("\"incomplete", "item", 11, "Closing DQUOTE missing") };
+                new TestCase("\"incomplete", "item", 11, "Closing DQUOTE missing"),
+                new TestCase(":empty", "item", 6, "Byte Sequence must end with COLON"),
+                new TestCase(":em pty:", "item", 4, "Invalid Byte Sequence Character "),
+                new TestCase(":empty:", "item", 7, "Last unit does not have enough valid bits") };
 
         for (TestCase test : tests) {
             try {
