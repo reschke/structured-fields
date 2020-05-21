@@ -47,7 +47,9 @@ public class DiagnosticsTests {
                 new TestCase("\"incomplete", "item", 11, "Closing DQUOTE missing"),
                 new TestCase(":empty", "item", 6, "Byte Sequence must end with COLON"),
                 new TestCase(":em pty:", "item", 4, "Invalid Byte Sequence Character "),
-                new TestCase(":empty:", "item", 7, "Last unit does not have enough valid bits") };
+                new TestCase(":empty:", "item", 7, "Last unit does not have enough valid bits"),
+                new TestCase("?", "item", 1, "Missing data in Boolean"),
+                new TestCase("??", "item", 1, "Expected '0' or '1' in Boolean, found") };
 
         for (TestCase test : tests) {
             try {
