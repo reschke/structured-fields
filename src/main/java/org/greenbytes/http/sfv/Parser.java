@@ -393,7 +393,7 @@ public class Parser {
 
         while (hasRemaining()) {
             result.add(internalParseItemOrInnerList());
-            removeLeadingOSP();
+            removeLeadingOWS();
             if (!hasRemaining()) {
                 return result;
             }
@@ -402,7 +402,7 @@ public class Parser {
                 backout();
                 throw complaint("Expected COMMA in List, got: " + format(c));
             }
-            removeLeadingOSP();
+            removeLeadingOWS();
             if (!hasRemaining()) {
                 throw complaint("Found trailing COMMA in List");
             }
@@ -476,14 +476,14 @@ public class Parser {
 
             result.put(name, member);
 
-            removeLeadingOSP();
+            removeLeadingOWS();
             if (hasRemaining()) {
                 char c = get();
                 if (c != ',') {
                     backout();
                     throw complaint("Expected COMMA in Dictionary, found: " + format(c));
                 }
-                removeLeadingOSP();
+                removeLeadingOWS();
                 if (!hasRemaining()) {
                     throw complaint("Found trailing COMMA in Dictionary");
                 }
@@ -877,7 +877,7 @@ public class Parser {
         }
     }
 
-    private void removeLeadingOSP() {
+    private void removeLeadingOWS() {
         while (checkNextChar(" \t")) {
             advance();
         }
