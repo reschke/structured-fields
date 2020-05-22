@@ -234,6 +234,7 @@ public class Parser {
     }
 
     private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
+
     private static boolean isBase64Char(char c) {
         return Utils.isAlpha(c) || Utils.isDigit(c) || c == '+' || c == '/' || c == '=';
     }
@@ -392,16 +393,16 @@ public class Parser {
 
         while (hasRemaining()) {
             result.add(internalParseItemOrInnerList());
-            removeLeadingSP();
+            removeLeadingOSP();
             if (!hasRemaining()) {
                 return result;
             }
             char c = get();
             if (c != ',') {
                 backout();
-                throw complaint("Expected COMMA in List, got: '" + c + "'");
+                throw complaint("Expected COMMA in List, got: " + format(c));
             }
-            removeLeadingSP();
+            removeLeadingOSP();
             if (!hasRemaining()) {
                 throw complaint("Found trailing COMMA in List");
             }
@@ -475,14 +476,14 @@ public class Parser {
 
             result.put(name, member);
 
-            removeLeadingSP();
+            removeLeadingOSP();
             if (hasRemaining()) {
                 char c = get();
                 if (c != ',') {
                     backout();
-                    throw complaint("Expected COMMA in Dictionary, found: '" + c + "'");
+                    throw complaint("Expected COMMA in Dictionary, found: " + format(c));
                 }
-                removeLeadingSP();
+                removeLeadingOSP();
                 if (!hasRemaining()) {
                     throw complaint("Found trailing COMMA in Dictionary");
                 }
@@ -876,11 +877,27 @@ public class Parser {
         }
     }
 
+    private void removeLeadingOSP() {
+        while (checkNextChar(" \t")) {
+            advance();
+        }
+    }
+
     private ParseException complaint(String message) {
         return new ParseException(message, input);
     }
 
     private ParseException complaint(String message, Throwable cause) {
         return new ParseException(message, input, cause);
+    }
+
+    private static String format(char c) {
+        String s;
+        if (c == 9) {
+            s = "HTAB";
+        } else {
+            s = "'" + c + "'";
+        }
+        return String.format("%s (\\u%04x)", s, (int) c);
     }
 }

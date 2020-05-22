@@ -56,8 +56,9 @@
     {
       "name": "tab separated dictionary",
       "raw": ["a=1\t,\tb=2"],
-      "header_type": "list",
-      "must_fail": true
+      "header_type": "dictionary",
+      "expected": {"a": [1, {}], "b": [2, {}]},
+      "canonical": ["a=1, b=2"]
     },
     {
       "name": "leading whitespace dictionary",
