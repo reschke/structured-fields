@@ -49,7 +49,10 @@ public class DiagnosticsTests {
                 new TestCase(":em pty:", "item", 4, "Invalid Byte Sequence Character "),
                 new TestCase(":empty:", "item", 7, "Last unit does not have enough valid bits"),
                 new TestCase("?", "item", 1, "Missing data in Boolean"),
-                new TestCase("??", "item", 1, "Expected '0' or '1' in Boolean, found") };
+                new TestCase("??", "item", 1, "Expected '0' or '1' in Boolean, found"),
+                new TestCase("1;", "item", 2, "Missing data in Key"),
+                new TestCase("1;_", "item", 2, "Key must start with LCALPHA or '*': '_' (\\u005f)"),
+                new TestCase("<uri>", "item", 0, "Unexpected start character in Bare Item: '<' (\\u003c)") };
 
         for (TestCase test : tests) {
             try {

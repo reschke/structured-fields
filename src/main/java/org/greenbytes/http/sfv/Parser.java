@@ -312,7 +312,7 @@ public class Parser {
             throw complaint("Missing data in Key");
         } else if (c != '*' && !Utils.isLcAlpha(c)) {
             backout();
-            throw complaint("Key must start with LCALPHA or '*': '" + c + "'");
+            throw complaint("Key must start with LCALPHA or '*': " + format(c));
         }
 
         StringBuilder result = new StringBuilder();
@@ -374,7 +374,7 @@ public class Parser {
         } else if (c == ':') {
             return internalParseBareByteSequence();
         } else {
-            throw complaint("Unknown start character in Bare Item: '" + c + "'");
+            throw complaint("Unexpected start character in Bare Item: " + format(c));
         }
     }
 
