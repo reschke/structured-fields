@@ -434,10 +434,10 @@ public class Parser {
                 result.add(item);
 
                 c = peek();
-                if (c < 0) {
+                if (c == EOD) {
                     throw complaint("Missing data in Inner List");
                 } else if (c != ' ' && c != ')') {
-                    throw complaint("Expected SP or ')' in Inner List, got: '" + c + "'");
+                    throw complaint("Expected SP or ')' in Inner List, got: " + format(c));
                 }
             }
 
