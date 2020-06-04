@@ -11,8 +11,8 @@ import java.util.function.Supplier;
  * @param <T>
  *            represented Java type
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#types">Section
- *      3 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#types">Section
+ *      3 of draft-ietf-httpbis-header-structure-19</a>
  */
 public interface Type<T> extends Supplier<T> {
 

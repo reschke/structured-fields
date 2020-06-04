@@ -7,8 +7,8 @@ import java.util.Objects;
  * Represents a List.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#list">Section
- *      3.1 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#list">Section
+ *      3.1 of draft-ietf-httpbis-header-structure-19</a>
  */
 public class OuterList implements Type<List<ListElement<? extends Object>>> {
 

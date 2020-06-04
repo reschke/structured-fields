@@ -8,11 +8,11 @@ import java.util.function.LongSupplier;
  * @param <T>
  *            represented Java type
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#integer">Section
- *      3.3.1 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#integer">Section
+ *      3.3.1 of draft-ietf-httpbis-header-structure-19</a>
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#decimal">Section
- *      3.3.2 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#decimal">Section
+ *      3.3.2 of draft-ietf-httpbis-header-structure-19</a>
  */
 public interface NumberItem<T> extends Item<T>, LongSupplier {
 

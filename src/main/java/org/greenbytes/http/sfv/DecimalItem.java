@@ -16,8 +16,8 @@ import java.util.Objects;
  * overhead of {@link BigDecimal} is not needed.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#decimal">Section
- *      3.3.2 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#decimal">Section
+ *      3.3.2 of draft-ietf-httpbis-header-structure-19</a>
  */
 public class DecimalItem implements NumberItem<BigDecimal> {
 

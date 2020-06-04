@@ -8,8 +8,8 @@ import java.util.Objects;
  * Represents a Byte Sequence.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#binary">Section
- *      3.3.5 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#binary">Section
+ *      3.3.5 of draft-ietf-httpbis-header-structure-19</a>
  */
 public class ByteSequenceItem implements Item<ByteBuffer> {
 

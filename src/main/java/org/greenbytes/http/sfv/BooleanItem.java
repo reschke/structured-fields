@@ -6,8 +6,8 @@ import java.util.Objects;
  * Represents a Boolean.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#boolean">Section
- *      3.3.6 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#boolean">Section
+ *      3.3.6 of draft-ietf-httpbis-header-structure-19</a>
  */
 public class BooleanItem implements Item<Boolean> {
 

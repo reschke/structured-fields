@@ -13,8 +13,8 @@ import java.util.Objects;
  * Implementation of the "Structured Field Values" Parser.
  *
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#text-parse">Section
- *      4.2 of draft-ietf-httpbis-header-structure-18</a>
+ *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#text-parse">Section
+ *      4.2 of draft-ietf-httpbis-header-structure-19</a>
  */
 public class Parser {
 
@@ -527,8 +527,8 @@ public class Parser {
      * @return result of parse as {@link OuterList}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-list">Section
-     *      4.2.1 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-list">Section
+     *      4.2.1 of draft-ietf-httpbis-header-structure-19</a>
      */
     public OuterList parseList() {
         removeLeadingSP();
@@ -544,8 +544,8 @@ public class Parser {
      * @return result of parse as {@link Dictionary}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-dictionary">Section
-     *      4.2.2 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-dictionary">Section
+     *      4.2.2 of draft-ietf-httpbis-header-structure-19</a>
      */
     public Dictionary parseDictionary() {
         removeLeadingSP();
@@ -561,8 +561,8 @@ public class Parser {
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item">Section
-     *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-item">Section
+     *      4.2.3 of draft-ietf-httpbis-header-structure-19</a>
      */
     public Item<? extends Object> parseItem() {
         removeLeadingSP();
@@ -583,8 +583,8 @@ public class Parser {
      * @return result of parse as {@link OuterList}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-list">Section
-     *      4.2.1 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-list">Section
+     *      4.2.1 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
@@ -602,8 +602,8 @@ public class Parser {
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item-or-list">Section
-     *      4.2.1.1 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-item-or-list">Section
+     *      4.2.1.1 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static Parametrizable<? extends Object> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
@@ -621,8 +621,8 @@ public class Parser {
      * @return result of parse as {@link InnerList}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-item-or-list">Section
-     *      4.2.1.2 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-item-or-list">Section
+     *      4.2.1.2 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static InnerList parseInnerList(String input) {
         Parser p = new Parser(input);
@@ -640,8 +640,8 @@ public class Parser {
      * @return result of parse as {@link Dictionary}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-dictionary">Section
-     *      4.2.2 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-dictionary">Section
+     *      4.2.2 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static Dictionary parseDictionary(String input) {
         Parser p = new Parser(input);
@@ -659,8 +659,8 @@ public class Parser {
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
-     *      4.2.3 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-bare-item">Section
+     *      4.2.3 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static Item<? extends Object> parseItem(String input) {
         Parser p = new Parser(input);
@@ -678,8 +678,8 @@ public class Parser {
      * @return result of parse as {@link Item}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-bare-item">Section
-     *      4.2.3.1 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-bare-item">Section
+     *      4.2.3.1 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static Item<? extends Object> parseBareItem(String input) {
         Parser p = new Parser(input);
@@ -697,8 +697,8 @@ public class Parser {
      * @return result of parse as {@link Parameters}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-param">Section
-     *      4.2.3.2 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-param">Section
+     *      4.2.3.2 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static Parameters parseParameters(String input) {
         Parser p = new Parser(input);
@@ -716,8 +716,8 @@ public class Parser {
      * @return result of parse as {@link String}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-key">Section
-     *      4.2.3.3 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-key">Section
+     *      4.2.3.3 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static String parseKey(String input) {
         Parser p = new Parser(input);
@@ -735,8 +735,8 @@ public class Parser {
      * @return result of parse as {@link NumberItem}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-number">Section
-     *      4.2.4 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-number">Section
+     *      4.2.4 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static NumberItem<? extends Object> parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
@@ -754,8 +754,8 @@ public class Parser {
      * @return result of parse as {@link StringItem}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-string">Section
-     *      4.2.5 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-string">Section
+     *      4.2.5 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static StringItem parseString(String input) {
         Parser p = new Parser(input);
@@ -773,8 +773,8 @@ public class Parser {
      * @return result of parse as {@link TokenItem}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-token">Section
-     *      4.2.6 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-token">Section
+     *      4.2.6 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static TokenItem parseToken(String input) {
         Parser p = new Parser(input);
@@ -792,8 +792,8 @@ public class Parser {
      * @return result of parse as {@link ByteSequenceItem}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-binary">Section
-     *      4.2.7 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-binary">Section
+     *      4.2.7 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static ByteSequenceItem parseByteSequence(String input) {
         Parser p = new Parser(input);
@@ -811,8 +811,8 @@ public class Parser {
      * @return result of parse as {@link BooleanItem}.
      *
      * @see <a href=
-     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-18.html#parse-boolean">Section
-     *      4.2.8 of draft-ietf-httpbis-header-structure-18</a>
+     *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#parse-boolean">Section
+     *      4.2.8 of draft-ietf-httpbis-header-structure-19</a>
      */
     public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
