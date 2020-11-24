@@ -49,7 +49,8 @@ public abstract class AbstractSpecificationTests {
 
         JsonReader reader = Json.createReader(AbstractSpecificationTests.class.getClassLoader().getResourceAsStream(filename));
         for (JsonValue vt : reader.readArray()) {
-            result.add(new Object[] { basename, makeOneTest(vt) });
+            TestParams p = makeOneTest(vt);
+            result.add(new Object[] { basename + ": " + p.name, p });
         }
 
         return result;
@@ -58,6 +59,7 @@ public abstract class AbstractSpecificationTests {
     private static TestParams makeOneTest(JsonValue vt) {
         JsonObject v = (JsonObject) vt;
         TestParams p = new TestParams();
+
         p.name = ((JsonObject) v).getString("name");
         p.raw = new ArrayList<>();
         for (JsonValue raw : v.getJsonArray("raw")) {
@@ -66,19 +68,24 @@ public abstract class AbstractSpecificationTests {
         }
         p.header_type = v.getString("header_type");
         p.must_fail = v.getBoolean("must_fail", false);
-        p.expected_params = null;
-        if (v.get("expected") instanceof JsonArray) {
-            JsonArray array = v.getJsonArray("expected");
-            if (array == null) {
-                p.expected_value = null;
-            } else if (array.size() == 2 && "item".equals(p.header_type)) {
+
+        if ("item".equals(p.header_type)) {
+            if (v.get("expected") instanceof JsonArray) {
+                JsonArray array = v.getJsonArray("expected");
                 p.expected_value = array.get(0);
                 p.expected_params = array.get(1);
             } else {
-                p.expected_value = array;
+                p.expected_value = v.getJsonObject("expected");
+                p.expected_params = null;
             }
-        } else {
+        } else if ("dictionary".equals(p.header_type)) {
             p.expected_value = v.getJsonObject("expected");
+            p.expected_params = null;
+        } else if ("list".equals(p.header_type)) {
+            p.expected_value = v.getJsonArray("expected");
+            p.expected_params = null;
+        } else {
+            throw new RuntimeException("unexpected header_type: " + p.header_type);
         }
         JsonArray canarr = v.getJsonArray("canonical");
         p.canonical = canarr == null || canarr.size() == 0 ? null : canarr.getString(0);
@@ -179,8 +186,8 @@ public abstract class AbstractSpecificationTests {
                 Type<? extends Object> parsed = parse();
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (ParseException expected) {
-//                System.out.println(p.name);
-//                System.err.println(expected.getDiagnostics());
+                // System.out.println(p.name);
+                // System.err.println(expected.getDiagnostics());
             }
         } else {
             Type<? extends Object> item = parse();
