@@ -69,18 +69,26 @@ public abstract class AbstractSpecificationTests {
         p.header_type = v.getString("header_type");
         p.must_fail = v.getBoolean("must_fail", false);
 
-        if ("item".equals(p.header_type)) {
-            if (v.get("expected") instanceof JsonArray) {
-                JsonArray array = v.getJsonArray("expected");
+        JsonValue expected = v.get("expected");
+
+        if (expected == null) {
+            p.expected_value = null;
+            p.expected_params = null;
+        } else if ("item".equals(p.header_type)) {
+            if (expected instanceof JsonArray) {
+                JsonArray array = (JsonArray) expected;
                 p.expected_value = array.get(0);
                 p.expected_params = array.get(1);
             } else {
-                p.expected_value = v.getJsonObject("expected");
+                p.expected_value = (JsonObject) expected;
                 p.expected_params = null;
             }
         } else if ("dictionary".equals(p.header_type)) {
-            p.expected_value = v.getJsonObject("expected");
-            p.expected_params = null;
+            if (expected instanceof JsonArray) {
+                p.expected_value = (JsonArray) expected;
+            } else {
+                throw new RuntimeException("unexpected dictionary expected value for test: " + p.name);
+            }
         } else if ("list".equals(p.header_type)) {
             p.expected_value = v.getJsonArray("expected");
             p.expected_params = null;
@@ -108,7 +116,7 @@ public abstract class AbstractSpecificationTests {
 
     private static void match(JsonValue value, JsonValue params, Type<? extends Object> item) {
         if (value instanceof JsonString) {
-            CharSequence expected = ((((JsonString) value)).getChars());
+            CharSequence expected = (((JsonString) value).getChars());
             assertEquals(expected, item.get());
         } else if (value instanceof JsonNumber) {
             JsonNumber num = (JsonNumber) value;
@@ -165,18 +173,24 @@ public abstract class AbstractSpecificationTests {
         }
         if (params != null) {
             assertTrue(item instanceof Parametrizable);
-            JsonObject expected = (JsonObject) params;
             Map<String, Item<? extends Object>> result = ((Parametrizable<? extends Object>) item).getParams();
-            assertEquals(expected.size(), result.size());
-            for (Map.Entry<String, JsonValue> e : expected.entrySet()) {
-                if (e.getValue() instanceof JsonArray) {
-                    JsonArray array = (JsonArray) e.getValue();
-                    assertEquals(2, array.size());
-                    match(array.get(0), array.get(1), result.get(e.getKey()));
-                } else {
-                    match(e.getValue(), null, result.get(e.getKey()));
+
+            if (params instanceof JsonArray) {
+                // new format
+                JsonArray expected = (JsonArray) params;
+                assertEquals(expected.size(), result.size());
+                int i = 0;
+                for (Map.Entry<String, Item<? extends Object>> param : result.entrySet()) {
+                    JsonArray e = (JsonArray) expected.get(i);
+                    assertEquals(2, e.size());
+                    assertEquals(((JsonString) e.get(0)).getString(), param.getKey());
+                    match(e.get(1), null, param.getValue());
+                    i += 1;
                 }
+            } else {
+                fail("unexpected param type: " + params);
             }
+
         }
     }
 
@@ -192,12 +206,24 @@ public abstract class AbstractSpecificationTests {
         } else {
             Type<? extends Object> item = parse();
             if (p.expected_value instanceof JsonArray) {
-                // assume list for now
-                assertTrue(item instanceof OuterList);
                 JsonArray array = (JsonArray) p.expected_value;
-                for (int i = 0; i < array.size(); i++) {
-                    JsonValue m = array.get(i);
-                    match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
+                if (item instanceof OuterList) {
+                    for (int i = 0; i < array.size(); i++) {
+                        JsonValue m = array.get(i);
+                        match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
+                    }
+                } else if (item instanceof Dictionary) {
+                    int i = 0;
+                    for (Map.Entry<String, ListElement<? extends Object>> e : ((Dictionary) item).get().entrySet()) {
+                        JsonArray m = (JsonArray) array.get(i);
+                        JsonValue name = m.get(0);
+                        JsonArray val = (JsonArray) m.get(1);
+                        assertEquals(((JsonString) name).getString(), e.getKey());
+                        match(val.get(0), val.get(1), e.getValue());
+                        i += 1;
+                    }
+                } else {
+                    fail("unexpected parse result: " + item.getClass());
                 }
             } else {
                 match(p.expected_value, p.expected_params, item);
