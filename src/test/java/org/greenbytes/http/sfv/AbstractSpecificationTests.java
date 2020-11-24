@@ -44,40 +44,45 @@ public abstract class AbstractSpecificationTests {
     }
 
     private static Collection<Object[]> makeParameters(String filename) {
+        String basename = filename.substring(0, filename.length() - ".json".length());
         List<Object[]> result = new ArrayList<>();
+
         JsonReader reader = Json.createReader(AbstractSpecificationTests.class.getClassLoader().getResourceAsStream(filename));
         for (JsonValue vt : reader.readArray()) {
-            JsonObject v = (JsonObject) vt;
-            TestParams p = new TestParams();
-            p.name = ((JsonObject) v).getString("name");
-            p.raw = new ArrayList<>();
-            for (JsonValue raw : v.getJsonArray("raw")) {
-                String t = ((JsonString) raw).getString();
-                p.raw.add(t);
-            }
-            p.header_type = v.getString("header_type");
-            p.must_fail = v.getBoolean("must_fail", false);
-            p.expected_params = null;
-            if (v.get("expected") instanceof JsonArray) {
-                JsonArray array = v.getJsonArray("expected");
-                if (array == null) {
-                    p.expected_value = null;
-                } else if (array.size() == 2 && "item".equals(p.header_type)) {
-                    p.expected_value = array.get(0);
-                    p.expected_params = array.get(1);
-                } else {
-                    p.expected_value = array;
-                }
-            } else {
-                p.expected_value = v.getJsonObject("expected");
-            }
-            JsonArray canarr = v.getJsonArray("canonical");
-            p.canonical = canarr == null || canarr.size() == 0 ? null : canarr.getString(0);
-            String basename = filename.substring(0, filename.length() - ".json".length());
-            result.add(new Object[] { basename + ": " + p.name, p });
+            result.add(new Object[] { basename, makeOneTest(vt) });
         }
 
         return result;
+    }
+
+    private static TestParams makeOneTest(JsonValue vt) {
+        JsonObject v = (JsonObject) vt;
+        TestParams p = new TestParams();
+        p.name = ((JsonObject) v).getString("name");
+        p.raw = new ArrayList<>();
+        for (JsonValue raw : v.getJsonArray("raw")) {
+            String t = ((JsonString) raw).getString();
+            p.raw.add(t);
+        }
+        p.header_type = v.getString("header_type");
+        p.must_fail = v.getBoolean("must_fail", false);
+        p.expected_params = null;
+        if (v.get("expected") instanceof JsonArray) {
+            JsonArray array = v.getJsonArray("expected");
+            if (array == null) {
+                p.expected_value = null;
+            } else if (array.size() == 2 && "item".equals(p.header_type)) {
+                p.expected_value = array.get(0);
+                p.expected_params = array.get(1);
+            } else {
+                p.expected_value = array;
+            }
+        } else {
+            p.expected_value = v.getJsonObject("expected");
+        }
+        JsonArray canarr = v.getJsonArray("canonical");
+        p.canonical = canarr == null || canarr.size() == 0 ? null : canarr.getString(0);
+        return p;
     }
 
     public Type<? extends Object> parse() {
