@@ -7,8 +7,8 @@ import java.util.Map;
  * Represents a Dictionary.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#dictionary">Section
- *      3.2 of draft-ietf-httpbis-header-structure-19</a>
+ *      "https://www.rfc-editor.org/rfc/rfc8941.html#dictionary">Section 3.2 of
+ *      RFC 8941</a>
  */
 public class Dictionary implements Type<Map<String, ListElement<? extends Object>>> {
 

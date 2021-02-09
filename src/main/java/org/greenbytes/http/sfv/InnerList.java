@@ -7,8 +7,8 @@ import java.util.Objects;
  * Represents an Inner List.
  *
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#inner-list">Section
- *      3.1.1 of draft-ietf-httpbis-header-structure-19</a>
+ *      "https://www.rfc-editor.org/rfc/rfc8941.html#inner-list">Section 3.1.1
+ *      of RFC 8941</a>
  */
 public class InnerList implements ListElement<List<Item<? extends Object>>>, Parametrizable<List<Item<? extends Object>>> {
 

@@ -5,9 +5,8 @@ import java.util.Objects;
 /**
  * Represents a Token.
  * 
- * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#token">Section
- *      3.3.4 of draft-ietf-httpbis-header-structure-19</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#token">Section
+ *      3.3.4 of RFC 8941</a>
  */
 public class TokenItem implements Item<String> {
 

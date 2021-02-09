@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.greenbytes.https</groupId>
   <artifactId>structured-field-values</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
   
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>

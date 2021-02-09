@@ -15,9 +15,8 @@ import java.util.Objects;
  * value. {@link #getAsLong()} provides access to the raw value when the
  * overhead of {@link BigDecimal} is not needed.
  * 
- * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#decimal">Section
- *      3.3.2 of draft-ietf-httpbis-header-structure-19</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#decimal">Section
+ *      3.3.2 of RFC 8941</a>
  */
 public class DecimalItem implements NumberItem<BigDecimal> {
 

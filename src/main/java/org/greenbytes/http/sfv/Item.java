@@ -5,9 +5,8 @@ package org.greenbytes.http.sfv;
  * 
  * @param <T>
  *            represented Java type
- * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#item">Section
- *      3.3 of draft-ietf-httpbis-header-structure-19</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#item">Section 3.3
+ *      of RFC 8941</a>
  */
 public interface Item<T> extends ListElement<T>, Parametrizable<T> {
 

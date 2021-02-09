@@ -15,8 +15,8 @@ import java.util.function.Function;
  * Represents the Parameters of an Item or an Inner List.
  * 
  * @see <a href=
- *      "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-19.html#param">Section
- *      3.1.2 of draft-ietf-httpbis-header-structure-19</a>
+ *      "https://www.rfc-editor.org/rfc/rfc8941.html#param">Section
+ *      3.1.2 of RFC 8941</a>
  */
 public class Parameters implements Map<String, Item<? extends Object>> {
 
