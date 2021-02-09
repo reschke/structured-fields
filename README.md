@@ -1,10 +1,10 @@
 # structured-fields
-Test implementation of draft-ietf-httpbis-header-structure.
+Test implementation of RFC 8941.
 
 Links:
 
-- https://greenbytes.de/tech/webdav/draft-ietf-httpbis-header-structure-latest.html
-- https://datatracker.ietf.org/doc/draft-ietf-httpbis-header-structure/
+- https://greenbytes.de/tech/webdav/rfc8941.html
+- https://www.rfc-editor.org/rfc/rfc8941.html
 - https://github.com/httpwg/structured-header-tests
 - API docs: https://reschke.github.io/structured-fields/apidocs/
 
