@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4</version>
   
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -70,5 +70,6 @@
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://github.com:reschke/structured-fields.git</developerConnection>
     <url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+    <tag>structured-fields-0.4</tag>
   </scm>
 </project>
