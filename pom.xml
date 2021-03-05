@@ -65,4 +65,10 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <scm>
+    <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
+    <developerConnection>scm:git:ssh://github.com:reschke/structured-fields.git</developerConnection>
+    <url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+  </scm>
 </project>
