@@ -7,28 +7,26 @@
  * <p>
  * Here's a minimal example:
  * 
- * <pre>
+ * <pre><code>
  * {
- *     &#64;code
  *     Parser p = new Parser("a=?0, b, c; foo=bar");
  *     Dictionary d = p.parseDictionary();
- *     for (Map.Entry<String, Item<? extends Object>> e : d.get()) {
+ *     for (Map.Entry&lt;String, Item&lt;? extends Object&gt;&gt; e : d.get()) {
  *         String key = e.getKey();
- *         Item<? extends Object> item = e.getValue();
+ *         Item&lt;? extends Object&gt; item = e.getValue();
  *         Object value = item.get();
  *         Parameters params = item.getParams();
- *         System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
+ *         System.out.println(key + " -&gt; " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
  *     }
  * }
- * </pre>
+ * </code></pre>
  * <p>
  * gives:
  * 
  * <pre>
- * {@code
- * a -> false
- * b -> true
- * c -> true (;foo=bar)}
+ * a -&gt; false
+ * b -&gt; true
+ * c -&gt; true (;foo=bar)
  * </pre>
  */
 
