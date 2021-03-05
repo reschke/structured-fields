@@ -69,7 +69,6 @@
   <scm>
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://github.com:reschke/structured-fields.git</developerConnection>
-    <url>http://github.com/simpligility/ossrh-demo/tree/master</url>
-    <tag>structured-fields-0.4</tag>
+    <url>http://github.com/reschke/structured-fields/tree/master</url>
   </scm>
 </project>
