@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
-  <version>0.4</version>
+  <version>0.3-SNAPSHOT</version>
   
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -69,6 +69,6 @@
   <scm>
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://github.com:reschke/structured-fields.git</developerConnection>
-    <url>http://github.com/reschke/structured-fields/tree/master</url>
+    <url>https://github.com/reschke/structured-fields/tree/master</url>
   </scm>
 </project>
