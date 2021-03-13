@@ -23,6 +23,13 @@
   <artifactId>structured-fields</artifactId>
   <version>0.3-SNAPSHOT</version>
   
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>23</version>
+    <relativePath />
+  </parent>
+
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
