@@ -140,6 +140,7 @@ public abstract class AbstractSpecificationTests {
                     fail("unexpected type: " + type);
                 }
             } else {
+                @SuppressWarnings("unchecked")
                 Map<String, Item<? extends Object>> result = (Map<String, Item<? extends Object>>) item.get();
                 assertEquals(container.size(), result.size());
                 for (Map.Entry<String, JsonValue> e : container.entrySet()) {
@@ -154,6 +155,7 @@ public abstract class AbstractSpecificationTests {
             }
         } else if (value instanceof JsonArray) {
             JsonArray array = (JsonArray) value;
+            @SuppressWarnings("unchecked")
             List<Item<? extends Object>> result = (List<Item<? extends Object>>) item.get();
             assertEquals(array.size(), result.size());
             for (int i = 0; i < array.size(); i++) {
