@@ -1,5 +1,5 @@
 # structured-fields
-Test implementation of RFC 8941.
+A parser for the HTTP Structured Fields syntax defined in IETF RFC 8941.
 
 Links:
 
