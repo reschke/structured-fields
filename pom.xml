@@ -23,6 +23,10 @@
   <artifactId>structured-fields</artifactId>
   <version>0.3-SNAPSHOT</version>
   
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
+  <url>https://github.com/reschke/structured-fields</url>
+
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
