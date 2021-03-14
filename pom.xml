@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4</version>
   
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
