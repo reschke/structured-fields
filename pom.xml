@@ -27,6 +27,13 @@
   <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
   <url>https://github.com/reschke/structured-fields</url>
 
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
