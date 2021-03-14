@@ -2,8 +2,8 @@
  * Implementation of <a href= "https://www.rfc-editor.org/rfc/rfc8941.html">IETF
  * RFC 8941: Structured Field Values for HTTP</a>.
  * <p>
- * Includes a {@link Parser} and object equivalents of the defined data types
- * (see {@link Type}).
+ * Includes a {@link org.greenbytes.http.sfv.Parser} and object equivalents of the defined data types
+ * (see {@link org.greenbytes.http.sfv.Type}).
  * <p>
  * Here's a minimal example:
  * 
