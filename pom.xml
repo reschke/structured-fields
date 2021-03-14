@@ -34,6 +34,15 @@
     </license>
   </licenses>
 
+  <developers>
+    <developer>
+      <name>Julian Reschke</name>
+      <email>julian.rescke@greenbytes.de</email>
+      <organization>Greenbytes GmbH</organization>
+      <organizationUrl>https://www.greenbytes.de</organizationUrl>
+    </developer>
+  </developers>
+
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
