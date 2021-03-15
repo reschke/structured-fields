@@ -15,4 +15,13 @@ This implementation is experimental and makes no promises yet on API stability
 
 In the mid-term, this code might transition to the Apache HTTP Components project.
 
+## Maven Coordinates
+
+    <dependency>
+      <groupId>org.greenbytes.http</groupId>
+      <artifactId>structured-fields</artifactId>
+      <version>0.4</version>
+    </dependency>
+
+
 ![Java CI with Maven](https://github.com/reschke/structured-fields/workflows/Java%20CI%20with%20Maven/badge.svg)
