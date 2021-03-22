@@ -262,4 +262,12 @@ public class Tests {
             }
         }
     }
+
+    @Test
+    public void immutabilityOfBinaries() {
+        String bs = ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:";
+        ByteSequenceItem i = Parser.parseByteSequence(bs);
+        i.get().put(0, (byte)0);
+        assertEquals(bs, i.serialize());
+    }
 }

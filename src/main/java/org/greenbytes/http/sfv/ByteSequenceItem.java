@@ -64,7 +64,8 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
 
     @Override
     public ByteBuffer get() {
-        // TODO: this makes the value mutable; maybe duplicate?
-        return ByteBuffer.wrap(this.value);
+        // this returns a a wrapper arouund a copy so that the object itself
+        // stays immutable
+        return ByteBuffer.wrap(this.value.clone());
     }
 }

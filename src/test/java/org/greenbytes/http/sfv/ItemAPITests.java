@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -139,7 +140,7 @@ public class ItemAPITests {
 
         for (int i = 0; i < tests.length; i++) {
             ByteSequenceItem item = ByteSequenceItem.valueOf(tests[i]);
-            assertEquals(tests[i], item.get().array());
+            assertArrayEquals(tests[i], item.get().array());
             assertEquals(results[i], item.serialize());
         }
     }
