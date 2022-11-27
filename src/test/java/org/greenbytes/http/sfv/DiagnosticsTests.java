@@ -58,7 +58,8 @@ public class DiagnosticsTests {
                 new TestCase("(1 2", "list", 4, "Missing data in Inner List"),
                 new TestCase("(1 2#", "list", 4, "Expected SP or ')' in Inner List, got: '#' (\\u0023)"),
                 new TestCase("a b", "dictionary", 2, "Expected COMMA in Dictionary, found: 'b' (\\u0062)"),
-                new TestCase("a,b,", "dictionary", 4, "Found trailing COMMA in Dictionary")
+                new TestCase("a,b,", "dictionary", 4, "Found trailing COMMA in Dictionary"),
+                new TestCase("@1234", "item", 0, "Unexpected start character in Bare Item: '@' (\\u0040)")
                 };
 
         for (TestCase test : tests) {
