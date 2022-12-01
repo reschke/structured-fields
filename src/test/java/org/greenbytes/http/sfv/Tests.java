@@ -24,6 +24,16 @@ public class Tests {
     }
 
     @Test
+    public void testValidDates() {
+        String tests[] = new String[] { "@0", "@1", "@-1", "@999999999999", "@-999999999999", "@3;a=b" };
+
+        for (String s : tests) {
+            DateItem i = Parser.parseDate(s);
+            assertEquals("should round-trip", i.serialize(), s);
+        }
+    }
+
+    @Test
     public void testInvalidIntegers() {
         String tests[] = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2",
                 "3 4" };
