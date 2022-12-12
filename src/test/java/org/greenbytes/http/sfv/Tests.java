@@ -189,7 +189,7 @@ public class Tests {
                 Boolean.FALSE, EMPTY, "a2", EMPTY, ByteSequenceItem.valueOf("f".getBytes()).get(), EMPTY });
         tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
 
-        tests.put("@12345, 123, 12.3", new Object[] { 12345L, EMPTY, 123L, EMPTY, BigDecimal.valueOf(12300, 3), EMPTY });
+        tests.put("@12345, 123;created=@-1, 12.3", new Object[] { 12345L, EMPTY, 123L, ";created=@-1", BigDecimal.valueOf(12300, 3), EMPTY });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             OuterList list = Parser.parseList(e.getKey());
