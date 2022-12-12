@@ -412,6 +412,8 @@ public class Parser {
             return internalParseBareToken();
         } else if (c == ':') {
             return internalParseBareByteSequence();
+        } else if (c == '@') {
+            return internalParseBareDate();
         } else {
             throw complaint("Unexpected start character in Bare Item: " + format(c));
         }
