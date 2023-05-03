@@ -107,6 +107,10 @@ public class Parser {
             advance();
         }
 
+        if (!checkNextChar("0123456789")) {
+            throw complaint("Illegal start inside a Date: '" + input + "'");
+        }
+
         boolean done = false;
         while (hasRemaining() && !done) {
             char c = peek();
