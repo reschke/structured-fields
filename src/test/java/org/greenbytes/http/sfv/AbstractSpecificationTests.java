@@ -35,15 +35,15 @@ public abstract class AbstractSpecificationTests {
         public String canonical;
     }
 
-    public static Collection<Object[]> makeParameters(List<String> filenames) {
+    public static Collection<Object[]> makeParameters(String... filenames) {
         List<Object[]> result = new ArrayList<>();
         for (String filename : filenames) {
-            result.addAll(makeParameters(filename));
+            result.addAll(internalMakeParameters(filename));
         }
         return result;
     }
 
-    private static Collection<Object[]> makeParameters(String filename) {
+    private static Collection<Object[]> internalMakeParameters(String filename) {
         String basename = filename.substring(0, filename.length() - ".json".length());
         List<Object[]> result = new ArrayList<>();
 
