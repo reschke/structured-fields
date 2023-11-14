@@ -282,4 +282,21 @@ public class Tests {
         i.get().put(0, (byte)0);
         assertEquals(bs, i.serialize());
     }
+
+    @Test
+    public void testConstructor() {
+        try {
+            new Parser((String) null);
+            fail("should not get here");
+        } catch (NullPointerException ex) {
+            assertTrue(ex.getMessage().contains("must not be null"));
+        }
+
+        try {
+            new Parser("x", null, "y");
+            fail("should not get here");
+        } catch (NullPointerException ex) {
+            assertTrue(ex.getMessage().contains("must not be null"));
+        }
+}
 }

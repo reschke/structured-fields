@@ -60,7 +60,7 @@ public class Parser {
         List<Integer> startPositions = Collections.emptyList();
 
         for (String s : Objects.requireNonNull(fieldLines, "fieldLines must not be null")) {
-            Objects.requireNonNull("field line must not be null", s);
+            Objects.requireNonNull(s, "field line must not be null");
             if (str == null) {
                 str = checkASCII(s);
             } else {
