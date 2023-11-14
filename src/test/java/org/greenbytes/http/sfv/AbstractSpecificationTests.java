@@ -139,6 +139,9 @@ public abstract class AbstractSpecificationTests {
                 } else if ("date".equals(type)) {
                     JsonNumber expectedNumber = (JsonNumber) container.get("value");
                     assertEquals(expectedNumber.longValueExact(), item.get());
+                } else if ("displaystring".equals(type)) {
+                    CharSequence expectedString = ((JsonString) container.get("value")).getChars();
+                    assertEquals(expectedString, item.get());
                 } else {
                     fail("unexpected type: " + type);
                 }
