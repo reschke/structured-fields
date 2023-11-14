@@ -1,6 +1,13 @@
 package org.greenbytes.http.sfv;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -240,6 +247,61 @@ public class Parser {
         throw complaint("Closing DQUOTE missing");
     }
 
+    private static final CharsetDecoder UTF8DECODER = StandardCharsets.UTF_8.newDecoder()
+            .onMalformedInput(CodingErrorAction.REPORT);
+
+    private DisplayStringItem internalParseBareDisplayString() {
+
+        if (getOrEOD() != '%') {
+            throw complaint("DisplayString must start with a percent sign: '" + input + "'");
+        }
+
+        if (getOrEOD() != '"') {
+            throw complaint("DisplayString must continue with a double quote: '" + input + "'");
+        }
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream(length() * 2);
+
+        while (hasRemaining()) {
+            if (startPositions.contains(position())) {
+                throw complaint("Display String crosses field line boundary at position " + position());
+            }
+
+            char c = get();
+            if (c == '%') {
+                char c1 = getOrEOD();
+                if (c1 == EOD) {
+                    throw complaint("Incomplete percent escape sequence at position " + position());
+                } else if (!isHex(c1)) {
+                    backout();
+                    throw complaint("Invalid percent escape sequence character '" + c + "' at position " + position());
+                }
+                char c2 = getOrEOD();
+                if (c2 == EOD) {
+                    throw complaint("Incomplete percent escape sequence at position " + position());
+                } else if (!isHex(c2)) {
+                    backout();
+                    throw complaint("Invalid percent escape sequence character '" + c + "' at position " + position());
+                }
+                output.write(decodeHex(c1, c2));
+            } else {
+                if (c == '"') {
+                    try {
+                        return DisplayStringItem.valueOf(UTF8DECODER.decode(ByteBuffer.wrap(output.toByteArray())).toString());
+                    } catch (CharacterCodingException e) {
+                        complaint("Invalid UTF-8 sequence");
+                    }
+                } else if (c < 0x20 || c >= 0x7f) {
+                    throw complaint("Invalid character in Display String at position " + position());
+                } else {
+                    output.write((int) c);
+                }
+            }
+        }
+
+        throw complaint("Closing DQUOTE missing");
+    }
+
     private StringItem internalParseString() {
         StringItem result = internalParseBareString();
         Parameters params = internalParseParameters();
@@ -418,6 +480,8 @@ public class Parser {
             return internalParseBareByteSequence();
         } else if (c == '@') {
             return internalParseBareDate();
+        } else if (c == '%') {
+            return internalParseBareDisplayString();
         } else {
             throw complaint("Unexpected start character in Bare Item: " + format(c));
         }
@@ -945,6 +1009,15 @@ public class Parser {
 
     private ParseException complaint(String message, Throwable cause) {
         return new ParseException(message, input, cause);
+    }
+
+    private static boolean isHex(char c) {
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f');
+    }
+
+    private static int decodeHex(char c1, char c2) {
+        String lookup="0123456789abcdef";
+        return (lookup.indexOf(c1) << 4) | lookup.indexOf(c2);
     }
 
     private static String format(char c) {
