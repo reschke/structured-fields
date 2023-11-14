@@ -93,6 +93,43 @@ public class Parser {
         return value;
     }
 
+    private DateItem internalParseBareDate() {
+        int sign = 1;
+        StringBuilder inputNumber = new StringBuilder(21);
+
+        if (!checkNextChar("@")) {
+            throw complaint("Illegal start for Date: '" + input + "'");
+        }
+        advance();
+
+        if (checkNextChar('-')) {
+            sign = -1;
+            advance();
+        }
+
+        if (!checkNextChar("0123456789")) {
+            throw complaint("Illegal start inside a Date: '" + input + "'");
+        }
+
+        boolean done = false;
+        while (hasRemaining() && !done) {
+            char c = peek();
+            if (Utils.isDigit(c)) {
+                inputNumber.append(c);
+                advance();
+            } else {
+                done = true;
+            }
+            if (inputNumber.length() > 15) {
+                backout();
+                throw complaint("Date too long: " + inputNumber.length() + " characters");
+            }
+        }
+
+        long l = Long.parseLong(inputNumber.toString());
+        return DateItem.valueOf(sign * l);
+    }
+
     private NumberItem<? extends Object> internalParseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
@@ -152,6 +189,12 @@ public class Parser {
             long l = Long.parseLong(inputNumber.toString());
             return DecimalItem.valueOf(sign * l);
         }
+    }
+
+    private DateItem internalParseDate() {
+        DateItem result = internalParseBareDate();
+        Parameters params = internalParseParameters();
+        return result.withParams(params);
     }
 
     private NumberItem<? extends Object> internalParseIntegerOrDecimal() {
@@ -373,6 +416,8 @@ public class Parser {
             return internalParseBareToken();
         } else if (c == ':') {
             return internalParseBareByteSequence();
+        } else if (c == '@') {
+            return internalParseBareDate();
         } else {
             throw complaint("Unexpected start character in Bare Item: " + format(c));
         }
@@ -496,6 +541,17 @@ public class Parser {
     }
 
     // protected methods unit testing
+
+    protected static DateItem parseDate(String input) {
+        Parser p = new Parser(input);
+        Item<? extends Object> result = p.internalParseDate();
+        if (!(result instanceof DateItem)) {
+            throw p.complaint("String parsed as Date '" + input + "' is not a Date");
+        } else {
+            p.assertEmpty("Extra characters in string parsed as Date");
+            return (DateItem) result;
+        }
+    }
 
     protected static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);

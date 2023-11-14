@@ -24,6 +24,16 @@ public class Tests {
     }
 
     @Test
+    public void testValidDates() {
+        String tests[] = new String[] { "@0", "@1", "@-1", "@999999999999", "@-999999999999", "@3;a=b" };
+
+        for (String s : tests) {
+            DateItem i = Parser.parseDate(s);
+            assertEquals("should round-trip", i.serialize(), s);
+        }
+    }
+
+    @Test
     public void testInvalidIntegers() {
         String tests[] = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2",
                 "3 4" };
@@ -179,11 +189,13 @@ public class Tests {
                 Boolean.FALSE, EMPTY, "a2", EMPTY, ByteSequenceItem.valueOf("f".getBytes()).get(), EMPTY });
         tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
 
+        tests.put("@12345, 123;created=@-1, 12.3", new Object[] { 12345L, EMPTY, 123L, ";created=@-1", BigDecimal.valueOf(12300, 3), EMPTY });
+
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
             OuterList list = Parser.parseList(e.getKey());
             Object[] expected = e.getValue();
             assertTrue(list instanceof OuterList);
-            assertEquals(list.get().size(), expected.length / 2);
+            assertEquals("unexpected list length for: " + e.getKey(), list.get().size(), expected.length / 2);
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
                 Parameters p = list.get().get(i).getParams();
