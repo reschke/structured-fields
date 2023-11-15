@@ -52,15 +52,19 @@ public class DiagnosticsTests {
                 new TestCase("??", "item", 1, "Expected '0' or '1' in Boolean, found"),
                 new TestCase("1;", "item", 2, "Missing data in Key"),
                 new TestCase("1;_", "item", 2, "Key must start with LCALPHA or '*': '_' (\\u005f)"),
-                new TestCase("<uri>", "item", 0, "Unexpected start character in Bare Item: '<' (\\u003c)") ,
+                new TestCase("<uri>", "item", 0, "Unexpected start character in Bare Item: '<' (\\u003c)"),
                 new TestCase("1 2", "list", 2, "Expected COMMA in List, got: '2' (\\u0032)"),
                 new TestCase("1, 2,", "list", 5, "Found trailing COMMA in List"),
                 new TestCase("(1 2", "list", 4, "Missing data in Inner List"),
                 new TestCase("(1 2#", "list", 4, "Expected SP or ')' in Inner List, got: '#' (\\u0023)"),
                 new TestCase("a b", "dictionary", 2, "Expected COMMA in Dictionary, found: 'b' (\\u0062)"),
                 new TestCase("a,b,", "dictionary", 4, "Found trailing COMMA in Dictionary"),
-                new TestCase("@12.34", "item", 3, "Extra characters in string parsed as Item")
-                };
+                new TestCase("@12.34", "item", 3, "Extra characters in string parsed as Item"),
+                new TestCase("%\"", "item", 2, "Closing DQUOTE missing"),
+                new TestCase("%\"nonhex percent: %XX\"", "item", 19, "Invalid percent escape sequence character"),
+                new TestCase("%\"truncated UTF-8: %80\"", "item", 23, "Invalid UTF-8 sequence"),
+                new TestCase("%\"unpaired surrogate: %ed%ba%ad\"", "item", 32, "Invalid UTF-8 sequence"),
+            };
 
         for (TestCase test : tests) {
             try {
