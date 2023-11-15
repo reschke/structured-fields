@@ -236,6 +236,9 @@ public abstract class AbstractSpecificationTests {
 
             if (p.canonical != null) {
                 assertEquals(p.canonical, item.serialize());
+            } else {
+                assertEquals("in absence of 'canonical', expect only one 'raw' value", 1, p.raw.size());
+                assertEquals(p.raw.get(0), item.serialize());
             }
         }
     }
