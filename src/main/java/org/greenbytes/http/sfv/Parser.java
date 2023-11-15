@@ -247,10 +247,9 @@ public class Parser {
         throw complaint("Closing DQUOTE missing");
     }
 
-    private static final CharsetDecoder UTF8DECODER = StandardCharsets.UTF_8.newDecoder()
-            .onMalformedInput(CodingErrorAction.REPORT);
-
     private DisplayStringItem internalParseBareDisplayString() {
+
+        CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT);
 
         if (getOrEOD() != '%') {
             throw complaint("DisplayString must start with a percent sign: '" + input + "'");
@@ -286,10 +285,11 @@ public class Parser {
                 output.write(decodeHex(c1, c2));
             } else {
                 if (c == '"') {
+                    ByteBuffer bytes = ByteBuffer.wrap(output.toByteArray());
                     try {
-                        return DisplayStringItem.valueOf(UTF8DECODER.decode(ByteBuffer.wrap(output.toByteArray())).toString());
+                        return DisplayStringItem.valueOf(decoder.decode(bytes).toString());
                     } catch (CharacterCodingException e) {
-                        complaint("Invalid UTF-8 sequence");
+                        throw complaint("Invalid UTF-8 sequence (" + e.getMessage() + ") before position " + position());
                     }
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw complaint("Invalid character in Display String at position " + position());
