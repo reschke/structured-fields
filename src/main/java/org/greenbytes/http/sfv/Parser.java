@@ -1,7 +1,6 @@
 package org.greenbytes.http.sfv;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -260,6 +259,7 @@ public class Parser {
         }
 
         ByteArrayOutputStream output = new ByteArrayOutputStream(length() * 2);
+        int startpos = position();
 
         while (hasRemaining()) {
             if (startPositions.contains(position())) {
@@ -286,10 +286,32 @@ public class Parser {
             } else {
                 if (c == '"') {
                     ByteBuffer bytes = ByteBuffer.wrap(output.toByteArray());
+                    int blen = bytes.remaining();
                     try {
                         return DisplayStringItem.valueOf(decoder.decode(bytes).toString());
-                    } catch (CharacterCodingException e) {
-                        throw complaint("Invalid UTF-8 sequence (" + e.getMessage() + ") before position " + position());
+                    } catch (CharacterCodingException ex) {
+                        int length = position() - startpos - 1;
+                        char chars[] = new char[length];
+                        input.position(startpos);
+                        input.get(chars, 0, length);
+//                        System.err.println("s: " + new String(chars));
+
+                        // map byte positions to input positions
+                        int offsets[] = new int[blen];
+                        for (int i = 0, j = 0; i < blen; i++) {
+                            offsets[i] = j;
+//                            System.err.println(chars[j] + " " + i + " " + j);
+                            if (chars[j] == '%') {
+                                j+=3;
+                            }else {
+                                j += 1;
+                            }
+                        }
+//                        System.err.println("r: " + bytes.remaining());
+//                        System.err.println("l: " + blen);
+//                        System.err.println("i: " + offsets[blen - bytes.remaining()]);
+                        int failpos = startpos + offsets[blen - bytes.remaining()];
+                        throw complaint("Invalid UTF-8 sequence (" + ex.getMessage() + ") before position " + failpos, failpos, ex);
                     }
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw complaint("Invalid character in Display String at position " + position());
@@ -1009,6 +1031,10 @@ public class Parser {
 
     private ParseException complaint(String message, Throwable cause) {
         return new ParseException(message, input, cause);
+    }
+
+    private ParseException complaint(String message, int position, Throwable cause) {
+        return new ParseException(message, input, position, cause);
     }
 
     private static boolean isHex(char c) {
