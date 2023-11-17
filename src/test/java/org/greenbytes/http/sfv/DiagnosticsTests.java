@@ -62,10 +62,11 @@ public class DiagnosticsTests {
                 new TestCase("@12.34", "item", 3, "Extra characters in string parsed as Item"),
                 new TestCase("%\"", "item", 2, "Closing DQUOTE missing"),
                 new TestCase("%\"nonhex percent: %XX\"", "item", 19, "Invalid percent escape sequence character"),
-                new TestCase("%\"truncated UTF-8: %80\"", "item", 23, "Invalid UTF-8 sequence"),
-                new TestCase("%\"surrogate: %ed%ba%ad\"", "item", 23, "Invalid UTF-8 sequence"),
-                new TestCase("%\"invalid UTF-8 (RFC 3629, Section 3): %c0%80\"", "item", 46, "Invalid UTF-8 sequence"),
-                new TestCase("%\"invalid UTF-8 (RFC 3629, Section 3): %ed%a1%8c%ed%be%b4\"", "item", 58, "Invalid UTF-8 sequence"),
+                new TestCase(" %\"truncated UTF-8: %80\"", "item", 20, "Invalid UTF-8 sequence"),
+                new TestCase("%\"surrogate: %ed%ba%ad\"", "item", 13, "Invalid UTF-8 sequence"),
+                new TestCase("%\"invalid UTF-8 (RFC 3629, Section 3): %c0%80\"", "item", 39, "Invalid UTF-8 sequence"),
+                new TestCase("  %\"invalid UTF-8 (RFC 3629, Section 3): %ed%a1%8c%ed%be%b4\"", "item", 41, "Invalid UTF-8 sequence"),
+                new TestCase("%\"mix:%20%20%ff\"", "item", 12, "Invalid UTF-8 sequence"),
             };
 
         for (TestCase test : tests) {

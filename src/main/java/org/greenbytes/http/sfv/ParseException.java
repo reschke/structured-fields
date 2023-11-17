@@ -37,6 +37,24 @@ public class ParseException extends IllegalArgumentException {
      *            parser input.
      * @param position
      *            position where parse exception occurred.
+     * @param cause
+     *            underlying exception, if any.
+     */
+    public ParseException(String message, CharBuffer input, int position, Throwable cause) {
+        super(message, cause);
+        this.position = position;
+        this.data = asString(input);
+    }
+
+    /**
+     * Create instance of {@link ParseException}.
+     * 
+     * @param message
+     *            exception message.
+     * @param input
+     *            parser input.
+     * @param position
+     *            position where parse exception occurred.
      */
     public ParseException(String message, String input, int position) {
         this(message, input, position, null);
