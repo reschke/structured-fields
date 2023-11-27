@@ -82,6 +82,16 @@ public class Tests {
     }
 
     @Test
+    public void testValidDisplayStrings() {
+        String tests[] = new String[] { "%\"\"", "%\"%f0%9f%92%a9\"", "%\"BOM: %ef%bb%bf\"", "%\"%ef%bb%bf: BOM\"" };
+
+        for (String s : tests) {
+            DisplayStringItem i = Parser.parseDisplayString(s);
+            assertEquals("should round-trip", s, i.serialize());
+        }
+    }
+
+    @Test
     public void testInvalidStrings() {
         String tests[] = new String[] { "\"abc", "\"\\g\"" };
 
