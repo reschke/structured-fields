@@ -330,6 +330,12 @@ public class Parser {
         return result.withParams(params);
     }
 
+    private DisplayStringItem internalParseDisplayString() {
+        DisplayStringItem result = internalParseBareDisplayString();
+        Parameters params = internalParseParameters();
+        return result.withParams(params);
+    }
+
     private TokenItem internalParseBareToken() {
 
         char c = getOrEOD();
@@ -902,6 +908,21 @@ public class Parser {
     public static StringItem parseString(String input) {
         Parser p = new Parser(input);
         StringItem result = p.internalParseString();
+        p.assertEmpty("Extra characters in string parsed as String");
+        return result;
+    }
+
+    /**
+     * Implementation of "Parsing a Display String" (assuming no extra characters left
+     * in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link DisplayStringItem}.
+     */
+    public static DisplayStringItem parseDisplayString(String input) {
+        Parser p = new Parser(input);
+        DisplayStringItem result = p.internalParseDisplayString();
         p.assertEmpty("Extra characters in string parsed as String");
         return result;
     }
