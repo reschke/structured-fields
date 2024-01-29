@@ -188,6 +188,7 @@ public class Tests {
         tests.put("1;a, 1.1, \"foo\", ?0, a2, :Zg==:", new Object[] { 1L, ";a", BigDecimal.valueOf(1100, 3), EMPTY, "foo", EMPTY,
                 Boolean.FALSE, EMPTY, "a2", EMPTY, ByteSequenceItem.valueOf("f".getBytes()).get(), EMPTY });
         tests.put("1, ();a", new Object[] { 1L, EMPTY, Collections.emptyList(), ";a" });
+        tests.put("\"foo\";x, \"bar\", \"foo\";y", new Object[] { "foo", ";x", "bar", EMPTY, "foo", ";y" });
 
         tests.put("@12345, 123;created=@-1, 12.3", new Object[] { 12345L, EMPTY, 123L, ";created=@-1", BigDecimal.valueOf(12300, 3), EMPTY });
 
