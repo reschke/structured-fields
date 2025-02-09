@@ -44,10 +44,9 @@ public class DisplayStringItem implements Item<String> {
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append("%\"");
-        byte octets[] = value.getBytes(StandardCharsets.UTF_8);
-        for (int i = 0; i < octets.length; i++) {
-            int b = octets[i];
-            if (b == 0x25 || b == 0x22 || b <= 0x1f || b >= 0x7f) {
+        byte[] octets = value.getBytes(StandardCharsets.UTF_8);
+        for (byte b : octets) {
+            if (b == 0x25 || b == 0x22 || b <= 0x1f || b == 0x7f) {
                 sb.append('%');
                 sb.append(Character.forDigit((b >> 4) & 0xf, 16));
                 sb.append(Character.forDigit(b & 0xf, 16));

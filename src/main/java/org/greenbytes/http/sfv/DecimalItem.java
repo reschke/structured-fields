@@ -89,7 +89,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         if (right % 10 == 0) {
             right /= 10;
         }
-        sb.append(sign).append(Long.toString(left)).append('.').append(Long.toString(right));
+        sb.append(sign).append(left).append('.').append(right);
 
         params.serializeTo(sb);
 

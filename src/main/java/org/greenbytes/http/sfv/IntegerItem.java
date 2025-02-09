@@ -52,7 +52,7 @@ public class IntegerItem implements NumberItem<Long> {
 
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
-        sb.append(Long.toString(value));
+        sb.append(value);
         params.serializeTo(sb);
         return sb;
     }

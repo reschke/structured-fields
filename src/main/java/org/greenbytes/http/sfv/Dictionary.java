@@ -10,11 +10,11 @@ import java.util.Map;
  *      "https://www.rfc-editor.org/rfc/rfc8941.html#dictionary">Section 3.2 of
  *      RFC 8941</a>
  */
-public class Dictionary implements Type<Map<String, ListElement<? extends Object>>> {
+public class Dictionary implements Type<Map<String, ListElement<?>>> {
 
-    private final Map<String, ListElement<? extends Object>> value;
+    private final Map<String, ListElement<?>> value;
 
-    private Dictionary(Map<String, ListElement<? extends Object>> value) {
+    private Dictionary(Map<String, ListElement<?>> value) {
         this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
@@ -30,12 +30,12 @@ public class Dictionary implements Type<Map<String, ListElement<? extends Object
      *            a {@code Map<String, Item>} value
      * @return a {@link Dictionary} representing {@code value}.
      */
-    public static Dictionary valueOf(Map<String, ListElement<? extends Object>> value) {
+    public static Dictionary valueOf(Map<String, ListElement<?>> value) {
         return new Dictionary(value);
     }
 
     @Override
-    public Map<String, ListElement<? extends Object>> get() {
+    public Map<String, ListElement<?>> get() {
         return value;
     }
 
@@ -43,12 +43,12 @@ public class Dictionary implements Type<Map<String, ListElement<? extends Object
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
-        for (Map.Entry<String, ListElement<? extends Object>> e : value.entrySet()) {
+        for (Map.Entry<String, ListElement<?>> e : value.entrySet()) {
             sb.append(separator);
             separator = ", ";
 
             String name = e.getKey();
-            ListElement<? extends Object> value = e.getValue();
+            ListElement<?> value = e.getValue();
 
             sb.append(name);
             if (Boolean.TRUE.equals(value.get())) {

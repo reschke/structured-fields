@@ -18,9 +18,9 @@ import java.util.function.Function;
  *      "https://www.rfc-editor.org/rfc/rfc8941.html#param">Section
  *      3.1.2 of RFC 8941</a>
  */
-public class Parameters implements Map<String, Item<? extends Object>> {
+public class Parameters implements Map<String, Item<?>> {
 
-    private final Map<String, Item<? extends Object>> delegate;
+    private final Map<String, Item<?>> delegate;
 
     public static final Parameters EMPTY = new Parameters(Collections.emptyMap());
 
@@ -45,7 +45,7 @@ public class Parameters implements Map<String, Item<? extends Object>> {
     }
 
     public StringBuilder serializeTo(StringBuilder sb) {
-        for (Map.Entry<String, Item<? extends Object>> e : delegate.entrySet()) {
+        for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
             sb.append(';').append(e.getKey());
             if (!(e.getValue().get().equals(Boolean.TRUE))) {
                 sb.append('=');
@@ -55,12 +55,12 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return sb;
     }
 
-    private static Map<String, Item<? extends Object>> checkAndTransformMap(Map<String, Object> map) {
-        Map<String, Item<? extends Object>> result = new LinkedHashMap<>(
+    private static Map<String, Item<?>> checkAndTransformMap(Map<String, Object> map) {
+        Map<String, Item<?>> result = new LinkedHashMap<>(
                 Objects.requireNonNull(map, "Map must not be null").size());
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String key = Utils.checkKey(entry.getKey());
-            Item<? extends Object> value = asItem(key, entry.getValue());
+            Item<?> value = asItem(key, entry.getValue());
             if (!value.getParams().isEmpty()) {
                 throw new IllegalArgumentException("Parameter value for '" + key + "' must be bare item (no parameters)");
             }
@@ -69,18 +69,17 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
-    private static Item<? extends Object> asItem(String key, Object o) {
+    private static Item<?> asItem(String key, Object o) {
         if (o instanceof Item) {
-            return (Item<? extends Object>) o;
+            return (Item<?>) o;
         } else if (o instanceof Integer) {
             return IntegerItem.valueOf(((Integer) o).longValue());
         } else if (o instanceof Long) {
-            return IntegerItem.valueOf(((Long) o).longValue());
+            return IntegerItem.valueOf((Long) o);
         } else if (o instanceof String) {
             return StringItem.valueOf((String) o);
         } else if (o instanceof Boolean) {
-            return BooleanItem.valueOf(((Boolean) o).booleanValue());
+            return BooleanItem.valueOf((Boolean) o);
         } else if (o instanceof byte[]) {
             return ByteSequenceItem.valueOf((byte[]) o);
         } else if (o instanceof BigDecimal) {
@@ -96,18 +95,18 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         delegate.clear();
     }
 
-    public Item<? extends Object> compute(String key,
-            BiFunction<? super String, ? super Item<? extends Object>, ? extends Item<? extends Object>> remappingFunction) {
+    public Item<?> compute(String key,
+                           BiFunction<? super String, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         return delegate.compute(key, remappingFunction);
     }
 
-    public Item<? extends Object> computeIfAbsent(String key,
-            Function<? super String, ? extends Item<? extends Object>> mappingFunction) {
+    public Item<?> computeIfAbsent(String key,
+                                   Function<? super String, ? extends Item<?>> mappingFunction) {
         return delegate.computeIfAbsent(key, mappingFunction);
     }
 
-    public Item<? extends Object> computeIfPresent(String key,
-            BiFunction<? super String, ? super Item<? extends Object>, ? extends Item<? extends Object>> remappingFunction) {
+    public Item<?> computeIfPresent(String key,
+                                    BiFunction<? super String, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         return delegate.computeIfPresent(key, remappingFunction);
     }
 
@@ -119,7 +118,7 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return delegate.containsValue(value);
     }
 
-    public Set<Entry<String, Item<? extends Object>>> entrySet() {
+    public Set<Entry<String, Item<?>>> entrySet() {
         return delegate.entrySet();
     }
 
@@ -127,15 +126,15 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return delegate.equals(o);
     }
 
-    public void forEach(BiConsumer<? super String, ? super Item<? extends Object>> action) {
+    public void forEach(BiConsumer<? super String, ? super Item<?>> action) {
         delegate.forEach(action);
     }
 
-    public Item<? extends Object> get(Object key) {
+    public Item<?> get(Object key) {
         return delegate.get(key);
     }
 
-    public Item<? extends Object> getOrDefault(Object key, Item<? extends Object> defaultValue) {
+    public Item<?> getOrDefault(Object key, Item<?> defaultValue) {
         return delegate.getOrDefault(key, defaultValue);
     }
 
@@ -151,20 +150,20 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return delegate.keySet();
     }
 
-    public Item<? extends Object> merge(String key, Item<? extends Object> value,
-            BiFunction<? super Item<? extends Object>, ? super Item<? extends Object>, ? extends Item<? extends Object>> remappingFunction) {
+    public Item<?> merge(String key, Item<?> value,
+            BiFunction<? super Item<?>, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         return delegate.merge(key, value, remappingFunction);
     }
 
-    public Item<? extends Object> put(String key, Item<? extends Object> value) {
+    public Item<?> put(String key, Item<?> value) {
         return delegate.put(key, value);
     }
 
-    public void putAll(Map<? extends String, ? extends Item<? extends Object>> m) {
+    public void putAll(Map<? extends String, ? extends Item<?>> m) {
         delegate.putAll(m);
     }
 
-    public Item<? extends Object> putIfAbsent(String key, Item<? extends Object> value) {
+    public Item<?> putIfAbsent(String key, Item<?> value) {
         return delegate.putIfAbsent(key, value);
     }
 
@@ -172,19 +171,19 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return delegate.remove(key, value);
     }
 
-    public Item<? extends Object> remove(Object key) {
+    public Item<?> remove(Object key) {
         return delegate.remove(key);
     }
 
-    public boolean replace(String key, Item<? extends Object> oldValue, Item<? extends Object> newValue) {
+    public boolean replace(String key, Item<?> oldValue, Item<?> newValue) {
         return delegate.replace(key, oldValue, newValue);
     }
 
-    public Item<? extends Object> replace(String key, Item<? extends Object> value) {
+    public Item<?> replace(String key, Item<?> value) {
         return delegate.replace(key, value);
     }
 
-    public void replaceAll(BiFunction<? super String, ? super Item<? extends Object>, ? extends Item<? extends Object>> function) {
+    public void replaceAll(BiFunction<? super String, ? super Item<?>, ? extends Item<?>> function) {
         delegate.replaceAll(function);
     }
 
@@ -192,7 +191,7 @@ public class Parameters implements Map<String, Item<? extends Object>> {
         return delegate.size();
     }
 
-    public Collection<Item<? extends Object>> values() {
+    public Collection<Item<?>> values() {
         return delegate.values();
     }
 
