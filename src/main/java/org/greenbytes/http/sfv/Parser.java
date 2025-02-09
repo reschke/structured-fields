@@ -594,8 +594,7 @@ public class Parser {
 
         LinkedHashMap<String, ListElement<?>> result = new LinkedHashMap<>();
 
-        boolean done = false;
-        while (hasRemaining() && !done) {
+        while (hasRemaining()) {
 
             ListElement<?> member;
 
@@ -621,8 +620,6 @@ public class Parser {
                 if (!hasRemaining()) {
                     throw complaint("Found trailing COMMA in Dictionary");
                 }
-            } else {
-                done = true;
             }
         }
 
