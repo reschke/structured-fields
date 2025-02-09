@@ -150,14 +150,10 @@ public class ItemAPITests {
     @Test
     public void testByteSequenceInvalid() {
 
-        byte[][] tests = new byte[][] { null };
-
-        for (byte[] ba : tests) {
-            try {
-                ByteSequenceItem item = ByteSequenceItem.valueOf(ba);
-                fail("should fail for '" + item + "' but got '" + item.get() + "'");
-            } catch (NullPointerException | IllegalArgumentException expected) {
-            }
+        try {
+            ByteSequenceItem item = ByteSequenceItem.valueOf(null);
+            fail("should fail for '" + item + "' but got '" + item.get() + "'");
+        } catch (NullPointerException | IllegalArgumentException expected) {
         }
     }
 
@@ -200,11 +196,9 @@ public class ItemAPITests {
         for (String key : tests) {
             m.clear();
             m.put(key, IntegerItem.valueOf(1));
-            try {
-                Parameters p = Parameters.valueOf(m);
-                fail("should fail for key '" + key + "' but got: " + p);
-            } catch (IllegalArgumentException ex) {
-            }
+            assertThrows("should throe",
+                    IllegalArgumentException.class,
+                    () -> Parameters.valueOf(m));
         }
     }
 
