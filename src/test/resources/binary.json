@@ -16,6 +16,18 @@
             []]
     },
     {
+        "name": "padding at beginning",
+        "raw": [":=aGVsbG8=:"],
+        "header_type": "item",
+        "must_fail": true
+    },
+    {
+        "name": "padding in middle",
+        "raw": [":a=GVsbG8=:"],
+        "header_type": "item",
+        "must_fail": true
+    },
+    {
         "name": "bad padding",
         "raw": [":aGVsbG8:"],
         "header_type": "item",
@@ -26,6 +38,12 @@
         "canonical": [":aGVsbG8=:"]
     },
     {
+        "name": "bad padding dot",
+        "raw": [":aGVsbG8.:"],
+        "header_type": "item",
+        "must_fail": true
+    },
+    {
         "name": "bad end delimiter",
         "raw": [":aGVsbG8="],
         "header_type": "item",
@@ -34,6 +52,12 @@
     {
         "name": "extra whitespace",
         "raw": [":aGVsb G8=:"],
+        "header_type": "item",
+        "must_fail": true
+    },
+    {
+        "name": "all whitespace",
+        "raw": [":    :"],
         "header_type": "item",
         "must_fail": true
     },
