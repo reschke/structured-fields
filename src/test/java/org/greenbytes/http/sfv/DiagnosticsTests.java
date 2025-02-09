@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class DiagnosticsTests {
 
-    private class TestCase {
+    private static class TestCase {
 
         final String[] input;
         final String type;
@@ -32,7 +32,7 @@ public class DiagnosticsTests {
     @Test
     public void diagnostics() {
 
-        TestCase[] tests = new TestCase[] { new TestCase("\u0080", null, 0, "Invalid character in field line "),
+        TestCase[] tests = new TestCase[] {new TestCase("\u0080", null, 0, "Invalid character in field line "),
                 new TestCase("   \u0080", null, 3, "Invalid character in field line "),
                 new TestCase("-a", "item", 1, "Illegal start for Integer or Decimal:"),
                 new TestCase("1234567890123.2", "item", 13, "Illegal position for decimal point in Decimal after "),
@@ -40,7 +40,7 @@ public class DiagnosticsTests {
                 new TestCase("123456789012.5556", "item", 16, "Decimal too long: "),
                 new TestCase("123456789012.", "item", 12, "Decimal must not end in '.'"),
                 new TestCase("0.1234", "item", 5, "Maximum number of fractional digits is 3, found:"),
-                new TestCase(new String[] { "\"foo", "bar\"" }, "item", 4, "String crosses field line boundary "),
+                new TestCase(new String[]{"\"foo", "bar\""}, "item", 4, "String crosses field line boundary "),
                 new TestCase("\"\\", "item", 2, "Incomplete escape sequence at position "),
                 new TestCase("\"\\a\"", "item", 2, "Invalid escape sequence character 'a'"),
                 new TestCase("\"\u007f\"", "item", 2, "Invalid character in String"),

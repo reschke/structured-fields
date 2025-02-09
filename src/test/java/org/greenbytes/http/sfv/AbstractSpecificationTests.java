@@ -60,7 +60,7 @@ public abstract class AbstractSpecificationTests {
         JsonObject v = (JsonObject) vt;
         TestParams p = new TestParams();
 
-        p.name = ((JsonObject) v).getString("name");
+        p.name = v.getString("name");
         p.raw = new ArrayList<>();
         for (JsonValue raw : v.getJsonArray("raw")) {
             String t = ((JsonString) raw).getString();
@@ -80,12 +80,12 @@ public abstract class AbstractSpecificationTests {
                 p.expected_value = array.get(0);
                 p.expected_params = array.get(1);
             } else {
-                p.expected_value = (JsonObject) expected;
+                p.expected_value = expected;
                 p.expected_params = null;
             }
         } else if ("dictionary".equals(p.header_type)) {
             if (expected instanceof JsonArray) {
-                p.expected_value = (JsonArray) expected;
+                p.expected_value = expected;
             } else {
                 throw new RuntimeException("unexpected dictionary expected value for test: " + p.name);
             }
@@ -96,25 +96,26 @@ public abstract class AbstractSpecificationTests {
             throw new RuntimeException("unexpected header_type: " + p.header_type);
         }
         JsonArray canarr = v.getJsonArray("canonical");
-        p.canonical = canarr == null || canarr.size() == 0 ? null : canarr.getString(0);
+        p.canonical = canarr == null || canarr.isEmpty() ? null : canarr.getString(0);
         return p;
     }
 
-    public Type<? extends Object> parse() {
+    public Type<?> parse() {
         Parser parser = new Parser(p.raw);
-        if (p.header_type.equals("item")) {
-            return parser.parseItem();
-        } else if (p.header_type.equals("list")) {
-            return parser.parseList();
-        } else if (p.header_type.equals("dictionary")) {
-            return parser.parseDictionary();
-        } else {
-            fail("unsupported header type");
-            return null;
+        switch (p.header_type) {
+            case "item":
+                return parser.parseItem();
+            case "list":
+                return parser.parseList();
+            case "dictionary":
+                return parser.parseDictionary();
+            default:
+                fail("unsupported header type");
+                return null;
         }
     }
 
-    private static void match(JsonValue value, JsonValue params, Type<? extends Object> item) {
+    private static void match(JsonValue value, JsonValue params, Type<?> item) {
         if (value instanceof JsonString) {
             CharSequence expected = (((JsonString) value).getChars());
             assertEquals(expected, item.get());
@@ -130,8 +131,8 @@ public abstract class AbstractSpecificationTests {
             if (container.containsKey("__type")) {
                 String type = container.getString("__type");
                 if ("binary".equals(type)) {
-                    byte expectedBytes[] = new Base32().decode(container.get("value").toString());
-                    byte actualBytes[] = ((ByteBuffer) (item.get())).array();
+                    byte[] expectedBytes = new Base32().decode(container.get("value").toString());
+                    byte[] actualBytes = ((ByteBuffer) (item.get())).array();
                     assertArrayEquals(expectedBytes, actualBytes);
                 } else if ("token".equals(type)) {
                     CharSequence expectedString = ((JsonString) container.get("value")).getChars();
@@ -147,7 +148,7 @@ public abstract class AbstractSpecificationTests {
                 }
             } else {
                 @SuppressWarnings("unchecked")
-                Map<String, Item<? extends Object>> result = (Map<String, Item<? extends Object>>) item.get();
+                Map<String, Item<?>> result = (Map<String, Item<?>>) item.get();
                 assertEquals(container.size(), result.size());
                 for (Map.Entry<String, JsonValue> e : container.entrySet()) {
                     if (e.getValue() instanceof JsonArray) {
@@ -162,16 +163,16 @@ public abstract class AbstractSpecificationTests {
         } else if (value instanceof JsonArray) {
             JsonArray array = (JsonArray) value;
             @SuppressWarnings("unchecked")
-            List<Item<? extends Object>> result = (List<Item<? extends Object>>) item.get();
+            List<Item<?>> result = (List<Item<?>>) item.get();
             assertEquals(array.size(), result.size());
             for (int i = 0; i < array.size(); i++) {
                 JsonArray t = (JsonArray) array.get(i);
                 assertEquals(2, t.size());
                 match(t.get(0), t.get(1), result.get(i));
             }
-        } else if (value instanceof JsonValue) {
+        } else if (value != null) {
             if (JsonValue.TRUE.equals(value) || JsonValue.FALSE.equals(value)) {
-                Boolean expected = Boolean.valueOf(((JsonValue) value).toString());
+                Boolean expected = Boolean.valueOf(value.toString());
                 assertEquals(expected, item.get());
             } else {
                 fail("unexpected JsonValue: " + value + " (" + value.getClass() + ")");
@@ -181,14 +182,14 @@ public abstract class AbstractSpecificationTests {
         }
         if (params != null) {
             assertTrue(item instanceof Parametrizable);
-            Map<String, Item<? extends Object>> result = ((Parametrizable<? extends Object>) item).getParams();
+            Map<String, Item<?>> result = ((Parametrizable<?>) item).getParams();
 
             if (params instanceof JsonArray) {
                 // new format
                 JsonArray expected = (JsonArray) params;
                 assertEquals(expected.size(), result.size());
                 int i = 0;
-                for (Map.Entry<String, Item<? extends Object>> param : result.entrySet()) {
+                for (Map.Entry<String, Item<?>> param : result.entrySet()) {
                     JsonArray e = (JsonArray) expected.get(i);
                     assertEquals(2, e.size());
                     assertEquals(((JsonString) e.get(0)).getString(), param.getKey());
@@ -205,14 +206,14 @@ public abstract class AbstractSpecificationTests {
     public void executeTest() {
         if (p.must_fail) {
             try {
-                Type<? extends Object> parsed = parse();
+                Type<?> parsed = parse();
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (ParseException expected) {
                 // System.out.println(p.name);
                 // System.err.println(expected.getDiagnostics());
             }
         } else {
-            Type<? extends Object> item = parse();
+            Type<?> item = parse();
             if (p.expected_value instanceof JsonArray) {
                 JsonArray array = (JsonArray) p.expected_value;
                 if (item instanceof OuterList) {
@@ -222,7 +223,7 @@ public abstract class AbstractSpecificationTests {
                     }
                 } else if (item instanceof Dictionary) {
                     int i = 0;
-                    for (Map.Entry<String, ListElement<? extends Object>> e : ((Dictionary) item).get().entrySet()) {
+                    for (Map.Entry<String, ListElement<?>> e : ((Dictionary) item).get().entrySet()) {
                         JsonArray m = (JsonArray) array.get(i);
                         JsonValue name = m.get(0);
                         JsonArray val = (JsonArray) m.get(1);
