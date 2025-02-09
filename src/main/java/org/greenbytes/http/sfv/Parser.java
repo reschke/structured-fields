@@ -74,7 +74,7 @@ public class Parser {
                     sb = new StringBuilder();
                     sb.append(str);
                 }
-                if (startPositions.size() == 0) {
+                if (startPositions.isEmpty()) {
                     startPositions = new ArrayList<>();
                 }
                 startPositions.add(sb.length());
@@ -91,7 +91,7 @@ public class Parser {
     private static String checkASCII(String value) {
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if (c < 0x00 || c > 0x7f) {
+            if (c > 0x7f) {
                 throw new ParseException(String.format("Invalid character in field line at position %d: '%c' (0x%04x) (input: %s)",
                         i, c, (int) c, value), value, i);
             }
@@ -291,13 +291,13 @@ public class Parser {
                         return DisplayStringItem.valueOf(decoder.decode(bytes).toString());
                     } catch (CharacterCodingException ex) {
                         int length = position() - startpos - 1;
-                        char chars[] = new char[length];
+                        char[] chars = new char[length];
                         input.position(startpos);
                         input.get(chars, 0, length);
 //                        System.err.println("s: " + new String(chars));
 
                         // map byte positions to input positions
-                        int offsets[] = new int[blen];
+                        int[] offsets = new int[blen];
                         for (int i = 0, j = 0; i < blen; i++) {
                             offsets[i] = j;
 //                            System.err.println(chars[j] + " " + i + " " + j);
@@ -307,16 +307,13 @@ public class Parser {
                                 j += 1;
                             }
                         }
-//                        System.err.println("r: " + bytes.remaining());
-//                        System.err.println("l: " + blen);
-//                        System.err.println("i: " + offsets[blen - bytes.remaining()]);
                         int failpos = startpos + offsets[blen - bytes.remaining()];
                         throw complaint("Invalid UTF-8 sequence (" + ex.getMessage() + ") before position " + failpos, failpos, ex);
                     }
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw complaint("Invalid character in Display String at position " + position());
                 } else {
-                    output.write((int) c);
+                    output.write(c);
                 }
             }
         }
@@ -366,7 +363,7 @@ public class Parser {
         return result.withParams(params);
     }
 
-    private static Base64.Decoder BASE64DECODER = Base64.getDecoder();
+    private static final Base64.Decoder BASE64DECODER = Base64.getDecoder();
 
     private static boolean isBase64Char(char c) {
         return Utils.isAlpha(c) || Utils.isDigit(c) || c == '+' || c == '/' || c == '=';
@@ -636,12 +633,12 @@ public class Parser {
 
     protected static DateItem parseDate(String input) {
         Parser p = new Parser(input);
-        Item<?> result = p.internalParseDate();
+        DateItem result = p.internalParseDate();
         if (!(result instanceof DateItem)) {
             throw p.complaint("String parsed as Date '" + input + "' is not a Date");
         } else {
             p.assertEmpty("Extra characters in string parsed as Date");
-            return (DateItem) result;
+            return result;
         }
     }
 
@@ -986,7 +983,7 @@ public class Parser {
 
     // utility methods on CharBuffer
 
-    private static char EOD = (char) -1;
+    private static final char EOD = (char) -1;
 
     private void assertEmpty(String message) {
         if (hasRemaining()) {
