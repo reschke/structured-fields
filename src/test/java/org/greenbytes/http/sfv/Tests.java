@@ -15,7 +15,7 @@ public class Tests {
 
     @Test
     public void testValidIntegers() {
-        String tests[] = new String[] { "0", "1", "-1", "999999999999", "-999999999999", "3;a=b" };
+        String[] tests = new String[] { "0", "1", "-1", "999999999999", "-999999999999", "3;a=b" };
 
         for (String s : tests) {
             IntegerItem i = Parser.parseInteger(s);
@@ -25,7 +25,7 @@ public class Tests {
 
     @Test
     public void testValidDates() {
-        String tests[] = new String[] { "@0", "@1", "@-1", "@999999999999", "@-999999999999", "@3;a=b" };
+        String[] tests = new String[] { "@0", "@1", "@-1", "@999999999999", "@-999999999999", "@3;a=b" };
 
         for (String s : tests) {
             DateItem i = Parser.parseDate(s);
@@ -35,7 +35,7 @@ public class Tests {
 
     @Test
     public void testInvalidIntegers() {
-        String tests[] = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2",
+        String[] tests = new String[] { "a", "1a", "1.", "9999999999999999", "-9999999999999999", "0999999999999999", "1-2",
                 "3 4" };
 
         for (String s : tests) {
@@ -49,7 +49,7 @@ public class Tests {
 
     @Test
     public void testValidDecimals() {
-        String tests[] = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0",
+        String[] tests = new String[] { "0.1", "1.345", "123.99", "-1.567", "999999999999.999", "-999999999999.999", "123.0",
                 "3.14;this-is-pi" };
 
         for (String s : tests) {
@@ -60,7 +60,7 @@ public class Tests {
 
     @Test
     public void testInvalidDecimals() {
-        String tests[] = new String[] { " 0.1", "1.3453", "-1.56.7", "99999999999999.90", "-99999999999999.90" };
+        String[] tests = new String[] { " 0.1", "1.3453", "-1.56.7", "99999999999999.90", "-99999999999999.90" };
 
         for (String s : tests) {
             try {
@@ -73,7 +73,7 @@ public class Tests {
 
     @Test
     public void testValidStrings() {
-        String tests[] = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"", "\"a\";c=2" };
+        String[] tests = new String[] { "\"\"", "\"abc\"", "\"a\\\\\\\"b\"", "\"a\";c=2" };
 
         for (String s : tests) {
             StringItem i = Parser.parseString(s);
@@ -83,7 +83,7 @@ public class Tests {
 
     @Test
     public void testValidDisplayStrings() {
-        String tests[] = new String[] { "%\"\"", "%\"%f0%9f%92%a9\"", "%\"BOM: %ef%bb%bf\"", "%\"%ef%bb%bf: BOM\"" };
+        String[] tests = new String[] { "%\"\"", "%\"%f0%9f%92%a9\"", "%\"BOM: %ef%bb%bf\"", "%\"%ef%bb%bf: BOM\"" };
 
         for (String s : tests) {
             DisplayStringItem i = Parser.parseDisplayString(s);
@@ -93,7 +93,7 @@ public class Tests {
 
     @Test
     public void testInvalidStrings() {
-        String tests[] = new String[] { "\"abc", "\"\\g\"" };
+        String[] tests = new String[] { "\"abc", "\"\\g\"" };
 
         for (String s : tests) {
             try {
@@ -106,7 +106,7 @@ public class Tests {
 
     @Test
     public void testValidTokens() {
-        String tests[] = new String[] { "x", "a2", "C", "text/plain;q=0.123", "foo:bar" };
+        String[] tests = new String[] { "x", "a2", "C", "text/plain;q=0.123", "foo:bar" };
 
         for (String s : tests) {
             TokenItem i = Parser.parseToken(s);
@@ -116,7 +116,7 @@ public class Tests {
 
     @Test
     public void testInvalidTokens() {
-        String tests[] = new String[] { "", "1", "a(b)", "3, ::" };
+        String[] tests = new String[] { "", "1", "a(b)", "3, ::" };
 
         for (String s : tests) {
             try {
@@ -129,7 +129,7 @@ public class Tests {
 
     @Test
     public void testValidBooleans() {
-        String tests[] = new String[] { "?0", "?1", "?0;maybe" };
+        String[] tests = new String[] { "?0", "?1", "?0;maybe" };
 
         for (String s : tests) {
             BooleanItem i = Parser.parseBoolean(s);
@@ -139,7 +139,7 @@ public class Tests {
 
     @Test
     public void testInvalidBooleans() {
-        String tests[] = new String[] { "?", "1", "?0 " };
+        String[] tests = new String[] { "?", "1", "?0 " };
 
         for (String s : tests) {
             try {
@@ -153,7 +153,7 @@ public class Tests {
 
     @Test
     public void testValidByteSequences() {
-        String tests[] = new String[] { ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:;foo=bar" };
+        String[] tests = new String[] { ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:;foo=bar" };
 
         for (String s : tests) {
             ByteSequenceItem i = Parser.parseByteSequence(s);
@@ -163,7 +163,7 @@ public class Tests {
 
     @Test
     public void testInvalidByteSequences() {
-        String tests[] = new String[] { "cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==",
+        String[] tests = new String[] { "cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==",
                 ":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==", "cHJld\nGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:" };
 
         for (String s : tests) {
@@ -236,7 +236,7 @@ public class Tests {
 
     @Test
     public void testInvalidLists() {
-        String tests[] = new String[] { "(abc\"def\"?0123*dXZ3*xyz)" };
+        String[] tests = new String[] { "(abc\"def\"?0123*dXZ3*xyz)" };
 
         for (String s : tests) {
             try {
@@ -249,7 +249,7 @@ public class Tests {
 
     @Test
     public void testParseValidDictionary() {
-        String tests[] = new String[] { "en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", "a=?0, b, c;foo=bar",
+        String[] tests = new String[] { "en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", "a=?0, b, c;foo=bar",
                 "rating=1.5, feelings=(joy sadness)", "a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid" };
 
         for (String s : tests) {
@@ -262,9 +262,9 @@ public class Tests {
     public void parserAPI() {
         Parser p = new Parser("a=?0, b, c; foo=bar");
         Dictionary d = p.parseDictionary();
-        for (Map.Entry<String, ListElement<? extends Object>> e : d.get().entrySet()) {
+        for (Map.Entry<String, ListElement<?>> e : d.get().entrySet()) {
             String key = e.getKey();
-            Parametrizable<? extends Object> item = e.getValue();
+            Parametrizable<?> item = e.getValue();
             Object value = item.get();
             Parameters params = item.getParams();
             System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
@@ -273,9 +273,9 @@ public class Tests {
 
     @Test
     public void brokenFieldLines() {
-        String tests[][] = new String[][] { new String[] { "\"foo", "bar\"" }, new String[] { "a", "", "b" } };
+        String[][] tests = new String[][] { new String[] { "\"foo", "bar\"" }, new String[] { "a", "", "b" } };
 
-        for (String t[] : tests) {
+        for (String[] t : tests) {
             Parser p = new Parser(t);
             try {
                 p.parseList();

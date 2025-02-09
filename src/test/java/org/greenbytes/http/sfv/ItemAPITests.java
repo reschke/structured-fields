@@ -27,7 +27,7 @@ public class ItemAPITests {
     @Test
     public void testInteger() {
 
-        long tests[] = new long[] { 0L, -0L, 999999999999999L, -999999999999999L };
+        long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L };
 
         for (long l : tests) {
             IntegerItem item = IntegerItem.valueOf(l);
@@ -41,7 +41,7 @@ public class ItemAPITests {
     @Test
     public void testIntegerInvalid() {
 
-        Long tests[] = new Long[] { 1000000000000000L, -1000000000000000L };
+        Long[] tests = new Long[] { 1000000000000000L, -1000000000000000L };
 
         for (Long l : tests) {
             try {
@@ -55,7 +55,7 @@ public class ItemAPITests {
     @Test
     public void testDecimal() {
 
-        long tests[] = new long[] { 0L, -0L, 999999999999999L, -999999999999999L, -123, 1000, 500, 10, -1 };
+        long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L, -123, 1000, 500, 10, -1 };
 
         for (long l : tests) {
             DecimalItem item = DecimalItem.valueOf(l);
@@ -81,7 +81,7 @@ public class ItemAPITests {
     @Test
     public void testString() {
 
-        String tests[] = new String[] { "", "'", "\"", "\\" };
+        String[] tests = new String[] { "", "'", "\"", "\\" };
 
         for (String s : tests) {
             StringItem item = StringItem.valueOf(s);
@@ -94,7 +94,7 @@ public class ItemAPITests {
     @Test
     public void testStringInvalid() {
 
-        String tests[] = new String[] { "\n", "\u0080", "\u007f", "\u0000" };
+        String[] tests = new String[] { "\n", "\u0080", "\u007f", "\u0000" };
 
         for (String s : tests) {
             try {
@@ -108,7 +108,7 @@ public class ItemAPITests {
     @Test
     public void testToken() {
 
-        String tests[] = new String[] { "*", "x", "*-/", "foo.bar-qux" };
+        String[] tests = new String[] { "*", "x", "*-/", "foo.bar-qux" };
 
         for (String s : tests) {
             TokenItem item = TokenItem.valueOf(s);
@@ -121,7 +121,7 @@ public class ItemAPITests {
     @Test
     public void testTokenInvalid() {
 
-        String tests[] = new String[] { "123", ".x", "a(b)", "\u0000foo" };
+        String[] tests = new String[] { "123", ".x", "a(b)", "\u0000foo" };
 
         for (String s : tests) {
             try {
@@ -135,8 +135,8 @@ public class ItemAPITests {
     @Test
     public void testByteSequence() {
 
-        byte tests[][] = new byte[][] { new byte[0], "x".getBytes() };
-        String results[] = new String[] { "::", ":eA==:" };
+        byte[][] tests = new byte[][] { new byte[0], "x".getBytes() };
+        String[] results = new String[] { "::", ":eA==:" };
 
         for (int i = 0; i < tests.length; i++) {
             ByteSequenceItem item = ByteSequenceItem.valueOf(tests[i]);
@@ -148,7 +148,7 @@ public class ItemAPITests {
     @Test
     public void testByteSequenceInvalid() {
 
-        byte tests[][] = new byte[][] { null };
+        byte[][] tests = new byte[][] { null };
 
         for (byte[] ba : tests) {
             try {
@@ -165,23 +165,23 @@ public class ItemAPITests {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("*", "star");
         m.put("i", 1);
-        m.put("l", 2l);
+        m.put("l", 2L);
         m.put("b", false);
         m.put("o", new byte[0]);
         m.put("d", new BigDecimal(0.1));
         Parameters p = Parameters.valueOf(m);
-        assertEquals(p.get("*").getClass(), StringItem.class);
-        assertEquals(p.get("i").getClass(), IntegerItem.class);
-        assertEquals(p.get("l").getClass(), IntegerItem.class);
-        assertEquals(p.get("b").getClass(), BooleanItem.class);
-        assertEquals(p.get("o").getClass(), ByteSequenceItem.class);
-        assertEquals(p.get("d").getClass(), DecimalItem.class);
+        assertEquals(StringItem.class, p.get("*").getClass());
+        assertEquals(IntegerItem.class, p.get("i").getClass());
+        assertEquals(IntegerItem.class, p.get("l").getClass());
+        assertEquals(BooleanItem.class, p.get("b").getClass());
+        assertEquals(ByteSequenceItem.class, p.get("o").getClass());
+        assertEquals(DecimalItem.class, p.get("d").getClass());
     }
 
     @Test
     public void testInvalidParameterKeys() {
 
-        String tests[] = { "Aa", "-a", "/a", "", " ", "1" };
+        String[] tests = { "Aa", "-a", "/a", "", " ", "1" };
         Map<String, Object> m = new LinkedHashMap<>();
         for (String key : tests) {
             m.clear();
