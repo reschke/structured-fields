@@ -8,7 +8,7 @@ package org.greenbytes.http.sfv;
  * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#param">Section
  *      3.1.2 of RFC 8941</a>
  */
-public interface Parametrizable<T> extends Type<T> {
+public interface Parameterizable<T> extends Type<T> {
 
     /**
      * Given an existing {@link Item}, return a new instance with the specified
@@ -18,7 +18,7 @@ public interface Parametrizable<T> extends Type<T> {
      *            {@link Parameters} to set (must be non-null)
      * @return new instance with specified {@link Parameters}.
      */
-    Parametrizable<T> withParams(Parameters params);
+    Parameterizable<T> withParams(Parameters params);
 
     /**
      * Get the {@link Parameters} of this {@link Item}.

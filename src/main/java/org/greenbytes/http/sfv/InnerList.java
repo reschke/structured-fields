@@ -10,7 +10,7 @@ import java.util.Objects;
  *      "https://www.rfc-editor.org/rfc/rfc8941.html#inner-list">Section 3.1.1
  *      of RFC 8941</a>
  */
-public class InnerList implements ListElement<List<Item<?>>>, Parametrizable<List<Item<?>>> {
+public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<List<Item<?>>> {
 
     private final List<Item<?>> value;
     private final Parameters params;

@@ -743,7 +743,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-item-or-list">Section
      *      4.2.1.1 of RFC 8941</a>
      */
-    public static Parametrizable<?> parseItemOrInnerList(String input) {
+    public static Parameterizable<?> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
         ListElement<?> result = p.internalParseItemOrInnerList();
         p.assertEmpty("Extra characters in string parsed as Item or Inner List");

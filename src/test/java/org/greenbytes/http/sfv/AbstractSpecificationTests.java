@@ -181,8 +181,8 @@ public abstract class AbstractSpecificationTests {
             fail("unexpected type");
         }
         if (params != null) {
-            assertTrue(item instanceof Parametrizable);
-            Map<String, Item<?>> result = ((Parametrizable<?>) item).getParams();
+            assertTrue(item instanceof Parameterizable);
+            Map<String, Item<?>> result = ((Parameterizable<?>) item).getParams();
 
             if (params instanceof JsonArray) {
                 // new format

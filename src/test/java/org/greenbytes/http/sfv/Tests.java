@@ -265,7 +265,7 @@ public class Tests {
         Dictionary d = p.parseDictionary();
         for (Map.Entry<String, ListElement<?>> e : d.get().entrySet()) {
             String key = e.getKey();
-            Parametrizable<?> item = e.getValue();
+            Parameterizable<?> item = e.getValue();
             Object value = item.get();
             Parameters params = item.getParams();
             System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
