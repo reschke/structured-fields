@@ -9,11 +9,11 @@ import java.util.Objects;
  * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#list">Section 3.1
  *      of RFC 8941</a>
  */
-public class OuterList implements Type<List<ListElement<? extends Object>>> {
+public class OuterList implements Type<List<ListElement<?>>> {
 
-    private final List<ListElement<? extends Object>> value;
+    private final List<ListElement<?>> value;
 
-    private OuterList(List<ListElement<? extends Object>> value) {
+    private OuterList(List<ListElement<?>> value) {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
@@ -25,7 +25,7 @@ public class OuterList implements Type<List<ListElement<? extends Object>>> {
      *            a {@code List<Item>} value.
      * @return a {@link OuterList} representing {@code value}.
      */
-    public static OuterList valueOf(List<ListElement<? extends Object>> value) {
+    public static OuterList valueOf(List<ListElement<?>> value) {
         return new OuterList(value);
     }
 
@@ -33,7 +33,7 @@ public class OuterList implements Type<List<ListElement<? extends Object>>> {
     public StringBuilder serializeTo(StringBuilder sb) {
         String separator = "";
 
-        for (ListElement<? extends Object> i : value) {
+        for (ListElement<?> i : value) {
             sb.append(separator);
             separator = ", ";
             i.serializeTo(sb);
@@ -48,7 +48,7 @@ public class OuterList implements Type<List<ListElement<? extends Object>>> {
     }
 
     @Override
-    public List<ListElement<? extends Object>> get() {
+    public List<ListElement<?>> get() {
         return value;
     }
 }

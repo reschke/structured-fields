@@ -62,7 +62,7 @@ public class TokenItem implements Item<String> {
     }
 
     private static String checkParam(String value) {
-        if (value.length() == 0) {
+        if (value.isEmpty()) {
             throw new IllegalArgumentException("Token can not be empty");
         }
         for (int i = 0; i < value.length(); i++) {

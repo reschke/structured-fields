@@ -22,12 +22,12 @@ public interface Type<T> extends Supplier<T> {
      *            where to serialize to
      * @return the {@link StringBuilder} so calls can be chained.
      */
-    public StringBuilder serializeTo(StringBuilder sb);
+    StringBuilder serializeTo(StringBuilder sb);
 
     /**
      * Serialize.
      * 
      * @return the serialization.
      */
-    public String serialize();
+    String serialize();
 }

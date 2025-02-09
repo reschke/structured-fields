@@ -18,12 +18,12 @@ public interface Parametrizable<T> extends Type<T> {
      *            {@link Parameters} to set (must be non-null)
      * @return new instance with specified {@link Parameters}.
      */
-    public Parametrizable<T> withParams(Parameters params);
+    Parametrizable<T> withParams(Parameters params);
 
     /**
      * Get the {@link Parameters} of this {@link Item}.
      * 
      * @return the parameters.
      */
-    public Parameters getParams();
+    Parameters getParams();
 }

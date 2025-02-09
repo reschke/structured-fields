@@ -10,12 +10,12 @@ import java.util.Objects;
  *      "https://www.rfc-editor.org/rfc/rfc8941.html#inner-list">Section 3.1.1
  *      of RFC 8941</a>
  */
-public class InnerList implements ListElement<List<Item<? extends Object>>>, Parametrizable<List<Item<? extends Object>>> {
+public class InnerList implements ListElement<List<Item<?>>>, Parametrizable<List<Item<?>>> {
 
-    private final List<Item<? extends Object>> value;
+    private final List<Item<?>> value;
     private final Parameters params;
 
-    private InnerList(List<Item<? extends Object>> value, Parameters params) {
+    private InnerList(List<Item<?>> value, Parameters params) {
         this.value = Objects.requireNonNull(value, "value must not be null");
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
@@ -28,7 +28,7 @@ public class InnerList implements ListElement<List<Item<? extends Object>>>, Par
      *            a {@code List<Item>} value.
      * @return a {@link InnerList} representing {@code value}.
      */
-    public static InnerList valueOf(List<Item<? extends Object>> value) {
+    public static InnerList valueOf(List<Item<?>> value) {
         return new InnerList(value, Parameters.EMPTY);
     }
 
@@ -47,7 +47,7 @@ public class InnerList implements ListElement<List<Item<? extends Object>>>, Par
 
         sb.append('(');
 
-        for (Item<? extends Object> i : value) {
+        for (Item<?> i : value) {
             sb.append(separator);
             separator = " ";
             i.serializeTo(sb);
@@ -71,7 +71,7 @@ public class InnerList implements ListElement<List<Item<? extends Object>>>, Par
     }
 
     @Override
-    public List<Item<? extends Object>> get() {
+    public List<Item<?>> get() {
         return value;
     }
 }

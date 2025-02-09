@@ -136,7 +136,7 @@ public class Parser {
         return DateItem.valueOf(sign * l);
     }
 
-    private NumberItem<? extends Object> internalParseBareIntegerOrDecimal() {
+    private NumberItem<?> internalParseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -203,8 +203,8 @@ public class Parser {
         return result.withParams(params);
     }
 
-    private NumberItem<? extends Object> internalParseIntegerOrDecimal() {
-        NumberItem<? extends Object> result = internalParseBareIntegerOrDecimal();
+    private NumberItem<?> internalParseIntegerOrDecimal() {
+        NumberItem<?> result = internalParseBareIntegerOrDecimal();
         Parameters params = internalParseParameters();
         return result.withParams(params);
     }
@@ -478,7 +478,7 @@ public class Parser {
                 advance();
                 removeLeadingSP();
                 String name = internalParseKey();
-                Item<? extends Object> value = BooleanItem.valueOf(true);
+                Item<?> value = BooleanItem.valueOf(true);
                 if (peek() == '=') {
                     advance();
                     value = internalParseBareItem();
@@ -490,7 +490,7 @@ public class Parser {
         return Parameters.valueOf(result);
     }
 
-    private Item<? extends Object> internalParseBareItem() {
+    private Item<?> internalParseBareItem() {
         if (!hasRemaining()) {
             throw complaint("Empty string found when parsing Bare Item");
         }
@@ -515,18 +515,18 @@ public class Parser {
         }
     }
 
-    private Item<? extends Object> internalParseItem() {
-        Item<? extends Object> result = internalParseBareItem();
+    private Item<?> internalParseItem() {
+        Item<?> result = internalParseBareItem();
         Parameters params = internalParseParameters();
         return result.withParams(params);
     }
 
-    private ListElement<? extends Object> internalParseItemOrInnerList() {
+    private ListElement<?> internalParseItemOrInnerList() {
         return peek() == '(' ? internalParseInnerList() : internalParseItem();
     }
 
-    private List<ListElement<? extends Object>> internalParseOuterList() {
-        List<ListElement<? extends Object>> result = new ArrayList<>();
+    private List<ListElement<?>> internalParseOuterList() {
+        List<ListElement<?>> result = new ArrayList<>();
 
         while (hasRemaining()) {
             result.add(internalParseItemOrInnerList());
@@ -549,14 +549,14 @@ public class Parser {
         return result;
     }
 
-    private List<Item<? extends Object>> internalParseBareInnerList() {
+    private List<Item<?>> internalParseBareInnerList() {
 
         char c = getOrEOD();
         if (c != '(') {
             throw complaint("Inner List must start with '(': " + input);
         }
 
-        List<Item<? extends Object>> result = new ArrayList<>();
+        List<Item<?>> result = new ArrayList<>();
 
         boolean done = false;
         while (hasRemaining() && !done) {
@@ -567,7 +567,7 @@ public class Parser {
                 advance();
                 done = true;
             } else {
-                Item<? extends Object> item = internalParseItem();
+                Item<?> item = internalParseItem();
                 result.add(item);
 
                 c = peek();
@@ -588,19 +588,19 @@ public class Parser {
     }
 
     private InnerList internalParseInnerList() {
-        List<Item<? extends Object>> result = internalParseBareInnerList();
+        List<Item<?>> result = internalParseBareInnerList();
         Parameters params = internalParseParameters();
         return InnerList.valueOf(result).withParams(params);
     }
 
     private Dictionary internalParseDictionary() {
 
-        LinkedHashMap<String, ListElement<? extends Object>> result = new LinkedHashMap<>();
+        LinkedHashMap<String, ListElement<?>> result = new LinkedHashMap<>();
 
         boolean done = false;
         while (hasRemaining() && !done) {
 
-            ListElement<? extends Object> member;
+            ListElement<?> member;
 
             String name = internalParseKey();
 
@@ -636,7 +636,7 @@ public class Parser {
 
     protected static DateItem parseDate(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.internalParseDate();
+        Item<?> result = p.internalParseDate();
         if (!(result instanceof DateItem)) {
             throw p.complaint("String parsed as Date '" + input + "' is not a Date");
         } else {
@@ -647,7 +647,7 @@ public class Parser {
 
     protected static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.internalParseIntegerOrDecimal();
+        Item<?> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
             throw p.complaint("String parsed as Integer '" + input + "' is a Decimal");
         } else {
@@ -658,7 +658,7 @@ public class Parser {
 
     protected static DecimalItem parseDecimal(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.internalParseIntegerOrDecimal();
+        Item<?> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
             throw p.complaint("String parsed as Decimal '" + input + "' is an Integer");
         } else {
@@ -680,7 +680,7 @@ public class Parser {
      */
     public OuterList parseList() {
         removeLeadingSP();
-        List<ListElement<? extends Object>> result = internalParseOuterList();
+        List<ListElement<?>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
@@ -712,9 +712,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-item">Section
      *      4.2.3 of RFC 8941</a>
      */
-    public Item<? extends Object> parseItem() {
+    public Item<?> parseItem() {
         removeLeadingSP();
-        Item<? extends Object> result = internalParseItem();
+        Item<?> result = internalParseItem();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as Item");
         return result;
@@ -736,7 +736,7 @@ public class Parser {
      */
     public static OuterList parseList(String input) {
         Parser p = new Parser(input);
-        List<ListElement<? extends Object>> result = p.internalParseOuterList();
+        List<ListElement<?>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
         return OuterList.valueOf(result);
     }
@@ -753,9 +753,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-item-or-list">Section
      *      4.2.1.1 of RFC 8941</a>
      */
-    public static Parametrizable<? extends Object> parseItemOrInnerList(String input) {
+    public static Parametrizable<?> parseItemOrInnerList(String input) {
         Parser p = new Parser(input);
-        ListElement<? extends Object> result = p.internalParseItemOrInnerList();
+        ListElement<?> result = p.internalParseItemOrInnerList();
         p.assertEmpty("Extra characters in string parsed as Item or Inner List");
         return result;
     }
@@ -810,9 +810,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-item">Section
      *      4.2.3 of RFC 8941</a>
      */
-    public static Item<? extends Object> parseItem(String input) {
+    public static Item<?> parseItem(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.parseItem();
+        Item<?> result = p.parseItem();
         p.assertEmpty("Extra characters in string parsed as Item");
         return result;
     }
@@ -829,9 +829,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-bare-item">Section
      *      4.2.3.1 of RFC 8941</a>
      */
-    public static Item<? extends Object> parseBareItem(String input) {
+    public static Item<?> parseBareItem(String input) {
         Parser p = new Parser(input);
-        Item<? extends Object> result = p.internalParseBareItem();
+        Item<?> result = p.internalParseBareItem();
         p.assertEmpty("Extra characters in string parsed as Bare Item");
         return result;
     }
@@ -886,9 +886,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc8941.html#parse-number">Section
      *      4.2.4 of RFC 8941</a>
      */
-    public static NumberItem<? extends Object> parseIntegerOrDecimal(String input) {
+    public static NumberItem<?> parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
-        NumberItem<? extends Object> result = p.internalParseIntegerOrDecimal();
+        NumberItem<?> result = p.internalParseIntegerOrDecimal();
         p.assertEmpty("Extra characters in string parsed as Integer or Decimal");
         return result;
     }

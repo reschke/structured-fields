@@ -24,7 +24,7 @@ public class Utils {
     }
 
     protected static String checkKey(String value) {
-        if (value == null || value.length() == 0) {
+        if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException("Key can not be null or empty");
         }
         for (int i = 0; i < value.length(); i++) {
@@ -38,7 +38,7 @@ public class Utils {
         return value;
     }
 
-    protected static Map<String, ListElement<? extends Object>> checkKeys(Map<String, ListElement<? extends Object>> value) {
+    protected static Map<String, ListElement<?>> checkKeys(Map<String, ListElement<?>> value) {
         for (String key : Objects.requireNonNull(value, "value must not be null").keySet()) {
             checkKey(key);
         }

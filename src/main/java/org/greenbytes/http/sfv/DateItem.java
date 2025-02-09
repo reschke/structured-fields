@@ -48,10 +48,9 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
-    public StringBuilder serializeTo(StringBuilder sb) 
-    {
+    public StringBuilder serializeTo(StringBuilder sb) {
         sb.append('@');
-        sb.append(Long.toString(value));
+        sb.append(value);
         params.serializeTo(sb);
         return sb;
     }

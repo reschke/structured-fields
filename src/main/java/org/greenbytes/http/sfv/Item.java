@@ -10,5 +10,5 @@ package org.greenbytes.http.sfv;
  */
 public interface Item<T> extends ListElement<T>, Parametrizable<T> {
 
-    public Item<T> withParams(Parameters params);
+    Item<T> withParams(Parameters params);
 }
