@@ -178,7 +178,7 @@ public abstract class AbstractSpecificationTests {
                 fail("unexpected JsonValue: " + value + " (" + value.getClass() + ")");
             }
         } else {
-            fail("unexpected type: " + value.getClass());
+            fail("unexpected type");
         }
         if (params != null) {
             assertTrue(item instanceof Parametrizable);
