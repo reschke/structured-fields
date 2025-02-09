@@ -2,9 +2,11 @@ package org.greenbytes.http.sfv;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -176,6 +178,18 @@ public class ItemAPITests {
         assertEquals(BooleanItem.class, p.get("b").getClass());
         assertEquals(ByteSequenceItem.class, p.get("o").getClass());
         assertEquals(DecimalItem.class, p.get("d").getClass());
+    }
+
+    @Test
+    public void testParametersUnmodifiable() {
+
+        Map<String, Object> m = new HashMap<>();
+        m.put("test", "test");
+        Parameters p = Parameters.valueOf(m);
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> p.clear());
     }
 
     @Test
