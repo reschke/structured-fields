@@ -70,8 +70,8 @@ public class ItemAPITests {
     @Test
     public void testDecimalByBigDecimal() {
 
-        BigDecimal[] tests = new BigDecimal[] { new BigDecimal(0.5), new BigDecimal(1), new BigDecimal(-1.1),
-                new BigDecimal(0.1234) };
+        BigDecimal[] tests = new BigDecimal[] { new BigDecimal("0.5"), new BigDecimal(1), BigDecimal.valueOf(-1.1),
+                new BigDecimal("0.1234") };
 
         for (BigDecimal b : tests) {
             BigDecimal permille = b.multiply(new BigDecimal(1000));
@@ -170,7 +170,7 @@ public class ItemAPITests {
         m.put("l", 2L);
         m.put("b", false);
         m.put("o", new byte[0]);
-        m.put("d", new BigDecimal(0.1));
+        m.put("d", new BigDecimal("0.1"));
         Parameters p = Parameters.valueOf(m);
         assertEquals(StringItem.class, p.get("*").getClass());
         assertEquals(IntegerItem.class, p.get("i").getClass());
@@ -189,7 +189,7 @@ public class ItemAPITests {
 
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> p.clear());
+                p::clear);
     }
 
     @Test
