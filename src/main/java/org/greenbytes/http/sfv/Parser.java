@@ -81,7 +81,7 @@ public class Parser {
                 sb.append(",").append(checkASCII(s));
             }
         }
-        if (str == null && sb == null) {
+        if (str == null) {
             throw new ParseException("Empty input", "", 0);
         }
         this.input = CharBuffer.wrap(sb != null ? sb : str);
@@ -631,12 +631,8 @@ public class Parser {
     protected static DateItem parseDate(String input) {
         Parser p = new Parser(input);
         DateItem result = p.internalParseDate();
-        if (!(result instanceof DateItem)) {
-            throw p.complaint("String parsed as Date '" + input + "' is not a Date");
-        } else {
-            p.assertEmpty("Extra characters in string parsed as Date");
-            return result;
-        }
+        p.assertEmpty("Extra characters in string parsed as Date");
+        return result;
     }
 
     protected static IntegerItem parseInteger(String input) {
