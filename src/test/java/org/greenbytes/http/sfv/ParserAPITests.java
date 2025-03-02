@@ -23,6 +23,11 @@ public class ParserAPITests {
     }
 
     @Test
+    public void testBareItemWithParameters() {
+        expectParseBareItemException("1; b=2", 1, "  -^ (0x3b) Extra characters in string parsed as Bare Item");
+    }
+
+    @Test
     public void testItemBadDisplayString() {
         expectParseItemException("%\"%80\"", 2, "  --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2");
     }
@@ -34,9 +39,10 @@ public class ParserAPITests {
 
     @Test
     public void testItemString() {
-        Item<?> parsed =  Parser.parseItem("\"123\"");
+        Item<?> parsed =  Parser.parseItem("\"123\"; a=1");
         assertEquals(StringItem.class, parsed.getClass());
         assertEquals("123", parsed.get());
+        assertEquals(";a=1", parsed.getParams().serialize());
     }
 
     @Test
@@ -49,6 +55,16 @@ public class ParserAPITests {
     private static void expectParseItemException(String input, int position, String diagostics) {
         try {
             Parser.parseItem(input);
+            fail("should trow");
+        } catch (ParseException pex) {
+            assertEquals(position, pex.getPosition());
+            assertEquals(">>" + input + "<<\n" + diagostics + "\n", pex.getDiagnostics());
+        }
+    }
+
+    private static void expectParseBareItemException(String input, int position, String diagostics) {
+        try {
+            Parser.parseBareItem(input);
             fail("should trow");
         } catch (ParseException pex) {
             assertEquals(position, pex.getPosition());
