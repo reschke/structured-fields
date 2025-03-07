@@ -52,6 +52,20 @@ public class ParserAPITests {
         assertEquals("\u20ac rates", parsed.get());
     }
 
+    @Test
+    public void testItemOrInnerListString() {
+        Parameterizable<?> parsed =  Parser.parseItemOrInnerList("\"foobar\"");
+        assertEquals(StringItem.class, parsed.getClass());
+        assertEquals("foobar", parsed.get());
+    }
+
+    @Test
+    public void testItemOrInnerListInnerList() {
+        Parameterizable<?> parsed =  Parser.parseItemOrInnerList("(1    \"x\")");
+        assertEquals(InnerList.class, parsed.getClass());
+        assertEquals("(1 \"x\")", parsed.serialize());
+    }
+
     private static void expectParseItemException(String input, int position, String diagostics) {
         try {
             Parser.parseItem(input);
