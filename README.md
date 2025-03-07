@@ -1,10 +1,10 @@
 # structured-fields
-A parser for the HTTP Structured Fields syntax defined in IETF RFC 8941.
+A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 
 Links:
 
-- https://greenbytes.de/tech/webdav/rfc8941.html
-- https://www.rfc-editor.org/rfc/rfc8941.html
+- https://greenbytes.de/tech/webdav/rfc9651.html
+- https://www.rfc-editor.org/rfc/rfc9651.html
 - https://github.com/httpwg/structured-header-tests
 - API docs: https://reschke.github.io/structured-fields/apidocs/
 
