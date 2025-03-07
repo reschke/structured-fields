@@ -2,6 +2,8 @@ package org.greenbytes.http.sfv;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -46,6 +48,13 @@ public class ParserAPITests {
     }
 
     @Test
+    public void testBareItemString() {
+        Item<?> parsed =  Parser.parseBareItem("\"123\"");
+        assertEquals(StringItem.class, parsed.getClass());
+        assertEquals("123", parsed.get());
+    }
+
+    @Test
     public void testItemDisplayString() {
         Item<?> parsed = Parser.parseItem("%\"%e2%82%ac%20rates\"");
         assertEquals(DisplayStringItem.class, parsed.getClass());
@@ -57,6 +66,26 @@ public class ParserAPITests {
         Parameterizable<?> parsed =  Parser.parseItemOrInnerList("\"foobar\"");
         assertEquals(StringItem.class, parsed.getClass());
         assertEquals("foobar", parsed.get());
+    }
+
+    @Test
+    public void testIntegerOrDecimalInteger() {
+        NumberItem<?> parsed = Parser.parseIntegerOrDecimal("42");
+        assertEquals(IntegerItem.class, parsed.getClass());
+        assertEquals(42L, parsed.get());
+    }
+
+    @Test
+    public void testIntegerOrDecimalDecimal() {
+        NumberItem<?> parsed = Parser.parseIntegerOrDecimal("4.5");
+        assertEquals(DecimalItem.class, parsed.getClass());
+        assertEquals(BigDecimal.valueOf(4500, 3), parsed.get());
+    }
+
+    @Test
+    public void testKey() {
+        String parsed = Parser.parseKey("*a23b");
+        assertEquals("*a23b", parsed);
     }
 
     @Test
@@ -79,7 +108,7 @@ public class ParserAPITests {
     private static void expectParseBareItemException(String input, int position, String diagostics) {
         try {
             Parser.parseBareItem(input);
-            fail("should trow");
+            fail("should throw");
         } catch (ParseException pex) {
             assertEquals(position, pex.getPosition());
             assertEquals(">>" + input + "<<\n" + diagostics + "\n", pex.getDiagnostics());
