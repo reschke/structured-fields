@@ -26,8 +26,9 @@ public abstract class AbstractSpecificationTests {
     public TestParams p;
 
     public static class TestParams {
+        public String filename;
         public String name;
-        List<String> raw;
+        public List<String> raw;
         public String header_type;
         public boolean must_fail;
         public JsonValue expected_value;
@@ -49,17 +50,18 @@ public abstract class AbstractSpecificationTests {
 
         JsonReader reader = Json.createReader(AbstractSpecificationTests.class.getClassLoader().getResourceAsStream(filename));
         for (JsonValue vt : reader.readArray()) {
-            TestParams p = makeOneTest(vt);
+            TestParams p = makeOneTest(basename, vt);
             result.add(new Object[] { basename + ": " + p.name, p });
         }
 
         return result;
     }
 
-    private static TestParams makeOneTest(JsonValue vt) {
+    private static TestParams makeOneTest(String basename, JsonValue vt) {
         JsonObject v = (JsonObject) vt;
         TestParams p = new TestParams();
 
+        p.filename = basename;
         p.name = v.getString("name");
         p.raw = new ArrayList<>();
         for (JsonValue raw : v.getJsonArray("raw")) {
@@ -115,7 +117,20 @@ public abstract class AbstractSpecificationTests {
         }
     }
 
-    private static void match(JsonValue value, JsonValue params, Type<?> item) {
+    private static void match(StringBuilder out, JsonValue value, JsonValue params, Type<?> item) {
+        try {
+            internalMatch(out, value, params, item);
+        }
+        catch (AssertionError ae) {
+            out.append("*FAIL*:\n");
+            out.append("~~~\n");
+            out.append(ae.getMessage()).append("\n");
+            out.append("~~~\n");
+            throw ae;
+        }
+    }
+
+    private static void internalMatch(StringBuilder out, JsonValue value, JsonValue params, Type<?> item) {
         if (value instanceof JsonString) {
             CharSequence expected = (((JsonString) value).getChars());
             assertEquals(expected, item.get());
@@ -154,9 +169,9 @@ public abstract class AbstractSpecificationTests {
                     if (e.getValue() instanceof JsonArray) {
                         JsonArray array = (JsonArray) e.getValue();
                         assertEquals(2, array.size());
-                        match(array.get(0), array.get(1), result.get(e.getKey()));
+                        match(out, array.get(0), array.get(1), result.get(e.getKey()));
                     } else {
-                        match(e.getValue(), null, result.get(e.getKey()));
+                        match(out, e.getValue(), null, result.get(e.getKey()));
                     }
                 }
             }
@@ -168,7 +183,7 @@ public abstract class AbstractSpecificationTests {
             for (int i = 0; i < array.size(); i++) {
                 JsonArray t = (JsonArray) array.get(i);
                 assertEquals(2, t.size());
-                match(t.get(0), t.get(1), result.get(i));
+                match(out, t.get(0), t.get(1), result.get(i));
             }
         } else if (value != null) {
             if (JsonValue.TRUE.equals(value) || JsonValue.FALSE.equals(value)) {
@@ -193,33 +208,43 @@ public abstract class AbstractSpecificationTests {
                     JsonArray e = (JsonArray) expected.get(i);
                     assertEquals(2, e.size());
                     assertEquals(((JsonString) e.get(0)).getString(), param.getKey());
-                    match(e.get(1), null, param.getValue());
+                    match(out, e.get(1), null, param.getValue());
                     i += 1;
                 }
             } else {
                 fail("unexpected param type: " + params);
             }
-
         }
     }
 
-    public void executeTest() {
+    public void executeTest(StringBuilder out) {
         if (p.must_fail) {
+            out.append("Expects Parse Error\n");
             try {
                 Type<?> parsed = parse();
+                out.append("*FAIL*, got:\n");
+                out.append("~~~\n");
+                out.append(parsed.serialize()).append("\n");
+                out.append("~~~\n");
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (ParseException expected) {
-                // System.out.println(p.name);
-                // System.err.println(expected.getDiagnostics());
+                out.append("~~~\n");
+                out.append(expected.getDiagnostics()).append("\n");
+                out.append("~~~\n");
+                out.append("\n");
             }
         } else {
             Type<?> item = parse();
+            out.append("Result:\n");
+            out.append("~~~\n");
+            out.append(item.serialize()).append("\n");
+            out.append("~~~\n");
             if (p.expected_value instanceof JsonArray) {
                 JsonArray array = (JsonArray) p.expected_value;
                 if (item instanceof OuterList) {
                     for (int i = 0; i < array.size(); i++) {
                         JsonValue m = array.get(i);
-                        match(((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
+                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
                     }
                 } else if (item instanceof Dictionary) {
                     int i = 0;
@@ -228,14 +253,14 @@ public abstract class AbstractSpecificationTests {
                         JsonValue name = m.get(0);
                         JsonArray val = (JsonArray) m.get(1);
                         assertEquals(((JsonString) name).getString(), e.getKey());
-                        match(val.get(0), val.get(1), e.getValue());
+                        match(out, val.get(0), val.get(1), e.getValue());
                         i += 1;
                     }
                 } else {
                     fail("unexpected parse result: " + item.getClass());
                 }
             } else {
-                match(p.expected_value, p.expected_params, item);
+                match(out, p.expected_value, p.expected_params, item);
             }
 
             if (p.canonical != null) {
