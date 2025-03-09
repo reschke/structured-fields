@@ -41,8 +41,8 @@ public class SpecificationTests extends AbstractSpecificationTests {
                 "param-listlist.json", "string.json", "string-generated.json", "token.json", "token-generated.json");
     }
 
-    public SpecificationTests(Object x, Object y) {
-        this.p = (TestParams) y;
+    public SpecificationTests(TestParams params) {
+        this.p = params;
     }
 
     @Test

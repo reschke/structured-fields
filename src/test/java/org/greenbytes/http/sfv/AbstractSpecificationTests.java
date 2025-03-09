@@ -34,6 +34,11 @@ public abstract class AbstractSpecificationTests {
         public JsonValue expected_value;
         public JsonValue expected_params;
         public String canonical;
+
+        // provides the test name to Junit runner
+        @Override public String toString() {
+            return filename + ":" + name;
+        }
     }
 
     public static Collection<Object[]> makeParameters(String... filenames) {
@@ -51,7 +56,7 @@ public abstract class AbstractSpecificationTests {
         JsonReader reader = Json.createReader(AbstractSpecificationTests.class.getClassLoader().getResourceAsStream(filename));
         for (JsonValue vt : reader.readArray()) {
             TestParams p = makeOneTest(basename, vt);
-            result.add(new Object[] { basename + ": " + p.name, p });
+            result.add(new Object[] { p });
         }
 
         return result;
