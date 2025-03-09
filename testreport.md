@@ -742,5 +742,508 @@ Expects Parse Error
 
 
 
+## display-string
 
+
+### basic display string (ascii content)
+
+Input:
+~~~
+%"foo bar"
+~~~
+
+Result:
+~~~
+%"foo bar"
+~~~
+
+### all printable ascii
+
+Input:
+~~~
+%" !%22#$%25&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+~~~
+
+Result:
+~~~
+%" !%22#$%25&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+~~~
+
+### non-ascii display string (uppercase escaping)
+
+Input:
+~~~
+%"f%C3%BC%C3%BC"
+~~~
+
+Expects Parse Error
+~~~
+>>%"f%C3%BC%C3%BC"<<
+  ----^ (0x43) Invalid percent escape sequence character '%' at position 4
+~~~
+
+
+### non-ascii display string (lowercase escaping)
+
+Input:
+~~~
+%"f%c3%bc%c3%bc"
+~~~
+
+Result:
+~~~
+%"f%c3%bc%c3%bc"
+~~~
+
+### tab in display string
+
+Input:
+~~~
+%"	"
+~~~
+
+Expects Parse Error
+~~~
+>>%"	"<<
+  ---^ (0x22) Invalid character in Display String at position 3
+~~~
+
+
+### newline in display string
+
+Input:
+~~~
+%"
+"
+~~~
+
+Expects Parse Error
+~~~
+>>%"
+"<<
+  ---^ (0x22) Invalid character in Display String at position 3
+~~~
+
+
+### single quoted display string
+
+Input:
+~~~
+%'foo'
+~~~
+
+Expects Parse Error
+~~~
+>>%'foo'<<
+  --^ (0x66) DisplayString must continue with a double quote: 'foo''
+~~~
+
+
+### unquoted display string
+
+Input:
+~~~
+%foo
+~~~
+
+Expects Parse Error
+~~~
+>>%foo<<
+  --^ (0x6f) DisplayString must continue with a double quote: 'oo'
+~~~
+
+
+### display string missing initial quote
+
+Input:
+~~~
+%foo"
+~~~
+
+Expects Parse Error
+~~~
+>>%foo"<<
+  --^ (0x6f) DisplayString must continue with a double quote: 'oo"'
+~~~
+
+
+### unbalanced display string
+
+Input:
+~~~
+%"foo
+~~~
+
+Expects Parse Error
+~~~
+>>%"foo<<
+  -----^ Closing DQUOTE missing
+~~~
+
+
+### display string quoting
+
+Input:
+~~~
+%"foo %22bar%22 \ baz"
+~~~
+
+Result:
+~~~
+%"foo %22bar%22 \ baz"
+~~~
+
+### bad display string escaping
+
+Input:
+~~~
+%"foo %a
+~~~
+
+Expects Parse Error
+~~~
+>>%"foo %a<<
+  --------^ Incomplete percent escape sequence at position 8
+~~~
+
+
+### bad display string utf-8 (invalid 2-byte seq)
+
+Input:
+~~~
+%"%c3%28"
+~~~
+
+Expects Parse Error
+~~~
+>>%"%c3%28"<<
+  --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
+~~~
+
+
+### bad display string utf-8 (invalid sequence id)
+
+Input:
+~~~
+%"%a0%a1"
+~~~
+
+Expects Parse Error
+~~~
+>>%"%a0%a1"<<
+  --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
+~~~
+
+
+### bad display string utf-8 (invalid hex)
+
+Input:
+~~~
+%"%g0%1w"
+~~~
+
+Expects Parse Error
+~~~
+>>%"%g0%1w"<<
+  ---^ (0x67) Invalid percent escape sequence character '%' at position 3
+~~~
+
+
+### bad display string utf-8 (invalid 3-byte seq)
+
+Input:
+~~~
+%"%e2%28%a1"
+~~~
+
+Expects Parse Error
+~~~
+>>%"%e2%28%a1"<<
+  --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
+~~~
+
+
+### bad display string utf-8 (invalid 4-byte seq)
+
+Input:
+~~~
+%"%f0%28%8c%28"
+~~~
+
+Expects Parse Error
+~~~
+>>%"%f0%28%8c%28"<<
+  --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
+~~~
+
+
+### BOM in display string
+
+Input:
+~~~
+%"BOM: %ef%bb%bf"
+~~~
+
+Result:
+~~~
+%"BOM: %ef%bb%bf"
+~~~
+
+
+## examples
+
+
+### Foo-Example
+
+Input:
+~~~
+2; foourl="https://foo.example.com/"
+~~~
+
+Result:
+~~~
+2;foourl="https://foo.example.com/"
+~~~
+
+### Example-StrListHeader
+
+Input:
+~~~
+"foo", "bar", "It was the best of times."
+~~~
+
+Result:
+~~~
+"foo", "bar", "It was the best of times."
+~~~
+
+### Example-Hdr (list on one line)
+
+Input:
+~~~
+foo, bar
+~~~
+
+Result:
+~~~
+foo, bar
+~~~
+
+### Example-Hdr (list on two lines)
+
+Input:
+~~~
+foo
+bar
+~~~
+
+Result:
+~~~
+foo, bar
+~~~
+
+### Example-StrListListHeader
+
+Input:
+~~~
+("foo" "bar"), ("baz"), ("bat" "one"), ()
+~~~
+
+Result:
+~~~
+("foo" "bar"), ("baz"), ("bat" "one"), ()
+~~~
+
+### Example-ListListParam
+
+Input:
+~~~
+("foo"; a=1;b=2);lvl=5, ("bar" "baz");lvl=1
+~~~
+
+Result:
+~~~
+("foo";a=1;b=2);lvl=5, ("bar" "baz");lvl=1
+~~~
+
+### Example-ParamListHeader
+
+Input:
+~~~
+abc;a=1;b=2; cde_456, (ghi;jk=4 l);q="9";r=w
+~~~
+
+Result:
+~~~
+abc;a=1;b=2;cde_456, (ghi;jk=4 l);q="9";r=w
+~~~
+
+### Example-IntHeader
+
+Input:
+~~~
+1; a; b=?0
+~~~
+
+Result:
+~~~
+1;a;b=?0
+~~~
+
+### Example-DictHeader
+
+Input:
+~~~
+en="Applepie", da=:w4ZibGV0w6ZydGU=:
+~~~
+
+Result:
+~~~
+en="Applepie", da=:w4ZibGV0w6ZydGU=:
+~~~
+
+### Example-DictHeader (boolean values)
+
+Input:
+~~~
+a=?0, b, c; foo=bar
+~~~
+
+Result:
+~~~
+a=?0, b, c;foo=bar
+~~~
+
+### Example-DictListHeader
+
+Input:
+~~~
+rating=1.5, feelings=(joy sadness)
+~~~
+
+Result:
+~~~
+rating=1.5, feelings=(joy sadness)
+~~~
+
+### Example-MixDict
+
+Input:
+~~~
+a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
+~~~
+
+Result:
+~~~
+a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
+~~~
+
+### Example-Hdr (dictionary on one line)
+
+Input:
+~~~
+foo=1, bar=2
+~~~
+
+Result:
+~~~
+foo=1, bar=2
+~~~
+
+### Example-Hdr (dictionary on two lines)
+
+Input:
+~~~
+foo=1
+bar=2
+~~~
+
+Result:
+~~~
+foo=1, bar=2
+~~~
+
+### Example-IntItemHeader
+
+Input:
+~~~
+5
+~~~
+
+Result:
+~~~
+5
+~~~
+
+### Example-IntItemHeader (params)
+
+Input:
+~~~
+5; foo=bar
+~~~
+
+Result:
+~~~
+5;foo=bar
+~~~
+
+### Example-IntegerHeader
+
+Input:
+~~~
+42
+~~~
+
+Result:
+~~~
+42
+~~~
+
+### Example-FloatHeader
+
+Input:
+~~~
+4.5
+~~~
+
+Result:
+~~~
+4.5
+~~~
+
+### Example-StringHeader
+
+Input:
+~~~
+"hello world"
+~~~
+
+Result:
+~~~
+"hello world"
+~~~
+
+### Example-BinaryHdr
+
+Input:
+~~~
+:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:
+~~~
+
+Result:
+~~~
+:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:
+~~~
+
+### Example-BoolHdr
+
+Input:
+~~~
+?1
+~~~
+
+Result:
+~~~
+?1
+~~~
 
