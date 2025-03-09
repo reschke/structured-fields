@@ -17130,3 +17130,79 @@ Expects Parse Error
 ~~~
 
 
+
+## token
+
+
+### basic token - item
+
+Input:
+~~~
+a_b-c.d3:f%00/*
+~~~
+
+Result:
+~~~
+a_b-c.d3:f%00/*
+~~~
+
+### token with capitals - item
+
+Input:
+~~~
+fooBar
+~~~
+
+Result:
+~~~
+fooBar
+~~~
+
+### token starting with capitals - item
+
+Input:
+~~~
+FooBar
+~~~
+
+Result:
+~~~
+FooBar
+~~~
+
+### basic token - list
+
+Input:
+~~~
+a_b-c3/*
+~~~
+
+Result:
+~~~
+a_b-c3/*
+~~~
+
+### token with capitals - list
+
+Input:
+~~~
+fooBar
+~~~
+
+Result:
+~~~
+fooBar
+~~~
+
+### token starting with capitals - list
+
+Input:
+~~~
+FooBar
+~~~
+
+Result:
+~~~
+FooBar
+~~~
+
