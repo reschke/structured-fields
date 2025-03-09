@@ -13717,3 +13717,3416 @@ Expects Parse Error
 ~~~
 
 
+
+## string-generated
+
+
+### 0x00 in string
+
+Input:
+~~~
+"   "
+~~~
+
+Expects Parse Error
+~~~
+>>"   "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x01 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x02 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x03 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x04 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x05 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x06 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x07 in string
+
+Input:
+~~~
+"   "
+~~~
+
+Expects Parse Error
+~~~
+>>"   "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x08 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x09 in string
+
+Input:
+~~~
+" 	 "
+~~~
+
+Expects Parse Error
+~~~
+>>" 	 "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0a in string
+
+Input:
+~~~
+" 
+ "
+~~~
+
+Expects Parse Error
+~~~
+>>" 
+ "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0b in string
+
+Input:
+~~~
+" 
+ "
+~~~
+
+Expects Parse Error
+~~~
+>>" 
+ "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0c in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0d in string
+
+Input:
+~~~
+" 
+ "
+~~~
+
+Expects Parse Error
+~~~
+>>" 
+ "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0e in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x0f in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x10 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x11 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x12 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x13 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x14 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x15 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x16 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x17 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x18 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x19 in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1a in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1b in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1c in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1d in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1e in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x1f in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### 0x20 in string
+
+Input:
+~~~
+"   "
+~~~
+
+Result:
+~~~
+"   "
+~~~
+
+### 0x21 in string
+
+Input:
+~~~
+" ! "
+~~~
+
+Result:
+~~~
+" ! "
+~~~
+
+### 0x22 in string
+
+Input:
+~~~
+" " "
+~~~
+
+Expects Parse Error
+~~~
+>>" " "<<
+  ----^ (0x22) Extra characters in string parsed as Item
+~~~
+
+
+### 0x23 in string
+
+Input:
+~~~
+" # "
+~~~
+
+Result:
+~~~
+" # "
+~~~
+
+### 0x24 in string
+
+Input:
+~~~
+" $ "
+~~~
+
+Result:
+~~~
+" $ "
+~~~
+
+### 0x25 in string
+
+Input:
+~~~
+" % "
+~~~
+
+Result:
+~~~
+" % "
+~~~
+
+### 0x26 in string
+
+Input:
+~~~
+" & "
+~~~
+
+Result:
+~~~
+" & "
+~~~
+
+### 0x27 in string
+
+Input:
+~~~
+" ' "
+~~~
+
+Result:
+~~~
+" ' "
+~~~
+
+### 0x28 in string
+
+Input:
+~~~
+" ( "
+~~~
+
+Result:
+~~~
+" ( "
+~~~
+
+### 0x29 in string
+
+Input:
+~~~
+" ) "
+~~~
+
+Result:
+~~~
+" ) "
+~~~
+
+### 0x2a in string
+
+Input:
+~~~
+" * "
+~~~
+
+Result:
+~~~
+" * "
+~~~
+
+### 0x2b in string
+
+Input:
+~~~
+" + "
+~~~
+
+Result:
+~~~
+" + "
+~~~
+
+### 0x2c in string
+
+Input:
+~~~
+" , "
+~~~
+
+Result:
+~~~
+" , "
+~~~
+
+### 0x2d in string
+
+Input:
+~~~
+" - "
+~~~
+
+Result:
+~~~
+" - "
+~~~
+
+### 0x2e in string
+
+Input:
+~~~
+" . "
+~~~
+
+Result:
+~~~
+" . "
+~~~
+
+### 0x2f in string
+
+Input:
+~~~
+" / "
+~~~
+
+Result:
+~~~
+" / "
+~~~
+
+### 0x30 in string
+
+Input:
+~~~
+" 0 "
+~~~
+
+Result:
+~~~
+" 0 "
+~~~
+
+### 0x31 in string
+
+Input:
+~~~
+" 1 "
+~~~
+
+Result:
+~~~
+" 1 "
+~~~
+
+### 0x32 in string
+
+Input:
+~~~
+" 2 "
+~~~
+
+Result:
+~~~
+" 2 "
+~~~
+
+### 0x33 in string
+
+Input:
+~~~
+" 3 "
+~~~
+
+Result:
+~~~
+" 3 "
+~~~
+
+### 0x34 in string
+
+Input:
+~~~
+" 4 "
+~~~
+
+Result:
+~~~
+" 4 "
+~~~
+
+### 0x35 in string
+
+Input:
+~~~
+" 5 "
+~~~
+
+Result:
+~~~
+" 5 "
+~~~
+
+### 0x36 in string
+
+Input:
+~~~
+" 6 "
+~~~
+
+Result:
+~~~
+" 6 "
+~~~
+
+### 0x37 in string
+
+Input:
+~~~
+" 7 "
+~~~
+
+Result:
+~~~
+" 7 "
+~~~
+
+### 0x38 in string
+
+Input:
+~~~
+" 8 "
+~~~
+
+Result:
+~~~
+" 8 "
+~~~
+
+### 0x39 in string
+
+Input:
+~~~
+" 9 "
+~~~
+
+Result:
+~~~
+" 9 "
+~~~
+
+### 0x3a in string
+
+Input:
+~~~
+" : "
+~~~
+
+Result:
+~~~
+" : "
+~~~
+
+### 0x3b in string
+
+Input:
+~~~
+" ; "
+~~~
+
+Result:
+~~~
+" ; "
+~~~
+
+### 0x3c in string
+
+Input:
+~~~
+" < "
+~~~
+
+Result:
+~~~
+" < "
+~~~
+
+### 0x3d in string
+
+Input:
+~~~
+" = "
+~~~
+
+Result:
+~~~
+" = "
+~~~
+
+### 0x3e in string
+
+Input:
+~~~
+" > "
+~~~
+
+Result:
+~~~
+" > "
+~~~
+
+### 0x3f in string
+
+Input:
+~~~
+" ? "
+~~~
+
+Result:
+~~~
+" ? "
+~~~
+
+### 0x40 in string
+
+Input:
+~~~
+" @ "
+~~~
+
+Result:
+~~~
+" @ "
+~~~
+
+### 0x41 in string
+
+Input:
+~~~
+" A "
+~~~
+
+Result:
+~~~
+" A "
+~~~
+
+### 0x42 in string
+
+Input:
+~~~
+" B "
+~~~
+
+Result:
+~~~
+" B "
+~~~
+
+### 0x43 in string
+
+Input:
+~~~
+" C "
+~~~
+
+Result:
+~~~
+" C "
+~~~
+
+### 0x44 in string
+
+Input:
+~~~
+" D "
+~~~
+
+Result:
+~~~
+" D "
+~~~
+
+### 0x45 in string
+
+Input:
+~~~
+" E "
+~~~
+
+Result:
+~~~
+" E "
+~~~
+
+### 0x46 in string
+
+Input:
+~~~
+" F "
+~~~
+
+Result:
+~~~
+" F "
+~~~
+
+### 0x47 in string
+
+Input:
+~~~
+" G "
+~~~
+
+Result:
+~~~
+" G "
+~~~
+
+### 0x48 in string
+
+Input:
+~~~
+" H "
+~~~
+
+Result:
+~~~
+" H "
+~~~
+
+### 0x49 in string
+
+Input:
+~~~
+" I "
+~~~
+
+Result:
+~~~
+" I "
+~~~
+
+### 0x4a in string
+
+Input:
+~~~
+" J "
+~~~
+
+Result:
+~~~
+" J "
+~~~
+
+### 0x4b in string
+
+Input:
+~~~
+" K "
+~~~
+
+Result:
+~~~
+" K "
+~~~
+
+### 0x4c in string
+
+Input:
+~~~
+" L "
+~~~
+
+Result:
+~~~
+" L "
+~~~
+
+### 0x4d in string
+
+Input:
+~~~
+" M "
+~~~
+
+Result:
+~~~
+" M "
+~~~
+
+### 0x4e in string
+
+Input:
+~~~
+" N "
+~~~
+
+Result:
+~~~
+" N "
+~~~
+
+### 0x4f in string
+
+Input:
+~~~
+" O "
+~~~
+
+Result:
+~~~
+" O "
+~~~
+
+### 0x50 in string
+
+Input:
+~~~
+" P "
+~~~
+
+Result:
+~~~
+" P "
+~~~
+
+### 0x51 in string
+
+Input:
+~~~
+" Q "
+~~~
+
+Result:
+~~~
+" Q "
+~~~
+
+### 0x52 in string
+
+Input:
+~~~
+" R "
+~~~
+
+Result:
+~~~
+" R "
+~~~
+
+### 0x53 in string
+
+Input:
+~~~
+" S "
+~~~
+
+Result:
+~~~
+" S "
+~~~
+
+### 0x54 in string
+
+Input:
+~~~
+" T "
+~~~
+
+Result:
+~~~
+" T "
+~~~
+
+### 0x55 in string
+
+Input:
+~~~
+" U "
+~~~
+
+Result:
+~~~
+" U "
+~~~
+
+### 0x56 in string
+
+Input:
+~~~
+" V "
+~~~
+
+Result:
+~~~
+" V "
+~~~
+
+### 0x57 in string
+
+Input:
+~~~
+" W "
+~~~
+
+Result:
+~~~
+" W "
+~~~
+
+### 0x58 in string
+
+Input:
+~~~
+" X "
+~~~
+
+Result:
+~~~
+" X "
+~~~
+
+### 0x59 in string
+
+Input:
+~~~
+" Y "
+~~~
+
+Result:
+~~~
+" Y "
+~~~
+
+### 0x5a in string
+
+Input:
+~~~
+" Z "
+~~~
+
+Result:
+~~~
+" Z "
+~~~
+
+### 0x5b in string
+
+Input:
+~~~
+" [ "
+~~~
+
+Result:
+~~~
+" [ "
+~~~
+
+### 0x5c in string
+
+Input:
+~~~
+" \ "
+~~~
+
+Expects Parse Error
+~~~
+>>" \ "<<
+  ---^ (0x20) Invalid escape sequence character ' ' at position 3
+~~~
+
+
+### 0x5d in string
+
+Input:
+~~~
+" ] "
+~~~
+
+Result:
+~~~
+" ] "
+~~~
+
+### 0x5e in string
+
+Input:
+~~~
+" ^ "
+~~~
+
+Result:
+~~~
+" ^ "
+~~~
+
+### 0x5f in string
+
+Input:
+~~~
+" _ "
+~~~
+
+Result:
+~~~
+" _ "
+~~~
+
+### 0x60 in string
+
+Input:
+~~~
+" ` "
+~~~
+
+Result:
+~~~
+" ` "
+~~~
+
+### 0x61 in string
+
+Input:
+~~~
+" a "
+~~~
+
+Result:
+~~~
+" a "
+~~~
+
+### 0x62 in string
+
+Input:
+~~~
+" b "
+~~~
+
+Result:
+~~~
+" b "
+~~~
+
+### 0x63 in string
+
+Input:
+~~~
+" c "
+~~~
+
+Result:
+~~~
+" c "
+~~~
+
+### 0x64 in string
+
+Input:
+~~~
+" d "
+~~~
+
+Result:
+~~~
+" d "
+~~~
+
+### 0x65 in string
+
+Input:
+~~~
+" e "
+~~~
+
+Result:
+~~~
+" e "
+~~~
+
+### 0x66 in string
+
+Input:
+~~~
+" f "
+~~~
+
+Result:
+~~~
+" f "
+~~~
+
+### 0x67 in string
+
+Input:
+~~~
+" g "
+~~~
+
+Result:
+~~~
+" g "
+~~~
+
+### 0x68 in string
+
+Input:
+~~~
+" h "
+~~~
+
+Result:
+~~~
+" h "
+~~~
+
+### 0x69 in string
+
+Input:
+~~~
+" i "
+~~~
+
+Result:
+~~~
+" i "
+~~~
+
+### 0x6a in string
+
+Input:
+~~~
+" j "
+~~~
+
+Result:
+~~~
+" j "
+~~~
+
+### 0x6b in string
+
+Input:
+~~~
+" k "
+~~~
+
+Result:
+~~~
+" k "
+~~~
+
+### 0x6c in string
+
+Input:
+~~~
+" l "
+~~~
+
+Result:
+~~~
+" l "
+~~~
+
+### 0x6d in string
+
+Input:
+~~~
+" m "
+~~~
+
+Result:
+~~~
+" m "
+~~~
+
+### 0x6e in string
+
+Input:
+~~~
+" n "
+~~~
+
+Result:
+~~~
+" n "
+~~~
+
+### 0x6f in string
+
+Input:
+~~~
+" o "
+~~~
+
+Result:
+~~~
+" o "
+~~~
+
+### 0x70 in string
+
+Input:
+~~~
+" p "
+~~~
+
+Result:
+~~~
+" p "
+~~~
+
+### 0x71 in string
+
+Input:
+~~~
+" q "
+~~~
+
+Result:
+~~~
+" q "
+~~~
+
+### 0x72 in string
+
+Input:
+~~~
+" r "
+~~~
+
+Result:
+~~~
+" r "
+~~~
+
+### 0x73 in string
+
+Input:
+~~~
+" s "
+~~~
+
+Result:
+~~~
+" s "
+~~~
+
+### 0x74 in string
+
+Input:
+~~~
+" t "
+~~~
+
+Result:
+~~~
+" t "
+~~~
+
+### 0x75 in string
+
+Input:
+~~~
+" u "
+~~~
+
+Result:
+~~~
+" u "
+~~~
+
+### 0x76 in string
+
+Input:
+~~~
+" v "
+~~~
+
+Result:
+~~~
+" v "
+~~~
+
+### 0x77 in string
+
+Input:
+~~~
+" w "
+~~~
+
+Result:
+~~~
+" w "
+~~~
+
+### 0x78 in string
+
+Input:
+~~~
+" x "
+~~~
+
+Result:
+~~~
+" x "
+~~~
+
+### 0x79 in string
+
+Input:
+~~~
+" y "
+~~~
+
+Result:
+~~~
+" y "
+~~~
+
+### 0x7a in string
+
+Input:
+~~~
+" z "
+~~~
+
+Result:
+~~~
+" z "
+~~~
+
+### 0x7b in string
+
+Input:
+~~~
+" { "
+~~~
+
+Result:
+~~~
+" { "
+~~~
+
+### 0x7c in string
+
+Input:
+~~~
+" | "
+~~~
+
+Result:
+~~~
+" | "
+~~~
+
+### 0x7d in string
+
+Input:
+~~~
+" } "
+~~~
+
+Result:
+~~~
+" } "
+~~~
+
+### 0x7e in string
+
+Input:
+~~~
+" ~ "
+~~~
+
+Result:
+~~~
+" ~ "
+~~~
+
+### 0x7f in string
+
+Input:
+~~~
+"  "
+~~~
+
+Expects Parse Error
+~~~
+>>"  "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### Escaped 0x00 in string
+
+Input:
+~~~
+"\ "
+~~~
+
+Expects Parse Error
+~~~
+>>"\ "<<
+  --^ (0x00) Invalid escape sequence character ' ' at position 2
+~~~
+
+
+### Escaped 0x01 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x01) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x02 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x02) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x03 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x03) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x04 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x04) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x05 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x05) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x06 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x06) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x07 in string
+
+Input:
+~~~
+"\ "
+~~~
+
+Expects Parse Error
+~~~
+>>"\ "<<
+  --^ (0x07) Invalid escape sequence character ' ' at position 2
+~~~
+
+
+### Escaped 0x08 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x08) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x09 in string
+
+Input:
+~~~
+"\	"
+~~~
+
+Expects Parse Error
+~~~
+>>"\	"<<
+  --^ (0x09) Invalid escape sequence character '	' at position 2
+~~~
+
+
+### Escaped 0x0a in string
+
+Input:
+~~~
+"\
+"
+~~~
+
+Expects Parse Error
+~~~
+>>"\
+"<<
+  --^ (0x0a) Invalid escape sequence character '
+' at position 2
+~~~
+
+
+### Escaped 0x0b in string
+
+Input:
+~~~
+"\
+"
+~~~
+
+Expects Parse Error
+~~~
+>>"\
+"<<
+  --^ (0x0b) Invalid escape sequence character '
+' at position 2
+~~~
+
+
+### Escaped 0x0c in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x0c) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x0d in string
+
+Input:
+~~~
+"\
+"
+~~~
+
+Expects Parse Error
+~~~
+>>"\
+"<<
+  --^ (0x0d) Invalid escape sequence character '
+' at position 2
+~~~
+
+
+### Escaped 0x0e in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x0e) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x0f in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x0f) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x10 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x10) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x11 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x11) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x12 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x12) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x13 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x13) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x14 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x14) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x15 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x15) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x16 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x16) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x17 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x17) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x18 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x18) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x19 in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x19) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1a in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1a) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1b in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1b) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1c in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1c) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1d in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1d) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1e in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1e) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x1f in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x1f) Invalid escape sequence character '' at position 2
+~~~
+
+
+### Escaped 0x20 in string
+
+Input:
+~~~
+"\ "
+~~~
+
+Expects Parse Error
+~~~
+>>"\ "<<
+  --^ (0x20) Invalid escape sequence character ' ' at position 2
+~~~
+
+
+### Escaped 0x21 in string
+
+Input:
+~~~
+"\!"
+~~~
+
+Expects Parse Error
+~~~
+>>"\!"<<
+  --^ (0x21) Invalid escape sequence character '!' at position 2
+~~~
+
+
+### Escaped 0x22 in string
+
+Input:
+~~~
+"\""
+~~~
+
+Result:
+~~~
+"\""
+~~~
+
+### Escaped 0x23 in string
+
+Input:
+~~~
+"\#"
+~~~
+
+Expects Parse Error
+~~~
+>>"\#"<<
+  --^ (0x23) Invalid escape sequence character '#' at position 2
+~~~
+
+
+### Escaped 0x24 in string
+
+Input:
+~~~
+"\$"
+~~~
+
+Expects Parse Error
+~~~
+>>"\$"<<
+  --^ (0x24) Invalid escape sequence character '$' at position 2
+~~~
+
+
+### Escaped 0x25 in string
+
+Input:
+~~~
+"\%"
+~~~
+
+Expects Parse Error
+~~~
+>>"\%"<<
+  --^ (0x25) Invalid escape sequence character '%' at position 2
+~~~
+
+
+### Escaped 0x26 in string
+
+Input:
+~~~
+"\&"
+~~~
+
+Expects Parse Error
+~~~
+>>"\&"<<
+  --^ (0x26) Invalid escape sequence character '&' at position 2
+~~~
+
+
+### Escaped 0x27 in string
+
+Input:
+~~~
+"\'"
+~~~
+
+Expects Parse Error
+~~~
+>>"\'"<<
+  --^ (0x27) Invalid escape sequence character ''' at position 2
+~~~
+
+
+### Escaped 0x28 in string
+
+Input:
+~~~
+"\("
+~~~
+
+Expects Parse Error
+~~~
+>>"\("<<
+  --^ (0x28) Invalid escape sequence character '(' at position 2
+~~~
+
+
+### Escaped 0x29 in string
+
+Input:
+~~~
+"\)"
+~~~
+
+Expects Parse Error
+~~~
+>>"\)"<<
+  --^ (0x29) Invalid escape sequence character ')' at position 2
+~~~
+
+
+### Escaped 0x2a in string
+
+Input:
+~~~
+"\*"
+~~~
+
+Expects Parse Error
+~~~
+>>"\*"<<
+  --^ (0x2a) Invalid escape sequence character '*' at position 2
+~~~
+
+
+### Escaped 0x2b in string
+
+Input:
+~~~
+"\+"
+~~~
+
+Expects Parse Error
+~~~
+>>"\+"<<
+  --^ (0x2b) Invalid escape sequence character '+' at position 2
+~~~
+
+
+### Escaped 0x2c in string
+
+Input:
+~~~
+"\,"
+~~~
+
+Expects Parse Error
+~~~
+>>"\,"<<
+  --^ (0x2c) Invalid escape sequence character ',' at position 2
+~~~
+
+
+### Escaped 0x2d in string
+
+Input:
+~~~
+"\-"
+~~~
+
+Expects Parse Error
+~~~
+>>"\-"<<
+  --^ (0x2d) Invalid escape sequence character '-' at position 2
+~~~
+
+
+### Escaped 0x2e in string
+
+Input:
+~~~
+"\."
+~~~
+
+Expects Parse Error
+~~~
+>>"\."<<
+  --^ (0x2e) Invalid escape sequence character '.' at position 2
+~~~
+
+
+### Escaped 0x2f in string
+
+Input:
+~~~
+"\/"
+~~~
+
+Expects Parse Error
+~~~
+>>"\/"<<
+  --^ (0x2f) Invalid escape sequence character '/' at position 2
+~~~
+
+
+### Escaped 0x30 in string
+
+Input:
+~~~
+"\0"
+~~~
+
+Expects Parse Error
+~~~
+>>"\0"<<
+  --^ (0x30) Invalid escape sequence character '0' at position 2
+~~~
+
+
+### Escaped 0x31 in string
+
+Input:
+~~~
+"\1"
+~~~
+
+Expects Parse Error
+~~~
+>>"\1"<<
+  --^ (0x31) Invalid escape sequence character '1' at position 2
+~~~
+
+
+### Escaped 0x32 in string
+
+Input:
+~~~
+"\2"
+~~~
+
+Expects Parse Error
+~~~
+>>"\2"<<
+  --^ (0x32) Invalid escape sequence character '2' at position 2
+~~~
+
+
+### Escaped 0x33 in string
+
+Input:
+~~~
+"\3"
+~~~
+
+Expects Parse Error
+~~~
+>>"\3"<<
+  --^ (0x33) Invalid escape sequence character '3' at position 2
+~~~
+
+
+### Escaped 0x34 in string
+
+Input:
+~~~
+"\4"
+~~~
+
+Expects Parse Error
+~~~
+>>"\4"<<
+  --^ (0x34) Invalid escape sequence character '4' at position 2
+~~~
+
+
+### Escaped 0x35 in string
+
+Input:
+~~~
+"\5"
+~~~
+
+Expects Parse Error
+~~~
+>>"\5"<<
+  --^ (0x35) Invalid escape sequence character '5' at position 2
+~~~
+
+
+### Escaped 0x36 in string
+
+Input:
+~~~
+"\6"
+~~~
+
+Expects Parse Error
+~~~
+>>"\6"<<
+  --^ (0x36) Invalid escape sequence character '6' at position 2
+~~~
+
+
+### Escaped 0x37 in string
+
+Input:
+~~~
+"\7"
+~~~
+
+Expects Parse Error
+~~~
+>>"\7"<<
+  --^ (0x37) Invalid escape sequence character '7' at position 2
+~~~
+
+
+### Escaped 0x38 in string
+
+Input:
+~~~
+"\8"
+~~~
+
+Expects Parse Error
+~~~
+>>"\8"<<
+  --^ (0x38) Invalid escape sequence character '8' at position 2
+~~~
+
+
+### Escaped 0x39 in string
+
+Input:
+~~~
+"\9"
+~~~
+
+Expects Parse Error
+~~~
+>>"\9"<<
+  --^ (0x39) Invalid escape sequence character '9' at position 2
+~~~
+
+
+### Escaped 0x3a in string
+
+Input:
+~~~
+"\:"
+~~~
+
+Expects Parse Error
+~~~
+>>"\:"<<
+  --^ (0x3a) Invalid escape sequence character ':' at position 2
+~~~
+
+
+### Escaped 0x3b in string
+
+Input:
+~~~
+"\;"
+~~~
+
+Expects Parse Error
+~~~
+>>"\;"<<
+  --^ (0x3b) Invalid escape sequence character ';' at position 2
+~~~
+
+
+### Escaped 0x3c in string
+
+Input:
+~~~
+"\<"
+~~~
+
+Expects Parse Error
+~~~
+>>"\<"<<
+  --^ (0x3c) Invalid escape sequence character '<' at position 2
+~~~
+
+
+### Escaped 0x3d in string
+
+Input:
+~~~
+"\="
+~~~
+
+Expects Parse Error
+~~~
+>>"\="<<
+  --^ (0x3d) Invalid escape sequence character '=' at position 2
+~~~
+
+
+### Escaped 0x3e in string
+
+Input:
+~~~
+"\>"
+~~~
+
+Expects Parse Error
+~~~
+>>"\>"<<
+  --^ (0x3e) Invalid escape sequence character '>' at position 2
+~~~
+
+
+### Escaped 0x3f in string
+
+Input:
+~~~
+"\?"
+~~~
+
+Expects Parse Error
+~~~
+>>"\?"<<
+  --^ (0x3f) Invalid escape sequence character '?' at position 2
+~~~
+
+
+### Escaped 0x40 in string
+
+Input:
+~~~
+"\@"
+~~~
+
+Expects Parse Error
+~~~
+>>"\@"<<
+  --^ (0x40) Invalid escape sequence character '@' at position 2
+~~~
+
+
+### Escaped 0x41 in string
+
+Input:
+~~~
+"\A"
+~~~
+
+Expects Parse Error
+~~~
+>>"\A"<<
+  --^ (0x41) Invalid escape sequence character 'A' at position 2
+~~~
+
+
+### Escaped 0x42 in string
+
+Input:
+~~~
+"\B"
+~~~
+
+Expects Parse Error
+~~~
+>>"\B"<<
+  --^ (0x42) Invalid escape sequence character 'B' at position 2
+~~~
+
+
+### Escaped 0x43 in string
+
+Input:
+~~~
+"\C"
+~~~
+
+Expects Parse Error
+~~~
+>>"\C"<<
+  --^ (0x43) Invalid escape sequence character 'C' at position 2
+~~~
+
+
+### Escaped 0x44 in string
+
+Input:
+~~~
+"\D"
+~~~
+
+Expects Parse Error
+~~~
+>>"\D"<<
+  --^ (0x44) Invalid escape sequence character 'D' at position 2
+~~~
+
+
+### Escaped 0x45 in string
+
+Input:
+~~~
+"\E"
+~~~
+
+Expects Parse Error
+~~~
+>>"\E"<<
+  --^ (0x45) Invalid escape sequence character 'E' at position 2
+~~~
+
+
+### Escaped 0x46 in string
+
+Input:
+~~~
+"\F"
+~~~
+
+Expects Parse Error
+~~~
+>>"\F"<<
+  --^ (0x46) Invalid escape sequence character 'F' at position 2
+~~~
+
+
+### Escaped 0x47 in string
+
+Input:
+~~~
+"\G"
+~~~
+
+Expects Parse Error
+~~~
+>>"\G"<<
+  --^ (0x47) Invalid escape sequence character 'G' at position 2
+~~~
+
+
+### Escaped 0x48 in string
+
+Input:
+~~~
+"\H"
+~~~
+
+Expects Parse Error
+~~~
+>>"\H"<<
+  --^ (0x48) Invalid escape sequence character 'H' at position 2
+~~~
+
+
+### Escaped 0x49 in string
+
+Input:
+~~~
+"\I"
+~~~
+
+Expects Parse Error
+~~~
+>>"\I"<<
+  --^ (0x49) Invalid escape sequence character 'I' at position 2
+~~~
+
+
+### Escaped 0x4a in string
+
+Input:
+~~~
+"\J"
+~~~
+
+Expects Parse Error
+~~~
+>>"\J"<<
+  --^ (0x4a) Invalid escape sequence character 'J' at position 2
+~~~
+
+
+### Escaped 0x4b in string
+
+Input:
+~~~
+"\K"
+~~~
+
+Expects Parse Error
+~~~
+>>"\K"<<
+  --^ (0x4b) Invalid escape sequence character 'K' at position 2
+~~~
+
+
+### Escaped 0x4c in string
+
+Input:
+~~~
+"\L"
+~~~
+
+Expects Parse Error
+~~~
+>>"\L"<<
+  --^ (0x4c) Invalid escape sequence character 'L' at position 2
+~~~
+
+
+### Escaped 0x4d in string
+
+Input:
+~~~
+"\M"
+~~~
+
+Expects Parse Error
+~~~
+>>"\M"<<
+  --^ (0x4d) Invalid escape sequence character 'M' at position 2
+~~~
+
+
+### Escaped 0x4e in string
+
+Input:
+~~~
+"\N"
+~~~
+
+Expects Parse Error
+~~~
+>>"\N"<<
+  --^ (0x4e) Invalid escape sequence character 'N' at position 2
+~~~
+
+
+### Escaped 0x4f in string
+
+Input:
+~~~
+"\O"
+~~~
+
+Expects Parse Error
+~~~
+>>"\O"<<
+  --^ (0x4f) Invalid escape sequence character 'O' at position 2
+~~~
+
+
+### Escaped 0x50 in string
+
+Input:
+~~~
+"\P"
+~~~
+
+Expects Parse Error
+~~~
+>>"\P"<<
+  --^ (0x50) Invalid escape sequence character 'P' at position 2
+~~~
+
+
+### Escaped 0x51 in string
+
+Input:
+~~~
+"\Q"
+~~~
+
+Expects Parse Error
+~~~
+>>"\Q"<<
+  --^ (0x51) Invalid escape sequence character 'Q' at position 2
+~~~
+
+
+### Escaped 0x52 in string
+
+Input:
+~~~
+"\R"
+~~~
+
+Expects Parse Error
+~~~
+>>"\R"<<
+  --^ (0x52) Invalid escape sequence character 'R' at position 2
+~~~
+
+
+### Escaped 0x53 in string
+
+Input:
+~~~
+"\S"
+~~~
+
+Expects Parse Error
+~~~
+>>"\S"<<
+  --^ (0x53) Invalid escape sequence character 'S' at position 2
+~~~
+
+
+### Escaped 0x54 in string
+
+Input:
+~~~
+"\T"
+~~~
+
+Expects Parse Error
+~~~
+>>"\T"<<
+  --^ (0x54) Invalid escape sequence character 'T' at position 2
+~~~
+
+
+### Escaped 0x55 in string
+
+Input:
+~~~
+"\U"
+~~~
+
+Expects Parse Error
+~~~
+>>"\U"<<
+  --^ (0x55) Invalid escape sequence character 'U' at position 2
+~~~
+
+
+### Escaped 0x56 in string
+
+Input:
+~~~
+"\V"
+~~~
+
+Expects Parse Error
+~~~
+>>"\V"<<
+  --^ (0x56) Invalid escape sequence character 'V' at position 2
+~~~
+
+
+### Escaped 0x57 in string
+
+Input:
+~~~
+"\W"
+~~~
+
+Expects Parse Error
+~~~
+>>"\W"<<
+  --^ (0x57) Invalid escape sequence character 'W' at position 2
+~~~
+
+
+### Escaped 0x58 in string
+
+Input:
+~~~
+"\X"
+~~~
+
+Expects Parse Error
+~~~
+>>"\X"<<
+  --^ (0x58) Invalid escape sequence character 'X' at position 2
+~~~
+
+
+### Escaped 0x59 in string
+
+Input:
+~~~
+"\Y"
+~~~
+
+Expects Parse Error
+~~~
+>>"\Y"<<
+  --^ (0x59) Invalid escape sequence character 'Y' at position 2
+~~~
+
+
+### Escaped 0x5a in string
+
+Input:
+~~~
+"\Z"
+~~~
+
+Expects Parse Error
+~~~
+>>"\Z"<<
+  --^ (0x5a) Invalid escape sequence character 'Z' at position 2
+~~~
+
+
+### Escaped 0x5b in string
+
+Input:
+~~~
+"\["
+~~~
+
+Expects Parse Error
+~~~
+>>"\["<<
+  --^ (0x5b) Invalid escape sequence character '[' at position 2
+~~~
+
+
+### Escaped 0x5c in string
+
+Input:
+~~~
+"\\"
+~~~
+
+Result:
+~~~
+"\\"
+~~~
+
+### Escaped 0x5d in string
+
+Input:
+~~~
+"\]"
+~~~
+
+Expects Parse Error
+~~~
+>>"\]"<<
+  --^ (0x5d) Invalid escape sequence character ']' at position 2
+~~~
+
+
+### Escaped 0x5e in string
+
+Input:
+~~~
+"\^"
+~~~
+
+Expects Parse Error
+~~~
+>>"\^"<<
+  --^ (0x5e) Invalid escape sequence character '^' at position 2
+~~~
+
+
+### Escaped 0x5f in string
+
+Input:
+~~~
+"\_"
+~~~
+
+Expects Parse Error
+~~~
+>>"\_"<<
+  --^ (0x5f) Invalid escape sequence character '_' at position 2
+~~~
+
+
+### Escaped 0x60 in string
+
+Input:
+~~~
+"\`"
+~~~
+
+Expects Parse Error
+~~~
+>>"\`"<<
+  --^ (0x60) Invalid escape sequence character '`' at position 2
+~~~
+
+
+### Escaped 0x61 in string
+
+Input:
+~~~
+"\a"
+~~~
+
+Expects Parse Error
+~~~
+>>"\a"<<
+  --^ (0x61) Invalid escape sequence character 'a' at position 2
+~~~
+
+
+### Escaped 0x62 in string
+
+Input:
+~~~
+"\b"
+~~~
+
+Expects Parse Error
+~~~
+>>"\b"<<
+  --^ (0x62) Invalid escape sequence character 'b' at position 2
+~~~
+
+
+### Escaped 0x63 in string
+
+Input:
+~~~
+"\c"
+~~~
+
+Expects Parse Error
+~~~
+>>"\c"<<
+  --^ (0x63) Invalid escape sequence character 'c' at position 2
+~~~
+
+
+### Escaped 0x64 in string
+
+Input:
+~~~
+"\d"
+~~~
+
+Expects Parse Error
+~~~
+>>"\d"<<
+  --^ (0x64) Invalid escape sequence character 'd' at position 2
+~~~
+
+
+### Escaped 0x65 in string
+
+Input:
+~~~
+"\e"
+~~~
+
+Expects Parse Error
+~~~
+>>"\e"<<
+  --^ (0x65) Invalid escape sequence character 'e' at position 2
+~~~
+
+
+### Escaped 0x66 in string
+
+Input:
+~~~
+"\f"
+~~~
+
+Expects Parse Error
+~~~
+>>"\f"<<
+  --^ (0x66) Invalid escape sequence character 'f' at position 2
+~~~
+
+
+### Escaped 0x67 in string
+
+Input:
+~~~
+"\g"
+~~~
+
+Expects Parse Error
+~~~
+>>"\g"<<
+  --^ (0x67) Invalid escape sequence character 'g' at position 2
+~~~
+
+
+### Escaped 0x68 in string
+
+Input:
+~~~
+"\h"
+~~~
+
+Expects Parse Error
+~~~
+>>"\h"<<
+  --^ (0x68) Invalid escape sequence character 'h' at position 2
+~~~
+
+
+### Escaped 0x69 in string
+
+Input:
+~~~
+"\i"
+~~~
+
+Expects Parse Error
+~~~
+>>"\i"<<
+  --^ (0x69) Invalid escape sequence character 'i' at position 2
+~~~
+
+
+### Escaped 0x6a in string
+
+Input:
+~~~
+"\j"
+~~~
+
+Expects Parse Error
+~~~
+>>"\j"<<
+  --^ (0x6a) Invalid escape sequence character 'j' at position 2
+~~~
+
+
+### Escaped 0x6b in string
+
+Input:
+~~~
+"\k"
+~~~
+
+Expects Parse Error
+~~~
+>>"\k"<<
+  --^ (0x6b) Invalid escape sequence character 'k' at position 2
+~~~
+
+
+### Escaped 0x6c in string
+
+Input:
+~~~
+"\l"
+~~~
+
+Expects Parse Error
+~~~
+>>"\l"<<
+  --^ (0x6c) Invalid escape sequence character 'l' at position 2
+~~~
+
+
+### Escaped 0x6d in string
+
+Input:
+~~~
+"\m"
+~~~
+
+Expects Parse Error
+~~~
+>>"\m"<<
+  --^ (0x6d) Invalid escape sequence character 'm' at position 2
+~~~
+
+
+### Escaped 0x6e in string
+
+Input:
+~~~
+"\n"
+~~~
+
+Expects Parse Error
+~~~
+>>"\n"<<
+  --^ (0x6e) Invalid escape sequence character 'n' at position 2
+~~~
+
+
+### Escaped 0x6f in string
+
+Input:
+~~~
+"\o"
+~~~
+
+Expects Parse Error
+~~~
+>>"\o"<<
+  --^ (0x6f) Invalid escape sequence character 'o' at position 2
+~~~
+
+
+### Escaped 0x70 in string
+
+Input:
+~~~
+"\p"
+~~~
+
+Expects Parse Error
+~~~
+>>"\p"<<
+  --^ (0x70) Invalid escape sequence character 'p' at position 2
+~~~
+
+
+### Escaped 0x71 in string
+
+Input:
+~~~
+"\q"
+~~~
+
+Expects Parse Error
+~~~
+>>"\q"<<
+  --^ (0x71) Invalid escape sequence character 'q' at position 2
+~~~
+
+
+### Escaped 0x72 in string
+
+Input:
+~~~
+"\r"
+~~~
+
+Expects Parse Error
+~~~
+>>"\r"<<
+  --^ (0x72) Invalid escape sequence character 'r' at position 2
+~~~
+
+
+### Escaped 0x73 in string
+
+Input:
+~~~
+"\s"
+~~~
+
+Expects Parse Error
+~~~
+>>"\s"<<
+  --^ (0x73) Invalid escape sequence character 's' at position 2
+~~~
+
+
+### Escaped 0x74 in string
+
+Input:
+~~~
+"\t"
+~~~
+
+Expects Parse Error
+~~~
+>>"\t"<<
+  --^ (0x74) Invalid escape sequence character 't' at position 2
+~~~
+
+
+### Escaped 0x75 in string
+
+Input:
+~~~
+"\u"
+~~~
+
+Expects Parse Error
+~~~
+>>"\u"<<
+  --^ (0x75) Invalid escape sequence character 'u' at position 2
+~~~
+
+
+### Escaped 0x76 in string
+
+Input:
+~~~
+"\v"
+~~~
+
+Expects Parse Error
+~~~
+>>"\v"<<
+  --^ (0x76) Invalid escape sequence character 'v' at position 2
+~~~
+
+
+### Escaped 0x77 in string
+
+Input:
+~~~
+"\w"
+~~~
+
+Expects Parse Error
+~~~
+>>"\w"<<
+  --^ (0x77) Invalid escape sequence character 'w' at position 2
+~~~
+
+
+### Escaped 0x78 in string
+
+Input:
+~~~
+"\x"
+~~~
+
+Expects Parse Error
+~~~
+>>"\x"<<
+  --^ (0x78) Invalid escape sequence character 'x' at position 2
+~~~
+
+
+### Escaped 0x79 in string
+
+Input:
+~~~
+"\y"
+~~~
+
+Expects Parse Error
+~~~
+>>"\y"<<
+  --^ (0x79) Invalid escape sequence character 'y' at position 2
+~~~
+
+
+### Escaped 0x7a in string
+
+Input:
+~~~
+"\z"
+~~~
+
+Expects Parse Error
+~~~
+>>"\z"<<
+  --^ (0x7a) Invalid escape sequence character 'z' at position 2
+~~~
+
+
+### Escaped 0x7b in string
+
+Input:
+~~~
+"\{"
+~~~
+
+Expects Parse Error
+~~~
+>>"\{"<<
+  --^ (0x7b) Invalid escape sequence character '{' at position 2
+~~~
+
+
+### Escaped 0x7c in string
+
+Input:
+~~~
+"\|"
+~~~
+
+Expects Parse Error
+~~~
+>>"\|"<<
+  --^ (0x7c) Invalid escape sequence character '|' at position 2
+~~~
+
+
+### Escaped 0x7d in string
+
+Input:
+~~~
+"\}"
+~~~
+
+Expects Parse Error
+~~~
+>>"\}"<<
+  --^ (0x7d) Invalid escape sequence character '}' at position 2
+~~~
+
+
+### Escaped 0x7e in string
+
+Input:
+~~~
+"\~"
+~~~
+
+Expects Parse Error
+~~~
+>>"\~"<<
+  --^ (0x7e) Invalid escape sequence character '~' at position 2
+~~~
+
+
+### Escaped 0x7f in string
+
+Input:
+~~~
+"\"
+~~~
+
+Expects Parse Error
+~~~
+>>"\"<<
+  --^ (0x7f) Invalid escape sequence character '' at position 2
+~~~
+
+
