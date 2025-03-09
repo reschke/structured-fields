@@ -44,14 +44,18 @@ public class SpecificationTests extends AbstractSpecificationTests {
     @Test
     public void runTest() {
         StringBuilder out = new StringBuilder();
+        if (basename.isEmpty()) {
+            out.append("# Test Report\n");
+            out.append("\n");
+        }
         if (!p.filename.equals(basename)) {
             out.append("\n");
-            out.append("# ").append(p.filename).append("\n");
+            out.append("## ").append(p.filename).append("\n");
             out.append("\n");
             basename = p.filename;
             out.append("\n");
         }
-        out.append("## ").append(p.name).append("\n");
+        out.append("### ").append(p.name).append("\n");
         out.append("\n");
         out.append("Input:").append("\n");
         out.append("~~~" + "\n");

@@ -1,9 +1,10 @@
-#Test Report
+# Test Report
+
 
 ## binary
 
 
-##### basic binary
+### basic binary
 
 Input:
 ~~~
@@ -16,7 +17,7 @@ Result:
 ~~~
 
 
-#### empty binary
+### empty binary
 
 Input:
 ~~~
@@ -29,7 +30,7 @@ Result:
 ~~~
 
 
-#### padding at beginning
+### padding at beginning
 
 Input:
 ~~~
@@ -40,12 +41,11 @@ Expects Parse Error
 ~~~
 >>:=aGVsbG8=:<<
   -----------^ Input byte array has wrong 4-byte ending unit
-
 ~~~
 
 
 
-#### padding in middle
+### padding in middle
 
 Input:
 ~~~
@@ -56,12 +56,11 @@ Expects Parse Error
 ~~~
 >>:a=GVsbG8=:<<
   -----------^ Last unit does not have enough valid bits
-
 ~~~
 
 
 
-#### bad padding
+### bad padding
 
 Input:
 ~~~
@@ -74,7 +73,7 @@ Result:
 ~~~
 
 
-#### bad padding dot
+### bad padding dot
 
 Input:
 ~~~
@@ -85,12 +84,11 @@ Expects Parse Error
 ~~~
 >>:aGVsbG8.:<<
   ---------^ (0x3a) Invalid Byte Sequence Character '.' at position 9
-
 ~~~
 
 
 
-#### bad end delimiter
+### bad end delimiter
 
 Input:
 ~~~
@@ -101,12 +99,11 @@ Expects Parse Error
 ~~~
 >>:aGVsbG8=<<
   ---------^ Byte Sequence must end with COLON: 'aGVsbG8='
-
 ~~~
 
 
 
-#### extra whitespace
+### extra whitespace
 
 Input:
 ~~~
@@ -117,12 +114,11 @@ Expects Parse Error
 ~~~
 >>:aGVsb G8=:<<
   -------^ (0x47) Invalid Byte Sequence Character ' ' at position 7
-
 ~~~
 
 
 
-#### all whitespace
+### all whitespace
 
 Input:
 ~~~
@@ -133,12 +129,11 @@ Expects Parse Error
 ~~~
 >>:    :<<
   --^ (0x20) Invalid Byte Sequence Character ' ' at position 2
-
 ~~~
 
 
 
-#### extra chars
+### extra chars
 
 Input:
 ~~~
@@ -149,12 +144,11 @@ Expects Parse Error
 ~~~
 >>:aGVsbG!8=:<<
   --------^ (0x38) Invalid Byte Sequence Character '!' at position 8
-
 ~~~
 
 
 
-#### suffix chars
+### suffix chars
 
 Input:
 ~~~
@@ -165,12 +159,11 @@ Expects Parse Error
 ~~~
 >>:aGVsbG8=!:<<
   ----------^ (0x3a) Invalid Byte Sequence Character '!' at position 10
-
 ~~~
 
 
 
-#### non-zero pad bits
+### non-zero pad bits
 
 Input:
 ~~~
@@ -183,7 +176,7 @@ Result:
 ~~~
 
 
-#### non-ASCII binary
+### non-ASCII binary
 
 Input:
 ~~~
@@ -196,7 +189,7 @@ Result:
 ~~~
 
 
-#### base64url binary
+### base64url binary
 
 Input:
 ~~~
@@ -207,7 +200,6 @@ Expects Parse Error
 ~~~
 >>:_-Ah:<<
   --^ (0x2d) Invalid Byte Sequence Character '_' at position 2
-
 ~~~
 
 
@@ -216,7 +208,7 @@ Expects Parse Error
 ## boolean
 
 
-#### basic true boolean
+### basic true boolean
 
 Input:
 ~~~
@@ -229,7 +221,7 @@ Result:
 ~~~
 
 
-#### basic false boolean
+### basic false boolean
 
 Input:
 ~~~
@@ -242,7 +234,7 @@ Result:
 ~~~
 
 
-#### unknown boolean
+### unknown boolean
 
 Input:
 ~~~
@@ -253,12 +245,11 @@ Expects Parse Error
 ~~~
 >>?Q<<
   -^ (0x51) Expected '0' or '1' in Boolean, found 'Q'
-
 ~~~
 
 
 
-#### whitespace boolean
+### whitespace boolean
 
 Input:
 ~~~
@@ -269,12 +260,11 @@ Expects Parse Error
 ~~~
 >>? 1<<
   -^ (0x20) Expected '0' or '1' in Boolean, found ' '
-
 ~~~
 
 
 
-#### negative zero boolean
+### negative zero boolean
 
 Input:
 ~~~
@@ -285,12 +275,11 @@ Expects Parse Error
 ~~~
 >>?-0<<
   -^ (0x2d) Expected '0' or '1' in Boolean, found '-'
-
 ~~~
 
 
 
-#### T boolean
+### T boolean
 
 Input:
 ~~~
@@ -301,12 +290,11 @@ Expects Parse Error
 ~~~
 >>?T<<
   -^ (0x54) Expected '0' or '1' in Boolean, found 'T'
-
 ~~~
 
 
 
-#### F boolean
+### F boolean
 
 Input:
 ~~~
@@ -317,12 +305,11 @@ Expects Parse Error
 ~~~
 >>?F<<
   -^ (0x46) Expected '0' or '1' in Boolean, found 'F'
-
 ~~~
 
 
 
-#### t boolean
+### t boolean
 
 Input:
 ~~~
@@ -333,12 +320,11 @@ Expects Parse Error
 ~~~
 >>?t<<
   -^ (0x74) Expected '0' or '1' in Boolean, found 't'
-
 ~~~
 
 
 
-#### f boolean
+### f boolean
 
 Input:
 ~~~
@@ -349,12 +335,11 @@ Expects Parse Error
 ~~~
 >>?f<<
   -^ (0x66) Expected '0' or '1' in Boolean, found 'f'
-
 ~~~
 
 
 
-#### spelled-out True boolean
+### spelled-out True boolean
 
 Input:
 ~~~
@@ -365,12 +350,11 @@ Expects Parse Error
 ~~~
 >>?True<<
   -^ (0x54) Expected '0' or '1' in Boolean, found 'T'
-
 ~~~
 
 
 
-#### spelled-out False boolean
+### spelled-out False boolean
 
 Input:
 ~~~
@@ -381,7 +365,6 @@ Expects Parse Error
 ~~~
 >>?False<<
   -^ (0x46) Expected '0' or '1' in Boolean, found 'F'
-
 ~~~
 
 
@@ -390,7 +373,7 @@ Expects Parse Error
 ## date
 
 
-#### date - 1970-01-01 00:00:00
+### date - 1970-01-01 00:00:00
 
 Input:
 ~~~
@@ -403,7 +386,7 @@ Result:
 ~~~
 
 
-#### date - 2022-08-04 01:57:13
+### date - 2022-08-04 01:57:13
 
 Input:
 ~~~
@@ -416,7 +399,7 @@ Result:
 ~~~
 
 
-#### date - 1917-05-30 22:02:47
+### date - 1917-05-30 22:02:47
 
 Input:
 ~~~
@@ -429,7 +412,7 @@ Result:
 ~~~
 
 
-#### date - 2^31
+### date - 2^31
 
 Input:
 ~~~
@@ -442,7 +425,7 @@ Result:
 ~~~
 
 
-#### date - 2^32
+### date - 2^32
 
 Input:
 ~~~
@@ -455,7 +438,7 @@ Result:
 ~~~
 
 
-#### date - decimal
+### date - decimal
 
 Input:
 ~~~
@@ -466,7 +449,6 @@ Expects Parse Error
 ~~~
 >>@1659578233.12<<
   -----------^ (0x2e) Extra characters in string parsed as Item
-
 ~~~
 
 
@@ -475,7 +457,7 @@ Expects Parse Error
 ## dictionary
 
 
-#### basic dictionary
+### basic dictionary
 
 Input:
 ~~~
@@ -488,7 +470,7 @@ en="Applepie", da=:w4ZibGV0w6ZydGUK:
 ~~~
 
 
-#### empty dictionary
+### empty dictionary
 
 Input:
 ~~~
@@ -501,7 +483,7 @@ Result:
 ~~~
 
 
-#### single item dictionary
+### single item dictionary
 
 Input:
 ~~~
@@ -514,7 +496,7 @@ a=1
 ~~~
 
 
-#### list item dictionary
+### list item dictionary
 
 Input:
 ~~~
@@ -527,7 +509,7 @@ a=(1 2)
 ~~~
 
 
-#### single list item dictionary
+### single list item dictionary
 
 Input:
 ~~~
@@ -540,7 +522,7 @@ a=(1)
 ~~~
 
 
-#### empty list item dictionary
+### empty list item dictionary
 
 Input:
 ~~~
@@ -553,7 +535,7 @@ a=()
 ~~~
 
 
-#### no whitespace dictionary
+### no whitespace dictionary
 
 Input:
 ~~~
@@ -566,7 +548,7 @@ a=1, b=2
 ~~~
 
 
-#### extra whitespace dictionary
+### extra whitespace dictionary
 
 Input:
 ~~~
@@ -579,7 +561,7 @@ a=1, b=2
 ~~~
 
 
-#### tab separated dictionary
+### tab separated dictionary
 
 Input:
 ~~~
@@ -592,7 +574,7 @@ a=1, b=2
 ~~~
 
 
-#### leading whitespace dictionary
+### leading whitespace dictionary
 
 Input:
 ~~~
@@ -605,7 +587,7 @@ a=1, b=2
 ~~~
 
 
-#### whitespace before = dictionary
+### whitespace before = dictionary
 
 Input:
 ~~~
@@ -616,12 +598,11 @@ Expects Parse Error
 ~~~
 >>a =1, b=2<<
   --^ (0x3d) Expected COMMA in Dictionary, found: '=' (\u003d)
-
 ~~~
 
 
 
-#### whitespace after = dictionary
+### whitespace after = dictionary
 
 Input:
 ~~~
@@ -632,12 +613,11 @@ Expects Parse Error
 ~~~
 >>a=1, b= 2<<
   -------^ (0x20) Unexpected start character in Bare Item: ' ' (\u0020)
-
 ~~~
 
 
 
-#### two lines dictionary
+### two lines dictionary
 
 Input:
 ~~~
@@ -651,7 +631,7 @@ a=1, b=2
 ~~~
 
 
-#### missing value dictionary
+### missing value dictionary
 
 Input:
 ~~~
@@ -664,7 +644,7 @@ a=1, b, c=3
 ~~~
 
 
-#### all missing value dictionary
+### all missing value dictionary
 
 Input:
 ~~~
@@ -677,7 +657,7 @@ a, b, c
 ~~~
 
 
-#### start missing value dictionary
+### start missing value dictionary
 
 Input:
 ~~~
@@ -690,7 +670,7 @@ a, b=2
 ~~~
 
 
-#### end missing value dictionary
+### end missing value dictionary
 
 Input:
 ~~~
@@ -703,7 +683,7 @@ a=1, b
 ~~~
 
 
-#### missing value with params dictionary
+### missing value with params dictionary
 
 Input:
 ~~~
@@ -716,7 +696,7 @@ a=1, b;foo=9, c=3
 ~~~
 
 
-#### explicit true value with params dictionary
+### explicit true value with params dictionary
 
 Input:
 ~~~
@@ -729,7 +709,7 @@ a=1, b;foo=9, c=3
 ~~~
 
 
-#### trailing comma dictionary
+### trailing comma dictionary
 
 Input:
 ~~~
@@ -740,12 +720,11 @@ Expects Parse Error
 ~~~
 >>a=1, b=2,<<
   ---------^ Found trailing COMMA in Dictionary
-
 ~~~
 
 
 
-#### empty item dictionary
+### empty item dictionary
 
 Input:
 ~~~
@@ -756,12 +735,11 @@ Expects Parse Error
 ~~~
 >>a=1,,b=2,<<
   ----^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
-
 ~~~
 
 
 
-#### duplicate key dictionary
+### duplicate key dictionary
 
 Input:
 ~~~
@@ -774,7 +752,7 @@ a=3, b=2
 ~~~
 
 
-#### numeric key dictionary
+### numeric key dictionary
 
 Input:
 ~~~
@@ -785,12 +763,11 @@ Expects Parse Error
 ~~~
 >>a=1,1b=2,a=1<<
   ----^ (0x31) Key must start with LCALPHA or '*': '1' (\u0031)
-
 ~~~
 
 
 
-#### uppercase key dictionary
+### uppercase key dictionary
 
 Input:
 ~~~
@@ -801,12 +778,11 @@ Expects Parse Error
 ~~~
 >>a=1,B=2,a=1<<
   ----^ (0x42) Key must start with LCALPHA or '*': 'B' (\u0042)
-
 ~~~
 
 
 
-#### bad key dictionary
+### bad key dictionary
 
 Input:
 ~~~
@@ -817,7 +793,6 @@ Expects Parse Error
 ~~~
 >>a=1,b!=2,a=1<<
   -----^ (0x21) Expected COMMA in Dictionary, found: '!' (\u0021)
-
 ~~~
 
 
@@ -826,7 +801,7 @@ Expects Parse Error
 ## display-string
 
 
-#### basic display string (ascii content)
+### basic display string (ascii content)
 
 Input:
 ~~~
@@ -839,7 +814,7 @@ Result:
 ~~~
 
 
-#### all printable ascii
+### all printable ascii
 
 Input:
 ~~~
@@ -852,7 +827,7 @@ Result:
 ~~~
 
 
-#### non-ascii display string (uppercase escaping)
+### non-ascii display string (uppercase escaping)
 
 Input:
 ~~~
@@ -863,12 +838,11 @@ Expects Parse Error
 ~~~
 >>%"f%C3%BC%C3%BC"<<
   ----^ (0x43) Invalid percent escape sequence character '%' at position 4
-
 ~~~
 
 
 
-#### non-ascii display string (lowercase escaping)
+### non-ascii display string (lowercase escaping)
 
 Input:
 ~~~
@@ -881,7 +855,7 @@ Result:
 ~~~
 
 
-#### tab in display string
+### tab in display string
 
 Input:
 ~~~
@@ -892,12 +866,11 @@ Expects Parse Error
 ~~~
 >>%"	"<<
   ---^ (0x22) Invalid character in Display String at position 3
-
 ~~~
 
 
 
-#### newline in display string
+### newline in display string
 
 Input:
 ~~~
@@ -910,12 +883,11 @@ Expects Parse Error
 >>%"
 "<<
   ---^ (0x22) Invalid character in Display String at position 3
-
 ~~~
 
 
 
-#### single quoted display string
+### single quoted display string
 
 Input:
 ~~~
@@ -926,12 +898,11 @@ Expects Parse Error
 ~~~
 >>%'foo'<<
   --^ (0x66) DisplayString must continue with a double quote: 'foo''
-
 ~~~
 
 
 
-#### unquoted display string
+### unquoted display string
 
 Input:
 ~~~
@@ -942,12 +913,11 @@ Expects Parse Error
 ~~~
 >>%foo<<
   --^ (0x6f) DisplayString must continue with a double quote: 'oo'
-
 ~~~
 
 
 
-#### display string missing initial quote
+### display string missing initial quote
 
 Input:
 ~~~
@@ -958,12 +928,11 @@ Expects Parse Error
 ~~~
 >>%foo"<<
   --^ (0x6f) DisplayString must continue with a double quote: 'oo"'
-
 ~~~
 
 
 
-#### unbalanced display string
+### unbalanced display string
 
 Input:
 ~~~
@@ -974,12 +943,11 @@ Expects Parse Error
 ~~~
 >>%"foo<<
   -----^ Closing DQUOTE missing
-
 ~~~
 
 
 
-#### display string quoting
+### display string quoting
 
 Input:
 ~~~
@@ -992,7 +960,7 @@ Result:
 ~~~
 
 
-#### bad display string escaping
+### bad display string escaping
 
 Input:
 ~~~
@@ -1003,12 +971,11 @@ Expects Parse Error
 ~~~
 >>%"foo %a<<
   --------^ Incomplete percent escape sequence at position 8
-
 ~~~
 
 
 
-#### bad display string utf-8 (invalid 2-byte seq)
+### bad display string utf-8 (invalid 2-byte seq)
 
 Input:
 ~~~
@@ -1019,12 +986,11 @@ Expects Parse Error
 ~~~
 >>%"%c3%28"<<
   --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
-
 ~~~
 
 
 
-#### bad display string utf-8 (invalid sequence id)
+### bad display string utf-8 (invalid sequence id)
 
 Input:
 ~~~
@@ -1035,12 +1001,11 @@ Expects Parse Error
 ~~~
 >>%"%a0%a1"<<
   --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
-
 ~~~
 
 
 
-#### bad display string utf-8 (invalid hex)
+### bad display string utf-8 (invalid hex)
 
 Input:
 ~~~
@@ -1051,12 +1016,11 @@ Expects Parse Error
 ~~~
 >>%"%g0%1w"<<
   ---^ (0x67) Invalid percent escape sequence character '%' at position 3
-
 ~~~
 
 
 
-#### bad display string utf-8 (invalid 3-byte seq)
+### bad display string utf-8 (invalid 3-byte seq)
 
 Input:
 ~~~
@@ -1067,12 +1031,11 @@ Expects Parse Error
 ~~~
 >>%"%e2%28%a1"<<
   --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
-
 ~~~
 
 
 
-#### bad display string utf-8 (invalid 4-byte seq)
+### bad display string utf-8 (invalid 4-byte seq)
 
 Input:
 ~~~
@@ -1083,12 +1046,11 @@ Expects Parse Error
 ~~~
 >>%"%f0%28%8c%28"<<
   --^ (0x25) Invalid UTF-8 sequence (Input length = 1) before position 2
-
 ~~~
 
 
 
-#### BOM in display string
+### BOM in display string
 
 Input:
 ~~~
@@ -1105,7 +1067,7 @@ Result:
 ## examples
 
 
-#### Foo-Example
+### Foo-Example
 
 Input:
 ~~~
@@ -1118,7 +1080,7 @@ Result:
 ~~~
 
 
-#### Example-StrListHeader
+### Example-StrListHeader
 
 Input:
 ~~~
@@ -1131,7 +1093,7 @@ Result:
 ~~~
 
 
-#### Example-Hdr (list on one line)
+### Example-Hdr (list on one line)
 
 Input:
 ~~~
@@ -1144,7 +1106,7 @@ foo, bar
 ~~~
 
 
-#### Example-Hdr (list on two lines)
+### Example-Hdr (list on two lines)
 
 Input:
 ~~~
@@ -1158,7 +1120,7 @@ foo, bar
 ~~~
 
 
-#### Example-StrListListHeader
+### Example-StrListListHeader
 
 Input:
 ~~~
@@ -1171,7 +1133,7 @@ Result:
 ~~~
 
 
-#### Example-ListListParam
+### Example-ListListParam
 
 Input:
 ~~~
@@ -1184,7 +1146,7 @@ Result:
 ~~~
 
 
-#### Example-ParamListHeader
+### Example-ParamListHeader
 
 Input:
 ~~~
@@ -1197,7 +1159,7 @@ abc;a=1;b=2;cde_456, (ghi;jk=4 l);q="9";r=w
 ~~~
 
 
-#### Example-IntHeader
+### Example-IntHeader
 
 Input:
 ~~~
@@ -1210,7 +1172,7 @@ Result:
 ~~~
 
 
-#### Example-DictHeader
+### Example-DictHeader
 
 Input:
 ~~~
@@ -1223,7 +1185,7 @@ en="Applepie", da=:w4ZibGV0w6ZydGU=:
 ~~~
 
 
-#### Example-DictHeader (boolean values)
+### Example-DictHeader (boolean values)
 
 Input:
 ~~~
@@ -1236,7 +1198,7 @@ a=?0, b, c;foo=bar
 ~~~
 
 
-#### Example-DictListHeader
+### Example-DictListHeader
 
 Input:
 ~~~
@@ -1249,7 +1211,7 @@ rating=1.5, feelings=(joy sadness)
 ~~~
 
 
-#### Example-MixDict
+### Example-MixDict
 
 Input:
 ~~~
@@ -1262,7 +1224,7 @@ a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
 ~~~
 
 
-#### Example-Hdr (dictionary on one line)
+### Example-Hdr (dictionary on one line)
 
 Input:
 ~~~
@@ -1275,7 +1237,7 @@ foo=1, bar=2
 ~~~
 
 
-#### Example-Hdr (dictionary on two lines)
+### Example-Hdr (dictionary on two lines)
 
 Input:
 ~~~
@@ -1289,7 +1251,7 @@ foo=1, bar=2
 ~~~
 
 
-#### Example-IntItemHeader
+### Example-IntItemHeader
 
 Input:
 ~~~
@@ -1302,7 +1264,7 @@ Result:
 ~~~
 
 
-#### Example-IntItemHeader (params)
+### Example-IntItemHeader (params)
 
 Input:
 ~~~
@@ -1315,7 +1277,7 @@ Result:
 ~~~
 
 
-#### Example-IntegerHeader
+### Example-IntegerHeader
 
 Input:
 ~~~
@@ -1328,7 +1290,7 @@ Result:
 ~~~
 
 
-#### Example-FloatHeader
+### Example-FloatHeader
 
 Input:
 ~~~
@@ -1341,7 +1303,7 @@ Result:
 ~~~
 
 
-#### Example-StringHeader
+### Example-StringHeader
 
 Input:
 ~~~
@@ -1354,7 +1316,7 @@ Result:
 ~~~
 
 
-#### Example-BinaryHdr
+### Example-BinaryHdr
 
 Input:
 ~~~
@@ -1367,7 +1329,7 @@ Result:
 ~~~
 
 
-#### Example-BoolHdr
+### Example-BoolHdr
 
 Input:
 ~~~
@@ -1384,7 +1346,7 @@ Result:
 ## item
 
 
-#### empty item
+### empty item
 
 Input:
 ~~~
@@ -1395,12 +1357,11 @@ Expects Parse Error
 ~~~
 >><<
   ^ Empty string found when parsing Bare Item
-
 ~~~
 
 
 
-#### leading space
+### leading space
 
 Input:
 ~~~
@@ -1411,12 +1372,11 @@ Expects Parse Error
 ~~~
 >> 	 1<<
   -^ (0x09) Unexpected start character in Bare Item: HTAB (\u0009)
-
 ~~~
 
 
 
-#### trailing space
+### trailing space
 
 Input:
 ~~~
@@ -1427,12 +1387,11 @@ Expects Parse Error
 ~~~
 >>1 	 <<
   --^ (0x09) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### leading and trailing space
+### leading and trailing space
 
 Input:
 ~~~
@@ -1445,7 +1404,7 @@ Result:
 ~~~
 
 
-#### leading and trailing whitespace
+### leading and trailing whitespace
 
 Input:
 ~~~
@@ -1462,23 +1421,22 @@ Result:
 ## key-generated
 
 
-#### 0x00 as a single-character dictionary key
+### 0x00 as a single-character dictionary key
 
 Input:
 ~~~
- =1
+ =1
 ~~~
 
 Expects Parse Error
 ~~~
->> =1<<
-  ^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
-
+>> =1<<
+  ^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 as a single-character dictionary key
+### 0x01 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1489,12 +1447,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x01) Key must start with LCALPHA or '*': '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 as a single-character dictionary key
+### 0x02 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1505,12 +1462,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x02) Key must start with LCALPHA or '*': '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 as a single-character dictionary key
+### 0x03 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1521,12 +1477,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x03) Key must start with LCALPHA or '*': '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 as a single-character dictionary key
+### 0x04 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1537,12 +1492,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x04) Key must start with LCALPHA or '*': '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 as a single-character dictionary key
+### 0x05 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1553,12 +1507,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x05) Key must start with LCALPHA or '*': '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 as a single-character dictionary key
+### 0x06 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1569,28 +1522,26 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x06) Key must start with LCALPHA or '*': '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 as a single-character dictionary key
+### 0x07 as a single-character dictionary key
 
 Input:
 ~~~
- =1
+=1
 ~~~
 
 Expects Parse Error
 ~~~
->> =1<<
-  ^ (0x07) Key must start with LCALPHA or '*': ' ' (\u0007)
-
+>>=1<<
+  ^ (0x07) Key must start with LCALPHA or '*': '' (\u0007)
 ~~~
 
 
 
-#### 0x08 as a single-character dictionary key
+### 0x08 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1601,12 +1552,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x08) Key must start with LCALPHA or '*': '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 as a single-character dictionary key
+### 0x09 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1617,12 +1567,11 @@ Expects Parse Error
 ~~~
 >>	=1<<
   ^ (0x09) Key must start with LCALPHA or '*': HTAB (\u0009)
-
 ~~~
 
 
 
-#### 0x0a as a single-character dictionary key
+### 0x0a as a single-character dictionary key
 
 Input:
 ~~~
@@ -1636,31 +1585,26 @@ Expects Parse Error
 =1<<
   ^ (0x0a) Key must start with LCALPHA or '*': '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b as a single-character dictionary key
+### 0x0b as a single-character dictionary key
 
 Input:
 ~~~
-
-=1
+=1
 ~~~
 
 Expects Parse Error
 ~~~
->>
-=1<<
-  ^ (0x0b) Key must start with LCALPHA or '*': '
-' (\u000b)
-
+>>=1<<
+  ^ (0x0b) Key must start with LCALPHA or '*': '' (\u000b)
 ~~~
 
 
 
-#### 0x0c as a single-character dictionary key
+### 0x0c as a single-character dictionary key
 
 Input:
 ~~~
@@ -1671,31 +1615,26 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x0c) Key must start with LCALPHA or '*': '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d as a single-character dictionary key
+### 0x0d as a single-character dictionary key
 
 Input:
 ~~~
-
-=1
+=1
 ~~~
 
 Expects Parse Error
 ~~~
->>
-=1<<
-  ^ (0x0d) Key must start with LCALPHA or '*': '
-' (\u000d)
-
+>>=1<<
+  ^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
 ~~~
 
 
 
-#### 0x0e as a single-character dictionary key
+### 0x0e as a single-character dictionary key
 
 Input:
 ~~~
@@ -1706,12 +1645,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x0e) Key must start with LCALPHA or '*': '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f as a single-character dictionary key
+### 0x0f as a single-character dictionary key
 
 Input:
 ~~~
@@ -1722,12 +1660,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x0f) Key must start with LCALPHA or '*': '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 as a single-character dictionary key
+### 0x10 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1738,12 +1675,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x10) Key must start with LCALPHA or '*': '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 as a single-character dictionary key
+### 0x11 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1754,12 +1690,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x11) Key must start with LCALPHA or '*': '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 as a single-character dictionary key
+### 0x12 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1770,12 +1705,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x12) Key must start with LCALPHA or '*': '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 as a single-character dictionary key
+### 0x13 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1786,12 +1720,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x13) Key must start with LCALPHA or '*': '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 as a single-character dictionary key
+### 0x14 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1802,12 +1735,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x14) Key must start with LCALPHA or '*': '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 as a single-character dictionary key
+### 0x15 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1818,12 +1750,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x15) Key must start with LCALPHA or '*': '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 as a single-character dictionary key
+### 0x16 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1834,12 +1765,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x16) Key must start with LCALPHA or '*': '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 as a single-character dictionary key
+### 0x17 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1850,12 +1780,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x17) Key must start with LCALPHA or '*': '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 as a single-character dictionary key
+### 0x18 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1866,12 +1795,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x18) Key must start with LCALPHA or '*': '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 as a single-character dictionary key
+### 0x19 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1882,12 +1810,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x19) Key must start with LCALPHA or '*': '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a as a single-character dictionary key
+### 0x1a as a single-character dictionary key
 
 Input:
 ~~~
@@ -1898,12 +1825,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1a) Key must start with LCALPHA or '*': '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b as a single-character dictionary key
+### 0x1b as a single-character dictionary key
 
 Input:
 ~~~
@@ -1914,12 +1840,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1b) Key must start with LCALPHA or '*': '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c as a single-character dictionary key
+### 0x1c as a single-character dictionary key
 
 Input:
 ~~~
@@ -1930,12 +1855,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1c) Key must start with LCALPHA or '*': '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d as a single-character dictionary key
+### 0x1d as a single-character dictionary key
 
 Input:
 ~~~
@@ -1946,12 +1870,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1d) Key must start with LCALPHA or '*': '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e as a single-character dictionary key
+### 0x1e as a single-character dictionary key
 
 Input:
 ~~~
@@ -1962,12 +1885,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1e) Key must start with LCALPHA or '*': '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f as a single-character dictionary key
+### 0x1f as a single-character dictionary key
 
 Input:
 ~~~
@@ -1978,12 +1900,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x1f) Key must start with LCALPHA or '*': '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 as a single-character dictionary key
+### 0x20 as a single-character dictionary key
 
 Input:
 ~~~
@@ -1994,12 +1915,11 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x3d) Key must start with LCALPHA or '*': '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x21 as a single-character dictionary key
+### 0x21 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2010,12 +1930,11 @@ Expects Parse Error
 ~~~
 >>!=1<<
   ^ (0x21) Key must start with LCALPHA or '*': '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 as a single-character dictionary key
+### 0x22 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2026,12 +1945,11 @@ Expects Parse Error
 ~~~
 >>"=1<<
   ^ (0x22) Key must start with LCALPHA or '*': '"' (\u0022)
-
 ~~~
 
 
 
-#### 0x23 as a single-character dictionary key
+### 0x23 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2042,12 +1960,11 @@ Expects Parse Error
 ~~~
 >>#=1<<
   ^ (0x23) Key must start with LCALPHA or '*': '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 as a single-character dictionary key
+### 0x24 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2058,12 +1975,11 @@ Expects Parse Error
 ~~~
 >>$=1<<
   ^ (0x24) Key must start with LCALPHA or '*': '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 as a single-character dictionary key
+### 0x25 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2074,12 +1990,11 @@ Expects Parse Error
 ~~~
 >>%=1<<
   ^ (0x25) Key must start with LCALPHA or '*': '%' (\u0025)
-
 ~~~
 
 
 
-#### 0x26 as a single-character dictionary key
+### 0x26 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2090,12 +2005,11 @@ Expects Parse Error
 ~~~
 >>&=1<<
   ^ (0x26) Key must start with LCALPHA or '*': '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 as a single-character dictionary key
+### 0x27 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2106,12 +2020,11 @@ Expects Parse Error
 ~~~
 >>'=1<<
   ^ (0x27) Key must start with LCALPHA or '*': ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 as a single-character dictionary key
+### 0x28 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2122,12 +2035,11 @@ Expects Parse Error
 ~~~
 >>(=1<<
   ^ (0x28) Key must start with LCALPHA or '*': '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 as a single-character dictionary key
+### 0x29 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2138,12 +2050,11 @@ Expects Parse Error
 ~~~
 >>)=1<<
   ^ (0x29) Key must start with LCALPHA or '*': ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a as a single-character dictionary key
+### 0x2a as a single-character dictionary key
 
 Input:
 ~~~
@@ -2156,7 +2067,7 @@ Result:
 ~~~
 
 
-#### 0x2b as a single-character dictionary key
+### 0x2b as a single-character dictionary key
 
 Input:
 ~~~
@@ -2167,12 +2078,11 @@ Expects Parse Error
 ~~~
 >>+=1<<
   ^ (0x2b) Key must start with LCALPHA or '*': '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c as a single-character dictionary key
+### 0x2c as a single-character dictionary key
 
 Input:
 ~~~
@@ -2183,12 +2093,11 @@ Expects Parse Error
 ~~~
 >>,=1<<
   ^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
-
 ~~~
 
 
 
-#### 0x2d as a single-character dictionary key
+### 0x2d as a single-character dictionary key
 
 Input:
 ~~~
@@ -2199,12 +2108,11 @@ Expects Parse Error
 ~~~
 >>-=1<<
   ^ (0x2d) Key must start with LCALPHA or '*': '-' (\u002d)
-
 ~~~
 
 
 
-#### 0x2e as a single-character dictionary key
+### 0x2e as a single-character dictionary key
 
 Input:
 ~~~
@@ -2215,12 +2123,11 @@ Expects Parse Error
 ~~~
 >>.=1<<
   ^ (0x2e) Key must start with LCALPHA or '*': '.' (\u002e)
-
 ~~~
 
 
 
-#### 0x2f as a single-character dictionary key
+### 0x2f as a single-character dictionary key
 
 Input:
 ~~~
@@ -2231,12 +2138,11 @@ Expects Parse Error
 ~~~
 >>/=1<<
   ^ (0x2f) Key must start with LCALPHA or '*': '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 as a single-character dictionary key
+### 0x30 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2247,12 +2153,11 @@ Expects Parse Error
 ~~~
 >>0=1<<
   ^ (0x30) Key must start with LCALPHA or '*': '0' (\u0030)
-
 ~~~
 
 
 
-#### 0x31 as a single-character dictionary key
+### 0x31 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2263,12 +2168,11 @@ Expects Parse Error
 ~~~
 >>1=1<<
   ^ (0x31) Key must start with LCALPHA or '*': '1' (\u0031)
-
 ~~~
 
 
 
-#### 0x32 as a single-character dictionary key
+### 0x32 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2279,12 +2183,11 @@ Expects Parse Error
 ~~~
 >>2=1<<
   ^ (0x32) Key must start with LCALPHA or '*': '2' (\u0032)
-
 ~~~
 
 
 
-#### 0x33 as a single-character dictionary key
+### 0x33 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2295,12 +2198,11 @@ Expects Parse Error
 ~~~
 >>3=1<<
   ^ (0x33) Key must start with LCALPHA or '*': '3' (\u0033)
-
 ~~~
 
 
 
-#### 0x34 as a single-character dictionary key
+### 0x34 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2311,12 +2213,11 @@ Expects Parse Error
 ~~~
 >>4=1<<
   ^ (0x34) Key must start with LCALPHA or '*': '4' (\u0034)
-
 ~~~
 
 
 
-#### 0x35 as a single-character dictionary key
+### 0x35 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2327,12 +2228,11 @@ Expects Parse Error
 ~~~
 >>5=1<<
   ^ (0x35) Key must start with LCALPHA or '*': '5' (\u0035)
-
 ~~~
 
 
 
-#### 0x36 as a single-character dictionary key
+### 0x36 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2343,12 +2243,11 @@ Expects Parse Error
 ~~~
 >>6=1<<
   ^ (0x36) Key must start with LCALPHA or '*': '6' (\u0036)
-
 ~~~
 
 
 
-#### 0x37 as a single-character dictionary key
+### 0x37 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2359,12 +2258,11 @@ Expects Parse Error
 ~~~
 >>7=1<<
   ^ (0x37) Key must start with LCALPHA or '*': '7' (\u0037)
-
 ~~~
 
 
 
-#### 0x38 as a single-character dictionary key
+### 0x38 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2375,12 +2273,11 @@ Expects Parse Error
 ~~~
 >>8=1<<
   ^ (0x38) Key must start with LCALPHA or '*': '8' (\u0038)
-
 ~~~
 
 
 
-#### 0x39 as a single-character dictionary key
+### 0x39 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2391,12 +2288,11 @@ Expects Parse Error
 ~~~
 >>9=1<<
   ^ (0x39) Key must start with LCALPHA or '*': '9' (\u0039)
-
 ~~~
 
 
 
-#### 0x3a as a single-character dictionary key
+### 0x3a as a single-character dictionary key
 
 Input:
 ~~~
@@ -2407,12 +2303,11 @@ Expects Parse Error
 ~~~
 >>:=1<<
   ^ (0x3a) Key must start with LCALPHA or '*': ':' (\u003a)
-
 ~~~
 
 
 
-#### 0x3b as a single-character dictionary key
+### 0x3b as a single-character dictionary key
 
 Input:
 ~~~
@@ -2423,12 +2318,11 @@ Expects Parse Error
 ~~~
 >>;=1<<
   ^ (0x3b) Key must start with LCALPHA or '*': ';' (\u003b)
-
 ~~~
 
 
 
-#### 0x3c as a single-character dictionary key
+### 0x3c as a single-character dictionary key
 
 Input:
 ~~~
@@ -2439,12 +2333,11 @@ Expects Parse Error
 ~~~
 >><=1<<
   ^ (0x3c) Key must start with LCALPHA or '*': '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d as a single-character dictionary key
+### 0x3d as a single-character dictionary key
 
 Input:
 ~~~
@@ -2455,12 +2348,11 @@ Expects Parse Error
 ~~~
 >>==1<<
   ^ (0x3d) Key must start with LCALPHA or '*': '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e as a single-character dictionary key
+### 0x3e as a single-character dictionary key
 
 Input:
 ~~~
@@ -2471,12 +2363,11 @@ Expects Parse Error
 ~~~
 >>>=1<<
   ^ (0x3e) Key must start with LCALPHA or '*': '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f as a single-character dictionary key
+### 0x3f as a single-character dictionary key
 
 Input:
 ~~~
@@ -2487,12 +2378,11 @@ Expects Parse Error
 ~~~
 >>?=1<<
   ^ (0x3f) Key must start with LCALPHA or '*': '?' (\u003f)
-
 ~~~
 
 
 
-#### 0x40 as a single-character dictionary key
+### 0x40 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2503,12 +2393,11 @@ Expects Parse Error
 ~~~
 >>@=1<<
   ^ (0x40) Key must start with LCALPHA or '*': '@' (\u0040)
-
 ~~~
 
 
 
-#### 0x41 as a single-character dictionary key
+### 0x41 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2519,12 +2408,11 @@ Expects Parse Error
 ~~~
 >>A=1<<
   ^ (0x41) Key must start with LCALPHA or '*': 'A' (\u0041)
-
 ~~~
 
 
 
-#### 0x42 as a single-character dictionary key
+### 0x42 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2535,12 +2423,11 @@ Expects Parse Error
 ~~~
 >>B=1<<
   ^ (0x42) Key must start with LCALPHA or '*': 'B' (\u0042)
-
 ~~~
 
 
 
-#### 0x43 as a single-character dictionary key
+### 0x43 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2551,12 +2438,11 @@ Expects Parse Error
 ~~~
 >>C=1<<
   ^ (0x43) Key must start with LCALPHA or '*': 'C' (\u0043)
-
 ~~~
 
 
 
-#### 0x44 as a single-character dictionary key
+### 0x44 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2567,12 +2453,11 @@ Expects Parse Error
 ~~~
 >>D=1<<
   ^ (0x44) Key must start with LCALPHA or '*': 'D' (\u0044)
-
 ~~~
 
 
 
-#### 0x45 as a single-character dictionary key
+### 0x45 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2583,12 +2468,11 @@ Expects Parse Error
 ~~~
 >>E=1<<
   ^ (0x45) Key must start with LCALPHA or '*': 'E' (\u0045)
-
 ~~~
 
 
 
-#### 0x46 as a single-character dictionary key
+### 0x46 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2599,12 +2483,11 @@ Expects Parse Error
 ~~~
 >>F=1<<
   ^ (0x46) Key must start with LCALPHA or '*': 'F' (\u0046)
-
 ~~~
 
 
 
-#### 0x47 as a single-character dictionary key
+### 0x47 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2615,12 +2498,11 @@ Expects Parse Error
 ~~~
 >>G=1<<
   ^ (0x47) Key must start with LCALPHA or '*': 'G' (\u0047)
-
 ~~~
 
 
 
-#### 0x48 as a single-character dictionary key
+### 0x48 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2631,12 +2513,11 @@ Expects Parse Error
 ~~~
 >>H=1<<
   ^ (0x48) Key must start with LCALPHA or '*': 'H' (\u0048)
-
 ~~~
 
 
 
-#### 0x49 as a single-character dictionary key
+### 0x49 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2647,12 +2528,11 @@ Expects Parse Error
 ~~~
 >>I=1<<
   ^ (0x49) Key must start with LCALPHA or '*': 'I' (\u0049)
-
 ~~~
 
 
 
-#### 0x4a as a single-character dictionary key
+### 0x4a as a single-character dictionary key
 
 Input:
 ~~~
@@ -2663,12 +2543,11 @@ Expects Parse Error
 ~~~
 >>J=1<<
   ^ (0x4a) Key must start with LCALPHA or '*': 'J' (\u004a)
-
 ~~~
 
 
 
-#### 0x4b as a single-character dictionary key
+### 0x4b as a single-character dictionary key
 
 Input:
 ~~~
@@ -2679,12 +2558,11 @@ Expects Parse Error
 ~~~
 >>K=1<<
   ^ (0x4b) Key must start with LCALPHA or '*': 'K' (\u004b)
-
 ~~~
 
 
 
-#### 0x4c as a single-character dictionary key
+### 0x4c as a single-character dictionary key
 
 Input:
 ~~~
@@ -2695,12 +2573,11 @@ Expects Parse Error
 ~~~
 >>L=1<<
   ^ (0x4c) Key must start with LCALPHA or '*': 'L' (\u004c)
-
 ~~~
 
 
 
-#### 0x4d as a single-character dictionary key
+### 0x4d as a single-character dictionary key
 
 Input:
 ~~~
@@ -2711,12 +2588,11 @@ Expects Parse Error
 ~~~
 >>M=1<<
   ^ (0x4d) Key must start with LCALPHA or '*': 'M' (\u004d)
-
 ~~~
 
 
 
-#### 0x4e as a single-character dictionary key
+### 0x4e as a single-character dictionary key
 
 Input:
 ~~~
@@ -2727,12 +2603,11 @@ Expects Parse Error
 ~~~
 >>N=1<<
   ^ (0x4e) Key must start with LCALPHA or '*': 'N' (\u004e)
-
 ~~~
 
 
 
-#### 0x4f as a single-character dictionary key
+### 0x4f as a single-character dictionary key
 
 Input:
 ~~~
@@ -2743,12 +2618,11 @@ Expects Parse Error
 ~~~
 >>O=1<<
   ^ (0x4f) Key must start with LCALPHA or '*': 'O' (\u004f)
-
 ~~~
 
 
 
-#### 0x50 as a single-character dictionary key
+### 0x50 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2759,12 +2633,11 @@ Expects Parse Error
 ~~~
 >>P=1<<
   ^ (0x50) Key must start with LCALPHA or '*': 'P' (\u0050)
-
 ~~~
 
 
 
-#### 0x51 as a single-character dictionary key
+### 0x51 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2775,12 +2648,11 @@ Expects Parse Error
 ~~~
 >>Q=1<<
   ^ (0x51) Key must start with LCALPHA or '*': 'Q' (\u0051)
-
 ~~~
 
 
 
-#### 0x52 as a single-character dictionary key
+### 0x52 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2791,12 +2663,11 @@ Expects Parse Error
 ~~~
 >>R=1<<
   ^ (0x52) Key must start with LCALPHA or '*': 'R' (\u0052)
-
 ~~~
 
 
 
-#### 0x53 as a single-character dictionary key
+### 0x53 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2807,12 +2678,11 @@ Expects Parse Error
 ~~~
 >>S=1<<
   ^ (0x53) Key must start with LCALPHA or '*': 'S' (\u0053)
-
 ~~~
 
 
 
-#### 0x54 as a single-character dictionary key
+### 0x54 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2823,12 +2693,11 @@ Expects Parse Error
 ~~~
 >>T=1<<
   ^ (0x54) Key must start with LCALPHA or '*': 'T' (\u0054)
-
 ~~~
 
 
 
-#### 0x55 as a single-character dictionary key
+### 0x55 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2839,12 +2708,11 @@ Expects Parse Error
 ~~~
 >>U=1<<
   ^ (0x55) Key must start with LCALPHA or '*': 'U' (\u0055)
-
 ~~~
 
 
 
-#### 0x56 as a single-character dictionary key
+### 0x56 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2855,12 +2723,11 @@ Expects Parse Error
 ~~~
 >>V=1<<
   ^ (0x56) Key must start with LCALPHA or '*': 'V' (\u0056)
-
 ~~~
 
 
 
-#### 0x57 as a single-character dictionary key
+### 0x57 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2871,12 +2738,11 @@ Expects Parse Error
 ~~~
 >>W=1<<
   ^ (0x57) Key must start with LCALPHA or '*': 'W' (\u0057)
-
 ~~~
 
 
 
-#### 0x58 as a single-character dictionary key
+### 0x58 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2887,12 +2753,11 @@ Expects Parse Error
 ~~~
 >>X=1<<
   ^ (0x58) Key must start with LCALPHA or '*': 'X' (\u0058)
-
 ~~~
 
 
 
-#### 0x59 as a single-character dictionary key
+### 0x59 as a single-character dictionary key
 
 Input:
 ~~~
@@ -2903,12 +2768,11 @@ Expects Parse Error
 ~~~
 >>Y=1<<
   ^ (0x59) Key must start with LCALPHA or '*': 'Y' (\u0059)
-
 ~~~
 
 
 
-#### 0x5a as a single-character dictionary key
+### 0x5a as a single-character dictionary key
 
 Input:
 ~~~
@@ -2919,12 +2783,11 @@ Expects Parse Error
 ~~~
 >>Z=1<<
   ^ (0x5a) Key must start with LCALPHA or '*': 'Z' (\u005a)
-
 ~~~
 
 
 
-#### 0x5b as a single-character dictionary key
+### 0x5b as a single-character dictionary key
 
 Input:
 ~~~
@@ -2935,12 +2798,11 @@ Expects Parse Error
 ~~~
 >>[=1<<
   ^ (0x5b) Key must start with LCALPHA or '*': '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c as a single-character dictionary key
+### 0x5c as a single-character dictionary key
 
 Input:
 ~~~
@@ -2951,12 +2813,11 @@ Expects Parse Error
 ~~~
 >>\=1<<
   ^ (0x5c) Key must start with LCALPHA or '*': '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d as a single-character dictionary key
+### 0x5d as a single-character dictionary key
 
 Input:
 ~~~
@@ -2967,12 +2828,11 @@ Expects Parse Error
 ~~~
 >>]=1<<
   ^ (0x5d) Key must start with LCALPHA or '*': ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e as a single-character dictionary key
+### 0x5e as a single-character dictionary key
 
 Input:
 ~~~
@@ -2983,12 +2843,11 @@ Expects Parse Error
 ~~~
 >>^=1<<
   ^ (0x5e) Key must start with LCALPHA or '*': '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f as a single-character dictionary key
+### 0x5f as a single-character dictionary key
 
 Input:
 ~~~
@@ -2999,12 +2858,11 @@ Expects Parse Error
 ~~~
 >>_=1<<
   ^ (0x5f) Key must start with LCALPHA or '*': '_' (\u005f)
-
 ~~~
 
 
 
-#### 0x60 as a single-character dictionary key
+### 0x60 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3015,12 +2873,11 @@ Expects Parse Error
 ~~~
 >>`=1<<
   ^ (0x60) Key must start with LCALPHA or '*': '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 as a single-character dictionary key
+### 0x61 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3033,7 +2890,7 @@ a=1
 ~~~
 
 
-#### 0x62 as a single-character dictionary key
+### 0x62 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3046,7 +2903,7 @@ b=1
 ~~~
 
 
-#### 0x63 as a single-character dictionary key
+### 0x63 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3059,7 +2916,7 @@ c=1
 ~~~
 
 
-#### 0x64 as a single-character dictionary key
+### 0x64 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3072,7 +2929,7 @@ d=1
 ~~~
 
 
-#### 0x65 as a single-character dictionary key
+### 0x65 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3085,7 +2942,7 @@ e=1
 ~~~
 
 
-#### 0x66 as a single-character dictionary key
+### 0x66 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3098,7 +2955,7 @@ f=1
 ~~~
 
 
-#### 0x67 as a single-character dictionary key
+### 0x67 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3111,7 +2968,7 @@ g=1
 ~~~
 
 
-#### 0x68 as a single-character dictionary key
+### 0x68 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3124,7 +2981,7 @@ h=1
 ~~~
 
 
-#### 0x69 as a single-character dictionary key
+### 0x69 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3137,7 +2994,7 @@ i=1
 ~~~
 
 
-#### 0x6a as a single-character dictionary key
+### 0x6a as a single-character dictionary key
 
 Input:
 ~~~
@@ -3150,7 +3007,7 @@ j=1
 ~~~
 
 
-#### 0x6b as a single-character dictionary key
+### 0x6b as a single-character dictionary key
 
 Input:
 ~~~
@@ -3163,7 +3020,7 @@ k=1
 ~~~
 
 
-#### 0x6c as a single-character dictionary key
+### 0x6c as a single-character dictionary key
 
 Input:
 ~~~
@@ -3176,7 +3033,7 @@ l=1
 ~~~
 
 
-#### 0x6d as a single-character dictionary key
+### 0x6d as a single-character dictionary key
 
 Input:
 ~~~
@@ -3189,7 +3046,7 @@ m=1
 ~~~
 
 
-#### 0x6e as a single-character dictionary key
+### 0x6e as a single-character dictionary key
 
 Input:
 ~~~
@@ -3202,7 +3059,7 @@ n=1
 ~~~
 
 
-#### 0x6f as a single-character dictionary key
+### 0x6f as a single-character dictionary key
 
 Input:
 ~~~
@@ -3215,7 +3072,7 @@ o=1
 ~~~
 
 
-#### 0x70 as a single-character dictionary key
+### 0x70 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3228,7 +3085,7 @@ p=1
 ~~~
 
 
-#### 0x71 as a single-character dictionary key
+### 0x71 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3241,7 +3098,7 @@ q=1
 ~~~
 
 
-#### 0x72 as a single-character dictionary key
+### 0x72 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3254,7 +3111,7 @@ r=1
 ~~~
 
 
-#### 0x73 as a single-character dictionary key
+### 0x73 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3267,7 +3124,7 @@ s=1
 ~~~
 
 
-#### 0x74 as a single-character dictionary key
+### 0x74 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3280,7 +3137,7 @@ t=1
 ~~~
 
 
-#### 0x75 as a single-character dictionary key
+### 0x75 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3293,7 +3150,7 @@ u=1
 ~~~
 
 
-#### 0x76 as a single-character dictionary key
+### 0x76 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3306,7 +3163,7 @@ v=1
 ~~~
 
 
-#### 0x77 as a single-character dictionary key
+### 0x77 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3319,7 +3176,7 @@ w=1
 ~~~
 
 
-#### 0x78 as a single-character dictionary key
+### 0x78 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3332,7 +3189,7 @@ x=1
 ~~~
 
 
-#### 0x79 as a single-character dictionary key
+### 0x79 as a single-character dictionary key
 
 Input:
 ~~~
@@ -3345,7 +3202,7 @@ y=1
 ~~~
 
 
-#### 0x7a as a single-character dictionary key
+### 0x7a as a single-character dictionary key
 
 Input:
 ~~~
@@ -3358,7 +3215,7 @@ z=1
 ~~~
 
 
-#### 0x7b as a single-character dictionary key
+### 0x7b as a single-character dictionary key
 
 Input:
 ~~~
@@ -3369,12 +3226,11 @@ Expects Parse Error
 ~~~
 >>{=1<<
   ^ (0x7b) Key must start with LCALPHA or '*': '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c as a single-character dictionary key
+### 0x7c as a single-character dictionary key
 
 Input:
 ~~~
@@ -3385,12 +3241,11 @@ Expects Parse Error
 ~~~
 >>|=1<<
   ^ (0x7c) Key must start with LCALPHA or '*': '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d as a single-character dictionary key
+### 0x7d as a single-character dictionary key
 
 Input:
 ~~~
@@ -3401,12 +3256,11 @@ Expects Parse Error
 ~~~
 >>}=1<<
   ^ (0x7d) Key must start with LCALPHA or '*': '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e as a single-character dictionary key
+### 0x7e as a single-character dictionary key
 
 Input:
 ~~~
@@ -3417,12 +3271,11 @@ Expects Parse Error
 ~~~
 >>~=1<<
   ^ (0x7e) Key must start with LCALPHA or '*': '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f as a single-character dictionary key
+### 0x7f as a single-character dictionary key
 
 Input:
 ~~~
@@ -3433,28 +3286,26 @@ Expects Parse Error
 ~~~
 >>=1<<
   ^ (0x7f) Key must start with LCALPHA or '*': '' (\u007f)
-
 ~~~
 
 
 
-#### 0x00 in dictionary key
+### 0x00 in dictionary key
 
 Input:
 ~~~
-a a=1
+a a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>a a=1<<
-  -^ (0x00) Expected COMMA in Dictionary, found: ' ' (\u0000)
-
+>>a a=1<<
+  -^ (0x00) Expected COMMA in Dictionary, found: ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 in dictionary key
+### 0x01 in dictionary key
 
 Input:
 ~~~
@@ -3465,12 +3316,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x01) Expected COMMA in Dictionary, found: '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 in dictionary key
+### 0x02 in dictionary key
 
 Input:
 ~~~
@@ -3481,12 +3331,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x02) Expected COMMA in Dictionary, found: '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 in dictionary key
+### 0x03 in dictionary key
 
 Input:
 ~~~
@@ -3497,12 +3346,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x03) Expected COMMA in Dictionary, found: '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 in dictionary key
+### 0x04 in dictionary key
 
 Input:
 ~~~
@@ -3513,12 +3361,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x04) Expected COMMA in Dictionary, found: '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 in dictionary key
+### 0x05 in dictionary key
 
 Input:
 ~~~
@@ -3529,12 +3376,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x05) Expected COMMA in Dictionary, found: '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 in dictionary key
+### 0x06 in dictionary key
 
 Input:
 ~~~
@@ -3545,28 +3391,26 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x06) Expected COMMA in Dictionary, found: '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 in dictionary key
+### 0x07 in dictionary key
 
 Input:
 ~~~
-a a=1
+aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>a a=1<<
-  -^ (0x07) Expected COMMA in Dictionary, found: ' ' (\u0007)
-
+>>aa=1<<
+  -^ (0x07) Expected COMMA in Dictionary, found: '' (\u0007)
 ~~~
 
 
 
-#### 0x08 in dictionary key
+### 0x08 in dictionary key
 
 Input:
 ~~~
@@ -3577,12 +3421,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x08) Expected COMMA in Dictionary, found: '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 in dictionary key
+### 0x09 in dictionary key
 
 Input:
 ~~~
@@ -3593,12 +3436,11 @@ Expects Parse Error
 ~~~
 >>a	a=1<<
   --^ (0x61) Expected COMMA in Dictionary, found: 'a' (\u0061)
-
 ~~~
 
 
 
-#### 0x0a in dictionary key
+### 0x0a in dictionary key
 
 Input:
 ~~~
@@ -3612,31 +3454,26 @@ Expects Parse Error
 a=1<<
   -^ (0x0a) Expected COMMA in Dictionary, found: '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b in dictionary key
+### 0x0b in dictionary key
 
 Input:
 ~~~
-a
-a=1
+aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>a
-a=1<<
-  -^ (0x0b) Expected COMMA in Dictionary, found: '
-' (\u000b)
-
+>>aa=1<<
+  -^ (0x0b) Expected COMMA in Dictionary, found: '' (\u000b)
 ~~~
 
 
 
-#### 0x0c in dictionary key
+### 0x0c in dictionary key
 
 Input:
 ~~~
@@ -3647,31 +3484,26 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x0c) Expected COMMA in Dictionary, found: '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d in dictionary key
+### 0x0d in dictionary key
 
 Input:
 ~~~
-a
-a=1
+aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>a
-a=1<<
-  -^ (0x0d) Expected COMMA in Dictionary, found: '
-' (\u000d)
-
+>>aa=1<<
+  -^ (0x0d) Expected COMMA in Dictionary, found: '' (\u000d)
 ~~~
 
 
 
-#### 0x0e in dictionary key
+### 0x0e in dictionary key
 
 Input:
 ~~~
@@ -3682,12 +3514,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x0e) Expected COMMA in Dictionary, found: '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f in dictionary key
+### 0x0f in dictionary key
 
 Input:
 ~~~
@@ -3698,12 +3529,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x0f) Expected COMMA in Dictionary, found: '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 in dictionary key
+### 0x10 in dictionary key
 
 Input:
 ~~~
@@ -3714,12 +3544,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x10) Expected COMMA in Dictionary, found: '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 in dictionary key
+### 0x11 in dictionary key
 
 Input:
 ~~~
@@ -3730,12 +3559,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x11) Expected COMMA in Dictionary, found: '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 in dictionary key
+### 0x12 in dictionary key
 
 Input:
 ~~~
@@ -3746,12 +3574,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x12) Expected COMMA in Dictionary, found: '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 in dictionary key
+### 0x13 in dictionary key
 
 Input:
 ~~~
@@ -3762,12 +3589,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x13) Expected COMMA in Dictionary, found: '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 in dictionary key
+### 0x14 in dictionary key
 
 Input:
 ~~~
@@ -3778,12 +3604,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x14) Expected COMMA in Dictionary, found: '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 in dictionary key
+### 0x15 in dictionary key
 
 Input:
 ~~~
@@ -3794,12 +3619,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x15) Expected COMMA in Dictionary, found: '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 in dictionary key
+### 0x16 in dictionary key
 
 Input:
 ~~~
@@ -3810,12 +3634,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x16) Expected COMMA in Dictionary, found: '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 in dictionary key
+### 0x17 in dictionary key
 
 Input:
 ~~~
@@ -3826,12 +3649,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x17) Expected COMMA in Dictionary, found: '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 in dictionary key
+### 0x18 in dictionary key
 
 Input:
 ~~~
@@ -3842,12 +3664,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x18) Expected COMMA in Dictionary, found: '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 in dictionary key
+### 0x19 in dictionary key
 
 Input:
 ~~~
@@ -3858,12 +3679,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x19) Expected COMMA in Dictionary, found: '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a in dictionary key
+### 0x1a in dictionary key
 
 Input:
 ~~~
@@ -3874,12 +3694,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1a) Expected COMMA in Dictionary, found: '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b in dictionary key
+### 0x1b in dictionary key
 
 Input:
 ~~~
@@ -3890,12 +3709,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1b) Expected COMMA in Dictionary, found: '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c in dictionary key
+### 0x1c in dictionary key
 
 Input:
 ~~~
@@ -3906,12 +3724,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1c) Expected COMMA in Dictionary, found: '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d in dictionary key
+### 0x1d in dictionary key
 
 Input:
 ~~~
@@ -3922,12 +3739,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1d) Expected COMMA in Dictionary, found: '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e in dictionary key
+### 0x1e in dictionary key
 
 Input:
 ~~~
@@ -3938,12 +3754,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1e) Expected COMMA in Dictionary, found: '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f in dictionary key
+### 0x1f in dictionary key
 
 Input:
 ~~~
@@ -3954,12 +3769,11 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x1f) Expected COMMA in Dictionary, found: '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 in dictionary key
+### 0x20 in dictionary key
 
 Input:
 ~~~
@@ -3970,12 +3784,11 @@ Expects Parse Error
 ~~~
 >>a a=1<<
   --^ (0x61) Expected COMMA in Dictionary, found: 'a' (\u0061)
-
 ~~~
 
 
 
-#### 0x21 in dictionary key
+### 0x21 in dictionary key
 
 Input:
 ~~~
@@ -3986,12 +3799,11 @@ Expects Parse Error
 ~~~
 >>a!a=1<<
   -^ (0x21) Expected COMMA in Dictionary, found: '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 in dictionary key
+### 0x22 in dictionary key
 
 Input:
 ~~~
@@ -4002,12 +3814,11 @@ Expects Parse Error
 ~~~
 >>a"a=1<<
   -^ (0x22) Expected COMMA in Dictionary, found: '"' (\u0022)
-
 ~~~
 
 
 
-#### 0x23 in dictionary key
+### 0x23 in dictionary key
 
 Input:
 ~~~
@@ -4018,12 +3829,11 @@ Expects Parse Error
 ~~~
 >>a#a=1<<
   -^ (0x23) Expected COMMA in Dictionary, found: '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 in dictionary key
+### 0x24 in dictionary key
 
 Input:
 ~~~
@@ -4034,12 +3844,11 @@ Expects Parse Error
 ~~~
 >>a$a=1<<
   -^ (0x24) Expected COMMA in Dictionary, found: '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 in dictionary key
+### 0x25 in dictionary key
 
 Input:
 ~~~
@@ -4050,12 +3859,11 @@ Expects Parse Error
 ~~~
 >>a%a=1<<
   -^ (0x25) Expected COMMA in Dictionary, found: '%' (\u0025)
-
 ~~~
 
 
 
-#### 0x26 in dictionary key
+### 0x26 in dictionary key
 
 Input:
 ~~~
@@ -4066,12 +3874,11 @@ Expects Parse Error
 ~~~
 >>a&a=1<<
   -^ (0x26) Expected COMMA in Dictionary, found: '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 in dictionary key
+### 0x27 in dictionary key
 
 Input:
 ~~~
@@ -4082,12 +3889,11 @@ Expects Parse Error
 ~~~
 >>a'a=1<<
   -^ (0x27) Expected COMMA in Dictionary, found: ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 in dictionary key
+### 0x28 in dictionary key
 
 Input:
 ~~~
@@ -4098,12 +3904,11 @@ Expects Parse Error
 ~~~
 >>a(a=1<<
   -^ (0x28) Expected COMMA in Dictionary, found: '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 in dictionary key
+### 0x29 in dictionary key
 
 Input:
 ~~~
@@ -4114,12 +3919,11 @@ Expects Parse Error
 ~~~
 >>a)a=1<<
   -^ (0x29) Expected COMMA in Dictionary, found: ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a in dictionary key
+### 0x2a in dictionary key
 
 Input:
 ~~~
@@ -4132,7 +3936,7 @@ a*a=1
 ~~~
 
 
-#### 0x2b in dictionary key
+### 0x2b in dictionary key
 
 Input:
 ~~~
@@ -4143,12 +3947,11 @@ Expects Parse Error
 ~~~
 >>a+a=1<<
   -^ (0x2b) Expected COMMA in Dictionary, found: '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c in dictionary key
+### 0x2c in dictionary key
 
 Input:
 ~~~
@@ -4161,7 +3964,7 @@ a=1
 ~~~
 
 
-#### 0x2d in dictionary key
+### 0x2d in dictionary key
 
 Input:
 ~~~
@@ -4174,7 +3977,7 @@ a-a=1
 ~~~
 
 
-#### 0x2e in dictionary key
+### 0x2e in dictionary key
 
 Input:
 ~~~
@@ -4187,7 +3990,7 @@ a.a=1
 ~~~
 
 
-#### 0x2f in dictionary key
+### 0x2f in dictionary key
 
 Input:
 ~~~
@@ -4198,12 +4001,11 @@ Expects Parse Error
 ~~~
 >>a/a=1<<
   -^ (0x2f) Expected COMMA in Dictionary, found: '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 in dictionary key
+### 0x30 in dictionary key
 
 Input:
 ~~~
@@ -4216,7 +4018,7 @@ a0a=1
 ~~~
 
 
-#### 0x31 in dictionary key
+### 0x31 in dictionary key
 
 Input:
 ~~~
@@ -4229,7 +4031,7 @@ a1a=1
 ~~~
 
 
-#### 0x32 in dictionary key
+### 0x32 in dictionary key
 
 Input:
 ~~~
@@ -4242,7 +4044,7 @@ a2a=1
 ~~~
 
 
-#### 0x33 in dictionary key
+### 0x33 in dictionary key
 
 Input:
 ~~~
@@ -4255,7 +4057,7 @@ a3a=1
 ~~~
 
 
-#### 0x34 in dictionary key
+### 0x34 in dictionary key
 
 Input:
 ~~~
@@ -4268,7 +4070,7 @@ a4a=1
 ~~~
 
 
-#### 0x35 in dictionary key
+### 0x35 in dictionary key
 
 Input:
 ~~~
@@ -4281,7 +4083,7 @@ a5a=1
 ~~~
 
 
-#### 0x36 in dictionary key
+### 0x36 in dictionary key
 
 Input:
 ~~~
@@ -4294,7 +4096,7 @@ a6a=1
 ~~~
 
 
-#### 0x37 in dictionary key
+### 0x37 in dictionary key
 
 Input:
 ~~~
@@ -4307,7 +4109,7 @@ a7a=1
 ~~~
 
 
-#### 0x38 in dictionary key
+### 0x38 in dictionary key
 
 Input:
 ~~~
@@ -4320,7 +4122,7 @@ a8a=1
 ~~~
 
 
-#### 0x39 in dictionary key
+### 0x39 in dictionary key
 
 Input:
 ~~~
@@ -4333,7 +4135,7 @@ a9a=1
 ~~~
 
 
-#### 0x3a in dictionary key
+### 0x3a in dictionary key
 
 Input:
 ~~~
@@ -4344,12 +4146,11 @@ Expects Parse Error
 ~~~
 >>a:a=1<<
   -^ (0x3a) Expected COMMA in Dictionary, found: ':' (\u003a)
-
 ~~~
 
 
 
-#### 0x3b in dictionary key
+### 0x3b in dictionary key
 
 Input:
 ~~~
@@ -4362,7 +4163,7 @@ a;a=1
 ~~~
 
 
-#### 0x3c in dictionary key
+### 0x3c in dictionary key
 
 Input:
 ~~~
@@ -4373,12 +4174,11 @@ Expects Parse Error
 ~~~
 >>a<a=1<<
   -^ (0x3c) Expected COMMA in Dictionary, found: '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d in dictionary key
+### 0x3d in dictionary key
 
 Input:
 ~~~
@@ -4389,12 +4189,11 @@ Expects Parse Error
 ~~~
 >>a=a=1<<
   ---^ (0x3d) Expected COMMA in Dictionary, found: '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e in dictionary key
+### 0x3e in dictionary key
 
 Input:
 ~~~
@@ -4405,12 +4204,11 @@ Expects Parse Error
 ~~~
 >>a>a=1<<
   -^ (0x3e) Expected COMMA in Dictionary, found: '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f in dictionary key
+### 0x3f in dictionary key
 
 Input:
 ~~~
@@ -4421,12 +4219,11 @@ Expects Parse Error
 ~~~
 >>a?a=1<<
   -^ (0x3f) Expected COMMA in Dictionary, found: '?' (\u003f)
-
 ~~~
 
 
 
-#### 0x40 in dictionary key
+### 0x40 in dictionary key
 
 Input:
 ~~~
@@ -4437,12 +4234,11 @@ Expects Parse Error
 ~~~
 >>a@a=1<<
   -^ (0x40) Expected COMMA in Dictionary, found: '@' (\u0040)
-
 ~~~
 
 
 
-#### 0x41 in dictionary key
+### 0x41 in dictionary key
 
 Input:
 ~~~
@@ -4453,12 +4249,11 @@ Expects Parse Error
 ~~~
 >>aAa=1<<
   -^ (0x41) Expected COMMA in Dictionary, found: 'A' (\u0041)
-
 ~~~
 
 
 
-#### 0x42 in dictionary key
+### 0x42 in dictionary key
 
 Input:
 ~~~
@@ -4469,12 +4264,11 @@ Expects Parse Error
 ~~~
 >>aBa=1<<
   -^ (0x42) Expected COMMA in Dictionary, found: 'B' (\u0042)
-
 ~~~
 
 
 
-#### 0x43 in dictionary key
+### 0x43 in dictionary key
 
 Input:
 ~~~
@@ -4485,12 +4279,11 @@ Expects Parse Error
 ~~~
 >>aCa=1<<
   -^ (0x43) Expected COMMA in Dictionary, found: 'C' (\u0043)
-
 ~~~
 
 
 
-#### 0x44 in dictionary key
+### 0x44 in dictionary key
 
 Input:
 ~~~
@@ -4501,12 +4294,11 @@ Expects Parse Error
 ~~~
 >>aDa=1<<
   -^ (0x44) Expected COMMA in Dictionary, found: 'D' (\u0044)
-
 ~~~
 
 
 
-#### 0x45 in dictionary key
+### 0x45 in dictionary key
 
 Input:
 ~~~
@@ -4517,12 +4309,11 @@ Expects Parse Error
 ~~~
 >>aEa=1<<
   -^ (0x45) Expected COMMA in Dictionary, found: 'E' (\u0045)
-
 ~~~
 
 
 
-#### 0x46 in dictionary key
+### 0x46 in dictionary key
 
 Input:
 ~~~
@@ -4533,12 +4324,11 @@ Expects Parse Error
 ~~~
 >>aFa=1<<
   -^ (0x46) Expected COMMA in Dictionary, found: 'F' (\u0046)
-
 ~~~
 
 
 
-#### 0x47 in dictionary key
+### 0x47 in dictionary key
 
 Input:
 ~~~
@@ -4549,12 +4339,11 @@ Expects Parse Error
 ~~~
 >>aGa=1<<
   -^ (0x47) Expected COMMA in Dictionary, found: 'G' (\u0047)
-
 ~~~
 
 
 
-#### 0x48 in dictionary key
+### 0x48 in dictionary key
 
 Input:
 ~~~
@@ -4565,12 +4354,11 @@ Expects Parse Error
 ~~~
 >>aHa=1<<
   -^ (0x48) Expected COMMA in Dictionary, found: 'H' (\u0048)
-
 ~~~
 
 
 
-#### 0x49 in dictionary key
+### 0x49 in dictionary key
 
 Input:
 ~~~
@@ -4581,12 +4369,11 @@ Expects Parse Error
 ~~~
 >>aIa=1<<
   -^ (0x49) Expected COMMA in Dictionary, found: 'I' (\u0049)
-
 ~~~
 
 
 
-#### 0x4a in dictionary key
+### 0x4a in dictionary key
 
 Input:
 ~~~
@@ -4597,12 +4384,11 @@ Expects Parse Error
 ~~~
 >>aJa=1<<
   -^ (0x4a) Expected COMMA in Dictionary, found: 'J' (\u004a)
-
 ~~~
 
 
 
-#### 0x4b in dictionary key
+### 0x4b in dictionary key
 
 Input:
 ~~~
@@ -4613,12 +4399,11 @@ Expects Parse Error
 ~~~
 >>aKa=1<<
   -^ (0x4b) Expected COMMA in Dictionary, found: 'K' (\u004b)
-
 ~~~
 
 
 
-#### 0x4c in dictionary key
+### 0x4c in dictionary key
 
 Input:
 ~~~
@@ -4629,12 +4414,11 @@ Expects Parse Error
 ~~~
 >>aLa=1<<
   -^ (0x4c) Expected COMMA in Dictionary, found: 'L' (\u004c)
-
 ~~~
 
 
 
-#### 0x4d in dictionary key
+### 0x4d in dictionary key
 
 Input:
 ~~~
@@ -4645,12 +4429,11 @@ Expects Parse Error
 ~~~
 >>aMa=1<<
   -^ (0x4d) Expected COMMA in Dictionary, found: 'M' (\u004d)
-
 ~~~
 
 
 
-#### 0x4e in dictionary key
+### 0x4e in dictionary key
 
 Input:
 ~~~
@@ -4661,12 +4444,11 @@ Expects Parse Error
 ~~~
 >>aNa=1<<
   -^ (0x4e) Expected COMMA in Dictionary, found: 'N' (\u004e)
-
 ~~~
 
 
 
-#### 0x4f in dictionary key
+### 0x4f in dictionary key
 
 Input:
 ~~~
@@ -4677,12 +4459,11 @@ Expects Parse Error
 ~~~
 >>aOa=1<<
   -^ (0x4f) Expected COMMA in Dictionary, found: 'O' (\u004f)
-
 ~~~
 
 
 
-#### 0x50 in dictionary key
+### 0x50 in dictionary key
 
 Input:
 ~~~
@@ -4693,12 +4474,11 @@ Expects Parse Error
 ~~~
 >>aPa=1<<
   -^ (0x50) Expected COMMA in Dictionary, found: 'P' (\u0050)
-
 ~~~
 
 
 
-#### 0x51 in dictionary key
+### 0x51 in dictionary key
 
 Input:
 ~~~
@@ -4709,12 +4489,11 @@ Expects Parse Error
 ~~~
 >>aQa=1<<
   -^ (0x51) Expected COMMA in Dictionary, found: 'Q' (\u0051)
-
 ~~~
 
 
 
-#### 0x52 in dictionary key
+### 0x52 in dictionary key
 
 Input:
 ~~~
@@ -4725,12 +4504,11 @@ Expects Parse Error
 ~~~
 >>aRa=1<<
   -^ (0x52) Expected COMMA in Dictionary, found: 'R' (\u0052)
-
 ~~~
 
 
 
-#### 0x53 in dictionary key
+### 0x53 in dictionary key
 
 Input:
 ~~~
@@ -4741,12 +4519,11 @@ Expects Parse Error
 ~~~
 >>aSa=1<<
   -^ (0x53) Expected COMMA in Dictionary, found: 'S' (\u0053)
-
 ~~~
 
 
 
-#### 0x54 in dictionary key
+### 0x54 in dictionary key
 
 Input:
 ~~~
@@ -4757,12 +4534,11 @@ Expects Parse Error
 ~~~
 >>aTa=1<<
   -^ (0x54) Expected COMMA in Dictionary, found: 'T' (\u0054)
-
 ~~~
 
 
 
-#### 0x55 in dictionary key
+### 0x55 in dictionary key
 
 Input:
 ~~~
@@ -4773,12 +4549,11 @@ Expects Parse Error
 ~~~
 >>aUa=1<<
   -^ (0x55) Expected COMMA in Dictionary, found: 'U' (\u0055)
-
 ~~~
 
 
 
-#### 0x56 in dictionary key
+### 0x56 in dictionary key
 
 Input:
 ~~~
@@ -4789,12 +4564,11 @@ Expects Parse Error
 ~~~
 >>aVa=1<<
   -^ (0x56) Expected COMMA in Dictionary, found: 'V' (\u0056)
-
 ~~~
 
 
 
-#### 0x57 in dictionary key
+### 0x57 in dictionary key
 
 Input:
 ~~~
@@ -4805,12 +4579,11 @@ Expects Parse Error
 ~~~
 >>aWa=1<<
   -^ (0x57) Expected COMMA in Dictionary, found: 'W' (\u0057)
-
 ~~~
 
 
 
-#### 0x58 in dictionary key
+### 0x58 in dictionary key
 
 Input:
 ~~~
@@ -4821,12 +4594,11 @@ Expects Parse Error
 ~~~
 >>aXa=1<<
   -^ (0x58) Expected COMMA in Dictionary, found: 'X' (\u0058)
-
 ~~~
 
 
 
-#### 0x59 in dictionary key
+### 0x59 in dictionary key
 
 Input:
 ~~~
@@ -4837,12 +4609,11 @@ Expects Parse Error
 ~~~
 >>aYa=1<<
   -^ (0x59) Expected COMMA in Dictionary, found: 'Y' (\u0059)
-
 ~~~
 
 
 
-#### 0x5a in dictionary key
+### 0x5a in dictionary key
 
 Input:
 ~~~
@@ -4853,12 +4624,11 @@ Expects Parse Error
 ~~~
 >>aZa=1<<
   -^ (0x5a) Expected COMMA in Dictionary, found: 'Z' (\u005a)
-
 ~~~
 
 
 
-#### 0x5b in dictionary key
+### 0x5b in dictionary key
 
 Input:
 ~~~
@@ -4869,12 +4639,11 @@ Expects Parse Error
 ~~~
 >>a[a=1<<
   -^ (0x5b) Expected COMMA in Dictionary, found: '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c in dictionary key
+### 0x5c in dictionary key
 
 Input:
 ~~~
@@ -4885,12 +4654,11 @@ Expects Parse Error
 ~~~
 >>a\a=1<<
   -^ (0x5c) Expected COMMA in Dictionary, found: '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d in dictionary key
+### 0x5d in dictionary key
 
 Input:
 ~~~
@@ -4901,12 +4669,11 @@ Expects Parse Error
 ~~~
 >>a]a=1<<
   -^ (0x5d) Expected COMMA in Dictionary, found: ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e in dictionary key
+### 0x5e in dictionary key
 
 Input:
 ~~~
@@ -4917,12 +4684,11 @@ Expects Parse Error
 ~~~
 >>a^a=1<<
   -^ (0x5e) Expected COMMA in Dictionary, found: '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f in dictionary key
+### 0x5f in dictionary key
 
 Input:
 ~~~
@@ -4935,7 +4701,7 @@ a_a=1
 ~~~
 
 
-#### 0x60 in dictionary key
+### 0x60 in dictionary key
 
 Input:
 ~~~
@@ -4946,12 +4712,11 @@ Expects Parse Error
 ~~~
 >>a`a=1<<
   -^ (0x60) Expected COMMA in Dictionary, found: '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 in dictionary key
+### 0x61 in dictionary key
 
 Input:
 ~~~
@@ -4964,7 +4729,7 @@ aaa=1
 ~~~
 
 
-#### 0x62 in dictionary key
+### 0x62 in dictionary key
 
 Input:
 ~~~
@@ -4977,7 +4742,7 @@ aba=1
 ~~~
 
 
-#### 0x63 in dictionary key
+### 0x63 in dictionary key
 
 Input:
 ~~~
@@ -4990,7 +4755,7 @@ aca=1
 ~~~
 
 
-#### 0x64 in dictionary key
+### 0x64 in dictionary key
 
 Input:
 ~~~
@@ -5003,7 +4768,7 @@ ada=1
 ~~~
 
 
-#### 0x65 in dictionary key
+### 0x65 in dictionary key
 
 Input:
 ~~~
@@ -5016,7 +4781,7 @@ aea=1
 ~~~
 
 
-#### 0x66 in dictionary key
+### 0x66 in dictionary key
 
 Input:
 ~~~
@@ -5029,7 +4794,7 @@ afa=1
 ~~~
 
 
-#### 0x67 in dictionary key
+### 0x67 in dictionary key
 
 Input:
 ~~~
@@ -5042,7 +4807,7 @@ aga=1
 ~~~
 
 
-#### 0x68 in dictionary key
+### 0x68 in dictionary key
 
 Input:
 ~~~
@@ -5055,7 +4820,7 @@ aha=1
 ~~~
 
 
-#### 0x69 in dictionary key
+### 0x69 in dictionary key
 
 Input:
 ~~~
@@ -5068,7 +4833,7 @@ aia=1
 ~~~
 
 
-#### 0x6a in dictionary key
+### 0x6a in dictionary key
 
 Input:
 ~~~
@@ -5081,7 +4846,7 @@ aja=1
 ~~~
 
 
-#### 0x6b in dictionary key
+### 0x6b in dictionary key
 
 Input:
 ~~~
@@ -5094,7 +4859,7 @@ aka=1
 ~~~
 
 
-#### 0x6c in dictionary key
+### 0x6c in dictionary key
 
 Input:
 ~~~
@@ -5107,7 +4872,7 @@ ala=1
 ~~~
 
 
-#### 0x6d in dictionary key
+### 0x6d in dictionary key
 
 Input:
 ~~~
@@ -5120,7 +4885,7 @@ ama=1
 ~~~
 
 
-#### 0x6e in dictionary key
+### 0x6e in dictionary key
 
 Input:
 ~~~
@@ -5133,7 +4898,7 @@ ana=1
 ~~~
 
 
-#### 0x6f in dictionary key
+### 0x6f in dictionary key
 
 Input:
 ~~~
@@ -5146,7 +4911,7 @@ aoa=1
 ~~~
 
 
-#### 0x70 in dictionary key
+### 0x70 in dictionary key
 
 Input:
 ~~~
@@ -5159,7 +4924,7 @@ apa=1
 ~~~
 
 
-#### 0x71 in dictionary key
+### 0x71 in dictionary key
 
 Input:
 ~~~
@@ -5172,7 +4937,7 @@ aqa=1
 ~~~
 
 
-#### 0x72 in dictionary key
+### 0x72 in dictionary key
 
 Input:
 ~~~
@@ -5185,7 +4950,7 @@ ara=1
 ~~~
 
 
-#### 0x73 in dictionary key
+### 0x73 in dictionary key
 
 Input:
 ~~~
@@ -5198,7 +4963,7 @@ asa=1
 ~~~
 
 
-#### 0x74 in dictionary key
+### 0x74 in dictionary key
 
 Input:
 ~~~
@@ -5211,7 +4976,7 @@ ata=1
 ~~~
 
 
-#### 0x75 in dictionary key
+### 0x75 in dictionary key
 
 Input:
 ~~~
@@ -5224,7 +4989,7 @@ aua=1
 ~~~
 
 
-#### 0x76 in dictionary key
+### 0x76 in dictionary key
 
 Input:
 ~~~
@@ -5237,7 +5002,7 @@ ava=1
 ~~~
 
 
-#### 0x77 in dictionary key
+### 0x77 in dictionary key
 
 Input:
 ~~~
@@ -5250,7 +5015,7 @@ awa=1
 ~~~
 
 
-#### 0x78 in dictionary key
+### 0x78 in dictionary key
 
 Input:
 ~~~
@@ -5263,7 +5028,7 @@ axa=1
 ~~~
 
 
-#### 0x79 in dictionary key
+### 0x79 in dictionary key
 
 Input:
 ~~~
@@ -5276,7 +5041,7 @@ aya=1
 ~~~
 
 
-#### 0x7a in dictionary key
+### 0x7a in dictionary key
 
 Input:
 ~~~
@@ -5289,7 +5054,7 @@ aza=1
 ~~~
 
 
-#### 0x7b in dictionary key
+### 0x7b in dictionary key
 
 Input:
 ~~~
@@ -5300,12 +5065,11 @@ Expects Parse Error
 ~~~
 >>a{a=1<<
   -^ (0x7b) Expected COMMA in Dictionary, found: '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c in dictionary key
+### 0x7c in dictionary key
 
 Input:
 ~~~
@@ -5316,12 +5080,11 @@ Expects Parse Error
 ~~~
 >>a|a=1<<
   -^ (0x7c) Expected COMMA in Dictionary, found: '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d in dictionary key
+### 0x7d in dictionary key
 
 Input:
 ~~~
@@ -5332,12 +5095,11 @@ Expects Parse Error
 ~~~
 >>a}a=1<<
   -^ (0x7d) Expected COMMA in Dictionary, found: '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e in dictionary key
+### 0x7e in dictionary key
 
 Input:
 ~~~
@@ -5348,12 +5110,11 @@ Expects Parse Error
 ~~~
 >>a~a=1<<
   -^ (0x7e) Expected COMMA in Dictionary, found: '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f in dictionary key
+### 0x7f in dictionary key
 
 Input:
 ~~~
@@ -5364,28 +5125,26 @@ Expects Parse Error
 ~~~
 >>aa=1<<
   -^ (0x7f) Expected COMMA in Dictionary, found: '' (\u007f)
-
 ~~~
 
 
 
-#### 0x00 starting a dictionary key
+### 0x00 starting a dictionary key
 
 Input:
 ~~~
- a=1
+ a=1
 ~~~
 
 Expects Parse Error
 ~~~
->> a=1<<
-  ^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
-
+>> a=1<<
+  ^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 starting a dictionary key
+### 0x01 starting a dictionary key
 
 Input:
 ~~~
@@ -5396,12 +5155,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x01) Key must start with LCALPHA or '*': '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 starting a dictionary key
+### 0x02 starting a dictionary key
 
 Input:
 ~~~
@@ -5412,12 +5170,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x02) Key must start with LCALPHA or '*': '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 starting a dictionary key
+### 0x03 starting a dictionary key
 
 Input:
 ~~~
@@ -5428,12 +5185,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x03) Key must start with LCALPHA or '*': '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 starting a dictionary key
+### 0x04 starting a dictionary key
 
 Input:
 ~~~
@@ -5444,12 +5200,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x04) Key must start with LCALPHA or '*': '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 starting a dictionary key
+### 0x05 starting a dictionary key
 
 Input:
 ~~~
@@ -5460,12 +5215,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x05) Key must start with LCALPHA or '*': '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 starting a dictionary key
+### 0x06 starting a dictionary key
 
 Input:
 ~~~
@@ -5476,28 +5230,26 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x06) Key must start with LCALPHA or '*': '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 starting a dictionary key
+### 0x07 starting a dictionary key
 
 Input:
 ~~~
- a=1
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->> a=1<<
-  ^ (0x07) Key must start with LCALPHA or '*': ' ' (\u0007)
-
+>>a=1<<
+  ^ (0x07) Key must start with LCALPHA or '*': '' (\u0007)
 ~~~
 
 
 
-#### 0x08 starting a dictionary key
+### 0x08 starting a dictionary key
 
 Input:
 ~~~
@@ -5508,12 +5260,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x08) Key must start with LCALPHA or '*': '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 starting a dictionary key
+### 0x09 starting a dictionary key
 
 Input:
 ~~~
@@ -5524,12 +5275,11 @@ Expects Parse Error
 ~~~
 >>	a=1<<
   ^ (0x09) Key must start with LCALPHA or '*': HTAB (\u0009)
-
 ~~~
 
 
 
-#### 0x0a starting a dictionary key
+### 0x0a starting a dictionary key
 
 Input:
 ~~~
@@ -5543,31 +5293,26 @@ Expects Parse Error
 a=1<<
   ^ (0x0a) Key must start with LCALPHA or '*': '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b starting a dictionary key
+### 0x0b starting a dictionary key
 
 Input:
 ~~~
-
-a=1
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>
-a=1<<
-  ^ (0x0b) Key must start with LCALPHA or '*': '
-' (\u000b)
-
+>>a=1<<
+  ^ (0x0b) Key must start with LCALPHA or '*': '' (\u000b)
 ~~~
 
 
 
-#### 0x0c starting a dictionary key
+### 0x0c starting a dictionary key
 
 Input:
 ~~~
@@ -5578,31 +5323,26 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x0c) Key must start with LCALPHA or '*': '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d starting a dictionary key
+### 0x0d starting a dictionary key
 
 Input:
 ~~~
-
-a=1
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>
-a=1<<
-  ^ (0x0d) Key must start with LCALPHA or '*': '
-' (\u000d)
-
+>>a=1<<
+  ^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
 ~~~
 
 
 
-#### 0x0e starting a dictionary key
+### 0x0e starting a dictionary key
 
 Input:
 ~~~
@@ -5613,12 +5353,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x0e) Key must start with LCALPHA or '*': '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f starting a dictionary key
+### 0x0f starting a dictionary key
 
 Input:
 ~~~
@@ -5629,12 +5368,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x0f) Key must start with LCALPHA or '*': '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 starting a dictionary key
+### 0x10 starting a dictionary key
 
 Input:
 ~~~
@@ -5645,12 +5383,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x10) Key must start with LCALPHA or '*': '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 starting a dictionary key
+### 0x11 starting a dictionary key
 
 Input:
 ~~~
@@ -5661,12 +5398,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x11) Key must start with LCALPHA or '*': '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 starting a dictionary key
+### 0x12 starting a dictionary key
 
 Input:
 ~~~
@@ -5677,12 +5413,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x12) Key must start with LCALPHA or '*': '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 starting a dictionary key
+### 0x13 starting a dictionary key
 
 Input:
 ~~~
@@ -5693,12 +5428,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x13) Key must start with LCALPHA or '*': '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 starting a dictionary key
+### 0x14 starting a dictionary key
 
 Input:
 ~~~
@@ -5709,12 +5443,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x14) Key must start with LCALPHA or '*': '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 starting a dictionary key
+### 0x15 starting a dictionary key
 
 Input:
 ~~~
@@ -5725,12 +5458,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x15) Key must start with LCALPHA or '*': '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 starting a dictionary key
+### 0x16 starting a dictionary key
 
 Input:
 ~~~
@@ -5741,12 +5473,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x16) Key must start with LCALPHA or '*': '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 starting a dictionary key
+### 0x17 starting a dictionary key
 
 Input:
 ~~~
@@ -5757,12 +5488,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x17) Key must start with LCALPHA or '*': '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 starting a dictionary key
+### 0x18 starting a dictionary key
 
 Input:
 ~~~
@@ -5773,12 +5503,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x18) Key must start with LCALPHA or '*': '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 starting a dictionary key
+### 0x19 starting a dictionary key
 
 Input:
 ~~~
@@ -5789,12 +5518,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x19) Key must start with LCALPHA or '*': '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a starting a dictionary key
+### 0x1a starting a dictionary key
 
 Input:
 ~~~
@@ -5805,12 +5533,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1a) Key must start with LCALPHA or '*': '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b starting a dictionary key
+### 0x1b starting a dictionary key
 
 Input:
 ~~~
@@ -5821,12 +5548,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1b) Key must start with LCALPHA or '*': '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c starting a dictionary key
+### 0x1c starting a dictionary key
 
 Input:
 ~~~
@@ -5837,12 +5563,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1c) Key must start with LCALPHA or '*': '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d starting a dictionary key
+### 0x1d starting a dictionary key
 
 Input:
 ~~~
@@ -5853,12 +5578,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1d) Key must start with LCALPHA or '*': '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e starting a dictionary key
+### 0x1e starting a dictionary key
 
 Input:
 ~~~
@@ -5869,12 +5593,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1e) Key must start with LCALPHA or '*': '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f starting a dictionary key
+### 0x1f starting a dictionary key
 
 Input:
 ~~~
@@ -5885,12 +5608,11 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x1f) Key must start with LCALPHA or '*': '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 starting a dictionary key
+### 0x20 starting a dictionary key
 
 Input:
 ~~~
@@ -5903,7 +5625,7 @@ a=1
 ~~~
 
 
-#### 0x21 starting a dictionary key
+### 0x21 starting a dictionary key
 
 Input:
 ~~~
@@ -5914,12 +5636,11 @@ Expects Parse Error
 ~~~
 >>!a=1<<
   ^ (0x21) Key must start with LCALPHA or '*': '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 starting a dictionary key
+### 0x22 starting a dictionary key
 
 Input:
 ~~~
@@ -5930,12 +5651,11 @@ Expects Parse Error
 ~~~
 >>"a=1<<
   ^ (0x22) Key must start with LCALPHA or '*': '"' (\u0022)
-
 ~~~
 
 
 
-#### 0x23 starting a dictionary key
+### 0x23 starting a dictionary key
 
 Input:
 ~~~
@@ -5946,12 +5666,11 @@ Expects Parse Error
 ~~~
 >>#a=1<<
   ^ (0x23) Key must start with LCALPHA or '*': '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 starting a dictionary key
+### 0x24 starting a dictionary key
 
 Input:
 ~~~
@@ -5962,12 +5681,11 @@ Expects Parse Error
 ~~~
 >>$a=1<<
   ^ (0x24) Key must start with LCALPHA or '*': '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 starting a dictionary key
+### 0x25 starting a dictionary key
 
 Input:
 ~~~
@@ -5978,12 +5696,11 @@ Expects Parse Error
 ~~~
 >>%a=1<<
   ^ (0x25) Key must start with LCALPHA or '*': '%' (\u0025)
-
 ~~~
 
 
 
-#### 0x26 starting a dictionary key
+### 0x26 starting a dictionary key
 
 Input:
 ~~~
@@ -5994,12 +5711,11 @@ Expects Parse Error
 ~~~
 >>&a=1<<
   ^ (0x26) Key must start with LCALPHA or '*': '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 starting a dictionary key
+### 0x27 starting a dictionary key
 
 Input:
 ~~~
@@ -6010,12 +5726,11 @@ Expects Parse Error
 ~~~
 >>'a=1<<
   ^ (0x27) Key must start with LCALPHA or '*': ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 starting a dictionary key
+### 0x28 starting a dictionary key
 
 Input:
 ~~~
@@ -6026,12 +5741,11 @@ Expects Parse Error
 ~~~
 >>(a=1<<
   ^ (0x28) Key must start with LCALPHA or '*': '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 starting a dictionary key
+### 0x29 starting a dictionary key
 
 Input:
 ~~~
@@ -6042,12 +5756,11 @@ Expects Parse Error
 ~~~
 >>)a=1<<
   ^ (0x29) Key must start with LCALPHA or '*': ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a starting a dictionary key
+### 0x2a starting a dictionary key
 
 Input:
 ~~~
@@ -6060,7 +5773,7 @@ Result:
 ~~~
 
 
-#### 0x2b starting a dictionary key
+### 0x2b starting a dictionary key
 
 Input:
 ~~~
@@ -6071,12 +5784,11 @@ Expects Parse Error
 ~~~
 >>+a=1<<
   ^ (0x2b) Key must start with LCALPHA or '*': '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c starting a dictionary key
+### 0x2c starting a dictionary key
 
 Input:
 ~~~
@@ -6087,12 +5799,11 @@ Expects Parse Error
 ~~~
 >>,a=1<<
   ^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
-
 ~~~
 
 
 
-#### 0x2d starting a dictionary key
+### 0x2d starting a dictionary key
 
 Input:
 ~~~
@@ -6103,12 +5814,11 @@ Expects Parse Error
 ~~~
 >>-a=1<<
   ^ (0x2d) Key must start with LCALPHA or '*': '-' (\u002d)
-
 ~~~
 
 
 
-#### 0x2e starting a dictionary key
+### 0x2e starting a dictionary key
 
 Input:
 ~~~
@@ -6119,12 +5829,11 @@ Expects Parse Error
 ~~~
 >>.a=1<<
   ^ (0x2e) Key must start with LCALPHA or '*': '.' (\u002e)
-
 ~~~
 
 
 
-#### 0x2f starting a dictionary key
+### 0x2f starting a dictionary key
 
 Input:
 ~~~
@@ -6135,12 +5844,11 @@ Expects Parse Error
 ~~~
 >>/a=1<<
   ^ (0x2f) Key must start with LCALPHA or '*': '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 starting a dictionary key
+### 0x30 starting a dictionary key
 
 Input:
 ~~~
@@ -6151,12 +5859,11 @@ Expects Parse Error
 ~~~
 >>0a=1<<
   ^ (0x30) Key must start with LCALPHA or '*': '0' (\u0030)
-
 ~~~
 
 
 
-#### 0x31 starting a dictionary key
+### 0x31 starting a dictionary key
 
 Input:
 ~~~
@@ -6167,12 +5874,11 @@ Expects Parse Error
 ~~~
 >>1a=1<<
   ^ (0x31) Key must start with LCALPHA or '*': '1' (\u0031)
-
 ~~~
 
 
 
-#### 0x32 starting a dictionary key
+### 0x32 starting a dictionary key
 
 Input:
 ~~~
@@ -6183,12 +5889,11 @@ Expects Parse Error
 ~~~
 >>2a=1<<
   ^ (0x32) Key must start with LCALPHA or '*': '2' (\u0032)
-
 ~~~
 
 
 
-#### 0x33 starting a dictionary key
+### 0x33 starting a dictionary key
 
 Input:
 ~~~
@@ -6199,12 +5904,11 @@ Expects Parse Error
 ~~~
 >>3a=1<<
   ^ (0x33) Key must start with LCALPHA or '*': '3' (\u0033)
-
 ~~~
 
 
 
-#### 0x34 starting a dictionary key
+### 0x34 starting a dictionary key
 
 Input:
 ~~~
@@ -6215,12 +5919,11 @@ Expects Parse Error
 ~~~
 >>4a=1<<
   ^ (0x34) Key must start with LCALPHA or '*': '4' (\u0034)
-
 ~~~
 
 
 
-#### 0x35 starting a dictionary key
+### 0x35 starting a dictionary key
 
 Input:
 ~~~
@@ -6231,12 +5934,11 @@ Expects Parse Error
 ~~~
 >>5a=1<<
   ^ (0x35) Key must start with LCALPHA or '*': '5' (\u0035)
-
 ~~~
 
 
 
-#### 0x36 starting a dictionary key
+### 0x36 starting a dictionary key
 
 Input:
 ~~~
@@ -6247,12 +5949,11 @@ Expects Parse Error
 ~~~
 >>6a=1<<
   ^ (0x36) Key must start with LCALPHA or '*': '6' (\u0036)
-
 ~~~
 
 
 
-#### 0x37 starting a dictionary key
+### 0x37 starting a dictionary key
 
 Input:
 ~~~
@@ -6263,12 +5964,11 @@ Expects Parse Error
 ~~~
 >>7a=1<<
   ^ (0x37) Key must start with LCALPHA or '*': '7' (\u0037)
-
 ~~~
 
 
 
-#### 0x38 starting a dictionary key
+### 0x38 starting a dictionary key
 
 Input:
 ~~~
@@ -6279,12 +5979,11 @@ Expects Parse Error
 ~~~
 >>8a=1<<
   ^ (0x38) Key must start with LCALPHA or '*': '8' (\u0038)
-
 ~~~
 
 
 
-#### 0x39 starting a dictionary key
+### 0x39 starting a dictionary key
 
 Input:
 ~~~
@@ -6295,12 +5994,11 @@ Expects Parse Error
 ~~~
 >>9a=1<<
   ^ (0x39) Key must start with LCALPHA or '*': '9' (\u0039)
-
 ~~~
 
 
 
-#### 0x3a starting a dictionary key
+### 0x3a starting a dictionary key
 
 Input:
 ~~~
@@ -6311,12 +6009,11 @@ Expects Parse Error
 ~~~
 >>:a=1<<
   ^ (0x3a) Key must start with LCALPHA or '*': ':' (\u003a)
-
 ~~~
 
 
 
-#### 0x3b starting a dictionary key
+### 0x3b starting a dictionary key
 
 Input:
 ~~~
@@ -6327,12 +6024,11 @@ Expects Parse Error
 ~~~
 >>;a=1<<
   ^ (0x3b) Key must start with LCALPHA or '*': ';' (\u003b)
-
 ~~~
 
 
 
-#### 0x3c starting a dictionary key
+### 0x3c starting a dictionary key
 
 Input:
 ~~~
@@ -6343,12 +6039,11 @@ Expects Parse Error
 ~~~
 >><a=1<<
   ^ (0x3c) Key must start with LCALPHA or '*': '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d starting a dictionary key
+### 0x3d starting a dictionary key
 
 Input:
 ~~~
@@ -6359,12 +6054,11 @@ Expects Parse Error
 ~~~
 >>=a=1<<
   ^ (0x3d) Key must start with LCALPHA or '*': '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e starting a dictionary key
+### 0x3e starting a dictionary key
 
 Input:
 ~~~
@@ -6375,12 +6069,11 @@ Expects Parse Error
 ~~~
 >>>a=1<<
   ^ (0x3e) Key must start with LCALPHA or '*': '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f starting a dictionary key
+### 0x3f starting a dictionary key
 
 Input:
 ~~~
@@ -6391,12 +6084,11 @@ Expects Parse Error
 ~~~
 >>?a=1<<
   ^ (0x3f) Key must start with LCALPHA or '*': '?' (\u003f)
-
 ~~~
 
 
 
-#### 0x40 starting a dictionary key
+### 0x40 starting a dictionary key
 
 Input:
 ~~~
@@ -6407,12 +6099,11 @@ Expects Parse Error
 ~~~
 >>@a=1<<
   ^ (0x40) Key must start with LCALPHA or '*': '@' (\u0040)
-
 ~~~
 
 
 
-#### 0x41 starting a dictionary key
+### 0x41 starting a dictionary key
 
 Input:
 ~~~
@@ -6423,12 +6114,11 @@ Expects Parse Error
 ~~~
 >>Aa=1<<
   ^ (0x41) Key must start with LCALPHA or '*': 'A' (\u0041)
-
 ~~~
 
 
 
-#### 0x42 starting a dictionary key
+### 0x42 starting a dictionary key
 
 Input:
 ~~~
@@ -6439,12 +6129,11 @@ Expects Parse Error
 ~~~
 >>Ba=1<<
   ^ (0x42) Key must start with LCALPHA or '*': 'B' (\u0042)
-
 ~~~
 
 
 
-#### 0x43 starting a dictionary key
+### 0x43 starting a dictionary key
 
 Input:
 ~~~
@@ -6455,12 +6144,11 @@ Expects Parse Error
 ~~~
 >>Ca=1<<
   ^ (0x43) Key must start with LCALPHA or '*': 'C' (\u0043)
-
 ~~~
 
 
 
-#### 0x44 starting a dictionary key
+### 0x44 starting a dictionary key
 
 Input:
 ~~~
@@ -6471,12 +6159,11 @@ Expects Parse Error
 ~~~
 >>Da=1<<
   ^ (0x44) Key must start with LCALPHA or '*': 'D' (\u0044)
-
 ~~~
 
 
 
-#### 0x45 starting a dictionary key
+### 0x45 starting a dictionary key
 
 Input:
 ~~~
@@ -6487,12 +6174,11 @@ Expects Parse Error
 ~~~
 >>Ea=1<<
   ^ (0x45) Key must start with LCALPHA or '*': 'E' (\u0045)
-
 ~~~
 
 
 
-#### 0x46 starting a dictionary key
+### 0x46 starting a dictionary key
 
 Input:
 ~~~
@@ -6503,12 +6189,11 @@ Expects Parse Error
 ~~~
 >>Fa=1<<
   ^ (0x46) Key must start with LCALPHA or '*': 'F' (\u0046)
-
 ~~~
 
 
 
-#### 0x47 starting a dictionary key
+### 0x47 starting a dictionary key
 
 Input:
 ~~~
@@ -6519,12 +6204,11 @@ Expects Parse Error
 ~~~
 >>Ga=1<<
   ^ (0x47) Key must start with LCALPHA or '*': 'G' (\u0047)
-
 ~~~
 
 
 
-#### 0x48 starting a dictionary key
+### 0x48 starting a dictionary key
 
 Input:
 ~~~
@@ -6535,12 +6219,11 @@ Expects Parse Error
 ~~~
 >>Ha=1<<
   ^ (0x48) Key must start with LCALPHA or '*': 'H' (\u0048)
-
 ~~~
 
 
 
-#### 0x49 starting a dictionary key
+### 0x49 starting a dictionary key
 
 Input:
 ~~~
@@ -6551,12 +6234,11 @@ Expects Parse Error
 ~~~
 >>Ia=1<<
   ^ (0x49) Key must start with LCALPHA or '*': 'I' (\u0049)
-
 ~~~
 
 
 
-#### 0x4a starting a dictionary key
+### 0x4a starting a dictionary key
 
 Input:
 ~~~
@@ -6567,12 +6249,11 @@ Expects Parse Error
 ~~~
 >>Ja=1<<
   ^ (0x4a) Key must start with LCALPHA or '*': 'J' (\u004a)
-
 ~~~
 
 
 
-#### 0x4b starting a dictionary key
+### 0x4b starting a dictionary key
 
 Input:
 ~~~
@@ -6583,12 +6264,11 @@ Expects Parse Error
 ~~~
 >>Ka=1<<
   ^ (0x4b) Key must start with LCALPHA or '*': 'K' (\u004b)
-
 ~~~
 
 
 
-#### 0x4c starting a dictionary key
+### 0x4c starting a dictionary key
 
 Input:
 ~~~
@@ -6599,12 +6279,11 @@ Expects Parse Error
 ~~~
 >>La=1<<
   ^ (0x4c) Key must start with LCALPHA or '*': 'L' (\u004c)
-
 ~~~
 
 
 
-#### 0x4d starting a dictionary key
+### 0x4d starting a dictionary key
 
 Input:
 ~~~
@@ -6615,12 +6294,11 @@ Expects Parse Error
 ~~~
 >>Ma=1<<
   ^ (0x4d) Key must start with LCALPHA or '*': 'M' (\u004d)
-
 ~~~
 
 
 
-#### 0x4e starting a dictionary key
+### 0x4e starting a dictionary key
 
 Input:
 ~~~
@@ -6631,12 +6309,11 @@ Expects Parse Error
 ~~~
 >>Na=1<<
   ^ (0x4e) Key must start with LCALPHA or '*': 'N' (\u004e)
-
 ~~~
 
 
 
-#### 0x4f starting a dictionary key
+### 0x4f starting a dictionary key
 
 Input:
 ~~~
@@ -6647,12 +6324,11 @@ Expects Parse Error
 ~~~
 >>Oa=1<<
   ^ (0x4f) Key must start with LCALPHA or '*': 'O' (\u004f)
-
 ~~~
 
 
 
-#### 0x50 starting a dictionary key
+### 0x50 starting a dictionary key
 
 Input:
 ~~~
@@ -6663,12 +6339,11 @@ Expects Parse Error
 ~~~
 >>Pa=1<<
   ^ (0x50) Key must start with LCALPHA or '*': 'P' (\u0050)
-
 ~~~
 
 
 
-#### 0x51 starting a dictionary key
+### 0x51 starting a dictionary key
 
 Input:
 ~~~
@@ -6679,12 +6354,11 @@ Expects Parse Error
 ~~~
 >>Qa=1<<
   ^ (0x51) Key must start with LCALPHA or '*': 'Q' (\u0051)
-
 ~~~
 
 
 
-#### 0x52 starting a dictionary key
+### 0x52 starting a dictionary key
 
 Input:
 ~~~
@@ -6695,12 +6369,11 @@ Expects Parse Error
 ~~~
 >>Ra=1<<
   ^ (0x52) Key must start with LCALPHA or '*': 'R' (\u0052)
-
 ~~~
 
 
 
-#### 0x53 starting a dictionary key
+### 0x53 starting a dictionary key
 
 Input:
 ~~~
@@ -6711,12 +6384,11 @@ Expects Parse Error
 ~~~
 >>Sa=1<<
   ^ (0x53) Key must start with LCALPHA or '*': 'S' (\u0053)
-
 ~~~
 
 
 
-#### 0x54 starting a dictionary key
+### 0x54 starting a dictionary key
 
 Input:
 ~~~
@@ -6727,12 +6399,11 @@ Expects Parse Error
 ~~~
 >>Ta=1<<
   ^ (0x54) Key must start with LCALPHA or '*': 'T' (\u0054)
-
 ~~~
 
 
 
-#### 0x55 starting a dictionary key
+### 0x55 starting a dictionary key
 
 Input:
 ~~~
@@ -6743,12 +6414,11 @@ Expects Parse Error
 ~~~
 >>Ua=1<<
   ^ (0x55) Key must start with LCALPHA or '*': 'U' (\u0055)
-
 ~~~
 
 
 
-#### 0x56 starting a dictionary key
+### 0x56 starting a dictionary key
 
 Input:
 ~~~
@@ -6759,12 +6429,11 @@ Expects Parse Error
 ~~~
 >>Va=1<<
   ^ (0x56) Key must start with LCALPHA or '*': 'V' (\u0056)
-
 ~~~
 
 
 
-#### 0x57 starting a dictionary key
+### 0x57 starting a dictionary key
 
 Input:
 ~~~
@@ -6775,12 +6444,11 @@ Expects Parse Error
 ~~~
 >>Wa=1<<
   ^ (0x57) Key must start with LCALPHA or '*': 'W' (\u0057)
-
 ~~~
 
 
 
-#### 0x58 starting a dictionary key
+### 0x58 starting a dictionary key
 
 Input:
 ~~~
@@ -6791,12 +6459,11 @@ Expects Parse Error
 ~~~
 >>Xa=1<<
   ^ (0x58) Key must start with LCALPHA or '*': 'X' (\u0058)
-
 ~~~
 
 
 
-#### 0x59 starting a dictionary key
+### 0x59 starting a dictionary key
 
 Input:
 ~~~
@@ -6807,12 +6474,11 @@ Expects Parse Error
 ~~~
 >>Ya=1<<
   ^ (0x59) Key must start with LCALPHA or '*': 'Y' (\u0059)
-
 ~~~
 
 
 
-#### 0x5a starting a dictionary key
+### 0x5a starting a dictionary key
 
 Input:
 ~~~
@@ -6823,12 +6489,11 @@ Expects Parse Error
 ~~~
 >>Za=1<<
   ^ (0x5a) Key must start with LCALPHA or '*': 'Z' (\u005a)
-
 ~~~
 
 
 
-#### 0x5b starting a dictionary key
+### 0x5b starting a dictionary key
 
 Input:
 ~~~
@@ -6839,12 +6504,11 @@ Expects Parse Error
 ~~~
 >>[a=1<<
   ^ (0x5b) Key must start with LCALPHA or '*': '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c starting a dictionary key
+### 0x5c starting a dictionary key
 
 Input:
 ~~~
@@ -6855,12 +6519,11 @@ Expects Parse Error
 ~~~
 >>\a=1<<
   ^ (0x5c) Key must start with LCALPHA or '*': '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d starting a dictionary key
+### 0x5d starting a dictionary key
 
 Input:
 ~~~
@@ -6871,12 +6534,11 @@ Expects Parse Error
 ~~~
 >>]a=1<<
   ^ (0x5d) Key must start with LCALPHA or '*': ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e starting a dictionary key
+### 0x5e starting a dictionary key
 
 Input:
 ~~~
@@ -6887,12 +6549,11 @@ Expects Parse Error
 ~~~
 >>^a=1<<
   ^ (0x5e) Key must start with LCALPHA or '*': '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f starting a dictionary key
+### 0x5f starting a dictionary key
 
 Input:
 ~~~
@@ -6903,12 +6564,11 @@ Expects Parse Error
 ~~~
 >>_a=1<<
   ^ (0x5f) Key must start with LCALPHA or '*': '_' (\u005f)
-
 ~~~
 
 
 
-#### 0x60 starting a dictionary key
+### 0x60 starting a dictionary key
 
 Input:
 ~~~
@@ -6919,12 +6579,11 @@ Expects Parse Error
 ~~~
 >>`a=1<<
   ^ (0x60) Key must start with LCALPHA or '*': '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 starting a dictionary key
+### 0x61 starting a dictionary key
 
 Input:
 ~~~
@@ -6937,7 +6596,7 @@ aa=1
 ~~~
 
 
-#### 0x62 starting a dictionary key
+### 0x62 starting a dictionary key
 
 Input:
 ~~~
@@ -6950,7 +6609,7 @@ ba=1
 ~~~
 
 
-#### 0x63 starting a dictionary key
+### 0x63 starting a dictionary key
 
 Input:
 ~~~
@@ -6963,7 +6622,7 @@ ca=1
 ~~~
 
 
-#### 0x64 starting a dictionary key
+### 0x64 starting a dictionary key
 
 Input:
 ~~~
@@ -6976,7 +6635,7 @@ da=1
 ~~~
 
 
-#### 0x65 starting a dictionary key
+### 0x65 starting a dictionary key
 
 Input:
 ~~~
@@ -6989,7 +6648,7 @@ ea=1
 ~~~
 
 
-#### 0x66 starting a dictionary key
+### 0x66 starting a dictionary key
 
 Input:
 ~~~
@@ -7002,7 +6661,7 @@ fa=1
 ~~~
 
 
-#### 0x67 starting a dictionary key
+### 0x67 starting a dictionary key
 
 Input:
 ~~~
@@ -7015,7 +6674,7 @@ ga=1
 ~~~
 
 
-#### 0x68 starting a dictionary key
+### 0x68 starting a dictionary key
 
 Input:
 ~~~
@@ -7028,7 +6687,7 @@ ha=1
 ~~~
 
 
-#### 0x69 starting a dictionary key
+### 0x69 starting a dictionary key
 
 Input:
 ~~~
@@ -7041,7 +6700,7 @@ ia=1
 ~~~
 
 
-#### 0x6a starting a dictionary key
+### 0x6a starting a dictionary key
 
 Input:
 ~~~
@@ -7054,7 +6713,7 @@ ja=1
 ~~~
 
 
-#### 0x6b starting a dictionary key
+### 0x6b starting a dictionary key
 
 Input:
 ~~~
@@ -7067,7 +6726,7 @@ ka=1
 ~~~
 
 
-#### 0x6c starting a dictionary key
+### 0x6c starting a dictionary key
 
 Input:
 ~~~
@@ -7080,7 +6739,7 @@ la=1
 ~~~
 
 
-#### 0x6d starting a dictionary key
+### 0x6d starting a dictionary key
 
 Input:
 ~~~
@@ -7093,7 +6752,7 @@ ma=1
 ~~~
 
 
-#### 0x6e starting a dictionary key
+### 0x6e starting a dictionary key
 
 Input:
 ~~~
@@ -7106,7 +6765,7 @@ na=1
 ~~~
 
 
-#### 0x6f starting a dictionary key
+### 0x6f starting a dictionary key
 
 Input:
 ~~~
@@ -7119,7 +6778,7 @@ oa=1
 ~~~
 
 
-#### 0x70 starting a dictionary key
+### 0x70 starting a dictionary key
 
 Input:
 ~~~
@@ -7132,7 +6791,7 @@ pa=1
 ~~~
 
 
-#### 0x71 starting a dictionary key
+### 0x71 starting a dictionary key
 
 Input:
 ~~~
@@ -7145,7 +6804,7 @@ qa=1
 ~~~
 
 
-#### 0x72 starting a dictionary key
+### 0x72 starting a dictionary key
 
 Input:
 ~~~
@@ -7158,7 +6817,7 @@ ra=1
 ~~~
 
 
-#### 0x73 starting a dictionary key
+### 0x73 starting a dictionary key
 
 Input:
 ~~~
@@ -7171,7 +6830,7 @@ sa=1
 ~~~
 
 
-#### 0x74 starting a dictionary key
+### 0x74 starting a dictionary key
 
 Input:
 ~~~
@@ -7184,7 +6843,7 @@ ta=1
 ~~~
 
 
-#### 0x75 starting a dictionary key
+### 0x75 starting a dictionary key
 
 Input:
 ~~~
@@ -7197,7 +6856,7 @@ ua=1
 ~~~
 
 
-#### 0x76 starting a dictionary key
+### 0x76 starting a dictionary key
 
 Input:
 ~~~
@@ -7210,7 +6869,7 @@ va=1
 ~~~
 
 
-#### 0x77 starting a dictionary key
+### 0x77 starting a dictionary key
 
 Input:
 ~~~
@@ -7223,7 +6882,7 @@ wa=1
 ~~~
 
 
-#### 0x78 starting a dictionary key
+### 0x78 starting a dictionary key
 
 Input:
 ~~~
@@ -7236,7 +6895,7 @@ xa=1
 ~~~
 
 
-#### 0x79 starting a dictionary key
+### 0x79 starting a dictionary key
 
 Input:
 ~~~
@@ -7249,7 +6908,7 @@ ya=1
 ~~~
 
 
-#### 0x7a starting a dictionary key
+### 0x7a starting a dictionary key
 
 Input:
 ~~~
@@ -7262,7 +6921,7 @@ za=1
 ~~~
 
 
-#### 0x7b starting a dictionary key
+### 0x7b starting a dictionary key
 
 Input:
 ~~~
@@ -7273,12 +6932,11 @@ Expects Parse Error
 ~~~
 >>{a=1<<
   ^ (0x7b) Key must start with LCALPHA or '*': '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c starting a dictionary key
+### 0x7c starting a dictionary key
 
 Input:
 ~~~
@@ -7289,12 +6947,11 @@ Expects Parse Error
 ~~~
 >>|a=1<<
   ^ (0x7c) Key must start with LCALPHA or '*': '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d starting a dictionary key
+### 0x7d starting a dictionary key
 
 Input:
 ~~~
@@ -7305,12 +6962,11 @@ Expects Parse Error
 ~~~
 >>}a=1<<
   ^ (0x7d) Key must start with LCALPHA or '*': '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e starting a dictionary key
+### 0x7e starting a dictionary key
 
 Input:
 ~~~
@@ -7321,12 +6977,11 @@ Expects Parse Error
 ~~~
 >>~a=1<<
   ^ (0x7e) Key must start with LCALPHA or '*': '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f starting a dictionary key
+### 0x7f starting a dictionary key
 
 Input:
 ~~~
@@ -7337,28 +6992,26 @@ Expects Parse Error
 ~~~
 >>a=1<<
   ^ (0x7f) Key must start with LCALPHA or '*': '' (\u007f)
-
 ~~~
 
 
 
-#### 0x00 in parameterised list key
+### 0x00 in parameterised list key
 
 Input:
 ~~~
-foo; a a=1
+foo; a a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; a a=1<<
-  ------^ (0x00) Expected COMMA in List, got: ' ' (\u0000)
-
+>>foo; a a=1<<
+  ------^ (0x00) Expected COMMA in List, got: ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 in parameterised list key
+### 0x01 in parameterised list key
 
 Input:
 ~~~
@@ -7369,12 +7022,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x01) Expected COMMA in List, got: '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 in parameterised list key
+### 0x02 in parameterised list key
 
 Input:
 ~~~
@@ -7385,12 +7037,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x02) Expected COMMA in List, got: '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 in parameterised list key
+### 0x03 in parameterised list key
 
 Input:
 ~~~
@@ -7401,12 +7052,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x03) Expected COMMA in List, got: '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 in parameterised list key
+### 0x04 in parameterised list key
 
 Input:
 ~~~
@@ -7417,12 +7067,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x04) Expected COMMA in List, got: '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 in parameterised list key
+### 0x05 in parameterised list key
 
 Input:
 ~~~
@@ -7433,12 +7082,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x05) Expected COMMA in List, got: '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 in parameterised list key
+### 0x06 in parameterised list key
 
 Input:
 ~~~
@@ -7449,28 +7097,26 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x06) Expected COMMA in List, got: '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 in parameterised list key
+### 0x07 in parameterised list key
 
 Input:
 ~~~
-foo; a a=1
+foo; aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; a a=1<<
-  ------^ (0x07) Expected COMMA in List, got: ' ' (\u0007)
-
+>>foo; aa=1<<
+  ------^ (0x07) Expected COMMA in List, got: '' (\u0007)
 ~~~
 
 
 
-#### 0x08 in parameterised list key
+### 0x08 in parameterised list key
 
 Input:
 ~~~
@@ -7481,12 +7127,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x08) Expected COMMA in List, got: '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 in parameterised list key
+### 0x09 in parameterised list key
 
 Input:
 ~~~
@@ -7497,12 +7142,11 @@ Expects Parse Error
 ~~~
 >>foo; a	a=1<<
   -------^ (0x61) Expected COMMA in List, got: 'a' (\u0061)
-
 ~~~
 
 
 
-#### 0x0a in parameterised list key
+### 0x0a in parameterised list key
 
 Input:
 ~~~
@@ -7516,31 +7160,26 @@ Expects Parse Error
 a=1<<
   ------^ (0x0a) Expected COMMA in List, got: '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b in parameterised list key
+### 0x0b in parameterised list key
 
 Input:
 ~~~
-foo; a
-a=1
+foo; aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; a
-a=1<<
-  ------^ (0x0b) Expected COMMA in List, got: '
-' (\u000b)
-
+>>foo; aa=1<<
+  ------^ (0x0b) Expected COMMA in List, got: '' (\u000b)
 ~~~
 
 
 
-#### 0x0c in parameterised list key
+### 0x0c in parameterised list key
 
 Input:
 ~~~
@@ -7551,31 +7190,26 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x0c) Expected COMMA in List, got: '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d in parameterised list key
+### 0x0d in parameterised list key
 
 Input:
 ~~~
-foo; a
-a=1
+foo; aa=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; a
-a=1<<
-  ------^ (0x0d) Expected COMMA in List, got: '
-' (\u000d)
-
+>>foo; aa=1<<
+  ------^ (0x0d) Expected COMMA in List, got: '' (\u000d)
 ~~~
 
 
 
-#### 0x0e in parameterised list key
+### 0x0e in parameterised list key
 
 Input:
 ~~~
@@ -7586,12 +7220,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x0e) Expected COMMA in List, got: '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f in parameterised list key
+### 0x0f in parameterised list key
 
 Input:
 ~~~
@@ -7602,12 +7235,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x0f) Expected COMMA in List, got: '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 in parameterised list key
+### 0x10 in parameterised list key
 
 Input:
 ~~~
@@ -7618,12 +7250,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x10) Expected COMMA in List, got: '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 in parameterised list key
+### 0x11 in parameterised list key
 
 Input:
 ~~~
@@ -7634,12 +7265,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x11) Expected COMMA in List, got: '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 in parameterised list key
+### 0x12 in parameterised list key
 
 Input:
 ~~~
@@ -7650,12 +7280,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x12) Expected COMMA in List, got: '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 in parameterised list key
+### 0x13 in parameterised list key
 
 Input:
 ~~~
@@ -7666,12 +7295,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x13) Expected COMMA in List, got: '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 in parameterised list key
+### 0x14 in parameterised list key
 
 Input:
 ~~~
@@ -7682,12 +7310,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x14) Expected COMMA in List, got: '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 in parameterised list key
+### 0x15 in parameterised list key
 
 Input:
 ~~~
@@ -7698,12 +7325,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x15) Expected COMMA in List, got: '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 in parameterised list key
+### 0x16 in parameterised list key
 
 Input:
 ~~~
@@ -7714,12 +7340,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x16) Expected COMMA in List, got: '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 in parameterised list key
+### 0x17 in parameterised list key
 
 Input:
 ~~~
@@ -7730,12 +7355,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x17) Expected COMMA in List, got: '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 in parameterised list key
+### 0x18 in parameterised list key
 
 Input:
 ~~~
@@ -7746,12 +7370,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x18) Expected COMMA in List, got: '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 in parameterised list key
+### 0x19 in parameterised list key
 
 Input:
 ~~~
@@ -7762,12 +7385,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x19) Expected COMMA in List, got: '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a in parameterised list key
+### 0x1a in parameterised list key
 
 Input:
 ~~~
@@ -7778,12 +7400,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1a) Expected COMMA in List, got: '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b in parameterised list key
+### 0x1b in parameterised list key
 
 Input:
 ~~~
@@ -7794,12 +7415,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1b) Expected COMMA in List, got: '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c in parameterised list key
+### 0x1c in parameterised list key
 
 Input:
 ~~~
@@ -7810,12 +7430,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1c) Expected COMMA in List, got: '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d in parameterised list key
+### 0x1d in parameterised list key
 
 Input:
 ~~~
@@ -7826,12 +7445,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1d) Expected COMMA in List, got: '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e in parameterised list key
+### 0x1e in parameterised list key
 
 Input:
 ~~~
@@ -7842,12 +7460,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1e) Expected COMMA in List, got: '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f in parameterised list key
+### 0x1f in parameterised list key
 
 Input:
 ~~~
@@ -7858,12 +7475,11 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x1f) Expected COMMA in List, got: '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 in parameterised list key
+### 0x20 in parameterised list key
 
 Input:
 ~~~
@@ -7874,12 +7490,11 @@ Expects Parse Error
 ~~~
 >>foo; a a=1<<
   -------^ (0x61) Expected COMMA in List, got: 'a' (\u0061)
-
 ~~~
 
 
 
-#### 0x21 in parameterised list key
+### 0x21 in parameterised list key
 
 Input:
 ~~~
@@ -7890,12 +7505,11 @@ Expects Parse Error
 ~~~
 >>foo; a!a=1<<
   ------^ (0x21) Expected COMMA in List, got: '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 in parameterised list key
+### 0x22 in parameterised list key
 
 Input:
 ~~~
@@ -7906,12 +7520,11 @@ Expects Parse Error
 ~~~
 >>foo; a"a=1<<
   ------^ (0x22) Expected COMMA in List, got: '"' (\u0022)
-
 ~~~
 
 
 
-#### 0x23 in parameterised list key
+### 0x23 in parameterised list key
 
 Input:
 ~~~
@@ -7922,12 +7535,11 @@ Expects Parse Error
 ~~~
 >>foo; a#a=1<<
   ------^ (0x23) Expected COMMA in List, got: '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 in parameterised list key
+### 0x24 in parameterised list key
 
 Input:
 ~~~
@@ -7938,12 +7550,11 @@ Expects Parse Error
 ~~~
 >>foo; a$a=1<<
   ------^ (0x24) Expected COMMA in List, got: '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 in parameterised list key
+### 0x25 in parameterised list key
 
 Input:
 ~~~
@@ -7954,12 +7565,11 @@ Expects Parse Error
 ~~~
 >>foo; a%a=1<<
   ------^ (0x25) Expected COMMA in List, got: '%' (\u0025)
-
 ~~~
 
 
 
-#### 0x26 in parameterised list key
+### 0x26 in parameterised list key
 
 Input:
 ~~~
@@ -7970,12 +7580,11 @@ Expects Parse Error
 ~~~
 >>foo; a&a=1<<
   ------^ (0x26) Expected COMMA in List, got: '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 in parameterised list key
+### 0x27 in parameterised list key
 
 Input:
 ~~~
@@ -7986,12 +7595,11 @@ Expects Parse Error
 ~~~
 >>foo; a'a=1<<
   ------^ (0x27) Expected COMMA in List, got: ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 in parameterised list key
+### 0x28 in parameterised list key
 
 Input:
 ~~~
@@ -8002,12 +7610,11 @@ Expects Parse Error
 ~~~
 >>foo; a(a=1<<
   ------^ (0x28) Expected COMMA in List, got: '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 in parameterised list key
+### 0x29 in parameterised list key
 
 Input:
 ~~~
@@ -8018,12 +7625,11 @@ Expects Parse Error
 ~~~
 >>foo; a)a=1<<
   ------^ (0x29) Expected COMMA in List, got: ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a in parameterised list key
+### 0x2a in parameterised list key
 
 Input:
 ~~~
@@ -8036,7 +7642,7 @@ foo;a*a=1
 ~~~
 
 
-#### 0x2b in parameterised list key
+### 0x2b in parameterised list key
 
 Input:
 ~~~
@@ -8047,12 +7653,11 @@ Expects Parse Error
 ~~~
 >>foo; a+a=1<<
   ------^ (0x2b) Expected COMMA in List, got: '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c in parameterised list key
+### 0x2c in parameterised list key
 
 Input:
 ~~~
@@ -8063,12 +7668,11 @@ Expects Parse Error
 ~~~
 >>foo; a,a=1<<
   --------^ (0x3d) Expected COMMA in List, got: '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x2d in parameterised list key
+### 0x2d in parameterised list key
 
 Input:
 ~~~
@@ -8081,7 +7685,7 @@ foo;a-a=1
 ~~~
 
 
-#### 0x2e in parameterised list key
+### 0x2e in parameterised list key
 
 Input:
 ~~~
@@ -8094,7 +7698,7 @@ foo;a.a=1
 ~~~
 
 
-#### 0x2f in parameterised list key
+### 0x2f in parameterised list key
 
 Input:
 ~~~
@@ -8105,12 +7709,11 @@ Expects Parse Error
 ~~~
 >>foo; a/a=1<<
   ------^ (0x2f) Expected COMMA in List, got: '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 in parameterised list key
+### 0x30 in parameterised list key
 
 Input:
 ~~~
@@ -8123,7 +7726,7 @@ foo;a0a=1
 ~~~
 
 
-#### 0x31 in parameterised list key
+### 0x31 in parameterised list key
 
 Input:
 ~~~
@@ -8136,7 +7739,7 @@ foo;a1a=1
 ~~~
 
 
-#### 0x32 in parameterised list key
+### 0x32 in parameterised list key
 
 Input:
 ~~~
@@ -8149,7 +7752,7 @@ foo;a2a=1
 ~~~
 
 
-#### 0x33 in parameterised list key
+### 0x33 in parameterised list key
 
 Input:
 ~~~
@@ -8162,7 +7765,7 @@ foo;a3a=1
 ~~~
 
 
-#### 0x34 in parameterised list key
+### 0x34 in parameterised list key
 
 Input:
 ~~~
@@ -8175,7 +7778,7 @@ foo;a4a=1
 ~~~
 
 
-#### 0x35 in parameterised list key
+### 0x35 in parameterised list key
 
 Input:
 ~~~
@@ -8188,7 +7791,7 @@ foo;a5a=1
 ~~~
 
 
-#### 0x36 in parameterised list key
+### 0x36 in parameterised list key
 
 Input:
 ~~~
@@ -8201,7 +7804,7 @@ foo;a6a=1
 ~~~
 
 
-#### 0x37 in parameterised list key
+### 0x37 in parameterised list key
 
 Input:
 ~~~
@@ -8214,7 +7817,7 @@ foo;a7a=1
 ~~~
 
 
-#### 0x38 in parameterised list key
+### 0x38 in parameterised list key
 
 Input:
 ~~~
@@ -8227,7 +7830,7 @@ foo;a8a=1
 ~~~
 
 
-#### 0x39 in parameterised list key
+### 0x39 in parameterised list key
 
 Input:
 ~~~
@@ -8240,7 +7843,7 @@ foo;a9a=1
 ~~~
 
 
-#### 0x3a in parameterised list key
+### 0x3a in parameterised list key
 
 Input:
 ~~~
@@ -8251,12 +7854,11 @@ Expects Parse Error
 ~~~
 >>foo; a:a=1<<
   ------^ (0x3a) Expected COMMA in List, got: ':' (\u003a)
-
 ~~~
 
 
 
-#### 0x3b in parameterised list key
+### 0x3b in parameterised list key
 
 Input:
 ~~~
@@ -8269,7 +7871,7 @@ foo;a=1
 ~~~
 
 
-#### 0x3c in parameterised list key
+### 0x3c in parameterised list key
 
 Input:
 ~~~
@@ -8280,12 +7882,11 @@ Expects Parse Error
 ~~~
 >>foo; a<a=1<<
   ------^ (0x3c) Expected COMMA in List, got: '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d in parameterised list key
+### 0x3d in parameterised list key
 
 Input:
 ~~~
@@ -8296,12 +7897,11 @@ Expects Parse Error
 ~~~
 >>foo; a=a=1<<
   --------^ (0x3d) Expected COMMA in List, got: '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e in parameterised list key
+### 0x3e in parameterised list key
 
 Input:
 ~~~
@@ -8312,12 +7912,11 @@ Expects Parse Error
 ~~~
 >>foo; a>a=1<<
   ------^ (0x3e) Expected COMMA in List, got: '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f in parameterised list key
+### 0x3f in parameterised list key
 
 Input:
 ~~~
@@ -8328,12 +7927,11 @@ Expects Parse Error
 ~~~
 >>foo; a?a=1<<
   ------^ (0x3f) Expected COMMA in List, got: '?' (\u003f)
-
 ~~~
 
 
 
-#### 0x40 in parameterised list key
+### 0x40 in parameterised list key
 
 Input:
 ~~~
@@ -8344,12 +7942,11 @@ Expects Parse Error
 ~~~
 >>foo; a@a=1<<
   ------^ (0x40) Expected COMMA in List, got: '@' (\u0040)
-
 ~~~
 
 
 
-#### 0x41 in parameterised list key
+### 0x41 in parameterised list key
 
 Input:
 ~~~
@@ -8360,12 +7957,11 @@ Expects Parse Error
 ~~~
 >>foo; aAa=1<<
   ------^ (0x41) Expected COMMA in List, got: 'A' (\u0041)
-
 ~~~
 
 
 
-#### 0x42 in parameterised list key
+### 0x42 in parameterised list key
 
 Input:
 ~~~
@@ -8376,12 +7972,11 @@ Expects Parse Error
 ~~~
 >>foo; aBa=1<<
   ------^ (0x42) Expected COMMA in List, got: 'B' (\u0042)
-
 ~~~
 
 
 
-#### 0x43 in parameterised list key
+### 0x43 in parameterised list key
 
 Input:
 ~~~
@@ -8392,12 +7987,11 @@ Expects Parse Error
 ~~~
 >>foo; aCa=1<<
   ------^ (0x43) Expected COMMA in List, got: 'C' (\u0043)
-
 ~~~
 
 
 
-#### 0x44 in parameterised list key
+### 0x44 in parameterised list key
 
 Input:
 ~~~
@@ -8408,12 +8002,11 @@ Expects Parse Error
 ~~~
 >>foo; aDa=1<<
   ------^ (0x44) Expected COMMA in List, got: 'D' (\u0044)
-
 ~~~
 
 
 
-#### 0x45 in parameterised list key
+### 0x45 in parameterised list key
 
 Input:
 ~~~
@@ -8424,12 +8017,11 @@ Expects Parse Error
 ~~~
 >>foo; aEa=1<<
   ------^ (0x45) Expected COMMA in List, got: 'E' (\u0045)
-
 ~~~
 
 
 
-#### 0x46 in parameterised list key
+### 0x46 in parameterised list key
 
 Input:
 ~~~
@@ -8440,12 +8032,11 @@ Expects Parse Error
 ~~~
 >>foo; aFa=1<<
   ------^ (0x46) Expected COMMA in List, got: 'F' (\u0046)
-
 ~~~
 
 
 
-#### 0x47 in parameterised list key
+### 0x47 in parameterised list key
 
 Input:
 ~~~
@@ -8456,12 +8047,11 @@ Expects Parse Error
 ~~~
 >>foo; aGa=1<<
   ------^ (0x47) Expected COMMA in List, got: 'G' (\u0047)
-
 ~~~
 
 
 
-#### 0x48 in parameterised list key
+### 0x48 in parameterised list key
 
 Input:
 ~~~
@@ -8472,12 +8062,11 @@ Expects Parse Error
 ~~~
 >>foo; aHa=1<<
   ------^ (0x48) Expected COMMA in List, got: 'H' (\u0048)
-
 ~~~
 
 
 
-#### 0x49 in parameterised list key
+### 0x49 in parameterised list key
 
 Input:
 ~~~
@@ -8488,12 +8077,11 @@ Expects Parse Error
 ~~~
 >>foo; aIa=1<<
   ------^ (0x49) Expected COMMA in List, got: 'I' (\u0049)
-
 ~~~
 
 
 
-#### 0x4a in parameterised list key
+### 0x4a in parameterised list key
 
 Input:
 ~~~
@@ -8504,12 +8092,11 @@ Expects Parse Error
 ~~~
 >>foo; aJa=1<<
   ------^ (0x4a) Expected COMMA in List, got: 'J' (\u004a)
-
 ~~~
 
 
 
-#### 0x4b in parameterised list key
+### 0x4b in parameterised list key
 
 Input:
 ~~~
@@ -8520,12 +8107,11 @@ Expects Parse Error
 ~~~
 >>foo; aKa=1<<
   ------^ (0x4b) Expected COMMA in List, got: 'K' (\u004b)
-
 ~~~
 
 
 
-#### 0x4c in parameterised list key
+### 0x4c in parameterised list key
 
 Input:
 ~~~
@@ -8536,12 +8122,11 @@ Expects Parse Error
 ~~~
 >>foo; aLa=1<<
   ------^ (0x4c) Expected COMMA in List, got: 'L' (\u004c)
-
 ~~~
 
 
 
-#### 0x4d in parameterised list key
+### 0x4d in parameterised list key
 
 Input:
 ~~~
@@ -8552,12 +8137,11 @@ Expects Parse Error
 ~~~
 >>foo; aMa=1<<
   ------^ (0x4d) Expected COMMA in List, got: 'M' (\u004d)
-
 ~~~
 
 
 
-#### 0x4e in parameterised list key
+### 0x4e in parameterised list key
 
 Input:
 ~~~
@@ -8568,12 +8152,11 @@ Expects Parse Error
 ~~~
 >>foo; aNa=1<<
   ------^ (0x4e) Expected COMMA in List, got: 'N' (\u004e)
-
 ~~~
 
 
 
-#### 0x4f in parameterised list key
+### 0x4f in parameterised list key
 
 Input:
 ~~~
@@ -8584,12 +8167,11 @@ Expects Parse Error
 ~~~
 >>foo; aOa=1<<
   ------^ (0x4f) Expected COMMA in List, got: 'O' (\u004f)
-
 ~~~
 
 
 
-#### 0x50 in parameterised list key
+### 0x50 in parameterised list key
 
 Input:
 ~~~
@@ -8600,12 +8182,11 @@ Expects Parse Error
 ~~~
 >>foo; aPa=1<<
   ------^ (0x50) Expected COMMA in List, got: 'P' (\u0050)
-
 ~~~
 
 
 
-#### 0x51 in parameterised list key
+### 0x51 in parameterised list key
 
 Input:
 ~~~
@@ -8616,12 +8197,11 @@ Expects Parse Error
 ~~~
 >>foo; aQa=1<<
   ------^ (0x51) Expected COMMA in List, got: 'Q' (\u0051)
-
 ~~~
 
 
 
-#### 0x52 in parameterised list key
+### 0x52 in parameterised list key
 
 Input:
 ~~~
@@ -8632,12 +8212,11 @@ Expects Parse Error
 ~~~
 >>foo; aRa=1<<
   ------^ (0x52) Expected COMMA in List, got: 'R' (\u0052)
-
 ~~~
 
 
 
-#### 0x53 in parameterised list key
+### 0x53 in parameterised list key
 
 Input:
 ~~~
@@ -8648,12 +8227,11 @@ Expects Parse Error
 ~~~
 >>foo; aSa=1<<
   ------^ (0x53) Expected COMMA in List, got: 'S' (\u0053)
-
 ~~~
 
 
 
-#### 0x54 in parameterised list key
+### 0x54 in parameterised list key
 
 Input:
 ~~~
@@ -8664,12 +8242,11 @@ Expects Parse Error
 ~~~
 >>foo; aTa=1<<
   ------^ (0x54) Expected COMMA in List, got: 'T' (\u0054)
-
 ~~~
 
 
 
-#### 0x55 in parameterised list key
+### 0x55 in parameterised list key
 
 Input:
 ~~~
@@ -8680,12 +8257,11 @@ Expects Parse Error
 ~~~
 >>foo; aUa=1<<
   ------^ (0x55) Expected COMMA in List, got: 'U' (\u0055)
-
 ~~~
 
 
 
-#### 0x56 in parameterised list key
+### 0x56 in parameterised list key
 
 Input:
 ~~~
@@ -8696,12 +8272,11 @@ Expects Parse Error
 ~~~
 >>foo; aVa=1<<
   ------^ (0x56) Expected COMMA in List, got: 'V' (\u0056)
-
 ~~~
 
 
 
-#### 0x57 in parameterised list key
+### 0x57 in parameterised list key
 
 Input:
 ~~~
@@ -8712,12 +8287,11 @@ Expects Parse Error
 ~~~
 >>foo; aWa=1<<
   ------^ (0x57) Expected COMMA in List, got: 'W' (\u0057)
-
 ~~~
 
 
 
-#### 0x58 in parameterised list key
+### 0x58 in parameterised list key
 
 Input:
 ~~~
@@ -8728,12 +8302,11 @@ Expects Parse Error
 ~~~
 >>foo; aXa=1<<
   ------^ (0x58) Expected COMMA in List, got: 'X' (\u0058)
-
 ~~~
 
 
 
-#### 0x59 in parameterised list key
+### 0x59 in parameterised list key
 
 Input:
 ~~~
@@ -8744,12 +8317,11 @@ Expects Parse Error
 ~~~
 >>foo; aYa=1<<
   ------^ (0x59) Expected COMMA in List, got: 'Y' (\u0059)
-
 ~~~
 
 
 
-#### 0x5a in parameterised list key
+### 0x5a in parameterised list key
 
 Input:
 ~~~
@@ -8760,12 +8332,11 @@ Expects Parse Error
 ~~~
 >>foo; aZa=1<<
   ------^ (0x5a) Expected COMMA in List, got: 'Z' (\u005a)
-
 ~~~
 
 
 
-#### 0x5b in parameterised list key
+### 0x5b in parameterised list key
 
 Input:
 ~~~
@@ -8776,12 +8347,11 @@ Expects Parse Error
 ~~~
 >>foo; a[a=1<<
   ------^ (0x5b) Expected COMMA in List, got: '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c in parameterised list key
+### 0x5c in parameterised list key
 
 Input:
 ~~~
@@ -8792,12 +8362,11 @@ Expects Parse Error
 ~~~
 >>foo; a\a=1<<
   ------^ (0x5c) Expected COMMA in List, got: '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d in parameterised list key
+### 0x5d in parameterised list key
 
 Input:
 ~~~
@@ -8808,12 +8377,11 @@ Expects Parse Error
 ~~~
 >>foo; a]a=1<<
   ------^ (0x5d) Expected COMMA in List, got: ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e in parameterised list key
+### 0x5e in parameterised list key
 
 Input:
 ~~~
@@ -8824,12 +8392,11 @@ Expects Parse Error
 ~~~
 >>foo; a^a=1<<
   ------^ (0x5e) Expected COMMA in List, got: '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f in parameterised list key
+### 0x5f in parameterised list key
 
 Input:
 ~~~
@@ -8842,7 +8409,7 @@ foo;a_a=1
 ~~~
 
 
-#### 0x60 in parameterised list key
+### 0x60 in parameterised list key
 
 Input:
 ~~~
@@ -8853,12 +8420,11 @@ Expects Parse Error
 ~~~
 >>foo; a`a=1<<
   ------^ (0x60) Expected COMMA in List, got: '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 in parameterised list key
+### 0x61 in parameterised list key
 
 Input:
 ~~~
@@ -8871,7 +8437,7 @@ foo;aaa=1
 ~~~
 
 
-#### 0x62 in parameterised list key
+### 0x62 in parameterised list key
 
 Input:
 ~~~
@@ -8884,7 +8450,7 @@ foo;aba=1
 ~~~
 
 
-#### 0x63 in parameterised list key
+### 0x63 in parameterised list key
 
 Input:
 ~~~
@@ -8897,7 +8463,7 @@ foo;aca=1
 ~~~
 
 
-#### 0x64 in parameterised list key
+### 0x64 in parameterised list key
 
 Input:
 ~~~
@@ -8910,7 +8476,7 @@ foo;ada=1
 ~~~
 
 
-#### 0x65 in parameterised list key
+### 0x65 in parameterised list key
 
 Input:
 ~~~
@@ -8923,7 +8489,7 @@ foo;aea=1
 ~~~
 
 
-#### 0x66 in parameterised list key
+### 0x66 in parameterised list key
 
 Input:
 ~~~
@@ -8936,7 +8502,7 @@ foo;afa=1
 ~~~
 
 
-#### 0x67 in parameterised list key
+### 0x67 in parameterised list key
 
 Input:
 ~~~
@@ -8949,7 +8515,7 @@ foo;aga=1
 ~~~
 
 
-#### 0x68 in parameterised list key
+### 0x68 in parameterised list key
 
 Input:
 ~~~
@@ -8962,7 +8528,7 @@ foo;aha=1
 ~~~
 
 
-#### 0x69 in parameterised list key
+### 0x69 in parameterised list key
 
 Input:
 ~~~
@@ -8975,7 +8541,7 @@ foo;aia=1
 ~~~
 
 
-#### 0x6a in parameterised list key
+### 0x6a in parameterised list key
 
 Input:
 ~~~
@@ -8988,7 +8554,7 @@ foo;aja=1
 ~~~
 
 
-#### 0x6b in parameterised list key
+### 0x6b in parameterised list key
 
 Input:
 ~~~
@@ -9001,7 +8567,7 @@ foo;aka=1
 ~~~
 
 
-#### 0x6c in parameterised list key
+### 0x6c in parameterised list key
 
 Input:
 ~~~
@@ -9014,7 +8580,7 @@ foo;ala=1
 ~~~
 
 
-#### 0x6d in parameterised list key
+### 0x6d in parameterised list key
 
 Input:
 ~~~
@@ -9027,7 +8593,7 @@ foo;ama=1
 ~~~
 
 
-#### 0x6e in parameterised list key
+### 0x6e in parameterised list key
 
 Input:
 ~~~
@@ -9040,7 +8606,7 @@ foo;ana=1
 ~~~
 
 
-#### 0x6f in parameterised list key
+### 0x6f in parameterised list key
 
 Input:
 ~~~
@@ -9053,7 +8619,7 @@ foo;aoa=1
 ~~~
 
 
-#### 0x70 in parameterised list key
+### 0x70 in parameterised list key
 
 Input:
 ~~~
@@ -9066,7 +8632,7 @@ foo;apa=1
 ~~~
 
 
-#### 0x71 in parameterised list key
+### 0x71 in parameterised list key
 
 Input:
 ~~~
@@ -9079,7 +8645,7 @@ foo;aqa=1
 ~~~
 
 
-#### 0x72 in parameterised list key
+### 0x72 in parameterised list key
 
 Input:
 ~~~
@@ -9092,7 +8658,7 @@ foo;ara=1
 ~~~
 
 
-#### 0x73 in parameterised list key
+### 0x73 in parameterised list key
 
 Input:
 ~~~
@@ -9105,7 +8671,7 @@ foo;asa=1
 ~~~
 
 
-#### 0x74 in parameterised list key
+### 0x74 in parameterised list key
 
 Input:
 ~~~
@@ -9118,7 +8684,7 @@ foo;ata=1
 ~~~
 
 
-#### 0x75 in parameterised list key
+### 0x75 in parameterised list key
 
 Input:
 ~~~
@@ -9131,7 +8697,7 @@ foo;aua=1
 ~~~
 
 
-#### 0x76 in parameterised list key
+### 0x76 in parameterised list key
 
 Input:
 ~~~
@@ -9144,7 +8710,7 @@ foo;ava=1
 ~~~
 
 
-#### 0x77 in parameterised list key
+### 0x77 in parameterised list key
 
 Input:
 ~~~
@@ -9157,7 +8723,7 @@ foo;awa=1
 ~~~
 
 
-#### 0x78 in parameterised list key
+### 0x78 in parameterised list key
 
 Input:
 ~~~
@@ -9170,7 +8736,7 @@ foo;axa=1
 ~~~
 
 
-#### 0x79 in parameterised list key
+### 0x79 in parameterised list key
 
 Input:
 ~~~
@@ -9183,7 +8749,7 @@ foo;aya=1
 ~~~
 
 
-#### 0x7a in parameterised list key
+### 0x7a in parameterised list key
 
 Input:
 ~~~
@@ -9196,7 +8762,7 @@ foo;aza=1
 ~~~
 
 
-#### 0x7b in parameterised list key
+### 0x7b in parameterised list key
 
 Input:
 ~~~
@@ -9207,12 +8773,11 @@ Expects Parse Error
 ~~~
 >>foo; a{a=1<<
   ------^ (0x7b) Expected COMMA in List, got: '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c in parameterised list key
+### 0x7c in parameterised list key
 
 Input:
 ~~~
@@ -9223,12 +8788,11 @@ Expects Parse Error
 ~~~
 >>foo; a|a=1<<
   ------^ (0x7c) Expected COMMA in List, got: '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d in parameterised list key
+### 0x7d in parameterised list key
 
 Input:
 ~~~
@@ -9239,12 +8803,11 @@ Expects Parse Error
 ~~~
 >>foo; a}a=1<<
   ------^ (0x7d) Expected COMMA in List, got: '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e in parameterised list key
+### 0x7e in parameterised list key
 
 Input:
 ~~~
@@ -9255,12 +8818,11 @@ Expects Parse Error
 ~~~
 >>foo; a~a=1<<
   ------^ (0x7e) Expected COMMA in List, got: '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f in parameterised list key
+### 0x7f in parameterised list key
 
 Input:
 ~~~
@@ -9271,28 +8833,26 @@ Expects Parse Error
 ~~~
 >>foo; aa=1<<
   ------^ (0x7f) Expected COMMA in List, got: '' (\u007f)
-
 ~~~
 
 
 
-#### 0x00 starting a parameterised list key
+### 0x00 starting a parameterised list key
 
 Input:
 ~~~
-foo;  a=1
+foo;  a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo;  a=1<<
-  -----^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
-
+>>foo;  a=1<<
+  -----^ (0x00) Key must start with LCALPHA or '*': ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 starting a parameterised list key
+### 0x01 starting a parameterised list key
 
 Input:
 ~~~
@@ -9303,12 +8863,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x01) Key must start with LCALPHA or '*': '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 starting a parameterised list key
+### 0x02 starting a parameterised list key
 
 Input:
 ~~~
@@ -9319,12 +8878,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x02) Key must start with LCALPHA or '*': '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 starting a parameterised list key
+### 0x03 starting a parameterised list key
 
 Input:
 ~~~
@@ -9335,12 +8893,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x03) Key must start with LCALPHA or '*': '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 starting a parameterised list key
+### 0x04 starting a parameterised list key
 
 Input:
 ~~~
@@ -9351,12 +8908,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x04) Key must start with LCALPHA or '*': '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 starting a parameterised list key
+### 0x05 starting a parameterised list key
 
 Input:
 ~~~
@@ -9367,12 +8923,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x05) Key must start with LCALPHA or '*': '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 starting a parameterised list key
+### 0x06 starting a parameterised list key
 
 Input:
 ~~~
@@ -9383,28 +8938,26 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x06) Key must start with LCALPHA or '*': '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 starting a parameterised list key
+### 0x07 starting a parameterised list key
 
 Input:
 ~~~
-foo;  a=1
+foo; a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo;  a=1<<
-  -----^ (0x07) Key must start with LCALPHA or '*': ' ' (\u0007)
-
+>>foo; a=1<<
+  -----^ (0x07) Key must start with LCALPHA or '*': '' (\u0007)
 ~~~
 
 
 
-#### 0x08 starting a parameterised list key
+### 0x08 starting a parameterised list key
 
 Input:
 ~~~
@@ -9415,12 +8968,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x08) Key must start with LCALPHA or '*': '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 starting a parameterised list key
+### 0x09 starting a parameterised list key
 
 Input:
 ~~~
@@ -9431,12 +8983,11 @@ Expects Parse Error
 ~~~
 >>foo; 	a=1<<
   -----^ (0x09) Key must start with LCALPHA or '*': HTAB (\u0009)
-
 ~~~
 
 
 
-#### 0x0a starting a parameterised list key
+### 0x0a starting a parameterised list key
 
 Input:
 ~~~
@@ -9450,31 +9001,26 @@ Expects Parse Error
 a=1<<
   -----^ (0x0a) Key must start with LCALPHA or '*': '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b starting a parameterised list key
+### 0x0b starting a parameterised list key
 
 Input:
 ~~~
-foo; 
-a=1
+foo; a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; 
-a=1<<
-  -----^ (0x0b) Key must start with LCALPHA or '*': '
-' (\u000b)
-
+>>foo; a=1<<
+  -----^ (0x0b) Key must start with LCALPHA or '*': '' (\u000b)
 ~~~
 
 
 
-#### 0x0c starting a parameterised list key
+### 0x0c starting a parameterised list key
 
 Input:
 ~~~
@@ -9485,31 +9031,26 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x0c) Key must start with LCALPHA or '*': '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d starting a parameterised list key
+### 0x0d starting a parameterised list key
 
 Input:
 ~~~
-foo; 
-a=1
+foo; a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; 
-a=1<<
-  -----^ (0x0d) Key must start with LCALPHA or '*': '
-' (\u000d)
-
+>>foo; a=1<<
+  -----^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
 ~~~
 
 
 
-#### 0x0e starting a parameterised list key
+### 0x0e starting a parameterised list key
 
 Input:
 ~~~
@@ -9520,12 +9061,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x0e) Key must start with LCALPHA or '*': '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f starting a parameterised list key
+### 0x0f starting a parameterised list key
 
 Input:
 ~~~
@@ -9536,12 +9076,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x0f) Key must start with LCALPHA or '*': '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 starting a parameterised list key
+### 0x10 starting a parameterised list key
 
 Input:
 ~~~
@@ -9552,12 +9091,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x10) Key must start with LCALPHA or '*': '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 starting a parameterised list key
+### 0x11 starting a parameterised list key
 
 Input:
 ~~~
@@ -9568,12 +9106,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x11) Key must start with LCALPHA or '*': '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 starting a parameterised list key
+### 0x12 starting a parameterised list key
 
 Input:
 ~~~
@@ -9584,12 +9121,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x12) Key must start with LCALPHA or '*': '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 starting a parameterised list key
+### 0x13 starting a parameterised list key
 
 Input:
 ~~~
@@ -9600,12 +9136,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x13) Key must start with LCALPHA or '*': '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 starting a parameterised list key
+### 0x14 starting a parameterised list key
 
 Input:
 ~~~
@@ -9616,12 +9151,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x14) Key must start with LCALPHA or '*': '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 starting a parameterised list key
+### 0x15 starting a parameterised list key
 
 Input:
 ~~~
@@ -9632,12 +9166,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x15) Key must start with LCALPHA or '*': '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 starting a parameterised list key
+### 0x16 starting a parameterised list key
 
 Input:
 ~~~
@@ -9648,12 +9181,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x16) Key must start with LCALPHA or '*': '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 starting a parameterised list key
+### 0x17 starting a parameterised list key
 
 Input:
 ~~~
@@ -9664,12 +9196,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x17) Key must start with LCALPHA or '*': '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 starting a parameterised list key
+### 0x18 starting a parameterised list key
 
 Input:
 ~~~
@@ -9680,12 +9211,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x18) Key must start with LCALPHA or '*': '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 starting a parameterised list key
+### 0x19 starting a parameterised list key
 
 Input:
 ~~~
@@ -9696,12 +9226,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x19) Key must start with LCALPHA or '*': '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a starting a parameterised list key
+### 0x1a starting a parameterised list key
 
 Input:
 ~~~
@@ -9712,12 +9241,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1a) Key must start with LCALPHA or '*': '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b starting a parameterised list key
+### 0x1b starting a parameterised list key
 
 Input:
 ~~~
@@ -9728,12 +9256,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1b) Key must start with LCALPHA or '*': '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c starting a parameterised list key
+### 0x1c starting a parameterised list key
 
 Input:
 ~~~
@@ -9744,12 +9271,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1c) Key must start with LCALPHA or '*': '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d starting a parameterised list key
+### 0x1d starting a parameterised list key
 
 Input:
 ~~~
@@ -9760,12 +9286,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1d) Key must start with LCALPHA or '*': '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e starting a parameterised list key
+### 0x1e starting a parameterised list key
 
 Input:
 ~~~
@@ -9776,12 +9301,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1e) Key must start with LCALPHA or '*': '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f starting a parameterised list key
+### 0x1f starting a parameterised list key
 
 Input:
 ~~~
@@ -9792,12 +9316,11 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x1f) Key must start with LCALPHA or '*': '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 starting a parameterised list key
+### 0x20 starting a parameterised list key
 
 Input:
 ~~~
@@ -9810,7 +9333,7 @@ foo;a=1
 ~~~
 
 
-#### 0x21 starting a parameterised list key
+### 0x21 starting a parameterised list key
 
 Input:
 ~~~
@@ -9821,12 +9344,11 @@ Expects Parse Error
 ~~~
 >>foo; !a=1<<
   -----^ (0x21) Key must start with LCALPHA or '*': '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 starting a parameterised list key
+### 0x22 starting a parameterised list key
 
 Input:
 ~~~
@@ -9837,12 +9359,11 @@ Expects Parse Error
 ~~~
 >>foo; "a=1<<
   -----^ (0x22) Key must start with LCALPHA or '*': '"' (\u0022)
-
 ~~~
 
 
 
-#### 0x23 starting a parameterised list key
+### 0x23 starting a parameterised list key
 
 Input:
 ~~~
@@ -9853,12 +9374,11 @@ Expects Parse Error
 ~~~
 >>foo; #a=1<<
   -----^ (0x23) Key must start with LCALPHA or '*': '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 starting a parameterised list key
+### 0x24 starting a parameterised list key
 
 Input:
 ~~~
@@ -9869,12 +9389,11 @@ Expects Parse Error
 ~~~
 >>foo; $a=1<<
   -----^ (0x24) Key must start with LCALPHA or '*': '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 starting a parameterised list key
+### 0x25 starting a parameterised list key
 
 Input:
 ~~~
@@ -9885,12 +9404,11 @@ Expects Parse Error
 ~~~
 >>foo; %a=1<<
   -----^ (0x25) Key must start with LCALPHA or '*': '%' (\u0025)
-
 ~~~
 
 
 
-#### 0x26 starting a parameterised list key
+### 0x26 starting a parameterised list key
 
 Input:
 ~~~
@@ -9901,12 +9419,11 @@ Expects Parse Error
 ~~~
 >>foo; &a=1<<
   -----^ (0x26) Key must start with LCALPHA or '*': '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 starting a parameterised list key
+### 0x27 starting a parameterised list key
 
 Input:
 ~~~
@@ -9917,12 +9434,11 @@ Expects Parse Error
 ~~~
 >>foo; 'a=1<<
   -----^ (0x27) Key must start with LCALPHA or '*': ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 starting a parameterised list key
+### 0x28 starting a parameterised list key
 
 Input:
 ~~~
@@ -9933,12 +9449,11 @@ Expects Parse Error
 ~~~
 >>foo; (a=1<<
   -----^ (0x28) Key must start with LCALPHA or '*': '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 starting a parameterised list key
+### 0x29 starting a parameterised list key
 
 Input:
 ~~~
@@ -9949,12 +9464,11 @@ Expects Parse Error
 ~~~
 >>foo; )a=1<<
   -----^ (0x29) Key must start with LCALPHA or '*': ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a starting a parameterised list key
+### 0x2a starting a parameterised list key
 
 Input:
 ~~~
@@ -9967,7 +9481,7 @@ foo;*a=1
 ~~~
 
 
-#### 0x2b starting a parameterised list key
+### 0x2b starting a parameterised list key
 
 Input:
 ~~~
@@ -9978,12 +9492,11 @@ Expects Parse Error
 ~~~
 >>foo; +a=1<<
   -----^ (0x2b) Key must start with LCALPHA or '*': '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c starting a parameterised list key
+### 0x2c starting a parameterised list key
 
 Input:
 ~~~
@@ -9994,12 +9507,11 @@ Expects Parse Error
 ~~~
 >>foo; ,a=1<<
   -----^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
-
 ~~~
 
 
 
-#### 0x2d starting a parameterised list key
+### 0x2d starting a parameterised list key
 
 Input:
 ~~~
@@ -10010,12 +9522,11 @@ Expects Parse Error
 ~~~
 >>foo; -a=1<<
   -----^ (0x2d) Key must start with LCALPHA or '*': '-' (\u002d)
-
 ~~~
 
 
 
-#### 0x2e starting a parameterised list key
+### 0x2e starting a parameterised list key
 
 Input:
 ~~~
@@ -10026,12 +9537,11 @@ Expects Parse Error
 ~~~
 >>foo; .a=1<<
   -----^ (0x2e) Key must start with LCALPHA or '*': '.' (\u002e)
-
 ~~~
 
 
 
-#### 0x2f starting a parameterised list key
+### 0x2f starting a parameterised list key
 
 Input:
 ~~~
@@ -10042,12 +9552,11 @@ Expects Parse Error
 ~~~
 >>foo; /a=1<<
   -----^ (0x2f) Key must start with LCALPHA or '*': '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 starting a parameterised list key
+### 0x30 starting a parameterised list key
 
 Input:
 ~~~
@@ -10058,12 +9567,11 @@ Expects Parse Error
 ~~~
 >>foo; 0a=1<<
   -----^ (0x30) Key must start with LCALPHA or '*': '0' (\u0030)
-
 ~~~
 
 
 
-#### 0x31 starting a parameterised list key
+### 0x31 starting a parameterised list key
 
 Input:
 ~~~
@@ -10074,12 +9582,11 @@ Expects Parse Error
 ~~~
 >>foo; 1a=1<<
   -----^ (0x31) Key must start with LCALPHA or '*': '1' (\u0031)
-
 ~~~
 
 
 
-#### 0x32 starting a parameterised list key
+### 0x32 starting a parameterised list key
 
 Input:
 ~~~
@@ -10090,12 +9597,11 @@ Expects Parse Error
 ~~~
 >>foo; 2a=1<<
   -----^ (0x32) Key must start with LCALPHA or '*': '2' (\u0032)
-
 ~~~
 
 
 
-#### 0x33 starting a parameterised list key
+### 0x33 starting a parameterised list key
 
 Input:
 ~~~
@@ -10106,12 +9612,11 @@ Expects Parse Error
 ~~~
 >>foo; 3a=1<<
   -----^ (0x33) Key must start with LCALPHA or '*': '3' (\u0033)
-
 ~~~
 
 
 
-#### 0x34 starting a parameterised list key
+### 0x34 starting a parameterised list key
 
 Input:
 ~~~
@@ -10122,12 +9627,11 @@ Expects Parse Error
 ~~~
 >>foo; 4a=1<<
   -----^ (0x34) Key must start with LCALPHA or '*': '4' (\u0034)
-
 ~~~
 
 
 
-#### 0x35 starting a parameterised list key
+### 0x35 starting a parameterised list key
 
 Input:
 ~~~
@@ -10138,12 +9642,11 @@ Expects Parse Error
 ~~~
 >>foo; 5a=1<<
   -----^ (0x35) Key must start with LCALPHA or '*': '5' (\u0035)
-
 ~~~
 
 
 
-#### 0x36 starting a parameterised list key
+### 0x36 starting a parameterised list key
 
 Input:
 ~~~
@@ -10154,12 +9657,11 @@ Expects Parse Error
 ~~~
 >>foo; 6a=1<<
   -----^ (0x36) Key must start with LCALPHA or '*': '6' (\u0036)
-
 ~~~
 
 
 
-#### 0x37 starting a parameterised list key
+### 0x37 starting a parameterised list key
 
 Input:
 ~~~
@@ -10170,12 +9672,11 @@ Expects Parse Error
 ~~~
 >>foo; 7a=1<<
   -----^ (0x37) Key must start with LCALPHA or '*': '7' (\u0037)
-
 ~~~
 
 
 
-#### 0x38 starting a parameterised list key
+### 0x38 starting a parameterised list key
 
 Input:
 ~~~
@@ -10186,12 +9687,11 @@ Expects Parse Error
 ~~~
 >>foo; 8a=1<<
   -----^ (0x38) Key must start with LCALPHA or '*': '8' (\u0038)
-
 ~~~
 
 
 
-#### 0x39 starting a parameterised list key
+### 0x39 starting a parameterised list key
 
 Input:
 ~~~
@@ -10202,12 +9702,11 @@ Expects Parse Error
 ~~~
 >>foo; 9a=1<<
   -----^ (0x39) Key must start with LCALPHA or '*': '9' (\u0039)
-
 ~~~
 
 
 
-#### 0x3a starting a parameterised list key
+### 0x3a starting a parameterised list key
 
 Input:
 ~~~
@@ -10218,12 +9717,11 @@ Expects Parse Error
 ~~~
 >>foo; :a=1<<
   -----^ (0x3a) Key must start with LCALPHA or '*': ':' (\u003a)
-
 ~~~
 
 
 
-#### 0x3b starting a parameterised list key
+### 0x3b starting a parameterised list key
 
 Input:
 ~~~
@@ -10234,12 +9732,11 @@ Expects Parse Error
 ~~~
 >>foo; ;a=1<<
   -----^ (0x3b) Key must start with LCALPHA or '*': ';' (\u003b)
-
 ~~~
 
 
 
-#### 0x3c starting a parameterised list key
+### 0x3c starting a parameterised list key
 
 Input:
 ~~~
@@ -10250,12 +9747,11 @@ Expects Parse Error
 ~~~
 >>foo; <a=1<<
   -----^ (0x3c) Key must start with LCALPHA or '*': '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d starting a parameterised list key
+### 0x3d starting a parameterised list key
 
 Input:
 ~~~
@@ -10266,12 +9762,11 @@ Expects Parse Error
 ~~~
 >>foo; =a=1<<
   -----^ (0x3d) Key must start with LCALPHA or '*': '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e starting a parameterised list key
+### 0x3e starting a parameterised list key
 
 Input:
 ~~~
@@ -10282,12 +9777,11 @@ Expects Parse Error
 ~~~
 >>foo; >a=1<<
   -----^ (0x3e) Key must start with LCALPHA or '*': '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f starting a parameterised list key
+### 0x3f starting a parameterised list key
 
 Input:
 ~~~
@@ -10298,12 +9792,11 @@ Expects Parse Error
 ~~~
 >>foo; ?a=1<<
   -----^ (0x3f) Key must start with LCALPHA or '*': '?' (\u003f)
-
 ~~~
 
 
 
-#### 0x40 starting a parameterised list key
+### 0x40 starting a parameterised list key
 
 Input:
 ~~~
@@ -10314,12 +9807,11 @@ Expects Parse Error
 ~~~
 >>foo; @a=1<<
   -----^ (0x40) Key must start with LCALPHA or '*': '@' (\u0040)
-
 ~~~
 
 
 
-#### 0x41 starting a parameterised list key
+### 0x41 starting a parameterised list key
 
 Input:
 ~~~
@@ -10330,12 +9822,11 @@ Expects Parse Error
 ~~~
 >>foo; Aa=1<<
   -----^ (0x41) Key must start with LCALPHA or '*': 'A' (\u0041)
-
 ~~~
 
 
 
-#### 0x42 starting a parameterised list key
+### 0x42 starting a parameterised list key
 
 Input:
 ~~~
@@ -10346,12 +9837,11 @@ Expects Parse Error
 ~~~
 >>foo; Ba=1<<
   -----^ (0x42) Key must start with LCALPHA or '*': 'B' (\u0042)
-
 ~~~
 
 
 
-#### 0x43 starting a parameterised list key
+### 0x43 starting a parameterised list key
 
 Input:
 ~~~
@@ -10362,12 +9852,11 @@ Expects Parse Error
 ~~~
 >>foo; Ca=1<<
   -----^ (0x43) Key must start with LCALPHA or '*': 'C' (\u0043)
-
 ~~~
 
 
 
-#### 0x44 starting a parameterised list key
+### 0x44 starting a parameterised list key
 
 Input:
 ~~~
@@ -10378,12 +9867,11 @@ Expects Parse Error
 ~~~
 >>foo; Da=1<<
   -----^ (0x44) Key must start with LCALPHA or '*': 'D' (\u0044)
-
 ~~~
 
 
 
-#### 0x45 starting a parameterised list key
+### 0x45 starting a parameterised list key
 
 Input:
 ~~~
@@ -10394,12 +9882,11 @@ Expects Parse Error
 ~~~
 >>foo; Ea=1<<
   -----^ (0x45) Key must start with LCALPHA or '*': 'E' (\u0045)
-
 ~~~
 
 
 
-#### 0x46 starting a parameterised list key
+### 0x46 starting a parameterised list key
 
 Input:
 ~~~
@@ -10410,12 +9897,11 @@ Expects Parse Error
 ~~~
 >>foo; Fa=1<<
   -----^ (0x46) Key must start with LCALPHA or '*': 'F' (\u0046)
-
 ~~~
 
 
 
-#### 0x47 starting a parameterised list key
+### 0x47 starting a parameterised list key
 
 Input:
 ~~~
@@ -10426,12 +9912,11 @@ Expects Parse Error
 ~~~
 >>foo; Ga=1<<
   -----^ (0x47) Key must start with LCALPHA or '*': 'G' (\u0047)
-
 ~~~
 
 
 
-#### 0x48 starting a parameterised list key
+### 0x48 starting a parameterised list key
 
 Input:
 ~~~
@@ -10442,12 +9927,11 @@ Expects Parse Error
 ~~~
 >>foo; Ha=1<<
   -----^ (0x48) Key must start with LCALPHA or '*': 'H' (\u0048)
-
 ~~~
 
 
 
-#### 0x49 starting a parameterised list key
+### 0x49 starting a parameterised list key
 
 Input:
 ~~~
@@ -10458,12 +9942,11 @@ Expects Parse Error
 ~~~
 >>foo; Ia=1<<
   -----^ (0x49) Key must start with LCALPHA or '*': 'I' (\u0049)
-
 ~~~
 
 
 
-#### 0x4a starting a parameterised list key
+### 0x4a starting a parameterised list key
 
 Input:
 ~~~
@@ -10474,12 +9957,11 @@ Expects Parse Error
 ~~~
 >>foo; Ja=1<<
   -----^ (0x4a) Key must start with LCALPHA or '*': 'J' (\u004a)
-
 ~~~
 
 
 
-#### 0x4b starting a parameterised list key
+### 0x4b starting a parameterised list key
 
 Input:
 ~~~
@@ -10490,12 +9972,11 @@ Expects Parse Error
 ~~~
 >>foo; Ka=1<<
   -----^ (0x4b) Key must start with LCALPHA or '*': 'K' (\u004b)
-
 ~~~
 
 
 
-#### 0x4c starting a parameterised list key
+### 0x4c starting a parameterised list key
 
 Input:
 ~~~
@@ -10506,12 +9987,11 @@ Expects Parse Error
 ~~~
 >>foo; La=1<<
   -----^ (0x4c) Key must start with LCALPHA or '*': 'L' (\u004c)
-
 ~~~
 
 
 
-#### 0x4d starting a parameterised list key
+### 0x4d starting a parameterised list key
 
 Input:
 ~~~
@@ -10522,12 +10002,11 @@ Expects Parse Error
 ~~~
 >>foo; Ma=1<<
   -----^ (0x4d) Key must start with LCALPHA or '*': 'M' (\u004d)
-
 ~~~
 
 
 
-#### 0x4e starting a parameterised list key
+### 0x4e starting a parameterised list key
 
 Input:
 ~~~
@@ -10538,12 +10017,11 @@ Expects Parse Error
 ~~~
 >>foo; Na=1<<
   -----^ (0x4e) Key must start with LCALPHA or '*': 'N' (\u004e)
-
 ~~~
 
 
 
-#### 0x4f starting a parameterised list key
+### 0x4f starting a parameterised list key
 
 Input:
 ~~~
@@ -10554,12 +10032,11 @@ Expects Parse Error
 ~~~
 >>foo; Oa=1<<
   -----^ (0x4f) Key must start with LCALPHA or '*': 'O' (\u004f)
-
 ~~~
 
 
 
-#### 0x50 starting a parameterised list key
+### 0x50 starting a parameterised list key
 
 Input:
 ~~~
@@ -10570,12 +10047,11 @@ Expects Parse Error
 ~~~
 >>foo; Pa=1<<
   -----^ (0x50) Key must start with LCALPHA or '*': 'P' (\u0050)
-
 ~~~
 
 
 
-#### 0x51 starting a parameterised list key
+### 0x51 starting a parameterised list key
 
 Input:
 ~~~
@@ -10586,12 +10062,11 @@ Expects Parse Error
 ~~~
 >>foo; Qa=1<<
   -----^ (0x51) Key must start with LCALPHA or '*': 'Q' (\u0051)
-
 ~~~
 
 
 
-#### 0x52 starting a parameterised list key
+### 0x52 starting a parameterised list key
 
 Input:
 ~~~
@@ -10602,12 +10077,11 @@ Expects Parse Error
 ~~~
 >>foo; Ra=1<<
   -----^ (0x52) Key must start with LCALPHA or '*': 'R' (\u0052)
-
 ~~~
 
 
 
-#### 0x53 starting a parameterised list key
+### 0x53 starting a parameterised list key
 
 Input:
 ~~~
@@ -10618,12 +10092,11 @@ Expects Parse Error
 ~~~
 >>foo; Sa=1<<
   -----^ (0x53) Key must start with LCALPHA or '*': 'S' (\u0053)
-
 ~~~
 
 
 
-#### 0x54 starting a parameterised list key
+### 0x54 starting a parameterised list key
 
 Input:
 ~~~
@@ -10634,12 +10107,11 @@ Expects Parse Error
 ~~~
 >>foo; Ta=1<<
   -----^ (0x54) Key must start with LCALPHA or '*': 'T' (\u0054)
-
 ~~~
 
 
 
-#### 0x55 starting a parameterised list key
+### 0x55 starting a parameterised list key
 
 Input:
 ~~~
@@ -10650,12 +10122,11 @@ Expects Parse Error
 ~~~
 >>foo; Ua=1<<
   -----^ (0x55) Key must start with LCALPHA or '*': 'U' (\u0055)
-
 ~~~
 
 
 
-#### 0x56 starting a parameterised list key
+### 0x56 starting a parameterised list key
 
 Input:
 ~~~
@@ -10666,12 +10137,11 @@ Expects Parse Error
 ~~~
 >>foo; Va=1<<
   -----^ (0x56) Key must start with LCALPHA or '*': 'V' (\u0056)
-
 ~~~
 
 
 
-#### 0x57 starting a parameterised list key
+### 0x57 starting a parameterised list key
 
 Input:
 ~~~
@@ -10682,12 +10152,11 @@ Expects Parse Error
 ~~~
 >>foo; Wa=1<<
   -----^ (0x57) Key must start with LCALPHA or '*': 'W' (\u0057)
-
 ~~~
 
 
 
-#### 0x58 starting a parameterised list key
+### 0x58 starting a parameterised list key
 
 Input:
 ~~~
@@ -10698,12 +10167,11 @@ Expects Parse Error
 ~~~
 >>foo; Xa=1<<
   -----^ (0x58) Key must start with LCALPHA or '*': 'X' (\u0058)
-
 ~~~
 
 
 
-#### 0x59 starting a parameterised list key
+### 0x59 starting a parameterised list key
 
 Input:
 ~~~
@@ -10714,12 +10182,11 @@ Expects Parse Error
 ~~~
 >>foo; Ya=1<<
   -----^ (0x59) Key must start with LCALPHA or '*': 'Y' (\u0059)
-
 ~~~
 
 
 
-#### 0x5a starting a parameterised list key
+### 0x5a starting a parameterised list key
 
 Input:
 ~~~
@@ -10730,12 +10197,11 @@ Expects Parse Error
 ~~~
 >>foo; Za=1<<
   -----^ (0x5a) Key must start with LCALPHA or '*': 'Z' (\u005a)
-
 ~~~
 
 
 
-#### 0x5b starting a parameterised list key
+### 0x5b starting a parameterised list key
 
 Input:
 ~~~
@@ -10746,12 +10212,11 @@ Expects Parse Error
 ~~~
 >>foo; [a=1<<
   -----^ (0x5b) Key must start with LCALPHA or '*': '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c starting a parameterised list key
+### 0x5c starting a parameterised list key
 
 Input:
 ~~~
@@ -10762,12 +10227,11 @@ Expects Parse Error
 ~~~
 >>foo; \a=1<<
   -----^ (0x5c) Key must start with LCALPHA or '*': '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d starting a parameterised list key
+### 0x5d starting a parameterised list key
 
 Input:
 ~~~
@@ -10778,12 +10242,11 @@ Expects Parse Error
 ~~~
 >>foo; ]a=1<<
   -----^ (0x5d) Key must start with LCALPHA or '*': ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e starting a parameterised list key
+### 0x5e starting a parameterised list key
 
 Input:
 ~~~
@@ -10794,12 +10257,11 @@ Expects Parse Error
 ~~~
 >>foo; ^a=1<<
   -----^ (0x5e) Key must start with LCALPHA or '*': '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f starting a parameterised list key
+### 0x5f starting a parameterised list key
 
 Input:
 ~~~
@@ -10810,12 +10272,11 @@ Expects Parse Error
 ~~~
 >>foo; _a=1<<
   -----^ (0x5f) Key must start with LCALPHA or '*': '_' (\u005f)
-
 ~~~
 
 
 
-#### 0x60 starting a parameterised list key
+### 0x60 starting a parameterised list key
 
 Input:
 ~~~
@@ -10826,12 +10287,11 @@ Expects Parse Error
 ~~~
 >>foo; `a=1<<
   -----^ (0x60) Key must start with LCALPHA or '*': '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 starting a parameterised list key
+### 0x61 starting a parameterised list key
 
 Input:
 ~~~
@@ -10844,7 +10304,7 @@ foo;aa=1
 ~~~
 
 
-#### 0x62 starting a parameterised list key
+### 0x62 starting a parameterised list key
 
 Input:
 ~~~
@@ -10857,7 +10317,7 @@ foo;ba=1
 ~~~
 
 
-#### 0x63 starting a parameterised list key
+### 0x63 starting a parameterised list key
 
 Input:
 ~~~
@@ -10870,7 +10330,7 @@ foo;ca=1
 ~~~
 
 
-#### 0x64 starting a parameterised list key
+### 0x64 starting a parameterised list key
 
 Input:
 ~~~
@@ -10883,7 +10343,7 @@ foo;da=1
 ~~~
 
 
-#### 0x65 starting a parameterised list key
+### 0x65 starting a parameterised list key
 
 Input:
 ~~~
@@ -10896,7 +10356,7 @@ foo;ea=1
 ~~~
 
 
-#### 0x66 starting a parameterised list key
+### 0x66 starting a parameterised list key
 
 Input:
 ~~~
@@ -10909,7 +10369,7 @@ foo;fa=1
 ~~~
 
 
-#### 0x67 starting a parameterised list key
+### 0x67 starting a parameterised list key
 
 Input:
 ~~~
@@ -10922,7 +10382,7 @@ foo;ga=1
 ~~~
 
 
-#### 0x68 starting a parameterised list key
+### 0x68 starting a parameterised list key
 
 Input:
 ~~~
@@ -10935,7 +10395,7 @@ foo;ha=1
 ~~~
 
 
-#### 0x69 starting a parameterised list key
+### 0x69 starting a parameterised list key
 
 Input:
 ~~~
@@ -10948,7 +10408,7 @@ foo;ia=1
 ~~~
 
 
-#### 0x6a starting a parameterised list key
+### 0x6a starting a parameterised list key
 
 Input:
 ~~~
@@ -10961,7 +10421,7 @@ foo;ja=1
 ~~~
 
 
-#### 0x6b starting a parameterised list key
+### 0x6b starting a parameterised list key
 
 Input:
 ~~~
@@ -10974,7 +10434,7 @@ foo;ka=1
 ~~~
 
 
-#### 0x6c starting a parameterised list key
+### 0x6c starting a parameterised list key
 
 Input:
 ~~~
@@ -10987,7 +10447,7 @@ foo;la=1
 ~~~
 
 
-#### 0x6d starting a parameterised list key
+### 0x6d starting a parameterised list key
 
 Input:
 ~~~
@@ -11000,7 +10460,7 @@ foo;ma=1
 ~~~
 
 
-#### 0x6e starting a parameterised list key
+### 0x6e starting a parameterised list key
 
 Input:
 ~~~
@@ -11013,7 +10473,7 @@ foo;na=1
 ~~~
 
 
-#### 0x6f starting a parameterised list key
+### 0x6f starting a parameterised list key
 
 Input:
 ~~~
@@ -11026,7 +10486,7 @@ foo;oa=1
 ~~~
 
 
-#### 0x70 starting a parameterised list key
+### 0x70 starting a parameterised list key
 
 Input:
 ~~~
@@ -11039,7 +10499,7 @@ foo;pa=1
 ~~~
 
 
-#### 0x71 starting a parameterised list key
+### 0x71 starting a parameterised list key
 
 Input:
 ~~~
@@ -11052,7 +10512,7 @@ foo;qa=1
 ~~~
 
 
-#### 0x72 starting a parameterised list key
+### 0x72 starting a parameterised list key
 
 Input:
 ~~~
@@ -11065,7 +10525,7 @@ foo;ra=1
 ~~~
 
 
-#### 0x73 starting a parameterised list key
+### 0x73 starting a parameterised list key
 
 Input:
 ~~~
@@ -11078,7 +10538,7 @@ foo;sa=1
 ~~~
 
 
-#### 0x74 starting a parameterised list key
+### 0x74 starting a parameterised list key
 
 Input:
 ~~~
@@ -11091,7 +10551,7 @@ foo;ta=1
 ~~~
 
 
-#### 0x75 starting a parameterised list key
+### 0x75 starting a parameterised list key
 
 Input:
 ~~~
@@ -11104,7 +10564,7 @@ foo;ua=1
 ~~~
 
 
-#### 0x76 starting a parameterised list key
+### 0x76 starting a parameterised list key
 
 Input:
 ~~~
@@ -11117,7 +10577,7 @@ foo;va=1
 ~~~
 
 
-#### 0x77 starting a parameterised list key
+### 0x77 starting a parameterised list key
 
 Input:
 ~~~
@@ -11130,7 +10590,7 @@ foo;wa=1
 ~~~
 
 
-#### 0x78 starting a parameterised list key
+### 0x78 starting a parameterised list key
 
 Input:
 ~~~
@@ -11143,7 +10603,7 @@ foo;xa=1
 ~~~
 
 
-#### 0x79 starting a parameterised list key
+### 0x79 starting a parameterised list key
 
 Input:
 ~~~
@@ -11156,7 +10616,7 @@ foo;ya=1
 ~~~
 
 
-#### 0x7a starting a parameterised list key
+### 0x7a starting a parameterised list key
 
 Input:
 ~~~
@@ -11169,7 +10629,7 @@ foo;za=1
 ~~~
 
 
-#### 0x7b starting a parameterised list key
+### 0x7b starting a parameterised list key
 
 Input:
 ~~~
@@ -11180,12 +10640,11 @@ Expects Parse Error
 ~~~
 >>foo; {a=1<<
   -----^ (0x7b) Key must start with LCALPHA or '*': '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c starting a parameterised list key
+### 0x7c starting a parameterised list key
 
 Input:
 ~~~
@@ -11196,12 +10655,11 @@ Expects Parse Error
 ~~~
 >>foo; |a=1<<
   -----^ (0x7c) Key must start with LCALPHA or '*': '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d starting a parameterised list key
+### 0x7d starting a parameterised list key
 
 Input:
 ~~~
@@ -11212,12 +10670,11 @@ Expects Parse Error
 ~~~
 >>foo; }a=1<<
   -----^ (0x7d) Key must start with LCALPHA or '*': '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e starting a parameterised list key
+### 0x7e starting a parameterised list key
 
 Input:
 ~~~
@@ -11228,12 +10685,11 @@ Expects Parse Error
 ~~~
 >>foo; ~a=1<<
   -----^ (0x7e) Key must start with LCALPHA or '*': '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f starting a parameterised list key
+### 0x7f starting a parameterised list key
 
 Input:
 ~~~
@@ -11244,7 +10700,6 @@ Expects Parse Error
 ~~~
 >>foo; a=1<<
   -----^ (0x7f) Key must start with LCALPHA or '*': '' (\u007f)
-
 ~~~
 
 
@@ -11253,7 +10708,7 @@ Expects Parse Error
 ## large-generated
 
 
-#### large dictionary
+### large dictionary
 
 Input:
 ~~~
@@ -11266,7 +10721,7 @@ a0=1, a1=1, a2=1, a3=1, a4=1, a5=1, a6=1, a7=1, a8=1, a9=1, a10=1, a11=1, a12=1,
 ~~~
 
 
-#### large dictionary key
+### large dictionary key
 
 Input:
 ~~~
@@ -11279,7 +10734,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=1
 ~~~
 
 
-#### large list
+### large list
 
 Input:
 ~~~
@@ -11292,7 +10747,7 @@ a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, 
 ~~~
 
 
-#### large parameterised list
+### large parameterised list
 
 Input:
 ~~~
@@ -11305,7 +10760,7 @@ foo;a0=1, foo;a1=1, foo;a2=1, foo;a3=1, foo;a4=1, foo;a5=1, foo;a6=1, foo;a7=1, 
 ~~~
 
 
-#### large params
+### large params
 
 Input:
 ~~~
@@ -11318,7 +10773,7 @@ foo;a0=1;a1=1;a2=1;a3=1;a4=1;a5=1;a6=1;a7=1;a8=1;a9=1;a10=1;a11=1;a12=1;a13=1;a1
 ~~~
 
 
-#### large param key
+### large param key
 
 Input:
 ~~~
@@ -11331,7 +10786,7 @@ foo;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=1
 ~~~
 
 
-#### large string
+### large string
 
 Input:
 ~~~
@@ -11344,7 +10799,7 @@ Result:
 ~~~
 
 
-#### large escaped string
+### large escaped string
 
 Input:
 ~~~
@@ -11357,7 +10812,7 @@ Result:
 ~~~
 
 
-#### large token
+### large token
 
 Input:
 ~~~
@@ -11374,7 +10829,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ## list
 
 
-#### basic list
+### basic list
 
 Input:
 ~~~
@@ -11387,7 +10842,7 @@ Result:
 ~~~
 
 
-#### empty list
+### empty list
 
 Input:
 ~~~
@@ -11400,7 +10855,7 @@ Result:
 ~~~
 
 
-#### leading SP list
+### leading SP list
 
 Input:
 ~~~
@@ -11413,7 +10868,7 @@ Result:
 ~~~
 
 
-#### single item list
+### single item list
 
 Input:
 ~~~
@@ -11426,7 +10881,7 @@ Result:
 ~~~
 
 
-#### no whitespace list
+### no whitespace list
 
 Input:
 ~~~
@@ -11439,7 +10894,7 @@ Result:
 ~~~
 
 
-#### extra whitespace list
+### extra whitespace list
 
 Input:
 ~~~
@@ -11452,7 +10907,7 @@ Result:
 ~~~
 
 
-#### tab separated list
+### tab separated list
 
 Input:
 ~~~
@@ -11465,7 +10920,7 @@ Result:
 ~~~
 
 
-#### two line list
+### two line list
 
 Input:
 ~~~
@@ -11479,7 +10934,7 @@ Result:
 ~~~
 
 
-#### trailing comma list
+### trailing comma list
 
 Input:
 ~~~
@@ -11490,12 +10945,11 @@ Expects Parse Error
 ~~~
 >>1, 42,<<
   ------^ Found trailing COMMA in List
-
 ~~~
 
 
 
-#### empty item list
+### empty item list
 
 Input:
 ~~~
@@ -11506,12 +10960,11 @@ Expects Parse Error
 ~~~
 >>1,,42<<
   --^ (0x2c) Unexpected start character in Bare Item: ',' (\u002c)
-
 ~~~
 
 
 
-#### empty item list (multiple field lines)
+### empty item list (multiple field lines)
 
 Input:
 ~~~
@@ -11524,7 +10977,6 @@ Expects Parse Error
 ~~~
 >>1,,42<<
   --^ (0x2c) Unexpected start character in Bare Item: ',' (\u002c)
-
 ~~~
 
 
@@ -11533,7 +10985,7 @@ Expects Parse Error
 ## listlist
 
 
-#### basic list of lists
+### basic list of lists
 
 Input:
 ~~~
@@ -11546,7 +10998,7 @@ Result:
 ~~~
 
 
-#### single item list of lists
+### single item list of lists
 
 Input:
 ~~~
@@ -11559,7 +11011,7 @@ Result:
 ~~~
 
 
-#### empty item list of lists
+### empty item list of lists
 
 Input:
 ~~~
@@ -11572,7 +11024,7 @@ Result:
 ~~~
 
 
-#### empty middle item list of lists
+### empty middle item list of lists
 
 Input:
 ~~~
@@ -11585,7 +11037,7 @@ Result:
 ~~~
 
 
-#### extra whitespace list of lists
+### extra whitespace list of lists
 
 Input:
 ~~~
@@ -11598,7 +11050,7 @@ Result:
 ~~~
 
 
-#### wrong whitespace list of lists
+### wrong whitespace list of lists
 
 Input:
 ~~~
@@ -11609,12 +11061,11 @@ Expects Parse Error
 ~~~
 >>(1	 42)<<
   --^ (0x09) Expected SP or ')' in Inner List, got: HTAB (\u0009)
-
 ~~~
 
 
 
-#### no trailing parenthesis list of lists
+### no trailing parenthesis list of lists
 
 Input:
 ~~~
@@ -11625,12 +11076,11 @@ Expects Parse Error
 ~~~
 >>(1 42<<
   -----^ Missing data in Inner List
-
 ~~~
 
 
 
-#### no trailing parenthesis middle list of lists
+### no trailing parenthesis middle list of lists
 
 Input:
 ~~~
@@ -11641,12 +11091,11 @@ Expects Parse Error
 ~~~
 >>(1 2, (42 43)<<
   ----^ (0x2c) Expected SP or ')' in Inner List, got: ',' (\u002c)
-
 ~~~
 
 
 
-#### no spaces in inner-list
+### no spaces in inner-list
 
 Input:
 ~~~
@@ -11657,12 +11106,11 @@ Expects Parse Error
 ~~~
 >>(abc"def"?0123*dXZ3*xyz)<<
   ----^ (0x22) Expected SP or ')' in Inner List, got: '"' (\u0022)
-
 ~~~
 
 
 
-#### no closing parenthesis
+### no closing parenthesis
 
 Input:
 ~~~
@@ -11673,7 +11121,6 @@ Expects Parse Error
 ~~~
 >>(<<
   -^ Inner List must end with ')': 
-
 ~~~
 
 
@@ -11682,7 +11129,7 @@ Expects Parse Error
 ## number
 
 
-#### basic integer
+### basic integer
 
 Input:
 ~~~
@@ -11695,7 +11142,7 @@ Result:
 ~~~
 
 
-#### zero integer
+### zero integer
 
 Input:
 ~~~
@@ -11708,7 +11155,7 @@ Result:
 ~~~
 
 
-#### negative zero
+### negative zero
 
 Input:
 ~~~
@@ -11721,7 +11168,7 @@ Result:
 ~~~
 
 
-#### double negative zero
+### double negative zero
 
 Input:
 ~~~
@@ -11732,12 +11179,11 @@ Expects Parse Error
 ~~~
 >>--0<<
   -^ (0x2d) Illegal start for Integer or Decimal: '-0'
-
 ~~~
 
 
 
-#### negative integer
+### negative integer
 
 Input:
 ~~~
@@ -11750,7 +11196,7 @@ Result:
 ~~~
 
 
-#### leading 0 integer
+### leading 0 integer
 
 Input:
 ~~~
@@ -11763,7 +11209,7 @@ Result:
 ~~~
 
 
-#### leading 0 negative integer
+### leading 0 negative integer
 
 Input:
 ~~~
@@ -11776,7 +11222,7 @@ Result:
 ~~~
 
 
-#### leading 0 zero
+### leading 0 zero
 
 Input:
 ~~~
@@ -11789,7 +11235,7 @@ Result:
 ~~~
 
 
-#### comma
+### comma
 
 Input:
 ~~~
@@ -11800,12 +11246,11 @@ Expects Parse Error
 ~~~
 >>2,3<<
   -^ (0x2c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### negative non-DIGIT first character
+### negative non-DIGIT first character
 
 Input:
 ~~~
@@ -11816,12 +11261,11 @@ Expects Parse Error
 ~~~
 >>-a23<<
   -^ (0x61) Illegal start for Integer or Decimal: 'a23'
-
 ~~~
 
 
 
-#### sign out of place
+### sign out of place
 
 Input:
 ~~~
@@ -11832,12 +11276,11 @@ Expects Parse Error
 ~~~
 >>4-2<<
   -^ (0x2d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### whitespace after sign
+### whitespace after sign
 
 Input:
 ~~~
@@ -11848,12 +11291,11 @@ Expects Parse Error
 ~~~
 >>- 42<<
   -^ (0x20) Illegal start for Integer or Decimal: ' 42'
-
 ~~~
 
 
 
-#### long integer
+### long integer
 
 Input:
 ~~~
@@ -11866,7 +11308,7 @@ Result:
 ~~~
 
 
-#### long negative integer
+### long negative integer
 
 Input:
 ~~~
@@ -11879,7 +11321,7 @@ Result:
 ~~~
 
 
-#### too long integer
+### too long integer
 
 Input:
 ~~~
@@ -11890,12 +11332,11 @@ Expects Parse Error
 ~~~
 >>1234567890123456<<
   ---------------^ (0x36) Integer too long: 16 characters
-
 ~~~
 
 
 
-#### negative too long integer
+### negative too long integer
 
 Input:
 ~~~
@@ -11906,12 +11347,11 @@ Expects Parse Error
 ~~~
 >>-1234567890123456<<
   ----------------^ (0x36) Integer too long: 16 characters
-
 ~~~
 
 
 
-#### simple decimal
+### simple decimal
 
 Input:
 ~~~
@@ -11924,7 +11364,7 @@ Result:
 ~~~
 
 
-#### negative decimal
+### negative decimal
 
 Input:
 ~~~
@@ -11937,7 +11377,7 @@ Result:
 ~~~
 
 
-#### decimal, whitespace after decimal
+### decimal, whitespace after decimal
 
 Input:
 ~~~
@@ -11948,12 +11388,11 @@ Expects Parse Error
 ~~~
 >>1. 23<<
   -^ (0x2e) Decimal must not end in '.'
-
 ~~~
 
 
 
-#### decimal, whitespace before decimal
+### decimal, whitespace before decimal
 
 Input:
 ~~~
@@ -11964,12 +11403,11 @@ Expects Parse Error
 ~~~
 >>1 .23<<
   --^ (0x2e) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### negative decimal, whitespace after sign
+### negative decimal, whitespace after sign
 
 Input:
 ~~~
@@ -11980,12 +11418,11 @@ Expects Parse Error
 ~~~
 >>- 1.23<<
   -^ (0x20) Illegal start for Integer or Decimal: ' 1.23'
-
 ~~~
 
 
 
-#### tricky precision decimal
+### tricky precision decimal
 
 Input:
 ~~~
@@ -11998,7 +11435,7 @@ Result:
 ~~~
 
 
-#### double decimal decimal
+### double decimal decimal
 
 Input:
 ~~~
@@ -12009,12 +11446,11 @@ Expects Parse Error
 ~~~
 >>1.5.4<<
   ---^ (0x2e) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### adjacent double decimal decimal
+### adjacent double decimal decimal
 
 Input:
 ~~~
@@ -12025,12 +11461,11 @@ Expects Parse Error
 ~~~
 >>1..4<<
   -^ (0x2e) Decimal must not end in '.'
-
 ~~~
 
 
 
-#### decimal with three fractional digits
+### decimal with three fractional digits
 
 Input:
 ~~~
@@ -12043,7 +11478,7 @@ Result:
 ~~~
 
 
-#### negative decimal with three fractional digits
+### negative decimal with three fractional digits
 
 Input:
 ~~~
@@ -12056,7 +11491,7 @@ Result:
 ~~~
 
 
-#### decimal with four fractional digits
+### decimal with four fractional digits
 
 Input:
 ~~~
@@ -12067,12 +11502,11 @@ Expects Parse Error
 ~~~
 >>1.1234<<
   -----^ (0x34) Maximum number of fractional digits is 3, found: 4, in: 1.1234
-
 ~~~
 
 
 
-#### negative decimal with four fractional digits
+### negative decimal with four fractional digits
 
 Input:
 ~~~
@@ -12083,12 +11517,11 @@ Expects Parse Error
 ~~~
 >>-1.1234<<
   ------^ (0x34) Maximum number of fractional digits is 3, found: 4, in: 1.1234
-
 ~~~
 
 
 
-#### decimal with thirteen integer digits
+### decimal with thirteen integer digits
 
 Input:
 ~~~
@@ -12099,12 +11532,11 @@ Expects Parse Error
 ~~~
 >>1234567890123.0<<
   -------------^ (0x2e) Illegal position for decimal point in Decimal after '1234567890123'
-
 ~~~
 
 
 
-#### negative decimal with thirteen integer digits
+### negative decimal with thirteen integer digits
 
 Input:
 ~~~
@@ -12115,12 +11547,11 @@ Expects Parse Error
 ~~~
 >>-1234567890123.0<<
   --------------^ (0x2e) Illegal position for decimal point in Decimal after '1234567890123'
-
 ~~~
 
 
 
-#### decimal with 1 significant digit and 1 insignificant digit
+### decimal with 1 significant digit and 1 insignificant digit
 
 Input:
 ~~~
@@ -12133,7 +11564,7 @@ Result:
 ~~~
 
 
-#### decimal with 1 significant digit and 2 insignificant digits
+### decimal with 1 significant digit and 2 insignificant digits
 
 Input:
 ~~~
@@ -12146,7 +11577,7 @@ Result:
 ~~~
 
 
-#### decimal with 2 significant digits and 1 insignificant digit
+### decimal with 2 significant digits and 1 insignificant digit
 
 Input:
 ~~~
@@ -12163,7 +11594,7 @@ Result:
 ## number-generated
 
 
-#### 1 digits of zero
+### 1 digits of zero
 
 Input:
 ~~~
@@ -12176,7 +11607,7 @@ Result:
 ~~~
 
 
-#### 1 digit small integer
+### 1 digit small integer
 
 Input:
 ~~~
@@ -12189,7 +11620,7 @@ Result:
 ~~~
 
 
-#### 1 digit large integer
+### 1 digit large integer
 
 Input:
 ~~~
@@ -12202,7 +11633,7 @@ Result:
 ~~~
 
 
-#### 2 digits of zero
+### 2 digits of zero
 
 Input:
 ~~~
@@ -12215,7 +11646,7 @@ Result:
 ~~~
 
 
-#### 2 digit small integer
+### 2 digit small integer
 
 Input:
 ~~~
@@ -12228,7 +11659,7 @@ Result:
 ~~~
 
 
-#### 2 digit large integer
+### 2 digit large integer
 
 Input:
 ~~~
@@ -12241,7 +11672,7 @@ Result:
 ~~~
 
 
-#### 3 digits of zero
+### 3 digits of zero
 
 Input:
 ~~~
@@ -12254,7 +11685,7 @@ Result:
 ~~~
 
 
-#### 3 digit small integer
+### 3 digit small integer
 
 Input:
 ~~~
@@ -12267,7 +11698,7 @@ Result:
 ~~~
 
 
-#### 3 digit large integer
+### 3 digit large integer
 
 Input:
 ~~~
@@ -12280,7 +11711,7 @@ Result:
 ~~~
 
 
-#### 4 digits of zero
+### 4 digits of zero
 
 Input:
 ~~~
@@ -12293,7 +11724,7 @@ Result:
 ~~~
 
 
-#### 4 digit small integer
+### 4 digit small integer
 
 Input:
 ~~~
@@ -12306,7 +11737,7 @@ Result:
 ~~~
 
 
-#### 4 digit large integer
+### 4 digit large integer
 
 Input:
 ~~~
@@ -12319,7 +11750,7 @@ Result:
 ~~~
 
 
-#### 5 digits of zero
+### 5 digits of zero
 
 Input:
 ~~~
@@ -12332,7 +11763,7 @@ Result:
 ~~~
 
 
-#### 5 digit small integer
+### 5 digit small integer
 
 Input:
 ~~~
@@ -12345,7 +11776,7 @@ Result:
 ~~~
 
 
-#### 5 digit large integer
+### 5 digit large integer
 
 Input:
 ~~~
@@ -12358,7 +11789,7 @@ Result:
 ~~~
 
 
-#### 6 digits of zero
+### 6 digits of zero
 
 Input:
 ~~~
@@ -12371,7 +11802,7 @@ Result:
 ~~~
 
 
-#### 6 digit small integer
+### 6 digit small integer
 
 Input:
 ~~~
@@ -12384,7 +11815,7 @@ Result:
 ~~~
 
 
-#### 6 digit large integer
+### 6 digit large integer
 
 Input:
 ~~~
@@ -12397,7 +11828,7 @@ Result:
 ~~~
 
 
-#### 7 digits of zero
+### 7 digits of zero
 
 Input:
 ~~~
@@ -12410,7 +11841,7 @@ Result:
 ~~~
 
 
-#### 7 digit small integer
+### 7 digit small integer
 
 Input:
 ~~~
@@ -12423,7 +11854,7 @@ Result:
 ~~~
 
 
-#### 7 digit large integer
+### 7 digit large integer
 
 Input:
 ~~~
@@ -12436,7 +11867,7 @@ Result:
 ~~~
 
 
-#### 8 digits of zero
+### 8 digits of zero
 
 Input:
 ~~~
@@ -12449,7 +11880,7 @@ Result:
 ~~~
 
 
-#### 8 digit small integer
+### 8 digit small integer
 
 Input:
 ~~~
@@ -12462,7 +11893,7 @@ Result:
 ~~~
 
 
-#### 8 digit large integer
+### 8 digit large integer
 
 Input:
 ~~~
@@ -12475,7 +11906,7 @@ Result:
 ~~~
 
 
-#### 9 digits of zero
+### 9 digits of zero
 
 Input:
 ~~~
@@ -12488,7 +11919,7 @@ Result:
 ~~~
 
 
-#### 9 digit small integer
+### 9 digit small integer
 
 Input:
 ~~~
@@ -12501,7 +11932,7 @@ Result:
 ~~~
 
 
-#### 9 digit large integer
+### 9 digit large integer
 
 Input:
 ~~~
@@ -12514,7 +11945,7 @@ Result:
 ~~~
 
 
-#### 10 digits of zero
+### 10 digits of zero
 
 Input:
 ~~~
@@ -12527,7 +11958,7 @@ Result:
 ~~~
 
 
-#### 10 digit small integer
+### 10 digit small integer
 
 Input:
 ~~~
@@ -12540,7 +11971,7 @@ Result:
 ~~~
 
 
-#### 10 digit large integer
+### 10 digit large integer
 
 Input:
 ~~~
@@ -12553,7 +11984,7 @@ Result:
 ~~~
 
 
-#### 11 digits of zero
+### 11 digits of zero
 
 Input:
 ~~~
@@ -12566,7 +11997,7 @@ Result:
 ~~~
 
 
-#### 11 digit small integer
+### 11 digit small integer
 
 Input:
 ~~~
@@ -12579,7 +12010,7 @@ Result:
 ~~~
 
 
-#### 11 digit large integer
+### 11 digit large integer
 
 Input:
 ~~~
@@ -12592,7 +12023,7 @@ Result:
 ~~~
 
 
-#### 12 digits of zero
+### 12 digits of zero
 
 Input:
 ~~~
@@ -12605,7 +12036,7 @@ Result:
 ~~~
 
 
-#### 12 digit small integer
+### 12 digit small integer
 
 Input:
 ~~~
@@ -12618,7 +12049,7 @@ Result:
 ~~~
 
 
-#### 12 digit large integer
+### 12 digit large integer
 
 Input:
 ~~~
@@ -12631,7 +12062,7 @@ Result:
 ~~~
 
 
-#### 13 digits of zero
+### 13 digits of zero
 
 Input:
 ~~~
@@ -12644,7 +12075,7 @@ Result:
 ~~~
 
 
-#### 13 digit small integer
+### 13 digit small integer
 
 Input:
 ~~~
@@ -12657,7 +12088,7 @@ Result:
 ~~~
 
 
-#### 13 digit large integer
+### 13 digit large integer
 
 Input:
 ~~~
@@ -12670,7 +12101,7 @@ Result:
 ~~~
 
 
-#### 14 digits of zero
+### 14 digits of zero
 
 Input:
 ~~~
@@ -12683,7 +12114,7 @@ Result:
 ~~~
 
 
-#### 14 digit small integer
+### 14 digit small integer
 
 Input:
 ~~~
@@ -12696,7 +12127,7 @@ Result:
 ~~~
 
 
-#### 14 digit large integer
+### 14 digit large integer
 
 Input:
 ~~~
@@ -12709,7 +12140,7 @@ Result:
 ~~~
 
 
-#### 15 digits of zero
+### 15 digits of zero
 
 Input:
 ~~~
@@ -12722,7 +12153,7 @@ Result:
 ~~~
 
 
-#### 15 digit small integer
+### 15 digit small integer
 
 Input:
 ~~~
@@ -12735,7 +12166,7 @@ Result:
 ~~~
 
 
-#### 15 digit large integer
+### 15 digit large integer
 
 Input:
 ~~~
@@ -12748,7 +12179,7 @@ Result:
 ~~~
 
 
-#### 2 digit 0, 1 fractional small decimal
+### 2 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -12761,7 +12192,7 @@ Result:
 ~~~
 
 
-#### 2 digit, 1 fractional 0 decimal
+### 2 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -12774,7 +12205,7 @@ Result:
 ~~~
 
 
-#### 2 digit, 1 fractional small decimal
+### 2 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -12787,7 +12218,7 @@ Result:
 ~~~
 
 
-#### 2 digit, 1 fractional large decimal
+### 2 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -12800,7 +12231,7 @@ Result:
 ~~~
 
 
-#### 3 digit 0, 2 fractional small decimal
+### 3 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -12813,7 +12244,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 2 fractional 0 decimal
+### 3 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -12826,7 +12257,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 2 fractional small decimal
+### 3 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -12839,7 +12270,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 2 fractional large decimal
+### 3 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -12852,7 +12283,7 @@ Result:
 ~~~
 
 
-#### 4 digit 0, 3 fractional small decimal
+### 4 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -12865,7 +12296,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 3 fractional 0 decimal
+### 4 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -12878,7 +12309,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 3 fractional small decimal
+### 4 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -12891,7 +12322,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 3 fractional large decimal
+### 4 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -12904,7 +12335,7 @@ Result:
 ~~~
 
 
-#### 3 digit 0, 1 fractional small decimal
+### 3 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -12917,7 +12348,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 1 fractional 0 decimal
+### 3 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -12930,7 +12361,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 1 fractional small decimal
+### 3 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -12943,7 +12374,7 @@ Result:
 ~~~
 
 
-#### 3 digit, 1 fractional large decimal
+### 3 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -12956,7 +12387,7 @@ Result:
 ~~~
 
 
-#### 4 digit 0, 2 fractional small decimal
+### 4 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -12969,7 +12400,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 2 fractional 0 decimal
+### 4 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -12982,7 +12413,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 2 fractional small decimal
+### 4 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -12995,7 +12426,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 2 fractional large decimal
+### 4 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13008,7 +12439,7 @@ Result:
 ~~~
 
 
-#### 5 digit 0, 3 fractional small decimal
+### 5 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13021,7 +12452,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 3 fractional 0 decimal
+### 5 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13034,7 +12465,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 3 fractional small decimal
+### 5 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13047,7 +12478,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 3 fractional large decimal
+### 5 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13060,7 +12491,7 @@ Result:
 ~~~
 
 
-#### 4 digit 0, 1 fractional small decimal
+### 4 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13073,7 +12504,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 1 fractional 0 decimal
+### 4 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13086,7 +12517,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 1 fractional small decimal
+### 4 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13099,7 +12530,7 @@ Result:
 ~~~
 
 
-#### 4 digit, 1 fractional large decimal
+### 4 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13112,7 +12543,7 @@ Result:
 ~~~
 
 
-#### 5 digit 0, 2 fractional small decimal
+### 5 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13125,7 +12556,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 2 fractional 0 decimal
+### 5 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13138,7 +12569,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 2 fractional small decimal
+### 5 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13151,7 +12582,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 2 fractional large decimal
+### 5 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13164,7 +12595,7 @@ Result:
 ~~~
 
 
-#### 6 digit 0, 3 fractional small decimal
+### 6 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13177,7 +12608,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 3 fractional 0 decimal
+### 6 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13190,7 +12621,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 3 fractional small decimal
+### 6 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13203,7 +12634,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 3 fractional large decimal
+### 6 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13216,7 +12647,7 @@ Result:
 ~~~
 
 
-#### 5 digit 0, 1 fractional small decimal
+### 5 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13229,7 +12660,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 1 fractional 0 decimal
+### 5 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13242,7 +12673,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 1 fractional small decimal
+### 5 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13255,7 +12686,7 @@ Result:
 ~~~
 
 
-#### 5 digit, 1 fractional large decimal
+### 5 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13268,7 +12699,7 @@ Result:
 ~~~
 
 
-#### 6 digit 0, 2 fractional small decimal
+### 6 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13281,7 +12712,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 2 fractional 0 decimal
+### 6 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13294,7 +12725,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 2 fractional small decimal
+### 6 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13307,7 +12738,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 2 fractional large decimal
+### 6 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13320,7 +12751,7 @@ Result:
 ~~~
 
 
-#### 7 digit 0, 3 fractional small decimal
+### 7 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13333,7 +12764,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 3 fractional 0 decimal
+### 7 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13346,7 +12777,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 3 fractional small decimal
+### 7 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13359,7 +12790,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 3 fractional large decimal
+### 7 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13372,7 +12803,7 @@ Result:
 ~~~
 
 
-#### 6 digit 0, 1 fractional small decimal
+### 6 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13385,7 +12816,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 1 fractional 0 decimal
+### 6 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13398,7 +12829,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 1 fractional small decimal
+### 6 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13411,7 +12842,7 @@ Result:
 ~~~
 
 
-#### 6 digit, 1 fractional large decimal
+### 6 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13424,7 +12855,7 @@ Result:
 ~~~
 
 
-#### 7 digit 0, 2 fractional small decimal
+### 7 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13437,7 +12868,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 2 fractional 0 decimal
+### 7 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13450,7 +12881,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 2 fractional small decimal
+### 7 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13463,7 +12894,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 2 fractional large decimal
+### 7 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13476,7 +12907,7 @@ Result:
 ~~~
 
 
-#### 8 digit 0, 3 fractional small decimal
+### 8 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13489,7 +12920,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 3 fractional 0 decimal
+### 8 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13502,7 +12933,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 3 fractional small decimal
+### 8 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13515,7 +12946,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 3 fractional large decimal
+### 8 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13528,7 +12959,7 @@ Result:
 ~~~
 
 
-#### 7 digit 0, 1 fractional small decimal
+### 7 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13541,7 +12972,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 1 fractional 0 decimal
+### 7 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13554,7 +12985,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 1 fractional small decimal
+### 7 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13567,7 +12998,7 @@ Result:
 ~~~
 
 
-#### 7 digit, 1 fractional large decimal
+### 7 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13580,7 +13011,7 @@ Result:
 ~~~
 
 
-#### 8 digit 0, 2 fractional small decimal
+### 8 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13593,7 +13024,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 2 fractional 0 decimal
+### 8 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13606,7 +13037,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 2 fractional small decimal
+### 8 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13619,7 +13050,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 2 fractional large decimal
+### 8 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13632,7 +13063,7 @@ Result:
 ~~~
 
 
-#### 9 digit 0, 3 fractional small decimal
+### 9 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13645,7 +13076,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 3 fractional 0 decimal
+### 9 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13658,7 +13089,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 3 fractional small decimal
+### 9 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13671,7 +13102,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 3 fractional large decimal
+### 9 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13684,7 +13115,7 @@ Result:
 ~~~
 
 
-#### 8 digit 0, 1 fractional small decimal
+### 8 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13697,7 +13128,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 1 fractional 0 decimal
+### 8 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13710,7 +13141,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 1 fractional small decimal
+### 8 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13723,7 +13154,7 @@ Result:
 ~~~
 
 
-#### 8 digit, 1 fractional large decimal
+### 8 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13736,7 +13167,7 @@ Result:
 ~~~
 
 
-#### 9 digit 0, 2 fractional small decimal
+### 9 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13749,7 +13180,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 2 fractional 0 decimal
+### 9 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13762,7 +13193,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 2 fractional small decimal
+### 9 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13775,7 +13206,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 2 fractional large decimal
+### 9 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13788,7 +13219,7 @@ Result:
 ~~~
 
 
-#### 10 digit 0, 3 fractional small decimal
+### 10 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13801,7 +13232,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 3 fractional 0 decimal
+### 10 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13814,7 +13245,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 3 fractional small decimal
+### 10 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13827,7 +13258,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 3 fractional large decimal
+### 10 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13840,7 +13271,7 @@ Result:
 ~~~
 
 
-#### 9 digit 0, 1 fractional small decimal
+### 9 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13853,7 +13284,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 1 fractional 0 decimal
+### 9 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -13866,7 +13297,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 1 fractional small decimal
+### 9 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -13879,7 +13310,7 @@ Result:
 ~~~
 
 
-#### 9 digit, 1 fractional large decimal
+### 9 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -13892,7 +13323,7 @@ Result:
 ~~~
 
 
-#### 10 digit 0, 2 fractional small decimal
+### 10 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13905,7 +13336,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 2 fractional 0 decimal
+### 10 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -13918,7 +13349,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 2 fractional small decimal
+### 10 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -13931,7 +13362,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 2 fractional large decimal
+### 10 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -13944,7 +13375,7 @@ Result:
 ~~~
 
 
-#### 11 digit 0, 3 fractional small decimal
+### 11 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13957,7 +13388,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 3 fractional 0 decimal
+### 11 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -13970,7 +13401,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 3 fractional small decimal
+### 11 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -13983,7 +13414,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 3 fractional large decimal
+### 11 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -13996,7 +13427,7 @@ Result:
 ~~~
 
 
-#### 10 digit 0, 1 fractional small decimal
+### 10 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14009,7 +13440,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 1 fractional 0 decimal
+### 10 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -14022,7 +13453,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 1 fractional small decimal
+### 10 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14035,7 +13466,7 @@ Result:
 ~~~
 
 
-#### 10 digit, 1 fractional large decimal
+### 10 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -14048,7 +13479,7 @@ Result:
 ~~~
 
 
-#### 11 digit 0, 2 fractional small decimal
+### 11 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14061,7 +13492,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 2 fractional 0 decimal
+### 11 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -14074,7 +13505,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 2 fractional small decimal
+### 11 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14087,7 +13518,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 2 fractional large decimal
+### 11 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -14100,7 +13531,7 @@ Result:
 ~~~
 
 
-#### 12 digit 0, 3 fractional small decimal
+### 12 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14113,7 +13544,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 3 fractional 0 decimal
+### 12 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -14126,7 +13557,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 3 fractional small decimal
+### 12 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14139,7 +13570,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 3 fractional large decimal
+### 12 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -14152,7 +13583,7 @@ Result:
 ~~~
 
 
-#### 11 digit 0, 1 fractional small decimal
+### 11 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14165,7 +13596,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 1 fractional 0 decimal
+### 11 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -14178,7 +13609,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 1 fractional small decimal
+### 11 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14191,7 +13622,7 @@ Result:
 ~~~
 
 
-#### 11 digit, 1 fractional large decimal
+### 11 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -14204,7 +13635,7 @@ Result:
 ~~~
 
 
-#### 12 digit 0, 2 fractional small decimal
+### 12 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14217,7 +13648,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 2 fractional 0 decimal
+### 12 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -14230,7 +13661,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 2 fractional small decimal
+### 12 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14243,7 +13674,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 2 fractional large decimal
+### 12 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -14256,7 +13687,7 @@ Result:
 ~~~
 
 
-#### 13 digit 0, 3 fractional small decimal
+### 13 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14269,7 +13700,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 3 fractional 0 decimal
+### 13 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -14282,7 +13713,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 3 fractional small decimal
+### 13 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14295,7 +13726,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 3 fractional large decimal
+### 13 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -14308,7 +13739,7 @@ Result:
 ~~~
 
 
-#### 12 digit 0, 1 fractional small decimal
+### 12 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14321,7 +13752,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 1 fractional 0 decimal
+### 12 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -14334,7 +13765,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 1 fractional small decimal
+### 12 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14347,7 +13778,7 @@ Result:
 ~~~
 
 
-#### 12 digit, 1 fractional large decimal
+### 12 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -14360,7 +13791,7 @@ Result:
 ~~~
 
 
-#### 13 digit 0, 2 fractional small decimal
+### 13 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14373,7 +13804,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 2 fractional 0 decimal
+### 13 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -14386,7 +13817,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 2 fractional small decimal
+### 13 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14399,7 +13830,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 2 fractional large decimal
+### 13 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -14412,7 +13843,7 @@ Result:
 ~~~
 
 
-#### 14 digit 0, 3 fractional small decimal
+### 14 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14425,7 +13856,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 3 fractional 0 decimal
+### 14 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -14438,7 +13869,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 3 fractional small decimal
+### 14 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14451,7 +13882,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 3 fractional large decimal
+### 14 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -14464,7 +13895,7 @@ Result:
 ~~~
 
 
-#### 13 digit 0, 1 fractional small decimal
+### 13 digit 0, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14477,7 +13908,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 1 fractional 0 decimal
+### 13 digit, 1 fractional 0 decimal
 
 Input:
 ~~~
@@ -14490,7 +13921,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 1 fractional small decimal
+### 13 digit, 1 fractional small decimal
 
 Input:
 ~~~
@@ -14503,7 +13934,7 @@ Result:
 ~~~
 
 
-#### 13 digit, 1 fractional large decimal
+### 13 digit, 1 fractional large decimal
 
 Input:
 ~~~
@@ -14516,7 +13947,7 @@ Result:
 ~~~
 
 
-#### 14 digit 0, 2 fractional small decimal
+### 14 digit 0, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14529,7 +13960,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 2 fractional 0 decimal
+### 14 digit, 2 fractional 0 decimal
 
 Input:
 ~~~
@@ -14542,7 +13973,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 2 fractional small decimal
+### 14 digit, 2 fractional small decimal
 
 Input:
 ~~~
@@ -14555,7 +13986,7 @@ Result:
 ~~~
 
 
-#### 14 digit, 2 fractional large decimal
+### 14 digit, 2 fractional large decimal
 
 Input:
 ~~~
@@ -14568,7 +13999,7 @@ Result:
 ~~~
 
 
-#### 15 digit 0, 3 fractional small decimal
+### 15 digit 0, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14581,7 +14012,7 @@ Result:
 ~~~
 
 
-#### 15 digit, 3 fractional 0 decimal
+### 15 digit, 3 fractional 0 decimal
 
 Input:
 ~~~
@@ -14594,7 +14025,7 @@ Result:
 ~~~
 
 
-#### 15 digit, 3 fractional small decimal
+### 15 digit, 3 fractional small decimal
 
 Input:
 ~~~
@@ -14607,7 +14038,7 @@ Result:
 ~~~
 
 
-#### 15 digit, 3 fractional large decimal
+### 15 digit, 3 fractional large decimal
 
 Input:
 ~~~
@@ -14620,7 +14051,7 @@ Result:
 ~~~
 
 
-#### too many digit 0 decimal
+### too many digit 0 decimal
 
 Input:
 ~~~
@@ -14631,12 +14062,11 @@ Expects Parse Error
 ~~~
 >>000000000000000.0<<
   ---------------^ (0x2e) Illegal position for decimal point in Decimal after '000000000000000'
-
 ~~~
 
 
 
-#### too many fractional digits 0 decimal
+### too many fractional digits 0 decimal
 
 Input:
 ~~~
@@ -14647,12 +14077,11 @@ Expects Parse Error
 ~~~
 >>000000000000.0000<<
   ----------------^ (0x30) Decimal too long: 17 characters
-
 ~~~
 
 
 
-#### too many digit 9 decimal
+### too many digit 9 decimal
 
 Input:
 ~~~
@@ -14663,12 +14092,11 @@ Expects Parse Error
 ~~~
 >>999999999999999.9<<
   ---------------^ (0x2e) Illegal position for decimal point in Decimal after '999999999999999'
-
 ~~~
 
 
 
-#### too many fractional digits 9 decimal
+### too many fractional digits 9 decimal
 
 Input:
 ~~~
@@ -14679,7 +14107,6 @@ Expects Parse Error
 ~~~
 >>999999999999.9999<<
   ----------------^ (0x39) Decimal too long: 17 characters
-
 ~~~
 
 
@@ -14688,7 +14115,7 @@ Expects Parse Error
 ## param-dict
 
 
-#### basic parameterised dict
+### basic parameterised dict
 
 Input:
 ~~~
@@ -14701,7 +14128,7 @@ abc=123;a=1;b=2, def=456, ghi=789;q=9;r="+w"
 ~~~
 
 
-#### single item parameterised dict
+### single item parameterised dict
 
 Input:
 ~~~
@@ -14714,7 +14141,7 @@ a=b;q=1.0
 ~~~
 
 
-#### list item parameterised dictionary
+### list item parameterised dictionary
 
 Input:
 ~~~
@@ -14727,7 +14154,7 @@ a=(1 2);q=1.0
 ~~~
 
 
-#### missing parameter value parameterised dict
+### missing parameter value parameterised dict
 
 Input:
 ~~~
@@ -14740,7 +14167,7 @@ a=3;c;d=5
 ~~~
 
 
-#### terminal missing parameter value parameterised dict
+### terminal missing parameter value parameterised dict
 
 Input:
 ~~~
@@ -14753,7 +14180,7 @@ a=3;c=5;d
 ~~~
 
 
-#### no whitespace parameterised dict
+### no whitespace parameterised dict
 
 Input:
 ~~~
@@ -14766,7 +14193,7 @@ a=b;c=1, d=e;f=2
 ~~~
 
 
-#### whitespace before = parameterised dict
+### whitespace before = parameterised dict
 
 Input:
 ~~~
@@ -14777,12 +14204,11 @@ Expects Parse Error
 ~~~
 >>a=b;q =0.5<<
   ------^ (0x3d) Expected COMMA in Dictionary, found: '=' (\u003d)
-
 ~~~
 
 
 
-#### whitespace after = parameterised dict
+### whitespace after = parameterised dict
 
 Input:
 ~~~
@@ -14793,12 +14219,11 @@ Expects Parse Error
 ~~~
 >>a=b;q= 0.5<<
   ------^ (0x20) Unexpected start character in Bare Item: ' ' (\u0020)
-
 ~~~
 
 
 
-#### whitespace before ; parameterised dict
+### whitespace before ; parameterised dict
 
 Input:
 ~~~
@@ -14809,12 +14234,11 @@ Expects Parse Error
 ~~~
 >>a=b ;q=0.5<<
   ----^ (0x3b) Expected COMMA in Dictionary, found: ';' (\u003b)
-
 ~~~
 
 
 
-#### whitespace after ; parameterised dict
+### whitespace after ; parameterised dict
 
 Input:
 ~~~
@@ -14827,7 +14251,7 @@ a=b;q=0.5
 ~~~
 
 
-#### extra whitespace parameterised dict
+### extra whitespace parameterised dict
 
 Input:
 ~~~
@@ -14840,7 +14264,7 @@ a=b;c=1, d=e;f=2;g=3
 ~~~
 
 
-#### two lines parameterised list
+### two lines parameterised list
 
 Input:
 ~~~
@@ -14854,7 +14278,7 @@ a=b;c=1, d=e;f=2
 ~~~
 
 
-#### trailing comma parameterised list
+### trailing comma parameterised list
 
 Input:
 ~~~
@@ -14865,12 +14289,11 @@ Expects Parse Error
 ~~~
 >>a=b; q=1.0,<<
   -----------^ Found trailing COMMA in Dictionary
-
 ~~~
 
 
 
-#### empty item parameterised list
+### empty item parameterised list
 
 Input:
 ~~~
@@ -14881,7 +14304,6 @@ Expects Parse Error
 ~~~
 >>a=b; q=1.0,,c=d<<
   -----------^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
-
 ~~~
 
 
@@ -14890,7 +14312,7 @@ Expects Parse Error
 ## param-list
 
 
-#### basic parameterised list
+### basic parameterised list
 
 Input:
 ~~~
@@ -14903,7 +14325,7 @@ abc_123;a=1;b=2;cdef_456, ghi;q=9;r="+w"
 ~~~
 
 
-#### single item parameterised list
+### single item parameterised list
 
 Input:
 ~~~
@@ -14916,7 +14338,7 @@ text/html;q=1.0
 ~~~
 
 
-#### missing parameter value parameterised list
+### missing parameter value parameterised list
 
 Input:
 ~~~
@@ -14929,7 +14351,7 @@ text/html;a;q=1.0
 ~~~
 
 
-#### missing terminal parameter value parameterised list
+### missing terminal parameter value parameterised list
 
 Input:
 ~~~
@@ -14942,7 +14364,7 @@ text/html;q=1.0;a
 ~~~
 
 
-#### no whitespace parameterised list
+### no whitespace parameterised list
 
 Input:
 ~~~
@@ -14955,7 +14377,7 @@ text/html, text/plain;q=0.5
 ~~~
 
 
-#### whitespace before = parameterised list
+### whitespace before = parameterised list
 
 Input:
 ~~~
@@ -14966,12 +14388,11 @@ Expects Parse Error
 ~~~
 >>text/html, text/plain;q =0.5<<
   ------------------------^ (0x3d) Expected COMMA in List, got: '=' (\u003d)
-
 ~~~
 
 
 
-#### whitespace after = parameterised list
+### whitespace after = parameterised list
 
 Input:
 ~~~
@@ -14982,12 +14403,11 @@ Expects Parse Error
 ~~~
 >>text/html, text/plain;q= 0.5<<
   ------------------------^ (0x20) Unexpected start character in Bare Item: ' ' (\u0020)
-
 ~~~
 
 
 
-#### whitespace before ; parameterised list
+### whitespace before ; parameterised list
 
 Input:
 ~~~
@@ -14998,12 +14418,11 @@ Expects Parse Error
 ~~~
 >>text/html, text/plain ;q=0.5<<
   ----------------------^ (0x3b) Expected COMMA in List, got: ';' (\u003b)
-
 ~~~
 
 
 
-#### whitespace after ; parameterised list
+### whitespace after ; parameterised list
 
 Input:
 ~~~
@@ -15016,7 +14435,7 @@ text/html, text/plain;q=0.5
 ~~~
 
 
-#### extra whitespace parameterised list
+### extra whitespace parameterised list
 
 Input:
 ~~~
@@ -15029,7 +14448,7 @@ text/html, text/plain;q=0.5;charset=utf-8
 ~~~
 
 
-#### two lines parameterised list
+### two lines parameterised list
 
 Input:
 ~~~
@@ -15043,7 +14462,7 @@ text/html, text/plain;q=0.5
 ~~~
 
 
-#### trailing comma parameterised list
+### trailing comma parameterised list
 
 Input:
 ~~~
@@ -15054,12 +14473,11 @@ Expects Parse Error
 ~~~
 >>text/html,text/plain;q=0.5,<<
   ---------------------------^ Found trailing COMMA in List
-
 ~~~
 
 
 
-#### empty item parameterised list
+### empty item parameterised list
 
 Input:
 ~~~
@@ -15070,7 +14488,6 @@ Expects Parse Error
 ~~~
 >>text/html,,text/plain;q=0.5,<<
   ----------^ (0x2c) Unexpected start character in Bare Item: ',' (\u002c)
-
 ~~~
 
 
@@ -15079,7 +14496,7 @@ Expects Parse Error
 ## param-listlist
 
 
-#### parameterised inner list
+### parameterised inner list
 
 Input:
 ~~~
@@ -15092,7 +14509,7 @@ Result:
 ~~~
 
 
-#### parameterised inner list item
+### parameterised inner list item
 
 Input:
 ~~~
@@ -15105,7 +14522,7 @@ Result:
 ~~~
 
 
-#### parameterised inner list with parameterised item
+### parameterised inner list with parameterised item
 
 Input:
 ~~~
@@ -15122,7 +14539,7 @@ Result:
 ## string
 
 
-#### basic string
+### basic string
 
 Input:
 ~~~
@@ -15135,7 +14552,7 @@ Result:
 ~~~
 
 
-#### empty string
+### empty string
 
 Input:
 ~~~
@@ -15148,7 +14565,7 @@ Result:
 ~~~
 
 
-#### long string
+### long string
 
 Input:
 ~~~
@@ -15161,7 +14578,7 @@ Result:
 ~~~
 
 
-#### whitespace string
+### whitespace string
 
 Input:
 ~~~
@@ -15174,7 +14591,7 @@ Result:
 ~~~
 
 
-#### non-ascii string
+### non-ascii string
 
 Input:
 ~~~
@@ -15185,12 +14602,11 @@ Expects Parse Error
 ~~~
 >>"füü"<<
   --^ (0xfc) Invalid character in field line at position 2: 'ü' (0x00fc) (input: "füü")
-
 ~~~
 
 
 
-#### tab in string
+### tab in string
 
 Input:
 ~~~
@@ -15201,12 +14617,11 @@ Expects Parse Error
 ~~~
 >>"	"<<
   --^ (0x22) Invalid character in String at position 2
-
 ~~~
 
 
 
-#### newline in string
+### newline in string
 
 Input:
 ~~~
@@ -15219,12 +14634,11 @@ Expects Parse Error
 >>" 
  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### single quoted string
+### single quoted string
 
 Input:
 ~~~
@@ -15235,12 +14649,11 @@ Expects Parse Error
 ~~~
 >>'foo'<<
   ^ (0x27) Unexpected start character in Bare Item: ''' (\u0027)
-
 ~~~
 
 
 
-#### unbalanced string
+### unbalanced string
 
 Input:
 ~~~
@@ -15251,12 +14664,11 @@ Expects Parse Error
 ~~~
 >>"foo<<
   ----^ Closing DQUOTE missing
-
 ~~~
 
 
 
-#### string quoting
+### string quoting
 
 Input:
 ~~~
@@ -15269,7 +14681,7 @@ Result:
 ~~~
 
 
-#### bad string quoting
+### bad string quoting
 
 Input:
 ~~~
@@ -15280,12 +14692,11 @@ Expects Parse Error
 ~~~
 >>"foo \,"<<
   ------^ (0x2c) Invalid escape sequence character ',' at position 6
-
 ~~~
 
 
 
-#### ending string quote
+### ending string quote
 
 Input:
 ~~~
@@ -15296,12 +14707,11 @@ Expects Parse Error
 ~~~
 >>"foo \"<<
   -------^ Closing DQUOTE missing
-
 ~~~
 
 
 
-#### abruptly ending string quote
+### abruptly ending string quote
 
 Input:
 ~~~
@@ -15312,7 +14722,6 @@ Expects Parse Error
 ~~~
 >>"foo \<<
   ------^ Incomplete escape sequence at position 6
-
 ~~~
 
 
@@ -15321,23 +14730,22 @@ Expects Parse Error
 ## string-generated
 
 
-#### 0x00 in string
+### 0x00 in string
 
 Input:
 ~~~
-"   "
+"   "
 ~~~
 
 Expects Parse Error
 ~~~
->>"   "<<
+>>"   "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x01 in string
+### 0x01 in string
 
 Input:
 ~~~
@@ -15348,12 +14756,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x02 in string
+### 0x02 in string
 
 Input:
 ~~~
@@ -15364,12 +14771,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x03 in string
+### 0x03 in string
 
 Input:
 ~~~
@@ -15380,12 +14786,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x04 in string
+### 0x04 in string
 
 Input:
 ~~~
@@ -15396,12 +14801,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x05 in string
+### 0x05 in string
 
 Input:
 ~~~
@@ -15412,12 +14816,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x06 in string
+### 0x06 in string
 
 Input:
 ~~~
@@ -15428,28 +14831,26 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x07 in string
+### 0x07 in string
 
 Input:
 ~~~
-"   "
+"  "
 ~~~
 
 Expects Parse Error
 ~~~
->>"   "<<
+>>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x08 in string
+### 0x08 in string
 
 Input:
 ~~~
@@ -15460,12 +14861,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x09 in string
+### 0x09 in string
 
 Input:
 ~~~
@@ -15476,12 +14876,11 @@ Expects Parse Error
 ~~~
 >>" 	 "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0a in string
+### 0x0a in string
 
 Input:
 ~~~
@@ -15494,30 +14893,26 @@ Expects Parse Error
 >>" 
  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0b in string
+### 0x0b in string
 
 Input:
 ~~~
-" 
- "
+"  "
 ~~~
 
 Expects Parse Error
 ~~~
->>" 
- "<<
+>>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0c in string
+### 0x0c in string
 
 Input:
 ~~~
@@ -15528,30 +14923,26 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0d in string
+### 0x0d in string
 
 Input:
 ~~~
-" 
- "
+"  "
 ~~~
 
 Expects Parse Error
 ~~~
->>" 
- "<<
+>>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0e in string
+### 0x0e in string
 
 Input:
 ~~~
@@ -15562,12 +14953,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x0f in string
+### 0x0f in string
 
 Input:
 ~~~
@@ -15578,12 +14968,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x10 in string
+### 0x10 in string
 
 Input:
 ~~~
@@ -15594,12 +14983,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x11 in string
+### 0x11 in string
 
 Input:
 ~~~
@@ -15610,12 +14998,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x12 in string
+### 0x12 in string
 
 Input:
 ~~~
@@ -15626,12 +15013,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x13 in string
+### 0x13 in string
 
 Input:
 ~~~
@@ -15642,12 +15028,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x14 in string
+### 0x14 in string
 
 Input:
 ~~~
@@ -15658,12 +15043,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x15 in string
+### 0x15 in string
 
 Input:
 ~~~
@@ -15674,12 +15058,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x16 in string
+### 0x16 in string
 
 Input:
 ~~~
@@ -15690,12 +15073,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x17 in string
+### 0x17 in string
 
 Input:
 ~~~
@@ -15706,12 +15088,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x18 in string
+### 0x18 in string
 
 Input:
 ~~~
@@ -15722,12 +15103,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x19 in string
+### 0x19 in string
 
 Input:
 ~~~
@@ -15738,12 +15118,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1a in string
+### 0x1a in string
 
 Input:
 ~~~
@@ -15754,12 +15133,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1b in string
+### 0x1b in string
 
 Input:
 ~~~
@@ -15770,12 +15148,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1c in string
+### 0x1c in string
 
 Input:
 ~~~
@@ -15786,12 +15163,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1d in string
+### 0x1d in string
 
 Input:
 ~~~
@@ -15802,12 +15178,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1e in string
+### 0x1e in string
 
 Input:
 ~~~
@@ -15818,12 +15193,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x1f in string
+### 0x1f in string
 
 Input:
 ~~~
@@ -15834,12 +15208,11 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### 0x20 in string
+### 0x20 in string
 
 Input:
 ~~~
@@ -15852,7 +15225,7 @@ Result:
 ~~~
 
 
-#### 0x21 in string
+### 0x21 in string
 
 Input:
 ~~~
@@ -15865,7 +15238,7 @@ Result:
 ~~~
 
 
-#### 0x22 in string
+### 0x22 in string
 
 Input:
 ~~~
@@ -15876,25 +15249,24 @@ Expects Parse Error
 ~~~
 >>" " "<<
   ----^ (0x22) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x23 in string
+### 0x23 in string
 
 Input:
 ~~~
-" ## "
+" # "
 ~~~
 
 Result:
 ~~~
-" ## "
+" # "
 ~~~
 
 
-#### 0x24 in string
+### 0x24 in string
 
 Input:
 ~~~
@@ -15907,7 +15279,7 @@ Result:
 ~~~
 
 
-#### 0x25 in string
+### 0x25 in string
 
 Input:
 ~~~
@@ -15920,7 +15292,7 @@ Result:
 ~~~
 
 
-#### 0x26 in string
+### 0x26 in string
 
 Input:
 ~~~
@@ -15933,7 +15305,7 @@ Result:
 ~~~
 
 
-#### 0x27 in string
+### 0x27 in string
 
 Input:
 ~~~
@@ -15946,7 +15318,7 @@ Result:
 ~~~
 
 
-#### 0x28 in string
+### 0x28 in string
 
 Input:
 ~~~
@@ -15959,7 +15331,7 @@ Result:
 ~~~
 
 
-#### 0x29 in string
+### 0x29 in string
 
 Input:
 ~~~
@@ -15972,7 +15344,7 @@ Result:
 ~~~
 
 
-#### 0x2a in string
+### 0x2a in string
 
 Input:
 ~~~
@@ -15985,7 +15357,7 @@ Result:
 ~~~
 
 
-#### 0x2b in string
+### 0x2b in string
 
 Input:
 ~~~
@@ -15998,7 +15370,7 @@ Result:
 ~~~
 
 
-#### 0x2c in string
+### 0x2c in string
 
 Input:
 ~~~
@@ -16011,7 +15383,7 @@ Result:
 ~~~
 
 
-#### 0x2d in string
+### 0x2d in string
 
 Input:
 ~~~
@@ -16024,7 +15396,7 @@ Result:
 ~~~
 
 
-#### 0x2e in string
+### 0x2e in string
 
 Input:
 ~~~
@@ -16037,7 +15409,7 @@ Result:
 ~~~
 
 
-#### 0x2f in string
+### 0x2f in string
 
 Input:
 ~~~
@@ -16050,7 +15422,7 @@ Result:
 ~~~
 
 
-#### 0x30 in string
+### 0x30 in string
 
 Input:
 ~~~
@@ -16063,7 +15435,7 @@ Result:
 ~~~
 
 
-#### 0x31 in string
+### 0x31 in string
 
 Input:
 ~~~
@@ -16076,7 +15448,7 @@ Result:
 ~~~
 
 
-#### 0x32 in string
+### 0x32 in string
 
 Input:
 ~~~
@@ -16089,7 +15461,7 @@ Result:
 ~~~
 
 
-#### 0x33 in string
+### 0x33 in string
 
 Input:
 ~~~
@@ -16102,7 +15474,7 @@ Result:
 ~~~
 
 
-#### 0x34 in string
+### 0x34 in string
 
 Input:
 ~~~
@@ -16115,7 +15487,7 @@ Result:
 ~~~
 
 
-#### 0x35 in string
+### 0x35 in string
 
 Input:
 ~~~
@@ -16128,7 +15500,7 @@ Result:
 ~~~
 
 
-#### 0x36 in string
+### 0x36 in string
 
 Input:
 ~~~
@@ -16141,7 +15513,7 @@ Result:
 ~~~
 
 
-#### 0x37 in string
+### 0x37 in string
 
 Input:
 ~~~
@@ -16154,7 +15526,7 @@ Result:
 ~~~
 
 
-#### 0x38 in string
+### 0x38 in string
 
 Input:
 ~~~
@@ -16167,7 +15539,7 @@ Result:
 ~~~
 
 
-#### 0x39 in string
+### 0x39 in string
 
 Input:
 ~~~
@@ -16180,7 +15552,7 @@ Result:
 ~~~
 
 
-#### 0x3a in string
+### 0x3a in string
 
 Input:
 ~~~
@@ -16193,7 +15565,7 @@ Result:
 ~~~
 
 
-#### 0x3b in string
+### 0x3b in string
 
 Input:
 ~~~
@@ -16206,7 +15578,7 @@ Result:
 ~~~
 
 
-#### 0x3c in string
+### 0x3c in string
 
 Input:
 ~~~
@@ -16219,7 +15591,7 @@ Result:
 ~~~
 
 
-#### 0x3d in string
+### 0x3d in string
 
 Input:
 ~~~
@@ -16232,7 +15604,7 @@ Result:
 ~~~
 
 
-#### 0x3e in string
+### 0x3e in string
 
 Input:
 ~~~
@@ -16245,7 +15617,7 @@ Result:
 ~~~
 
 
-#### 0x3f in string
+### 0x3f in string
 
 Input:
 ~~~
@@ -16258,7 +15630,7 @@ Result:
 ~~~
 
 
-#### 0x40 in string
+### 0x40 in string
 
 Input:
 ~~~
@@ -16271,7 +15643,7 @@ Result:
 ~~~
 
 
-#### 0x41 in string
+### 0x41 in string
 
 Input:
 ~~~
@@ -16284,7 +15656,7 @@ Result:
 ~~~
 
 
-#### 0x42 in string
+### 0x42 in string
 
 Input:
 ~~~
@@ -16297,7 +15669,7 @@ Result:
 ~~~
 
 
-#### 0x43 in string
+### 0x43 in string
 
 Input:
 ~~~
@@ -16310,7 +15682,7 @@ Result:
 ~~~
 
 
-#### 0x44 in string
+### 0x44 in string
 
 Input:
 ~~~
@@ -16323,7 +15695,7 @@ Result:
 ~~~
 
 
-#### 0x45 in string
+### 0x45 in string
 
 Input:
 ~~~
@@ -16336,7 +15708,7 @@ Result:
 ~~~
 
 
-#### 0x46 in string
+### 0x46 in string
 
 Input:
 ~~~
@@ -16349,7 +15721,7 @@ Result:
 ~~~
 
 
-#### 0x47 in string
+### 0x47 in string
 
 Input:
 ~~~
@@ -16362,7 +15734,7 @@ Result:
 ~~~
 
 
-#### 0x48 in string
+### 0x48 in string
 
 Input:
 ~~~
@@ -16375,7 +15747,7 @@ Result:
 ~~~
 
 
-#### 0x49 in string
+### 0x49 in string
 
 Input:
 ~~~
@@ -16388,7 +15760,7 @@ Result:
 ~~~
 
 
-#### 0x4a in string
+### 0x4a in string
 
 Input:
 ~~~
@@ -16401,7 +15773,7 @@ Result:
 ~~~
 
 
-#### 0x4b in string
+### 0x4b in string
 
 Input:
 ~~~
@@ -16414,7 +15786,7 @@ Result:
 ~~~
 
 
-#### 0x4c in string
+### 0x4c in string
 
 Input:
 ~~~
@@ -16427,7 +15799,7 @@ Result:
 ~~~
 
 
-#### 0x4d in string
+### 0x4d in string
 
 Input:
 ~~~
@@ -16440,7 +15812,7 @@ Result:
 ~~~
 
 
-#### 0x4e in string
+### 0x4e in string
 
 Input:
 ~~~
@@ -16453,7 +15825,7 @@ Result:
 ~~~
 
 
-#### 0x4f in string
+### 0x4f in string
 
 Input:
 ~~~
@@ -16466,7 +15838,7 @@ Result:
 ~~~
 
 
-#### 0x50 in string
+### 0x50 in string
 
 Input:
 ~~~
@@ -16479,7 +15851,7 @@ Result:
 ~~~
 
 
-#### 0x51 in string
+### 0x51 in string
 
 Input:
 ~~~
@@ -16492,7 +15864,7 @@ Result:
 ~~~
 
 
-#### 0x52 in string
+### 0x52 in string
 
 Input:
 ~~~
@@ -16505,7 +15877,7 @@ Result:
 ~~~
 
 
-#### 0x53 in string
+### 0x53 in string
 
 Input:
 ~~~
@@ -16518,7 +15890,7 @@ Result:
 ~~~
 
 
-#### 0x54 in string
+### 0x54 in string
 
 Input:
 ~~~
@@ -16531,7 +15903,7 @@ Result:
 ~~~
 
 
-#### 0x55 in string
+### 0x55 in string
 
 Input:
 ~~~
@@ -16544,7 +15916,7 @@ Result:
 ~~~
 
 
-#### 0x56 in string
+### 0x56 in string
 
 Input:
 ~~~
@@ -16557,7 +15929,7 @@ Result:
 ~~~
 
 
-#### 0x57 in string
+### 0x57 in string
 
 Input:
 ~~~
@@ -16570,7 +15942,7 @@ Result:
 ~~~
 
 
-#### 0x58 in string
+### 0x58 in string
 
 Input:
 ~~~
@@ -16583,7 +15955,7 @@ Result:
 ~~~
 
 
-#### 0x59 in string
+### 0x59 in string
 
 Input:
 ~~~
@@ -16596,7 +15968,7 @@ Result:
 ~~~
 
 
-#### 0x5a in string
+### 0x5a in string
 
 Input:
 ~~~
@@ -16609,7 +15981,7 @@ Result:
 ~~~
 
 
-#### 0x5b in string
+### 0x5b in string
 
 Input:
 ~~~
@@ -16622,7 +15994,7 @@ Result:
 ~~~
 
 
-#### 0x5c in string
+### 0x5c in string
 
 Input:
 ~~~
@@ -16633,12 +16005,11 @@ Expects Parse Error
 ~~~
 >>" \ "<<
   ---^ (0x20) Invalid escape sequence character ' ' at position 3
-
 ~~~
 
 
 
-#### 0x5d in string
+### 0x5d in string
 
 Input:
 ~~~
@@ -16651,7 +16022,7 @@ Result:
 ~~~
 
 
-#### 0x5e in string
+### 0x5e in string
 
 Input:
 ~~~
@@ -16664,7 +16035,7 @@ Result:
 ~~~
 
 
-#### 0x5f in string
+### 0x5f in string
 
 Input:
 ~~~
@@ -16677,7 +16048,7 @@ Result:
 ~~~
 
 
-#### 0x60 in string
+### 0x60 in string
 
 Input:
 ~~~
@@ -16690,7 +16061,7 @@ Result:
 ~~~
 
 
-#### 0x61 in string
+### 0x61 in string
 
 Input:
 ~~~
@@ -16703,7 +16074,7 @@ Result:
 ~~~
 
 
-#### 0x62 in string
+### 0x62 in string
 
 Input:
 ~~~
@@ -16716,7 +16087,7 @@ Result:
 ~~~
 
 
-#### 0x63 in string
+### 0x63 in string
 
 Input:
 ~~~
@@ -16729,7 +16100,7 @@ Result:
 ~~~
 
 
-#### 0x64 in string
+### 0x64 in string
 
 Input:
 ~~~
@@ -16742,7 +16113,7 @@ Result:
 ~~~
 
 
-#### 0x65 in string
+### 0x65 in string
 
 Input:
 ~~~
@@ -16755,7 +16126,7 @@ Result:
 ~~~
 
 
-#### 0x66 in string
+### 0x66 in string
 
 Input:
 ~~~
@@ -16768,7 +16139,7 @@ Result:
 ~~~
 
 
-#### 0x67 in string
+### 0x67 in string
 
 Input:
 ~~~
@@ -16781,7 +16152,7 @@ Result:
 ~~~
 
 
-#### 0x68 in string
+### 0x68 in string
 
 Input:
 ~~~
@@ -16794,7 +16165,7 @@ Result:
 ~~~
 
 
-#### 0x69 in string
+### 0x69 in string
 
 Input:
 ~~~
@@ -16807,7 +16178,7 @@ Result:
 ~~~
 
 
-#### 0x6a in string
+### 0x6a in string
 
 Input:
 ~~~
@@ -16820,7 +16191,7 @@ Result:
 ~~~
 
 
-#### 0x6b in string
+### 0x6b in string
 
 Input:
 ~~~
@@ -16833,7 +16204,7 @@ Result:
 ~~~
 
 
-#### 0x6c in string
+### 0x6c in string
 
 Input:
 ~~~
@@ -16846,7 +16217,7 @@ Result:
 ~~~
 
 
-#### 0x6d in string
+### 0x6d in string
 
 Input:
 ~~~
@@ -16859,7 +16230,7 @@ Result:
 ~~~
 
 
-#### 0x6e in string
+### 0x6e in string
 
 Input:
 ~~~
@@ -16872,7 +16243,7 @@ Result:
 ~~~
 
 
-#### 0x6f in string
+### 0x6f in string
 
 Input:
 ~~~
@@ -16885,7 +16256,7 @@ Result:
 ~~~
 
 
-#### 0x70 in string
+### 0x70 in string
 
 Input:
 ~~~
@@ -16898,7 +16269,7 @@ Result:
 ~~~
 
 
-#### 0x71 in string
+### 0x71 in string
 
 Input:
 ~~~
@@ -16911,7 +16282,7 @@ Result:
 ~~~
 
 
-#### 0x72 in string
+### 0x72 in string
 
 Input:
 ~~~
@@ -16924,7 +16295,7 @@ Result:
 ~~~
 
 
-#### 0x73 in string
+### 0x73 in string
 
 Input:
 ~~~
@@ -16937,7 +16308,7 @@ Result:
 ~~~
 
 
-#### 0x74 in string
+### 0x74 in string
 
 Input:
 ~~~
@@ -16950,7 +16321,7 @@ Result:
 ~~~
 
 
-#### 0x75 in string
+### 0x75 in string
 
 Input:
 ~~~
@@ -16963,7 +16334,7 @@ Result:
 ~~~
 
 
-#### 0x76 in string
+### 0x76 in string
 
 Input:
 ~~~
@@ -16976,7 +16347,7 @@ Result:
 ~~~
 
 
-#### 0x77 in string
+### 0x77 in string
 
 Input:
 ~~~
@@ -16989,7 +16360,7 @@ Result:
 ~~~
 
 
-#### 0x78 in string
+### 0x78 in string
 
 Input:
 ~~~
@@ -17002,7 +16373,7 @@ Result:
 ~~~
 
 
-#### 0x79 in string
+### 0x79 in string
 
 Input:
 ~~~
@@ -17015,7 +16386,7 @@ Result:
 ~~~
 
 
-#### 0x7a in string
+### 0x7a in string
 
 Input:
 ~~~
@@ -17028,7 +16399,7 @@ Result:
 ~~~
 
 
-#### 0x7b in string
+### 0x7b in string
 
 Input:
 ~~~
@@ -17041,7 +16412,7 @@ Result:
 ~~~
 
 
-#### 0x7c in string
+### 0x7c in string
 
 Input:
 ~~~
@@ -17054,7 +16425,7 @@ Result:
 ~~~
 
 
-#### 0x7d in string
+### 0x7d in string
 
 Input:
 ~~~
@@ -17067,7 +16438,7 @@ Result:
 ~~~
 
 
-#### 0x7e in string
+### 0x7e in string
 
 Input:
 ~~~
@@ -17080,7 +16451,7 @@ Result:
 ~~~
 
 
-#### 0x7f in string
+### 0x7f in string
 
 Input:
 ~~~
@@ -17091,28 +16462,26 @@ Expects Parse Error
 ~~~
 >>"  "<<
   ---^ (0x20) Invalid character in String at position 3
-
 ~~~
 
 
 
-#### Escaped 0x00 in string
+### Escaped 0x00 in string
 
 Input:
 ~~~
-"\ "
+"\ "
 ~~~
 
 Expects Parse Error
 ~~~
->>"\ "<<
-  --^ (0x00) Invalid escape sequence character ' ' at position 2
-
+>>"\ "<<
+  --^ (0x00) Invalid escape sequence character ' ' at position 2
 ~~~
 
 
 
-#### Escaped 0x01 in string
+### Escaped 0x01 in string
 
 Input:
 ~~~
@@ -17123,12 +16492,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x01) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x02 in string
+### Escaped 0x02 in string
 
 Input:
 ~~~
@@ -17139,12 +16507,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x02) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x03 in string
+### Escaped 0x03 in string
 
 Input:
 ~~~
@@ -17155,12 +16522,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x03) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x04 in string
+### Escaped 0x04 in string
 
 Input:
 ~~~
@@ -17171,12 +16537,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x04) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x05 in string
+### Escaped 0x05 in string
 
 Input:
 ~~~
@@ -17187,12 +16552,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x05) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x06 in string
+### Escaped 0x06 in string
 
 Input:
 ~~~
@@ -17203,28 +16567,26 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x06) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x07 in string
+### Escaped 0x07 in string
 
 Input:
 ~~~
-"\ "
+"\"
 ~~~
 
 Expects Parse Error
 ~~~
->>"\ "<<
-  --^ (0x07) Invalid escape sequence character ' ' at position 2
-
+>>"\"<<
+  --^ (0x07) Invalid escape sequence character '' at position 2
 ~~~
 
 
 
-#### Escaped 0x08 in string
+### Escaped 0x08 in string
 
 Input:
 ~~~
@@ -17235,12 +16597,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x08) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x09 in string
+### Escaped 0x09 in string
 
 Input:
 ~~~
@@ -17251,12 +16612,11 @@ Expects Parse Error
 ~~~
 >>"\	"<<
   --^ (0x09) Invalid escape sequence character '	' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x0a in string
+### Escaped 0x0a in string
 
 Input:
 ~~~
@@ -17270,31 +16630,26 @@ Expects Parse Error
 "<<
   --^ (0x0a) Invalid escape sequence character '
 ' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x0b in string
+### Escaped 0x0b in string
 
 Input:
 ~~~
-"\
-"
+"\"
 ~~~
 
 Expects Parse Error
 ~~~
->>"\
-"<<
-  --^ (0x0b) Invalid escape sequence character '
-' at position 2
-
+>>"\"<<
+  --^ (0x0b) Invalid escape sequence character '' at position 2
 ~~~
 
 
 
-#### Escaped 0x0c in string
+### Escaped 0x0c in string
 
 Input:
 ~~~
@@ -17305,31 +16660,26 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x0c) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x0d in string
+### Escaped 0x0d in string
 
 Input:
 ~~~
-"\
-"
+"\"
 ~~~
 
 Expects Parse Error
 ~~~
->>"\
-"<<
-  --^ (0x0d) Invalid escape sequence character '
-' at position 2
-
+>>"\"<<
+  --^ (0x0d) Invalid escape sequence character '' at position 2
 ~~~
 
 
 
-#### Escaped 0x0e in string
+### Escaped 0x0e in string
 
 Input:
 ~~~
@@ -17340,12 +16690,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x0e) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x0f in string
+### Escaped 0x0f in string
 
 Input:
 ~~~
@@ -17356,12 +16705,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x0f) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x10 in string
+### Escaped 0x10 in string
 
 Input:
 ~~~
@@ -17372,12 +16720,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x10) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x11 in string
+### Escaped 0x11 in string
 
 Input:
 ~~~
@@ -17388,12 +16735,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x11) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x12 in string
+### Escaped 0x12 in string
 
 Input:
 ~~~
@@ -17404,12 +16750,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x12) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x13 in string
+### Escaped 0x13 in string
 
 Input:
 ~~~
@@ -17420,12 +16765,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x13) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x14 in string
+### Escaped 0x14 in string
 
 Input:
 ~~~
@@ -17436,12 +16780,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x14) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x15 in string
+### Escaped 0x15 in string
 
 Input:
 ~~~
@@ -17452,12 +16795,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x15) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x16 in string
+### Escaped 0x16 in string
 
 Input:
 ~~~
@@ -17468,12 +16810,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x16) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x17 in string
+### Escaped 0x17 in string
 
 Input:
 ~~~
@@ -17484,12 +16825,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x17) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x18 in string
+### Escaped 0x18 in string
 
 Input:
 ~~~
@@ -17500,12 +16840,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x18) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x19 in string
+### Escaped 0x19 in string
 
 Input:
 ~~~
@@ -17516,12 +16855,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x19) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1a in string
+### Escaped 0x1a in string
 
 Input:
 ~~~
@@ -17532,12 +16870,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1a) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1b in string
+### Escaped 0x1b in string
 
 Input:
 ~~~
@@ -17548,12 +16885,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1b) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1c in string
+### Escaped 0x1c in string
 
 Input:
 ~~~
@@ -17564,12 +16900,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1c) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1d in string
+### Escaped 0x1d in string
 
 Input:
 ~~~
@@ -17580,12 +16915,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1d) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1e in string
+### Escaped 0x1e in string
 
 Input:
 ~~~
@@ -17596,12 +16930,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1e) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x1f in string
+### Escaped 0x1f in string
 
 Input:
 ~~~
@@ -17612,12 +16945,11 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x1f) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x20 in string
+### Escaped 0x20 in string
 
 Input:
 ~~~
@@ -17628,12 +16960,11 @@ Expects Parse Error
 ~~~
 >>"\ "<<
   --^ (0x20) Invalid escape sequence character ' ' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x21 in string
+### Escaped 0x21 in string
 
 Input:
 ~~~
@@ -17644,12 +16975,11 @@ Expects Parse Error
 ~~~
 >>"\!"<<
   --^ (0x21) Invalid escape sequence character '!' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x22 in string
+### Escaped 0x22 in string
 
 Input:
 ~~~
@@ -17662,7 +16992,7 @@ Result:
 ~~~
 
 
-#### Escaped 0x23 in string
+### Escaped 0x23 in string
 
 Input:
 ~~~
@@ -17673,12 +17003,11 @@ Expects Parse Error
 ~~~
 >>"\#"<<
   --^ (0x23) Invalid escape sequence character '#' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x24 in string
+### Escaped 0x24 in string
 
 Input:
 ~~~
@@ -17689,12 +17018,11 @@ Expects Parse Error
 ~~~
 >>"\$"<<
   --^ (0x24) Invalid escape sequence character '$' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x25 in string
+### Escaped 0x25 in string
 
 Input:
 ~~~
@@ -17705,12 +17033,11 @@ Expects Parse Error
 ~~~
 >>"\%"<<
   --^ (0x25) Invalid escape sequence character '%' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x26 in string
+### Escaped 0x26 in string
 
 Input:
 ~~~
@@ -17721,12 +17048,11 @@ Expects Parse Error
 ~~~
 >>"\&"<<
   --^ (0x26) Invalid escape sequence character '&' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x27 in string
+### Escaped 0x27 in string
 
 Input:
 ~~~
@@ -17737,12 +17063,11 @@ Expects Parse Error
 ~~~
 >>"\'"<<
   --^ (0x27) Invalid escape sequence character ''' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x28 in string
+### Escaped 0x28 in string
 
 Input:
 ~~~
@@ -17753,12 +17078,11 @@ Expects Parse Error
 ~~~
 >>"\("<<
   --^ (0x28) Invalid escape sequence character '(' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x29 in string
+### Escaped 0x29 in string
 
 Input:
 ~~~
@@ -17769,12 +17093,11 @@ Expects Parse Error
 ~~~
 >>"\)"<<
   --^ (0x29) Invalid escape sequence character ')' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2a in string
+### Escaped 0x2a in string
 
 Input:
 ~~~
@@ -17785,12 +17108,11 @@ Expects Parse Error
 ~~~
 >>"\*"<<
   --^ (0x2a) Invalid escape sequence character '*' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2b in string
+### Escaped 0x2b in string
 
 Input:
 ~~~
@@ -17801,12 +17123,11 @@ Expects Parse Error
 ~~~
 >>"\+"<<
   --^ (0x2b) Invalid escape sequence character '+' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2c in string
+### Escaped 0x2c in string
 
 Input:
 ~~~
@@ -17817,12 +17138,11 @@ Expects Parse Error
 ~~~
 >>"\,"<<
   --^ (0x2c) Invalid escape sequence character ',' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2d in string
+### Escaped 0x2d in string
 
 Input:
 ~~~
@@ -17833,12 +17153,11 @@ Expects Parse Error
 ~~~
 >>"\-"<<
   --^ (0x2d) Invalid escape sequence character '-' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2e in string
+### Escaped 0x2e in string
 
 Input:
 ~~~
@@ -17849,12 +17168,11 @@ Expects Parse Error
 ~~~
 >>"\."<<
   --^ (0x2e) Invalid escape sequence character '.' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x2f in string
+### Escaped 0x2f in string
 
 Input:
 ~~~
@@ -17865,12 +17183,11 @@ Expects Parse Error
 ~~~
 >>"\/"<<
   --^ (0x2f) Invalid escape sequence character '/' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x30 in string
+### Escaped 0x30 in string
 
 Input:
 ~~~
@@ -17881,12 +17198,11 @@ Expects Parse Error
 ~~~
 >>"\0"<<
   --^ (0x30) Invalid escape sequence character '0' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x31 in string
+### Escaped 0x31 in string
 
 Input:
 ~~~
@@ -17897,12 +17213,11 @@ Expects Parse Error
 ~~~
 >>"\1"<<
   --^ (0x31) Invalid escape sequence character '1' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x32 in string
+### Escaped 0x32 in string
 
 Input:
 ~~~
@@ -17913,12 +17228,11 @@ Expects Parse Error
 ~~~
 >>"\2"<<
   --^ (0x32) Invalid escape sequence character '2' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x33 in string
+### Escaped 0x33 in string
 
 Input:
 ~~~
@@ -17929,12 +17243,11 @@ Expects Parse Error
 ~~~
 >>"\3"<<
   --^ (0x33) Invalid escape sequence character '3' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x34 in string
+### Escaped 0x34 in string
 
 Input:
 ~~~
@@ -17945,12 +17258,11 @@ Expects Parse Error
 ~~~
 >>"\4"<<
   --^ (0x34) Invalid escape sequence character '4' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x35 in string
+### Escaped 0x35 in string
 
 Input:
 ~~~
@@ -17961,12 +17273,11 @@ Expects Parse Error
 ~~~
 >>"\5"<<
   --^ (0x35) Invalid escape sequence character '5' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x36 in string
+### Escaped 0x36 in string
 
 Input:
 ~~~
@@ -17977,12 +17288,11 @@ Expects Parse Error
 ~~~
 >>"\6"<<
   --^ (0x36) Invalid escape sequence character '6' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x37 in string
+### Escaped 0x37 in string
 
 Input:
 ~~~
@@ -17993,12 +17303,11 @@ Expects Parse Error
 ~~~
 >>"\7"<<
   --^ (0x37) Invalid escape sequence character '7' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x38 in string
+### Escaped 0x38 in string
 
 Input:
 ~~~
@@ -18009,12 +17318,11 @@ Expects Parse Error
 ~~~
 >>"\8"<<
   --^ (0x38) Invalid escape sequence character '8' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x39 in string
+### Escaped 0x39 in string
 
 Input:
 ~~~
@@ -18025,12 +17333,11 @@ Expects Parse Error
 ~~~
 >>"\9"<<
   --^ (0x39) Invalid escape sequence character '9' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3a in string
+### Escaped 0x3a in string
 
 Input:
 ~~~
@@ -18041,12 +17348,11 @@ Expects Parse Error
 ~~~
 >>"\:"<<
   --^ (0x3a) Invalid escape sequence character ':' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3b in string
+### Escaped 0x3b in string
 
 Input:
 ~~~
@@ -18057,12 +17363,11 @@ Expects Parse Error
 ~~~
 >>"\;"<<
   --^ (0x3b) Invalid escape sequence character ';' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3c in string
+### Escaped 0x3c in string
 
 Input:
 ~~~
@@ -18073,12 +17378,11 @@ Expects Parse Error
 ~~~
 >>"\<"<<
   --^ (0x3c) Invalid escape sequence character '<' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3d in string
+### Escaped 0x3d in string
 
 Input:
 ~~~
@@ -18089,12 +17393,11 @@ Expects Parse Error
 ~~~
 >>"\="<<
   --^ (0x3d) Invalid escape sequence character '=' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3e in string
+### Escaped 0x3e in string
 
 Input:
 ~~~
@@ -18105,12 +17408,11 @@ Expects Parse Error
 ~~~
 >>"\>"<<
   --^ (0x3e) Invalid escape sequence character '>' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x3f in string
+### Escaped 0x3f in string
 
 Input:
 ~~~
@@ -18121,12 +17423,11 @@ Expects Parse Error
 ~~~
 >>"\?"<<
   --^ (0x3f) Invalid escape sequence character '?' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x40 in string
+### Escaped 0x40 in string
 
 Input:
 ~~~
@@ -18137,12 +17438,11 @@ Expects Parse Error
 ~~~
 >>"\@"<<
   --^ (0x40) Invalid escape sequence character '@' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x41 in string
+### Escaped 0x41 in string
 
 Input:
 ~~~
@@ -18153,12 +17453,11 @@ Expects Parse Error
 ~~~
 >>"\A"<<
   --^ (0x41) Invalid escape sequence character 'A' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x42 in string
+### Escaped 0x42 in string
 
 Input:
 ~~~
@@ -18169,12 +17468,11 @@ Expects Parse Error
 ~~~
 >>"\B"<<
   --^ (0x42) Invalid escape sequence character 'B' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x43 in string
+### Escaped 0x43 in string
 
 Input:
 ~~~
@@ -18185,12 +17483,11 @@ Expects Parse Error
 ~~~
 >>"\C"<<
   --^ (0x43) Invalid escape sequence character 'C' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x44 in string
+### Escaped 0x44 in string
 
 Input:
 ~~~
@@ -18201,12 +17498,11 @@ Expects Parse Error
 ~~~
 >>"\D"<<
   --^ (0x44) Invalid escape sequence character 'D' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x45 in string
+### Escaped 0x45 in string
 
 Input:
 ~~~
@@ -18217,12 +17513,11 @@ Expects Parse Error
 ~~~
 >>"\E"<<
   --^ (0x45) Invalid escape sequence character 'E' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x46 in string
+### Escaped 0x46 in string
 
 Input:
 ~~~
@@ -18233,12 +17528,11 @@ Expects Parse Error
 ~~~
 >>"\F"<<
   --^ (0x46) Invalid escape sequence character 'F' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x47 in string
+### Escaped 0x47 in string
 
 Input:
 ~~~
@@ -18249,12 +17543,11 @@ Expects Parse Error
 ~~~
 >>"\G"<<
   --^ (0x47) Invalid escape sequence character 'G' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x48 in string
+### Escaped 0x48 in string
 
 Input:
 ~~~
@@ -18265,12 +17558,11 @@ Expects Parse Error
 ~~~
 >>"\H"<<
   --^ (0x48) Invalid escape sequence character 'H' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x49 in string
+### Escaped 0x49 in string
 
 Input:
 ~~~
@@ -18281,12 +17573,11 @@ Expects Parse Error
 ~~~
 >>"\I"<<
   --^ (0x49) Invalid escape sequence character 'I' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4a in string
+### Escaped 0x4a in string
 
 Input:
 ~~~
@@ -18297,12 +17588,11 @@ Expects Parse Error
 ~~~
 >>"\J"<<
   --^ (0x4a) Invalid escape sequence character 'J' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4b in string
+### Escaped 0x4b in string
 
 Input:
 ~~~
@@ -18313,12 +17603,11 @@ Expects Parse Error
 ~~~
 >>"\K"<<
   --^ (0x4b) Invalid escape sequence character 'K' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4c in string
+### Escaped 0x4c in string
 
 Input:
 ~~~
@@ -18329,12 +17618,11 @@ Expects Parse Error
 ~~~
 >>"\L"<<
   --^ (0x4c) Invalid escape sequence character 'L' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4d in string
+### Escaped 0x4d in string
 
 Input:
 ~~~
@@ -18345,12 +17633,11 @@ Expects Parse Error
 ~~~
 >>"\M"<<
   --^ (0x4d) Invalid escape sequence character 'M' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4e in string
+### Escaped 0x4e in string
 
 Input:
 ~~~
@@ -18361,12 +17648,11 @@ Expects Parse Error
 ~~~
 >>"\N"<<
   --^ (0x4e) Invalid escape sequence character 'N' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x4f in string
+### Escaped 0x4f in string
 
 Input:
 ~~~
@@ -18377,12 +17663,11 @@ Expects Parse Error
 ~~~
 >>"\O"<<
   --^ (0x4f) Invalid escape sequence character 'O' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x50 in string
+### Escaped 0x50 in string
 
 Input:
 ~~~
@@ -18393,12 +17678,11 @@ Expects Parse Error
 ~~~
 >>"\P"<<
   --^ (0x50) Invalid escape sequence character 'P' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x51 in string
+### Escaped 0x51 in string
 
 Input:
 ~~~
@@ -18409,12 +17693,11 @@ Expects Parse Error
 ~~~
 >>"\Q"<<
   --^ (0x51) Invalid escape sequence character 'Q' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x52 in string
+### Escaped 0x52 in string
 
 Input:
 ~~~
@@ -18425,12 +17708,11 @@ Expects Parse Error
 ~~~
 >>"\R"<<
   --^ (0x52) Invalid escape sequence character 'R' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x53 in string
+### Escaped 0x53 in string
 
 Input:
 ~~~
@@ -18441,12 +17723,11 @@ Expects Parse Error
 ~~~
 >>"\S"<<
   --^ (0x53) Invalid escape sequence character 'S' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x54 in string
+### Escaped 0x54 in string
 
 Input:
 ~~~
@@ -18457,12 +17738,11 @@ Expects Parse Error
 ~~~
 >>"\T"<<
   --^ (0x54) Invalid escape sequence character 'T' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x55 in string
+### Escaped 0x55 in string
 
 Input:
 ~~~
@@ -18473,12 +17753,11 @@ Expects Parse Error
 ~~~
 >>"\U"<<
   --^ (0x55) Invalid escape sequence character 'U' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x56 in string
+### Escaped 0x56 in string
 
 Input:
 ~~~
@@ -18489,12 +17768,11 @@ Expects Parse Error
 ~~~
 >>"\V"<<
   --^ (0x56) Invalid escape sequence character 'V' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x57 in string
+### Escaped 0x57 in string
 
 Input:
 ~~~
@@ -18505,12 +17783,11 @@ Expects Parse Error
 ~~~
 >>"\W"<<
   --^ (0x57) Invalid escape sequence character 'W' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x58 in string
+### Escaped 0x58 in string
 
 Input:
 ~~~
@@ -18521,12 +17798,11 @@ Expects Parse Error
 ~~~
 >>"\X"<<
   --^ (0x58) Invalid escape sequence character 'X' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x59 in string
+### Escaped 0x59 in string
 
 Input:
 ~~~
@@ -18537,12 +17813,11 @@ Expects Parse Error
 ~~~
 >>"\Y"<<
   --^ (0x59) Invalid escape sequence character 'Y' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x5a in string
+### Escaped 0x5a in string
 
 Input:
 ~~~
@@ -18553,12 +17828,11 @@ Expects Parse Error
 ~~~
 >>"\Z"<<
   --^ (0x5a) Invalid escape sequence character 'Z' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x5b in string
+### Escaped 0x5b in string
 
 Input:
 ~~~
@@ -18569,12 +17843,11 @@ Expects Parse Error
 ~~~
 >>"\["<<
   --^ (0x5b) Invalid escape sequence character '[' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x5c in string
+### Escaped 0x5c in string
 
 Input:
 ~~~
@@ -18587,7 +17860,7 @@ Result:
 ~~~
 
 
-#### Escaped 0x5d in string
+### Escaped 0x5d in string
 
 Input:
 ~~~
@@ -18598,12 +17871,11 @@ Expects Parse Error
 ~~~
 >>"\]"<<
   --^ (0x5d) Invalid escape sequence character ']' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x5e in string
+### Escaped 0x5e in string
 
 Input:
 ~~~
@@ -18614,12 +17886,11 @@ Expects Parse Error
 ~~~
 >>"\^"<<
   --^ (0x5e) Invalid escape sequence character '^' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x5f in string
+### Escaped 0x5f in string
 
 Input:
 ~~~
@@ -18630,12 +17901,11 @@ Expects Parse Error
 ~~~
 >>"\_"<<
   --^ (0x5f) Invalid escape sequence character '_' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x60 in string
+### Escaped 0x60 in string
 
 Input:
 ~~~
@@ -18646,12 +17916,11 @@ Expects Parse Error
 ~~~
 >>"\`"<<
   --^ (0x60) Invalid escape sequence character '`' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x61 in string
+### Escaped 0x61 in string
 
 Input:
 ~~~
@@ -18662,12 +17931,11 @@ Expects Parse Error
 ~~~
 >>"\a"<<
   --^ (0x61) Invalid escape sequence character 'a' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x62 in string
+### Escaped 0x62 in string
 
 Input:
 ~~~
@@ -18678,12 +17946,11 @@ Expects Parse Error
 ~~~
 >>"\b"<<
   --^ (0x62) Invalid escape sequence character 'b' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x63 in string
+### Escaped 0x63 in string
 
 Input:
 ~~~
@@ -18694,12 +17961,11 @@ Expects Parse Error
 ~~~
 >>"\c"<<
   --^ (0x63) Invalid escape sequence character 'c' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x64 in string
+### Escaped 0x64 in string
 
 Input:
 ~~~
@@ -18710,12 +17976,11 @@ Expects Parse Error
 ~~~
 >>"\d"<<
   --^ (0x64) Invalid escape sequence character 'd' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x65 in string
+### Escaped 0x65 in string
 
 Input:
 ~~~
@@ -18726,12 +17991,11 @@ Expects Parse Error
 ~~~
 >>"\e"<<
   --^ (0x65) Invalid escape sequence character 'e' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x66 in string
+### Escaped 0x66 in string
 
 Input:
 ~~~
@@ -18742,12 +18006,11 @@ Expects Parse Error
 ~~~
 >>"\f"<<
   --^ (0x66) Invalid escape sequence character 'f' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x67 in string
+### Escaped 0x67 in string
 
 Input:
 ~~~
@@ -18758,12 +18021,11 @@ Expects Parse Error
 ~~~
 >>"\g"<<
   --^ (0x67) Invalid escape sequence character 'g' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x68 in string
+### Escaped 0x68 in string
 
 Input:
 ~~~
@@ -18774,12 +18036,11 @@ Expects Parse Error
 ~~~
 >>"\h"<<
   --^ (0x68) Invalid escape sequence character 'h' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x69 in string
+### Escaped 0x69 in string
 
 Input:
 ~~~
@@ -18790,12 +18051,11 @@ Expects Parse Error
 ~~~
 >>"\i"<<
   --^ (0x69) Invalid escape sequence character 'i' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6a in string
+### Escaped 0x6a in string
 
 Input:
 ~~~
@@ -18806,12 +18066,11 @@ Expects Parse Error
 ~~~
 >>"\j"<<
   --^ (0x6a) Invalid escape sequence character 'j' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6b in string
+### Escaped 0x6b in string
 
 Input:
 ~~~
@@ -18822,12 +18081,11 @@ Expects Parse Error
 ~~~
 >>"\k"<<
   --^ (0x6b) Invalid escape sequence character 'k' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6c in string
+### Escaped 0x6c in string
 
 Input:
 ~~~
@@ -18838,12 +18096,11 @@ Expects Parse Error
 ~~~
 >>"\l"<<
   --^ (0x6c) Invalid escape sequence character 'l' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6d in string
+### Escaped 0x6d in string
 
 Input:
 ~~~
@@ -18854,12 +18111,11 @@ Expects Parse Error
 ~~~
 >>"\m"<<
   --^ (0x6d) Invalid escape sequence character 'm' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6e in string
+### Escaped 0x6e in string
 
 Input:
 ~~~
@@ -18870,12 +18126,11 @@ Expects Parse Error
 ~~~
 >>"\n"<<
   --^ (0x6e) Invalid escape sequence character 'n' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x6f in string
+### Escaped 0x6f in string
 
 Input:
 ~~~
@@ -18886,12 +18141,11 @@ Expects Parse Error
 ~~~
 >>"\o"<<
   --^ (0x6f) Invalid escape sequence character 'o' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x70 in string
+### Escaped 0x70 in string
 
 Input:
 ~~~
@@ -18902,12 +18156,11 @@ Expects Parse Error
 ~~~
 >>"\p"<<
   --^ (0x70) Invalid escape sequence character 'p' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x71 in string
+### Escaped 0x71 in string
 
 Input:
 ~~~
@@ -18918,12 +18171,11 @@ Expects Parse Error
 ~~~
 >>"\q"<<
   --^ (0x71) Invalid escape sequence character 'q' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x72 in string
+### Escaped 0x72 in string
 
 Input:
 ~~~
@@ -18934,12 +18186,11 @@ Expects Parse Error
 ~~~
 >>"\r"<<
   --^ (0x72) Invalid escape sequence character 'r' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x73 in string
+### Escaped 0x73 in string
 
 Input:
 ~~~
@@ -18950,12 +18201,11 @@ Expects Parse Error
 ~~~
 >>"\s"<<
   --^ (0x73) Invalid escape sequence character 's' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x74 in string
+### Escaped 0x74 in string
 
 Input:
 ~~~
@@ -18966,12 +18216,11 @@ Expects Parse Error
 ~~~
 >>"\t"<<
   --^ (0x74) Invalid escape sequence character 't' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x75 in string
+### Escaped 0x75 in string
 
 Input:
 ~~~
@@ -18982,12 +18231,11 @@ Expects Parse Error
 ~~~
 >>"\u"<<
   --^ (0x75) Invalid escape sequence character 'u' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x76 in string
+### Escaped 0x76 in string
 
 Input:
 ~~~
@@ -18998,12 +18246,11 @@ Expects Parse Error
 ~~~
 >>"\v"<<
   --^ (0x76) Invalid escape sequence character 'v' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x77 in string
+### Escaped 0x77 in string
 
 Input:
 ~~~
@@ -19014,12 +18261,11 @@ Expects Parse Error
 ~~~
 >>"\w"<<
   --^ (0x77) Invalid escape sequence character 'w' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x78 in string
+### Escaped 0x78 in string
 
 Input:
 ~~~
@@ -19030,12 +18276,11 @@ Expects Parse Error
 ~~~
 >>"\x"<<
   --^ (0x78) Invalid escape sequence character 'x' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x79 in string
+### Escaped 0x79 in string
 
 Input:
 ~~~
@@ -19046,12 +18291,11 @@ Expects Parse Error
 ~~~
 >>"\y"<<
   --^ (0x79) Invalid escape sequence character 'y' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7a in string
+### Escaped 0x7a in string
 
 Input:
 ~~~
@@ -19062,12 +18306,11 @@ Expects Parse Error
 ~~~
 >>"\z"<<
   --^ (0x7a) Invalid escape sequence character 'z' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7b in string
+### Escaped 0x7b in string
 
 Input:
 ~~~
@@ -19078,12 +18321,11 @@ Expects Parse Error
 ~~~
 >>"\{"<<
   --^ (0x7b) Invalid escape sequence character '{' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7c in string
+### Escaped 0x7c in string
 
 Input:
 ~~~
@@ -19094,12 +18336,11 @@ Expects Parse Error
 ~~~
 >>"\|"<<
   --^ (0x7c) Invalid escape sequence character '|' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7d in string
+### Escaped 0x7d in string
 
 Input:
 ~~~
@@ -19110,12 +18351,11 @@ Expects Parse Error
 ~~~
 >>"\}"<<
   --^ (0x7d) Invalid escape sequence character '}' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7e in string
+### Escaped 0x7e in string
 
 Input:
 ~~~
@@ -19126,12 +18366,11 @@ Expects Parse Error
 ~~~
 >>"\~"<<
   --^ (0x7e) Invalid escape sequence character '~' at position 2
-
 ~~~
 
 
 
-#### Escaped 0x7f in string
+### Escaped 0x7f in string
 
 Input:
 ~~~
@@ -19142,7 +18381,6 @@ Expects Parse Error
 ~~~
 >>"\"<<
   --^ (0x7f) Invalid escape sequence character '' at position 2
-
 ~~~
 
 
@@ -19151,7 +18389,7 @@ Expects Parse Error
 ## token
 
 
-#### basic token - item
+### basic token - item
 
 Input:
 ~~~
@@ -19164,7 +18402,7 @@ a_b-c.d3:f%00/*
 ~~~
 
 
-#### token with capitals - item
+### token with capitals - item
 
 Input:
 ~~~
@@ -19177,7 +18415,7 @@ fooBar
 ~~~
 
 
-#### token starting with capitals - item
+### token starting with capitals - item
 
 Input:
 ~~~
@@ -19190,7 +18428,7 @@ FooBar
 ~~~
 
 
-#### basic token - list
+### basic token - list
 
 Input:
 ~~~
@@ -19203,7 +18441,7 @@ a_b-c3/*
 ~~~
 
 
-#### token with capitals - list
+### token with capitals - list
 
 Input:
 ~~~
@@ -19216,7 +18454,7 @@ fooBar
 ~~~
 
 
-#### token starting with capitals - list
+### token starting with capitals - list
 
 Input:
 ~~~
@@ -19233,23 +18471,22 @@ FooBar
 ## token-generated
 
 
-#### 0x00 in token
+### 0x00 in token
 
 Input:
 ~~~
-a a
+a a
 ~~~
 
 Expects Parse Error
 ~~~
->>a a<<
+>>a a<<
   -^ (0x00) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x01 in token
+### 0x01 in token
 
 Input:
 ~~~
@@ -19260,12 +18497,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x01) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x02 in token
+### 0x02 in token
 
 Input:
 ~~~
@@ -19276,12 +18512,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x02) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x03 in token
+### 0x03 in token
 
 Input:
 ~~~
@@ -19292,12 +18527,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x03) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x04 in token
+### 0x04 in token
 
 Input:
 ~~~
@@ -19308,12 +18542,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x04) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x05 in token
+### 0x05 in token
 
 Input:
 ~~~
@@ -19324,12 +18557,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x05) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x06 in token
+### 0x06 in token
 
 Input:
 ~~~
@@ -19340,28 +18572,26 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x06) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x07 in token
+### 0x07 in token
 
 Input:
 ~~~
-a a
+aa
 ~~~
 
 Expects Parse Error
 ~~~
->>a a<<
+>>aa<<
   -^ (0x07) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x08 in token
+### 0x08 in token
 
 Input:
 ~~~
@@ -19372,12 +18602,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x08) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x09 in token
+### 0x09 in token
 
 Input:
 ~~~
@@ -19388,12 +18617,11 @@ Expects Parse Error
 ~~~
 >>a	a<<
   -^ (0x09) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0a in token
+### 0x0a in token
 
 Input:
 ~~~
@@ -19406,30 +18634,26 @@ Expects Parse Error
 >>a
 a<<
   -^ (0x0a) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0b in token
+### 0x0b in token
 
 Input:
 ~~~
-a
-a
+aa
 ~~~
 
 Expects Parse Error
 ~~~
->>a
-a<<
+>>aa<<
   -^ (0x0b) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0c in token
+### 0x0c in token
 
 Input:
 ~~~
@@ -19440,30 +18664,26 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x0c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0d in token
+### 0x0d in token
 
 Input:
 ~~~
-a
-a
+aa
 ~~~
 
 Expects Parse Error
 ~~~
->>a
-a<<
+>>aa<<
   -^ (0x0d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0e in token
+### 0x0e in token
 
 Input:
 ~~~
@@ -19474,12 +18694,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x0e) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x0f in token
+### 0x0f in token
 
 Input:
 ~~~
@@ -19490,12 +18709,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x0f) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x10 in token
+### 0x10 in token
 
 Input:
 ~~~
@@ -19506,12 +18724,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x10) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x11 in token
+### 0x11 in token
 
 Input:
 ~~~
@@ -19522,12 +18739,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x11) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x12 in token
+### 0x12 in token
 
 Input:
 ~~~
@@ -19538,12 +18754,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x12) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x13 in token
+### 0x13 in token
 
 Input:
 ~~~
@@ -19554,12 +18769,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x13) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x14 in token
+### 0x14 in token
 
 Input:
 ~~~
@@ -19570,12 +18784,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x14) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x15 in token
+### 0x15 in token
 
 Input:
 ~~~
@@ -19586,12 +18799,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x15) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x16 in token
+### 0x16 in token
 
 Input:
 ~~~
@@ -19602,12 +18814,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x16) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x17 in token
+### 0x17 in token
 
 Input:
 ~~~
@@ -19618,12 +18829,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x17) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x18 in token
+### 0x18 in token
 
 Input:
 ~~~
@@ -19634,12 +18844,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x18) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x19 in token
+### 0x19 in token
 
 Input:
 ~~~
@@ -19650,12 +18859,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x19) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1a in token
+### 0x1a in token
 
 Input:
 ~~~
@@ -19666,12 +18874,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1a) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1b in token
+### 0x1b in token
 
 Input:
 ~~~
@@ -19682,12 +18889,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1b) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1c in token
+### 0x1c in token
 
 Input:
 ~~~
@@ -19698,12 +18904,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1d in token
+### 0x1d in token
 
 Input:
 ~~~
@@ -19714,12 +18919,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1e in token
+### 0x1e in token
 
 Input:
 ~~~
@@ -19730,12 +18934,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1e) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x1f in token
+### 0x1f in token
 
 Input:
 ~~~
@@ -19746,12 +18949,11 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x1f) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x20 in token
+### 0x20 in token
 
 Input:
 ~~~
@@ -19762,12 +18964,11 @@ Expects Parse Error
 ~~~
 >>a a<<
   --^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x21 in token
+### 0x21 in token
 
 Input:
 ~~~
@@ -19780,7 +18981,7 @@ a!a
 ~~~
 
 
-#### 0x22 in token
+### 0x22 in token
 
 Input:
 ~~~
@@ -19791,12 +18992,11 @@ Expects Parse Error
 ~~~
 >>a"a<<
   -^ (0x22) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x23 in token
+### 0x23 in token
 
 Input:
 ~~~
@@ -19809,7 +19009,7 @@ a#a
 ~~~
 
 
-#### 0x24 in token
+### 0x24 in token
 
 Input:
 ~~~
@@ -19822,7 +19022,7 @@ a$a
 ~~~
 
 
-#### 0x25 in token
+### 0x25 in token
 
 Input:
 ~~~
@@ -19835,7 +19035,7 @@ a%a
 ~~~
 
 
-#### 0x26 in token
+### 0x26 in token
 
 Input:
 ~~~
@@ -19848,7 +19048,7 @@ a&a
 ~~~
 
 
-#### 0x27 in token
+### 0x27 in token
 
 Input:
 ~~~
@@ -19861,7 +19061,7 @@ a'a
 ~~~
 
 
-#### 0x28 in token
+### 0x28 in token
 
 Input:
 ~~~
@@ -19872,12 +19072,11 @@ Expects Parse Error
 ~~~
 >>a(a<<
   -^ (0x28) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x29 in token
+### 0x29 in token
 
 Input:
 ~~~
@@ -19888,12 +19087,11 @@ Expects Parse Error
 ~~~
 >>a)a<<
   -^ (0x29) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x2a in token
+### 0x2a in token
 
 Input:
 ~~~
@@ -19906,7 +19104,7 @@ a*a
 ~~~
 
 
-#### 0x2b in token
+### 0x2b in token
 
 Input:
 ~~~
@@ -19919,7 +19117,7 @@ a+a
 ~~~
 
 
-#### 0x2c in token
+### 0x2c in token
 
 Input:
 ~~~
@@ -19930,12 +19128,11 @@ Expects Parse Error
 ~~~
 >>a,a<<
   -^ (0x2c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x2d in token
+### 0x2d in token
 
 Input:
 ~~~
@@ -19948,7 +19145,7 @@ a-a
 ~~~
 
 
-#### 0x2e in token
+### 0x2e in token
 
 Input:
 ~~~
@@ -19961,7 +19158,7 @@ a.a
 ~~~
 
 
-#### 0x2f in token
+### 0x2f in token
 
 Input:
 ~~~
@@ -19974,7 +19171,7 @@ a/a
 ~~~
 
 
-#### 0x30 in token
+### 0x30 in token
 
 Input:
 ~~~
@@ -19987,7 +19184,7 @@ a0a
 ~~~
 
 
-#### 0x31 in token
+### 0x31 in token
 
 Input:
 ~~~
@@ -20000,7 +19197,7 @@ a1a
 ~~~
 
 
-#### 0x32 in token
+### 0x32 in token
 
 Input:
 ~~~
@@ -20013,7 +19210,7 @@ a2a
 ~~~
 
 
-#### 0x33 in token
+### 0x33 in token
 
 Input:
 ~~~
@@ -20026,7 +19223,7 @@ a3a
 ~~~
 
 
-#### 0x34 in token
+### 0x34 in token
 
 Input:
 ~~~
@@ -20039,7 +19236,7 @@ a4a
 ~~~
 
 
-#### 0x35 in token
+### 0x35 in token
 
 Input:
 ~~~
@@ -20052,7 +19249,7 @@ a5a
 ~~~
 
 
-#### 0x36 in token
+### 0x36 in token
 
 Input:
 ~~~
@@ -20065,7 +19262,7 @@ a6a
 ~~~
 
 
-#### 0x37 in token
+### 0x37 in token
 
 Input:
 ~~~
@@ -20078,7 +19275,7 @@ a7a
 ~~~
 
 
-#### 0x38 in token
+### 0x38 in token
 
 Input:
 ~~~
@@ -20091,7 +19288,7 @@ a8a
 ~~~
 
 
-#### 0x39 in token
+### 0x39 in token
 
 Input:
 ~~~
@@ -20104,7 +19301,7 @@ a9a
 ~~~
 
 
-#### 0x3a in token
+### 0x3a in token
 
 Input:
 ~~~
@@ -20117,7 +19314,7 @@ a:a
 ~~~
 
 
-#### 0x3b in token
+### 0x3b in token
 
 Input:
 ~~~
@@ -20130,7 +19327,7 @@ a;a
 ~~~
 
 
-#### 0x3c in token
+### 0x3c in token
 
 Input:
 ~~~
@@ -20141,12 +19338,11 @@ Expects Parse Error
 ~~~
 >>a<a<<
   -^ (0x3c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x3d in token
+### 0x3d in token
 
 Input:
 ~~~
@@ -20157,12 +19353,11 @@ Expects Parse Error
 ~~~
 >>a=a<<
   -^ (0x3d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x3e in token
+### 0x3e in token
 
 Input:
 ~~~
@@ -20173,12 +19368,11 @@ Expects Parse Error
 ~~~
 >>a>a<<
   -^ (0x3e) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x3f in token
+### 0x3f in token
 
 Input:
 ~~~
@@ -20189,12 +19383,11 @@ Expects Parse Error
 ~~~
 >>a?a<<
   -^ (0x3f) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x40 in token
+### 0x40 in token
 
 Input:
 ~~~
@@ -20205,12 +19398,11 @@ Expects Parse Error
 ~~~
 >>a@a<<
   -^ (0x40) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x41 in token
+### 0x41 in token
 
 Input:
 ~~~
@@ -20223,7 +19415,7 @@ aAa
 ~~~
 
 
-#### 0x42 in token
+### 0x42 in token
 
 Input:
 ~~~
@@ -20236,7 +19428,7 @@ aBa
 ~~~
 
 
-#### 0x43 in token
+### 0x43 in token
 
 Input:
 ~~~
@@ -20249,7 +19441,7 @@ aCa
 ~~~
 
 
-#### 0x44 in token
+### 0x44 in token
 
 Input:
 ~~~
@@ -20262,7 +19454,7 @@ aDa
 ~~~
 
 
-#### 0x45 in token
+### 0x45 in token
 
 Input:
 ~~~
@@ -20275,7 +19467,7 @@ aEa
 ~~~
 
 
-#### 0x46 in token
+### 0x46 in token
 
 Input:
 ~~~
@@ -20288,7 +19480,7 @@ aFa
 ~~~
 
 
-#### 0x47 in token
+### 0x47 in token
 
 Input:
 ~~~
@@ -20301,7 +19493,7 @@ aGa
 ~~~
 
 
-#### 0x48 in token
+### 0x48 in token
 
 Input:
 ~~~
@@ -20314,7 +19506,7 @@ aHa
 ~~~
 
 
-#### 0x49 in token
+### 0x49 in token
 
 Input:
 ~~~
@@ -20327,7 +19519,7 @@ aIa
 ~~~
 
 
-#### 0x4a in token
+### 0x4a in token
 
 Input:
 ~~~
@@ -20340,7 +19532,7 @@ aJa
 ~~~
 
 
-#### 0x4b in token
+### 0x4b in token
 
 Input:
 ~~~
@@ -20353,7 +19545,7 @@ aKa
 ~~~
 
 
-#### 0x4c in token
+### 0x4c in token
 
 Input:
 ~~~
@@ -20366,7 +19558,7 @@ aLa
 ~~~
 
 
-#### 0x4d in token
+### 0x4d in token
 
 Input:
 ~~~
@@ -20379,7 +19571,7 @@ aMa
 ~~~
 
 
-#### 0x4e in token
+### 0x4e in token
 
 Input:
 ~~~
@@ -20392,7 +19584,7 @@ aNa
 ~~~
 
 
-#### 0x4f in token
+### 0x4f in token
 
 Input:
 ~~~
@@ -20405,7 +19597,7 @@ aOa
 ~~~
 
 
-#### 0x50 in token
+### 0x50 in token
 
 Input:
 ~~~
@@ -20418,7 +19610,7 @@ aPa
 ~~~
 
 
-#### 0x51 in token
+### 0x51 in token
 
 Input:
 ~~~
@@ -20431,7 +19623,7 @@ aQa
 ~~~
 
 
-#### 0x52 in token
+### 0x52 in token
 
 Input:
 ~~~
@@ -20444,7 +19636,7 @@ aRa
 ~~~
 
 
-#### 0x53 in token
+### 0x53 in token
 
 Input:
 ~~~
@@ -20457,7 +19649,7 @@ aSa
 ~~~
 
 
-#### 0x54 in token
+### 0x54 in token
 
 Input:
 ~~~
@@ -20470,7 +19662,7 @@ aTa
 ~~~
 
 
-#### 0x55 in token
+### 0x55 in token
 
 Input:
 ~~~
@@ -20483,7 +19675,7 @@ aUa
 ~~~
 
 
-#### 0x56 in token
+### 0x56 in token
 
 Input:
 ~~~
@@ -20496,7 +19688,7 @@ aVa
 ~~~
 
 
-#### 0x57 in token
+### 0x57 in token
 
 Input:
 ~~~
@@ -20509,7 +19701,7 @@ aWa
 ~~~
 
 
-#### 0x58 in token
+### 0x58 in token
 
 Input:
 ~~~
@@ -20522,7 +19714,7 @@ aXa
 ~~~
 
 
-#### 0x59 in token
+### 0x59 in token
 
 Input:
 ~~~
@@ -20535,7 +19727,7 @@ aYa
 ~~~
 
 
-#### 0x5a in token
+### 0x5a in token
 
 Input:
 ~~~
@@ -20548,7 +19740,7 @@ aZa
 ~~~
 
 
-#### 0x5b in token
+### 0x5b in token
 
 Input:
 ~~~
@@ -20559,12 +19751,11 @@ Expects Parse Error
 ~~~
 >>a[a<<
   -^ (0x5b) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x5c in token
+### 0x5c in token
 
 Input:
 ~~~
@@ -20575,12 +19766,11 @@ Expects Parse Error
 ~~~
 >>a\a<<
   -^ (0x5c) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x5d in token
+### 0x5d in token
 
 Input:
 ~~~
@@ -20591,12 +19781,11 @@ Expects Parse Error
 ~~~
 >>a]a<<
   -^ (0x5d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x5e in token
+### 0x5e in token
 
 Input:
 ~~~
@@ -20609,7 +19798,7 @@ a^a
 ~~~
 
 
-#### 0x5f in token
+### 0x5f in token
 
 Input:
 ~~~
@@ -20622,7 +19811,7 @@ a_a
 ~~~
 
 
-#### 0x60 in token
+### 0x60 in token
 
 Input:
 ~~~
@@ -20635,7 +19824,7 @@ a`a
 ~~~
 
 
-#### 0x61 in token
+### 0x61 in token
 
 Input:
 ~~~
@@ -20648,7 +19837,7 @@ aaa
 ~~~
 
 
-#### 0x62 in token
+### 0x62 in token
 
 Input:
 ~~~
@@ -20661,7 +19850,7 @@ aba
 ~~~
 
 
-#### 0x63 in token
+### 0x63 in token
 
 Input:
 ~~~
@@ -20674,7 +19863,7 @@ aca
 ~~~
 
 
-#### 0x64 in token
+### 0x64 in token
 
 Input:
 ~~~
@@ -20687,7 +19876,7 @@ ada
 ~~~
 
 
-#### 0x65 in token
+### 0x65 in token
 
 Input:
 ~~~
@@ -20700,7 +19889,7 @@ aea
 ~~~
 
 
-#### 0x66 in token
+### 0x66 in token
 
 Input:
 ~~~
@@ -20713,7 +19902,7 @@ afa
 ~~~
 
 
-#### 0x67 in token
+### 0x67 in token
 
 Input:
 ~~~
@@ -20726,7 +19915,7 @@ aga
 ~~~
 
 
-#### 0x68 in token
+### 0x68 in token
 
 Input:
 ~~~
@@ -20739,7 +19928,7 @@ aha
 ~~~
 
 
-#### 0x69 in token
+### 0x69 in token
 
 Input:
 ~~~
@@ -20752,7 +19941,7 @@ aia
 ~~~
 
 
-#### 0x6a in token
+### 0x6a in token
 
 Input:
 ~~~
@@ -20765,7 +19954,7 @@ aja
 ~~~
 
 
-#### 0x6b in token
+### 0x6b in token
 
 Input:
 ~~~
@@ -20778,7 +19967,7 @@ aka
 ~~~
 
 
-#### 0x6c in token
+### 0x6c in token
 
 Input:
 ~~~
@@ -20791,7 +19980,7 @@ ala
 ~~~
 
 
-#### 0x6d in token
+### 0x6d in token
 
 Input:
 ~~~
@@ -20804,7 +19993,7 @@ ama
 ~~~
 
 
-#### 0x6e in token
+### 0x6e in token
 
 Input:
 ~~~
@@ -20817,7 +20006,7 @@ ana
 ~~~
 
 
-#### 0x6f in token
+### 0x6f in token
 
 Input:
 ~~~
@@ -20830,7 +20019,7 @@ aoa
 ~~~
 
 
-#### 0x70 in token
+### 0x70 in token
 
 Input:
 ~~~
@@ -20843,7 +20032,7 @@ apa
 ~~~
 
 
-#### 0x71 in token
+### 0x71 in token
 
 Input:
 ~~~
@@ -20856,7 +20045,7 @@ aqa
 ~~~
 
 
-#### 0x72 in token
+### 0x72 in token
 
 Input:
 ~~~
@@ -20869,7 +20058,7 @@ ara
 ~~~
 
 
-#### 0x73 in token
+### 0x73 in token
 
 Input:
 ~~~
@@ -20882,7 +20071,7 @@ asa
 ~~~
 
 
-#### 0x74 in token
+### 0x74 in token
 
 Input:
 ~~~
@@ -20895,7 +20084,7 @@ ata
 ~~~
 
 
-#### 0x75 in token
+### 0x75 in token
 
 Input:
 ~~~
@@ -20908,7 +20097,7 @@ aua
 ~~~
 
 
-#### 0x76 in token
+### 0x76 in token
 
 Input:
 ~~~
@@ -20921,7 +20110,7 @@ ava
 ~~~
 
 
-#### 0x77 in token
+### 0x77 in token
 
 Input:
 ~~~
@@ -20934,7 +20123,7 @@ awa
 ~~~
 
 
-#### 0x78 in token
+### 0x78 in token
 
 Input:
 ~~~
@@ -20947,7 +20136,7 @@ axa
 ~~~
 
 
-#### 0x79 in token
+### 0x79 in token
 
 Input:
 ~~~
@@ -20960,7 +20149,7 @@ aya
 ~~~
 
 
-#### 0x7a in token
+### 0x7a in token
 
 Input:
 ~~~
@@ -20973,7 +20162,7 @@ aza
 ~~~
 
 
-#### 0x7b in token
+### 0x7b in token
 
 Input:
 ~~~
@@ -20984,12 +20173,11 @@ Expects Parse Error
 ~~~
 >>a{a<<
   -^ (0x7b) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x7c in token
+### 0x7c in token
 
 Input:
 ~~~
@@ -21002,7 +20190,7 @@ a|a
 ~~~
 
 
-#### 0x7d in token
+### 0x7d in token
 
 Input:
 ~~~
@@ -21013,12 +20201,11 @@ Expects Parse Error
 ~~~
 >>a}a<<
   -^ (0x7d) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x7e in token
+### 0x7e in token
 
 Input:
 ~~~
@@ -21031,7 +20218,7 @@ a~a
 ~~~
 
 
-#### 0x7f in token
+### 0x7f in token
 
 Input:
 ~~~
@@ -21042,28 +20229,26 @@ Expects Parse Error
 ~~~
 >>aa<<
   -^ (0x7f) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x00 starting a token
+### 0x00 starting a token
 
 Input:
 ~~~
- a
+ a
 ~~~
 
 Expects Parse Error
 ~~~
->> a<<
-  ^ (0x00) Unexpected start character in Bare Item: ' ' (\u0000)
-
+>> a<<
+  ^ (0x00) Unexpected start character in Bare Item: ' ' (\u0000)
 ~~~
 
 
 
-#### 0x01 starting a token
+### 0x01 starting a token
 
 Input:
 ~~~
@@ -21074,12 +20259,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x01) Unexpected start character in Bare Item: '' (\u0001)
-
 ~~~
 
 
 
-#### 0x02 starting a token
+### 0x02 starting a token
 
 Input:
 ~~~
@@ -21090,12 +20274,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x02) Unexpected start character in Bare Item: '' (\u0002)
-
 ~~~
 
 
 
-#### 0x03 starting a token
+### 0x03 starting a token
 
 Input:
 ~~~
@@ -21106,12 +20289,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x03) Unexpected start character in Bare Item: '' (\u0003)
-
 ~~~
 
 
 
-#### 0x04 starting a token
+### 0x04 starting a token
 
 Input:
 ~~~
@@ -21122,12 +20304,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x04) Unexpected start character in Bare Item: '' (\u0004)
-
 ~~~
 
 
 
-#### 0x05 starting a token
+### 0x05 starting a token
 
 Input:
 ~~~
@@ -21138,12 +20319,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x05) Unexpected start character in Bare Item: '' (\u0005)
-
 ~~~
 
 
 
-#### 0x06 starting a token
+### 0x06 starting a token
 
 Input:
 ~~~
@@ -21154,28 +20334,26 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x06) Unexpected start character in Bare Item: '' (\u0006)
-
 ~~~
 
 
 
-#### 0x07 starting a token
+### 0x07 starting a token
 
 Input:
 ~~~
- a
+a
 ~~~
 
 Expects Parse Error
 ~~~
->> a<<
-  ^ (0x07) Unexpected start character in Bare Item: ' ' (\u0007)
-
+>>a<<
+  ^ (0x07) Unexpected start character in Bare Item: '' (\u0007)
 ~~~
 
 
 
-#### 0x08 starting a token
+### 0x08 starting a token
 
 Input:
 ~~~
@@ -21186,12 +20364,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x08) Unexpected start character in Bare Item: '' (\u0008)
-
 ~~~
 
 
 
-#### 0x09 starting a token
+### 0x09 starting a token
 
 Input:
 ~~~
@@ -21202,12 +20379,11 @@ Expects Parse Error
 ~~~
 >>	a<<
   ^ (0x09) Unexpected start character in Bare Item: HTAB (\u0009)
-
 ~~~
 
 
 
-#### 0x0a starting a token
+### 0x0a starting a token
 
 Input:
 ~~~
@@ -21221,31 +20397,26 @@ Expects Parse Error
 a<<
   ^ (0x0a) Unexpected start character in Bare Item: '
 ' (\u000a)
-
 ~~~
 
 
 
-#### 0x0b starting a token
+### 0x0b starting a token
 
 Input:
 ~~~
-
-a
+a
 ~~~
 
 Expects Parse Error
 ~~~
->>
-a<<
-  ^ (0x0b) Unexpected start character in Bare Item: '
-' (\u000b)
-
+>>a<<
+  ^ (0x0b) Unexpected start character in Bare Item: '' (\u000b)
 ~~~
 
 
 
-#### 0x0c starting a token
+### 0x0c starting a token
 
 Input:
 ~~~
@@ -21256,31 +20427,26 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x0c) Unexpected start character in Bare Item: '' (\u000c)
-
 ~~~
 
 
 
-#### 0x0d starting a token
+### 0x0d starting a token
 
 Input:
 ~~~
-
-a
+a
 ~~~
 
 Expects Parse Error
 ~~~
->>
-a<<
-  ^ (0x0d) Unexpected start character in Bare Item: '
-' (\u000d)
-
+>>a<<
+  ^ (0x0d) Unexpected start character in Bare Item: '' (\u000d)
 ~~~
 
 
 
-#### 0x0e starting a token
+### 0x0e starting a token
 
 Input:
 ~~~
@@ -21291,12 +20457,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x0e) Unexpected start character in Bare Item: '' (\u000e)
-
 ~~~
 
 
 
-#### 0x0f starting a token
+### 0x0f starting a token
 
 Input:
 ~~~
@@ -21307,12 +20472,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x0f) Unexpected start character in Bare Item: '' (\u000f)
-
 ~~~
 
 
 
-#### 0x10 starting a token
+### 0x10 starting a token
 
 Input:
 ~~~
@@ -21323,12 +20487,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x10) Unexpected start character in Bare Item: '' (\u0010)
-
 ~~~
 
 
 
-#### 0x11 starting a token
+### 0x11 starting a token
 
 Input:
 ~~~
@@ -21339,12 +20502,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x11) Unexpected start character in Bare Item: '' (\u0011)
-
 ~~~
 
 
 
-#### 0x12 starting a token
+### 0x12 starting a token
 
 Input:
 ~~~
@@ -21355,12 +20517,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x12) Unexpected start character in Bare Item: '' (\u0012)
-
 ~~~
 
 
 
-#### 0x13 starting a token
+### 0x13 starting a token
 
 Input:
 ~~~
@@ -21371,12 +20532,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x13) Unexpected start character in Bare Item: '' (\u0013)
-
 ~~~
 
 
 
-#### 0x14 starting a token
+### 0x14 starting a token
 
 Input:
 ~~~
@@ -21387,12 +20547,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x14) Unexpected start character in Bare Item: '' (\u0014)
-
 ~~~
 
 
 
-#### 0x15 starting a token
+### 0x15 starting a token
 
 Input:
 ~~~
@@ -21403,12 +20562,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x15) Unexpected start character in Bare Item: '' (\u0015)
-
 ~~~
 
 
 
-#### 0x16 starting a token
+### 0x16 starting a token
 
 Input:
 ~~~
@@ -21419,12 +20577,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x16) Unexpected start character in Bare Item: '' (\u0016)
-
 ~~~
 
 
 
-#### 0x17 starting a token
+### 0x17 starting a token
 
 Input:
 ~~~
@@ -21435,12 +20592,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x17) Unexpected start character in Bare Item: '' (\u0017)
-
 ~~~
 
 
 
-#### 0x18 starting a token
+### 0x18 starting a token
 
 Input:
 ~~~
@@ -21451,12 +20607,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x18) Unexpected start character in Bare Item: '' (\u0018)
-
 ~~~
 
 
 
-#### 0x19 starting a token
+### 0x19 starting a token
 
 Input:
 ~~~
@@ -21467,12 +20622,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x19) Unexpected start character in Bare Item: '' (\u0019)
-
 ~~~
 
 
 
-#### 0x1a starting a token
+### 0x1a starting a token
 
 Input:
 ~~~
@@ -21483,12 +20637,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1a) Unexpected start character in Bare Item: '' (\u001a)
-
 ~~~
 
 
 
-#### 0x1b starting a token
+### 0x1b starting a token
 
 Input:
 ~~~
@@ -21499,12 +20652,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1b) Unexpected start character in Bare Item: '' (\u001b)
-
 ~~~
 
 
 
-#### 0x1c starting a token
+### 0x1c starting a token
 
 Input:
 ~~~
@@ -21515,12 +20667,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1c) Unexpected start character in Bare Item: '' (\u001c)
-
 ~~~
 
 
 
-#### 0x1d starting a token
+### 0x1d starting a token
 
 Input:
 ~~~
@@ -21531,12 +20682,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1d) Unexpected start character in Bare Item: '' (\u001d)
-
 ~~~
 
 
 
-#### 0x1e starting a token
+### 0x1e starting a token
 
 Input:
 ~~~
@@ -21547,12 +20697,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1e) Unexpected start character in Bare Item: '' (\u001e)
-
 ~~~
 
 
 
-#### 0x1f starting a token
+### 0x1f starting a token
 
 Input:
 ~~~
@@ -21563,12 +20712,11 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x1f) Unexpected start character in Bare Item: '' (\u001f)
-
 ~~~
 
 
 
-#### 0x20 starting a token
+### 0x20 starting a token
 
 Input:
 ~~~
@@ -21581,7 +20729,7 @@ a
 ~~~
 
 
-#### 0x21 starting a token
+### 0x21 starting a token
 
 Input:
 ~~~
@@ -21592,12 +20740,11 @@ Expects Parse Error
 ~~~
 >>!a<<
   ^ (0x21) Unexpected start character in Bare Item: '!' (\u0021)
-
 ~~~
 
 
 
-#### 0x22 starting a token
+### 0x22 starting a token
 
 Input:
 ~~~
@@ -21608,12 +20755,11 @@ Expects Parse Error
 ~~~
 >>"a<<
   --^ Closing DQUOTE missing
-
 ~~~
 
 
 
-#### 0x23 starting a token
+### 0x23 starting a token
 
 Input:
 ~~~
@@ -21624,12 +20770,11 @@ Expects Parse Error
 ~~~
 >>#a<<
   ^ (0x23) Unexpected start character in Bare Item: '#' (\u0023)
-
 ~~~
 
 
 
-#### 0x24 starting a token
+### 0x24 starting a token
 
 Input:
 ~~~
@@ -21640,12 +20785,11 @@ Expects Parse Error
 ~~~
 >>$a<<
   ^ (0x24) Unexpected start character in Bare Item: '$' (\u0024)
-
 ~~~
 
 
 
-#### 0x25 starting a token
+### 0x25 starting a token
 
 Input:
 ~~~
@@ -21656,12 +20800,11 @@ Expects Parse Error
 ~~~
 >>%a<<
   --^ DisplayString must continue with a double quote: ''
-
 ~~~
 
 
 
-#### 0x26 starting a token
+### 0x26 starting a token
 
 Input:
 ~~~
@@ -21672,12 +20815,11 @@ Expects Parse Error
 ~~~
 >>&a<<
   ^ (0x26) Unexpected start character in Bare Item: '&' (\u0026)
-
 ~~~
 
 
 
-#### 0x27 starting a token
+### 0x27 starting a token
 
 Input:
 ~~~
@@ -21688,12 +20830,11 @@ Expects Parse Error
 ~~~
 >>'a<<
   ^ (0x27) Unexpected start character in Bare Item: ''' (\u0027)
-
 ~~~
 
 
 
-#### 0x28 starting a token
+### 0x28 starting a token
 
 Input:
 ~~~
@@ -21704,12 +20845,11 @@ Expects Parse Error
 ~~~
 >>(a<<
   ^ (0x28) Unexpected start character in Bare Item: '(' (\u0028)
-
 ~~~
 
 
 
-#### 0x29 starting a token
+### 0x29 starting a token
 
 Input:
 ~~~
@@ -21720,12 +20860,11 @@ Expects Parse Error
 ~~~
 >>)a<<
   ^ (0x29) Unexpected start character in Bare Item: ')' (\u0029)
-
 ~~~
 
 
 
-#### 0x2a starting a token
+### 0x2a starting a token
 
 Input:
 ~~~
@@ -21738,7 +20877,7 @@ Result:
 ~~~
 
 
-#### 0x2b starting a token
+### 0x2b starting a token
 
 Input:
 ~~~
@@ -21749,12 +20888,11 @@ Expects Parse Error
 ~~~
 >>+a<<
   ^ (0x2b) Unexpected start character in Bare Item: '+' (\u002b)
-
 ~~~
 
 
 
-#### 0x2c starting a token
+### 0x2c starting a token
 
 Input:
 ~~~
@@ -21765,12 +20903,11 @@ Expects Parse Error
 ~~~
 >>,a<<
   ^ (0x2c) Unexpected start character in Bare Item: ',' (\u002c)
-
 ~~~
 
 
 
-#### 0x2d starting a token
+### 0x2d starting a token
 
 Input:
 ~~~
@@ -21781,12 +20918,11 @@ Expects Parse Error
 ~~~
 >>-a<<
   -^ (0x61) Illegal start for Integer or Decimal: 'a'
-
 ~~~
 
 
 
-#### 0x2e starting a token
+### 0x2e starting a token
 
 Input:
 ~~~
@@ -21797,12 +20933,11 @@ Expects Parse Error
 ~~~
 >>.a<<
   ^ (0x2e) Unexpected start character in Bare Item: '.' (\u002e)
-
 ~~~
 
 
 
-#### 0x2f starting a token
+### 0x2f starting a token
 
 Input:
 ~~~
@@ -21813,12 +20948,11 @@ Expects Parse Error
 ~~~
 >>/a<<
   ^ (0x2f) Unexpected start character in Bare Item: '/' (\u002f)
-
 ~~~
 
 
 
-#### 0x30 starting a token
+### 0x30 starting a token
 
 Input:
 ~~~
@@ -21829,12 +20963,11 @@ Expects Parse Error
 ~~~
 >>0a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x31 starting a token
+### 0x31 starting a token
 
 Input:
 ~~~
@@ -21845,12 +20978,11 @@ Expects Parse Error
 ~~~
 >>1a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x32 starting a token
+### 0x32 starting a token
 
 Input:
 ~~~
@@ -21861,12 +20993,11 @@ Expects Parse Error
 ~~~
 >>2a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x33 starting a token
+### 0x33 starting a token
 
 Input:
 ~~~
@@ -21877,12 +21008,11 @@ Expects Parse Error
 ~~~
 >>3a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x34 starting a token
+### 0x34 starting a token
 
 Input:
 ~~~
@@ -21893,12 +21023,11 @@ Expects Parse Error
 ~~~
 >>4a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x35 starting a token
+### 0x35 starting a token
 
 Input:
 ~~~
@@ -21909,12 +21038,11 @@ Expects Parse Error
 ~~~
 >>5a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x36 starting a token
+### 0x36 starting a token
 
 Input:
 ~~~
@@ -21925,12 +21053,11 @@ Expects Parse Error
 ~~~
 >>6a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x37 starting a token
+### 0x37 starting a token
 
 Input:
 ~~~
@@ -21941,12 +21068,11 @@ Expects Parse Error
 ~~~
 >>7a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x38 starting a token
+### 0x38 starting a token
 
 Input:
 ~~~
@@ -21957,12 +21083,11 @@ Expects Parse Error
 ~~~
 >>8a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x39 starting a token
+### 0x39 starting a token
 
 Input:
 ~~~
@@ -21973,12 +21098,11 @@ Expects Parse Error
 ~~~
 >>9a<<
   -^ (0x61) Extra characters in string parsed as Item
-
 ~~~
 
 
 
-#### 0x3a starting a token
+### 0x3a starting a token
 
 Input:
 ~~~
@@ -21989,12 +21113,11 @@ Expects Parse Error
 ~~~
 >>:a<<
   --^ Byte Sequence must end with COLON: 'a'
-
 ~~~
 
 
 
-#### 0x3b starting a token
+### 0x3b starting a token
 
 Input:
 ~~~
@@ -22005,12 +21128,11 @@ Expects Parse Error
 ~~~
 >>;a<<
   ^ (0x3b) Unexpected start character in Bare Item: ';' (\u003b)
-
 ~~~
 
 
 
-#### 0x3c starting a token
+### 0x3c starting a token
 
 Input:
 ~~~
@@ -22021,12 +21143,11 @@ Expects Parse Error
 ~~~
 >><a<<
   ^ (0x3c) Unexpected start character in Bare Item: '<' (\u003c)
-
 ~~~
 
 
 
-#### 0x3d starting a token
+### 0x3d starting a token
 
 Input:
 ~~~
@@ -22037,12 +21158,11 @@ Expects Parse Error
 ~~~
 >>=a<<
   ^ (0x3d) Unexpected start character in Bare Item: '=' (\u003d)
-
 ~~~
 
 
 
-#### 0x3e starting a token
+### 0x3e starting a token
 
 Input:
 ~~~
@@ -22053,12 +21173,11 @@ Expects Parse Error
 ~~~
 >>>a<<
   ^ (0x3e) Unexpected start character in Bare Item: '>' (\u003e)
-
 ~~~
 
 
 
-#### 0x3f starting a token
+### 0x3f starting a token
 
 Input:
 ~~~
@@ -22069,12 +21188,11 @@ Expects Parse Error
 ~~~
 >>?a<<
   -^ (0x61) Expected '0' or '1' in Boolean, found 'a'
-
 ~~~
 
 
 
-#### 0x40 starting a token
+### 0x40 starting a token
 
 Input:
 ~~~
@@ -22085,12 +21203,11 @@ Expects Parse Error
 ~~~
 >>@a<<
   -^ (0x61) Illegal start inside a Date: 'a'
-
 ~~~
 
 
 
-#### 0x41 starting a token
+### 0x41 starting a token
 
 Input:
 ~~~
@@ -22103,7 +21220,7 @@ Aa
 ~~~
 
 
-#### 0x42 starting a token
+### 0x42 starting a token
 
 Input:
 ~~~
@@ -22116,7 +21233,7 @@ Ba
 ~~~
 
 
-#### 0x43 starting a token
+### 0x43 starting a token
 
 Input:
 ~~~
@@ -22129,7 +21246,7 @@ Ca
 ~~~
 
 
-#### 0x44 starting a token
+### 0x44 starting a token
 
 Input:
 ~~~
@@ -22142,7 +21259,7 @@ Da
 ~~~
 
 
-#### 0x45 starting a token
+### 0x45 starting a token
 
 Input:
 ~~~
@@ -22155,7 +21272,7 @@ Ea
 ~~~
 
 
-#### 0x46 starting a token
+### 0x46 starting a token
 
 Input:
 ~~~
@@ -22168,7 +21285,7 @@ Fa
 ~~~
 
 
-#### 0x47 starting a token
+### 0x47 starting a token
 
 Input:
 ~~~
@@ -22181,7 +21298,7 @@ Ga
 ~~~
 
 
-#### 0x48 starting a token
+### 0x48 starting a token
 
 Input:
 ~~~
@@ -22194,7 +21311,7 @@ Ha
 ~~~
 
 
-#### 0x49 starting a token
+### 0x49 starting a token
 
 Input:
 ~~~
@@ -22207,7 +21324,7 @@ Ia
 ~~~
 
 
-#### 0x4a starting a token
+### 0x4a starting a token
 
 Input:
 ~~~
@@ -22220,7 +21337,7 @@ Ja
 ~~~
 
 
-#### 0x4b starting a token
+### 0x4b starting a token
 
 Input:
 ~~~
@@ -22233,7 +21350,7 @@ Ka
 ~~~
 
 
-#### 0x4c starting a token
+### 0x4c starting a token
 
 Input:
 ~~~
@@ -22246,7 +21363,7 @@ La
 ~~~
 
 
-#### 0x4d starting a token
+### 0x4d starting a token
 
 Input:
 ~~~
@@ -22259,7 +21376,7 @@ Ma
 ~~~
 
 
-#### 0x4e starting a token
+### 0x4e starting a token
 
 Input:
 ~~~
@@ -22272,7 +21389,7 @@ Na
 ~~~
 
 
-#### 0x4f starting a token
+### 0x4f starting a token
 
 Input:
 ~~~
@@ -22285,7 +21402,7 @@ Oa
 ~~~
 
 
-#### 0x50 starting a token
+### 0x50 starting a token
 
 Input:
 ~~~
@@ -22298,7 +21415,7 @@ Pa
 ~~~
 
 
-#### 0x51 starting a token
+### 0x51 starting a token
 
 Input:
 ~~~
@@ -22311,7 +21428,7 @@ Qa
 ~~~
 
 
-#### 0x52 starting a token
+### 0x52 starting a token
 
 Input:
 ~~~
@@ -22324,7 +21441,7 @@ Ra
 ~~~
 
 
-#### 0x53 starting a token
+### 0x53 starting a token
 
 Input:
 ~~~
@@ -22337,7 +21454,7 @@ Sa
 ~~~
 
 
-#### 0x54 starting a token
+### 0x54 starting a token
 
 Input:
 ~~~
@@ -22350,7 +21467,7 @@ Ta
 ~~~
 
 
-#### 0x55 starting a token
+### 0x55 starting a token
 
 Input:
 ~~~
@@ -22363,7 +21480,7 @@ Ua
 ~~~
 
 
-#### 0x56 starting a token
+### 0x56 starting a token
 
 Input:
 ~~~
@@ -22376,7 +21493,7 @@ Va
 ~~~
 
 
-#### 0x57 starting a token
+### 0x57 starting a token
 
 Input:
 ~~~
@@ -22389,7 +21506,7 @@ Wa
 ~~~
 
 
-#### 0x58 starting a token
+### 0x58 starting a token
 
 Input:
 ~~~
@@ -22402,7 +21519,7 @@ Xa
 ~~~
 
 
-#### 0x59 starting a token
+### 0x59 starting a token
 
 Input:
 ~~~
@@ -22415,7 +21532,7 @@ Ya
 ~~~
 
 
-#### 0x5a starting a token
+### 0x5a starting a token
 
 Input:
 ~~~
@@ -22428,7 +21545,7 @@ Za
 ~~~
 
 
-#### 0x5b starting a token
+### 0x5b starting a token
 
 Input:
 ~~~
@@ -22439,12 +21556,11 @@ Expects Parse Error
 ~~~
 >>[a<<
   ^ (0x5b) Unexpected start character in Bare Item: '[' (\u005b)
-
 ~~~
 
 
 
-#### 0x5c starting a token
+### 0x5c starting a token
 
 Input:
 ~~~
@@ -22455,12 +21571,11 @@ Expects Parse Error
 ~~~
 >>\a<<
   ^ (0x5c) Unexpected start character in Bare Item: '\' (\u005c)
-
 ~~~
 
 
 
-#### 0x5d starting a token
+### 0x5d starting a token
 
 Input:
 ~~~
@@ -22471,12 +21586,11 @@ Expects Parse Error
 ~~~
 >>]a<<
   ^ (0x5d) Unexpected start character in Bare Item: ']' (\u005d)
-
 ~~~
 
 
 
-#### 0x5e starting a token
+### 0x5e starting a token
 
 Input:
 ~~~
@@ -22487,12 +21601,11 @@ Expects Parse Error
 ~~~
 >>^a<<
   ^ (0x5e) Unexpected start character in Bare Item: '^' (\u005e)
-
 ~~~
 
 
 
-#### 0x5f starting a token
+### 0x5f starting a token
 
 Input:
 ~~~
@@ -22503,12 +21616,11 @@ Expects Parse Error
 ~~~
 >>_a<<
   ^ (0x5f) Unexpected start character in Bare Item: '_' (\u005f)
-
 ~~~
 
 
 
-#### 0x60 starting a token
+### 0x60 starting a token
 
 Input:
 ~~~
@@ -22519,12 +21631,11 @@ Expects Parse Error
 ~~~
 >>`a<<
   ^ (0x60) Unexpected start character in Bare Item: '`' (\u0060)
-
 ~~~
 
 
 
-#### 0x61 starting a token
+### 0x61 starting a token
 
 Input:
 ~~~
@@ -22537,7 +21648,7 @@ aa
 ~~~
 
 
-#### 0x62 starting a token
+### 0x62 starting a token
 
 Input:
 ~~~
@@ -22550,7 +21661,7 @@ ba
 ~~~
 
 
-#### 0x63 starting a token
+### 0x63 starting a token
 
 Input:
 ~~~
@@ -22563,7 +21674,7 @@ ca
 ~~~
 
 
-#### 0x64 starting a token
+### 0x64 starting a token
 
 Input:
 ~~~
@@ -22576,7 +21687,7 @@ da
 ~~~
 
 
-#### 0x65 starting a token
+### 0x65 starting a token
 
 Input:
 ~~~
@@ -22589,7 +21700,7 @@ ea
 ~~~
 
 
-#### 0x66 starting a token
+### 0x66 starting a token
 
 Input:
 ~~~
@@ -22602,7 +21713,7 @@ fa
 ~~~
 
 
-#### 0x67 starting a token
+### 0x67 starting a token
 
 Input:
 ~~~
@@ -22615,7 +21726,7 @@ ga
 ~~~
 
 
-#### 0x68 starting a token
+### 0x68 starting a token
 
 Input:
 ~~~
@@ -22628,7 +21739,7 @@ ha
 ~~~
 
 
-#### 0x69 starting a token
+### 0x69 starting a token
 
 Input:
 ~~~
@@ -22641,7 +21752,7 @@ ia
 ~~~
 
 
-#### 0x6a starting a token
+### 0x6a starting a token
 
 Input:
 ~~~
@@ -22654,7 +21765,7 @@ ja
 ~~~
 
 
-#### 0x6b starting a token
+### 0x6b starting a token
 
 Input:
 ~~~
@@ -22667,7 +21778,7 @@ ka
 ~~~
 
 
-#### 0x6c starting a token
+### 0x6c starting a token
 
 Input:
 ~~~
@@ -22680,7 +21791,7 @@ la
 ~~~
 
 
-#### 0x6d starting a token
+### 0x6d starting a token
 
 Input:
 ~~~
@@ -22693,7 +21804,7 @@ ma
 ~~~
 
 
-#### 0x6e starting a token
+### 0x6e starting a token
 
 Input:
 ~~~
@@ -22706,7 +21817,7 @@ na
 ~~~
 
 
-#### 0x6f starting a token
+### 0x6f starting a token
 
 Input:
 ~~~
@@ -22719,7 +21830,7 @@ oa
 ~~~
 
 
-#### 0x70 starting a token
+### 0x70 starting a token
 
 Input:
 ~~~
@@ -22732,7 +21843,7 @@ pa
 ~~~
 
 
-#### 0x71 starting a token
+### 0x71 starting a token
 
 Input:
 ~~~
@@ -22745,7 +21856,7 @@ qa
 ~~~
 
 
-#### 0x72 starting a token
+### 0x72 starting a token
 
 Input:
 ~~~
@@ -22758,7 +21869,7 @@ ra
 ~~~
 
 
-#### 0x73 starting a token
+### 0x73 starting a token
 
 Input:
 ~~~
@@ -22771,7 +21882,7 @@ sa
 ~~~
 
 
-#### 0x74 starting a token
+### 0x74 starting a token
 
 Input:
 ~~~
@@ -22784,7 +21895,7 @@ ta
 ~~~
 
 
-#### 0x75 starting a token
+### 0x75 starting a token
 
 Input:
 ~~~
@@ -22797,7 +21908,7 @@ ua
 ~~~
 
 
-#### 0x76 starting a token
+### 0x76 starting a token
 
 Input:
 ~~~
@@ -22810,7 +21921,7 @@ va
 ~~~
 
 
-#### 0x77 starting a token
+### 0x77 starting a token
 
 Input:
 ~~~
@@ -22823,7 +21934,7 @@ wa
 ~~~
 
 
-#### 0x78 starting a token
+### 0x78 starting a token
 
 Input:
 ~~~
@@ -22836,7 +21947,7 @@ xa
 ~~~
 
 
-#### 0x79 starting a token
+### 0x79 starting a token
 
 Input:
 ~~~
@@ -22849,7 +21960,7 @@ ya
 ~~~
 
 
-#### 0x7a starting a token
+### 0x7a starting a token
 
 Input:
 ~~~
@@ -22862,7 +21973,7 @@ za
 ~~~
 
 
-#### 0x7b starting a token
+### 0x7b starting a token
 
 Input:
 ~~~
@@ -22873,12 +21984,11 @@ Expects Parse Error
 ~~~
 >>{a<<
   ^ (0x7b) Unexpected start character in Bare Item: '{' (\u007b)
-
 ~~~
 
 
 
-#### 0x7c starting a token
+### 0x7c starting a token
 
 Input:
 ~~~
@@ -22889,12 +21999,11 @@ Expects Parse Error
 ~~~
 >>|a<<
   ^ (0x7c) Unexpected start character in Bare Item: '|' (\u007c)
-
 ~~~
 
 
 
-#### 0x7d starting a token
+### 0x7d starting a token
 
 Input:
 ~~~
@@ -22905,12 +22014,11 @@ Expects Parse Error
 ~~~
 >>}a<<
   ^ (0x7d) Unexpected start character in Bare Item: '}' (\u007d)
-
 ~~~
 
 
 
-#### 0x7e starting a token
+### 0x7e starting a token
 
 Input:
 ~~~
@@ -22921,12 +22029,11 @@ Expects Parse Error
 ~~~
 >>~a<<
   ^ (0x7e) Unexpected start character in Bare Item: '~' (\u007e)
-
 ~~~
 
 
 
-#### 0x7f starting a token
+### 0x7f starting a token
 
 Input:
 ~~~
@@ -22937,7 +22044,6 @@ Expects Parse Error
 ~~~
 >>a<<
   ^ (0x7f) Unexpected start character in Bare Item: '' (\u007f)
-
 ~~~
 
 

@@ -229,7 +229,7 @@ public abstract class AbstractSpecificationTests {
                 fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
             } catch (ParseException expected) {
                 out.append("~~~\n");
-                out.append(expected.getDiagnostics()).append("\n");
+                out.append(expected.getDiagnostics());
                 out.append("~~~\n");
                 out.append("\n");
             }
