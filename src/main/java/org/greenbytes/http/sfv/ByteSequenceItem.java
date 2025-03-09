@@ -7,8 +7,8 @@ import java.util.Objects;
 /**
  * Represents a Byte Sequence.
  * 
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#binary">Section
- *      3.3.5 of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#binary">Section
+ *      3.3.5 of RFC 9651</a>
  */
 public class ByteSequenceItem implements Item<ByteBuffer> {
 

@@ -5,8 +5,8 @@ import java.util.Objects;
 /**
  * Represents a Token.
  * 
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#token">Section
- *      3.3.4 of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#token">Section
+ *      3.3.4 of RFC 9651</a>
  */
 public class TokenItem implements Item<String> {
 
