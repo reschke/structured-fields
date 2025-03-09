@@ -13539,3 +13539,181 @@ Result:
 (abc_123;a=1;b=2);cdef_456
 ~~~
 
+
+## string
+
+
+### basic string
+
+Input:
+~~~
+"foo bar"
+~~~
+
+Result:
+~~~
+"foo bar"
+~~~
+
+### empty string
+
+Input:
+~~~
+""
+~~~
+
+Result:
+~~~
+""
+~~~
+
+### long string
+
+Input:
+~~~
+"foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo "
+~~~
+
+Result:
+~~~
+"foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo "
+~~~
+
+### whitespace string
+
+Input:
+~~~
+"   "
+~~~
+
+Result:
+~~~
+"   "
+~~~
+
+### non-ascii string
+
+Input:
+~~~
+"füü"
+~~~
+
+Expects Parse Error
+~~~
+>>"füü"<<
+  --^ (0xfc) Invalid character in field line at position 2: 'ü' (0x00fc) (input: "füü")
+~~~
+
+
+### tab in string
+
+Input:
+~~~
+"	"
+~~~
+
+Expects Parse Error
+~~~
+>>"	"<<
+  --^ (0x22) Invalid character in String at position 2
+~~~
+
+
+### newline in string
+
+Input:
+~~~
+" 
+ "
+~~~
+
+Expects Parse Error
+~~~
+>>" 
+ "<<
+  ---^ (0x20) Invalid character in String at position 3
+~~~
+
+
+### single quoted string
+
+Input:
+~~~
+'foo'
+~~~
+
+Expects Parse Error
+~~~
+>>'foo'<<
+  ^ (0x27) Unexpected start character in Bare Item: ''' (\u0027)
+~~~
+
+
+### unbalanced string
+
+Input:
+~~~
+"foo
+~~~
+
+Expects Parse Error
+~~~
+>>"foo<<
+  ----^ Closing DQUOTE missing
+~~~
+
+
+### string quoting
+
+Input:
+~~~
+"foo \"bar\" \\ baz"
+~~~
+
+Result:
+~~~
+"foo \"bar\" \\ baz"
+~~~
+
+### bad string quoting
+
+Input:
+~~~
+"foo \,"
+~~~
+
+Expects Parse Error
+~~~
+>>"foo \,"<<
+  ------^ (0x2c) Invalid escape sequence character ',' at position 6
+~~~
+
+
+### ending string quote
+
+Input:
+~~~
+"foo \"
+~~~
+
+Expects Parse Error
+~~~
+>>"foo \"<<
+  -------^ Closing DQUOTE missing
+~~~
+
+
+### abruptly ending string quote
+
+Input:
+~~~
+"foo \
+~~~
+
+Expects Parse Error
+~~~
+>>"foo \<<
+  ------^ Incomplete escape sequence at position 6
+~~~
+
+
