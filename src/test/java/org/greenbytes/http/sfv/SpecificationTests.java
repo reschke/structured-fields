@@ -1,32 +1,35 @@
 package org.greenbytes.http.sfv;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class SpecificationTests extends AbstractSpecificationTests {
 
     private static String basename = "";
 
-    private static final Path output;
+    private static final Path outputPath;
 
     static {
         String filename = System.getProperty("output");
-        if (filename == null) {
-            output = null;
-        } else {
-            output = Paths.get(filename);
-            output.toFile().delete();
+        Path tmp = null;
+        if (filename != null) {
+            tmp = Paths.get(filename);
+            try {
+                Files.deleteIfExists(tmp);
+            } catch (IOException e) {
+                tmp = null;
+            }
         }
+        outputPath = tmp;
     }
 
     @Parameterized.Parameters(name = "{0}")
@@ -43,36 +46,31 @@ public class SpecificationTests extends AbstractSpecificationTests {
 
     @Test
     public void runTest() {
-        StringBuilder out = new StringBuilder();
+        StringBuilder testOutput = new StringBuilder();
         if (basename.isEmpty()) {
-            out.append("# Test Report\n");
-            out.append("\n");
+            testOutput.append("# Test Report\n\n");
         }
         if (!p.filename.equals(basename)) {
-            out.append("\n");
-            out.append("## ").append(p.filename).append("\n");
-            out.append("\n");
+            testOutput.append("\n## ").append(p.filename).append("\n\n\n");
             basename = p.filename;
-            out.append("\n");
         }
-        out.append("### ").append(p.name).append("\n");
-        out.append("\n");
-        out.append("Input:").append("\n");
-        out.append("~~~" + "\n");
+        testOutput.append("### ").append(p.name).append("\n\n");
+        testOutput.append("Input:").append("\n");
+        testOutput.append("~~~\n");
         for (String s : p.raw) {
-            out.append(s).append("\n");
+            testOutput.append(s).append("\n");
         }
-        out.append("~~~" + "\n");
-        out.append("\n");
+        testOutput.append("~~~\n\n");
 
-        executeTest(out);
-        out.append("\n");
+        executeTest(testOutput);
 
-        if (output != null) {
-            try (PrintWriter pw = new PrintWriter(
-                    new FileOutputStream(output.toFile(), true), true, StandardCharsets.UTF_8)) {
-                pw.println(out);
-            } catch (FileNotFoundException ex) {
+        testOutput.append("\n");
+
+        if (outputPath != null) {
+            try {
+                Files.writeString(outputPath, testOutput, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            } catch (Exception ex) {
+                System.err.printf("Can't write to %s%n.", outputPath);
             }
         }
     }
