@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -68,7 +69,9 @@ public class SpecificationTests extends AbstractSpecificationTests {
 
         if (outputPath != null) {
             try {
-                Files.writeString(outputPath, testOutput, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                Files.write(outputPath,
+                        testOutput.toString().getBytes(StandardCharsets.UTF_8),
+                        StandardOpenOption.APPEND, StandardOpenOption.CREATE);
             } catch (Exception ex) {
                 System.err.printf("Can't write to %s%n.", outputPath);
             }
