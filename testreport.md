@@ -10385,3 +10385,3157 @@ Expects Parse Error
 ~~~
 
 
+
+## number
+
+
+### basic integer
+
+Input:
+~~~
+42
+~~~
+
+Result:
+~~~
+42
+~~~
+
+### zero integer
+
+Input:
+~~~
+0
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### negative zero
+
+Input:
+~~~
+-0
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### double negative zero
+
+Input:
+~~~
+--0
+~~~
+
+Expects Parse Error
+~~~
+>>--0<<
+  -^ (0x2d) Illegal start for Integer or Decimal: '-0'
+~~~
+
+
+### negative integer
+
+Input:
+~~~
+-42
+~~~
+
+Result:
+~~~
+-42
+~~~
+
+### leading 0 integer
+
+Input:
+~~~
+042
+~~~
+
+Result:
+~~~
+42
+~~~
+
+### leading 0 negative integer
+
+Input:
+~~~
+-042
+~~~
+
+Result:
+~~~
+-42
+~~~
+
+### leading 0 zero
+
+Input:
+~~~
+00
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### comma
+
+Input:
+~~~
+2,3
+~~~
+
+Expects Parse Error
+~~~
+>>2,3<<
+  -^ (0x2c) Extra characters in string parsed as Item
+~~~
+
+
+### negative non-DIGIT first character
+
+Input:
+~~~
+-a23
+~~~
+
+Expects Parse Error
+~~~
+>>-a23<<
+  -^ (0x61) Illegal start for Integer or Decimal: 'a23'
+~~~
+
+
+### sign out of place
+
+Input:
+~~~
+4-2
+~~~
+
+Expects Parse Error
+~~~
+>>4-2<<
+  -^ (0x2d) Extra characters in string parsed as Item
+~~~
+
+
+### whitespace after sign
+
+Input:
+~~~
+- 42
+~~~
+
+Expects Parse Error
+~~~
+>>- 42<<
+  -^ (0x20) Illegal start for Integer or Decimal: ' 42'
+~~~
+
+
+### long integer
+
+Input:
+~~~
+123456789012345
+~~~
+
+Result:
+~~~
+123456789012345
+~~~
+
+### long negative integer
+
+Input:
+~~~
+-123456789012345
+~~~
+
+Result:
+~~~
+-123456789012345
+~~~
+
+### too long integer
+
+Input:
+~~~
+1234567890123456
+~~~
+
+Expects Parse Error
+~~~
+>>1234567890123456<<
+  ---------------^ (0x36) Integer too long: 16 characters
+~~~
+
+
+### negative too long integer
+
+Input:
+~~~
+-1234567890123456
+~~~
+
+Expects Parse Error
+~~~
+>>-1234567890123456<<
+  ----------------^ (0x36) Integer too long: 16 characters
+~~~
+
+
+### simple decimal
+
+Input:
+~~~
+1.23
+~~~
+
+Result:
+~~~
+1.23
+~~~
+
+### negative decimal
+
+Input:
+~~~
+-1.23
+~~~
+
+Result:
+~~~
+-1.23
+~~~
+
+### decimal, whitespace after decimal
+
+Input:
+~~~
+1. 23
+~~~
+
+Expects Parse Error
+~~~
+>>1. 23<<
+  -^ (0x2e) Decimal must not end in '.'
+~~~
+
+
+### decimal, whitespace before decimal
+
+Input:
+~~~
+1 .23
+~~~
+
+Expects Parse Error
+~~~
+>>1 .23<<
+  --^ (0x2e) Extra characters in string parsed as Item
+~~~
+
+
+### negative decimal, whitespace after sign
+
+Input:
+~~~
+- 1.23
+~~~
+
+Expects Parse Error
+~~~
+>>- 1.23<<
+  -^ (0x20) Illegal start for Integer or Decimal: ' 1.23'
+~~~
+
+
+### tricky precision decimal
+
+Input:
+~~~
+123456789012.1
+~~~
+
+Result:
+~~~
+123456789012.1
+~~~
+
+### double decimal decimal
+
+Input:
+~~~
+1.5.4
+~~~
+
+Expects Parse Error
+~~~
+>>1.5.4<<
+  ---^ (0x2e) Extra characters in string parsed as Item
+~~~
+
+
+### adjacent double decimal decimal
+
+Input:
+~~~
+1..4
+~~~
+
+Expects Parse Error
+~~~
+>>1..4<<
+  -^ (0x2e) Decimal must not end in '.'
+~~~
+
+
+### decimal with three fractional digits
+
+Input:
+~~~
+1.123
+~~~
+
+Result:
+~~~
+1.123
+~~~
+
+### negative decimal with three fractional digits
+
+Input:
+~~~
+-1.123
+~~~
+
+Result:
+~~~
+-1.123
+~~~
+
+### decimal with four fractional digits
+
+Input:
+~~~
+1.1234
+~~~
+
+Expects Parse Error
+~~~
+>>1.1234<<
+  -----^ (0x34) Maximum number of fractional digits is 3, found: 4, in: 1.1234
+~~~
+
+
+### negative decimal with four fractional digits
+
+Input:
+~~~
+-1.1234
+~~~
+
+Expects Parse Error
+~~~
+>>-1.1234<<
+  ------^ (0x34) Maximum number of fractional digits is 3, found: 4, in: 1.1234
+~~~
+
+
+### decimal with thirteen integer digits
+
+Input:
+~~~
+1234567890123.0
+~~~
+
+Expects Parse Error
+~~~
+>>1234567890123.0<<
+  -------------^ (0x2e) Illegal position for decimal point in Decimal after '1234567890123'
+~~~
+
+
+### negative decimal with thirteen integer digits
+
+Input:
+~~~
+-1234567890123.0
+~~~
+
+Expects Parse Error
+~~~
+>>-1234567890123.0<<
+  --------------^ (0x2e) Illegal position for decimal point in Decimal after '1234567890123'
+~~~
+
+
+### decimal with 1 significant digit and 1 insignificant digit
+
+Input:
+~~~
+1.20
+~~~
+
+Result:
+~~~
+1.2
+~~~
+
+### decimal with 1 significant digit and 2 insignificant digits
+
+Input:
+~~~
+1.200
+~~~
+
+Result:
+~~~
+1.2
+~~~
+
+### decimal with 2 significant digits and 1 insignificant digit
+
+Input:
+~~~
+1.230
+~~~
+
+Result:
+~~~
+1.23
+~~~
+
+
+## number-generated
+
+
+### 1 digits of zero
+
+Input:
+~~~
+0
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 1 digit small integer
+
+Input:
+~~~
+1
+~~~
+
+Result:
+~~~
+1
+~~~
+
+### 1 digit large integer
+
+Input:
+~~~
+9
+~~~
+
+Result:
+~~~
+9
+~~~
+
+### 2 digits of zero
+
+Input:
+~~~
+00
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 2 digit small integer
+
+Input:
+~~~
+11
+~~~
+
+Result:
+~~~
+11
+~~~
+
+### 2 digit large integer
+
+Input:
+~~~
+99
+~~~
+
+Result:
+~~~
+99
+~~~
+
+### 3 digits of zero
+
+Input:
+~~~
+000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 3 digit small integer
+
+Input:
+~~~
+111
+~~~
+
+Result:
+~~~
+111
+~~~
+
+### 3 digit large integer
+
+Input:
+~~~
+999
+~~~
+
+Result:
+~~~
+999
+~~~
+
+### 4 digits of zero
+
+Input:
+~~~
+0000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 4 digit small integer
+
+Input:
+~~~
+1111
+~~~
+
+Result:
+~~~
+1111
+~~~
+
+### 4 digit large integer
+
+Input:
+~~~
+9999
+~~~
+
+Result:
+~~~
+9999
+~~~
+
+### 5 digits of zero
+
+Input:
+~~~
+00000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 5 digit small integer
+
+Input:
+~~~
+11111
+~~~
+
+Result:
+~~~
+11111
+~~~
+
+### 5 digit large integer
+
+Input:
+~~~
+99999
+~~~
+
+Result:
+~~~
+99999
+~~~
+
+### 6 digits of zero
+
+Input:
+~~~
+000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 6 digit small integer
+
+Input:
+~~~
+111111
+~~~
+
+Result:
+~~~
+111111
+~~~
+
+### 6 digit large integer
+
+Input:
+~~~
+999999
+~~~
+
+Result:
+~~~
+999999
+~~~
+
+### 7 digits of zero
+
+Input:
+~~~
+0000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 7 digit small integer
+
+Input:
+~~~
+1111111
+~~~
+
+Result:
+~~~
+1111111
+~~~
+
+### 7 digit large integer
+
+Input:
+~~~
+9999999
+~~~
+
+Result:
+~~~
+9999999
+~~~
+
+### 8 digits of zero
+
+Input:
+~~~
+00000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 8 digit small integer
+
+Input:
+~~~
+11111111
+~~~
+
+Result:
+~~~
+11111111
+~~~
+
+### 8 digit large integer
+
+Input:
+~~~
+99999999
+~~~
+
+Result:
+~~~
+99999999
+~~~
+
+### 9 digits of zero
+
+Input:
+~~~
+000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 9 digit small integer
+
+Input:
+~~~
+111111111
+~~~
+
+Result:
+~~~
+111111111
+~~~
+
+### 9 digit large integer
+
+Input:
+~~~
+999999999
+~~~
+
+Result:
+~~~
+999999999
+~~~
+
+### 10 digits of zero
+
+Input:
+~~~
+0000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 10 digit small integer
+
+Input:
+~~~
+1111111111
+~~~
+
+Result:
+~~~
+1111111111
+~~~
+
+### 10 digit large integer
+
+Input:
+~~~
+9999999999
+~~~
+
+Result:
+~~~
+9999999999
+~~~
+
+### 11 digits of zero
+
+Input:
+~~~
+00000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 11 digit small integer
+
+Input:
+~~~
+11111111111
+~~~
+
+Result:
+~~~
+11111111111
+~~~
+
+### 11 digit large integer
+
+Input:
+~~~
+99999999999
+~~~
+
+Result:
+~~~
+99999999999
+~~~
+
+### 12 digits of zero
+
+Input:
+~~~
+000000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 12 digit small integer
+
+Input:
+~~~
+111111111111
+~~~
+
+Result:
+~~~
+111111111111
+~~~
+
+### 12 digit large integer
+
+Input:
+~~~
+999999999999
+~~~
+
+Result:
+~~~
+999999999999
+~~~
+
+### 13 digits of zero
+
+Input:
+~~~
+0000000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 13 digit small integer
+
+Input:
+~~~
+1111111111111
+~~~
+
+Result:
+~~~
+1111111111111
+~~~
+
+### 13 digit large integer
+
+Input:
+~~~
+9999999999999
+~~~
+
+Result:
+~~~
+9999999999999
+~~~
+
+### 14 digits of zero
+
+Input:
+~~~
+00000000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 14 digit small integer
+
+Input:
+~~~
+11111111111111
+~~~
+
+Result:
+~~~
+11111111111111
+~~~
+
+### 14 digit large integer
+
+Input:
+~~~
+99999999999999
+~~~
+
+Result:
+~~~
+99999999999999
+~~~
+
+### 15 digits of zero
+
+Input:
+~~~
+000000000000000
+~~~
+
+Result:
+~~~
+0
+~~~
+
+### 15 digit small integer
+
+Input:
+~~~
+111111111111111
+~~~
+
+Result:
+~~~
+111111111111111
+~~~
+
+### 15 digit large integer
+
+Input:
+~~~
+999999999999999
+~~~
+
+Result:
+~~~
+999999999999999
+~~~
+
+### 2 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+0.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 2 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+1.0
+~~~
+
+Result:
+~~~
+1.0
+~~~
+
+### 2 digit, 1 fractional small decimal
+
+Input:
+~~~
+1.1
+~~~
+
+Result:
+~~~
+1.1
+~~~
+
+### 2 digit, 1 fractional large decimal
+
+Input:
+~~~
+9.9
+~~~
+
+Result:
+~~~
+9.9
+~~~
+
+### 3 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+0.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 3 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+1.00
+~~~
+
+Result:
+~~~
+1.0
+~~~
+
+### 3 digit, 2 fractional small decimal
+
+Input:
+~~~
+1.11
+~~~
+
+Result:
+~~~
+1.11
+~~~
+
+### 3 digit, 2 fractional large decimal
+
+Input:
+~~~
+9.99
+~~~
+
+Result:
+~~~
+9.99
+~~~
+
+### 4 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+0.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 4 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+1.000
+~~~
+
+Result:
+~~~
+1.0
+~~~
+
+### 4 digit, 3 fractional small decimal
+
+Input:
+~~~
+1.111
+~~~
+
+Result:
+~~~
+1.111
+~~~
+
+### 4 digit, 3 fractional large decimal
+
+Input:
+~~~
+9.999
+~~~
+
+Result:
+~~~
+9.999
+~~~
+
+### 3 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+00.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 3 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+11.0
+~~~
+
+Result:
+~~~
+11.0
+~~~
+
+### 3 digit, 1 fractional small decimal
+
+Input:
+~~~
+11.1
+~~~
+
+Result:
+~~~
+11.1
+~~~
+
+### 3 digit, 1 fractional large decimal
+
+Input:
+~~~
+99.9
+~~~
+
+Result:
+~~~
+99.9
+~~~
+
+### 4 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+00.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 4 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+11.00
+~~~
+
+Result:
+~~~
+11.0
+~~~
+
+### 4 digit, 2 fractional small decimal
+
+Input:
+~~~
+11.11
+~~~
+
+Result:
+~~~
+11.11
+~~~
+
+### 4 digit, 2 fractional large decimal
+
+Input:
+~~~
+99.99
+~~~
+
+Result:
+~~~
+99.99
+~~~
+
+### 5 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+00.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 5 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+11.000
+~~~
+
+Result:
+~~~
+11.0
+~~~
+
+### 5 digit, 3 fractional small decimal
+
+Input:
+~~~
+11.111
+~~~
+
+Result:
+~~~
+11.111
+~~~
+
+### 5 digit, 3 fractional large decimal
+
+Input:
+~~~
+99.999
+~~~
+
+Result:
+~~~
+99.999
+~~~
+
+### 4 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 4 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+111.0
+~~~
+
+Result:
+~~~
+111.0
+~~~
+
+### 4 digit, 1 fractional small decimal
+
+Input:
+~~~
+111.1
+~~~
+
+Result:
+~~~
+111.1
+~~~
+
+### 4 digit, 1 fractional large decimal
+
+Input:
+~~~
+999.9
+~~~
+
+Result:
+~~~
+999.9
+~~~
+
+### 5 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 5 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+111.00
+~~~
+
+Result:
+~~~
+111.0
+~~~
+
+### 5 digit, 2 fractional small decimal
+
+Input:
+~~~
+111.11
+~~~
+
+Result:
+~~~
+111.11
+~~~
+
+### 5 digit, 2 fractional large decimal
+
+Input:
+~~~
+999.99
+~~~
+
+Result:
+~~~
+999.99
+~~~
+
+### 6 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 6 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+111.000
+~~~
+
+Result:
+~~~
+111.0
+~~~
+
+### 6 digit, 3 fractional small decimal
+
+Input:
+~~~
+111.111
+~~~
+
+Result:
+~~~
+111.111
+~~~
+
+### 6 digit, 3 fractional large decimal
+
+Input:
+~~~
+999.999
+~~~
+
+Result:
+~~~
+999.999
+~~~
+
+### 5 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+0000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 5 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+1111.0
+~~~
+
+Result:
+~~~
+1111.0
+~~~
+
+### 5 digit, 1 fractional small decimal
+
+Input:
+~~~
+1111.1
+~~~
+
+Result:
+~~~
+1111.1
+~~~
+
+### 5 digit, 1 fractional large decimal
+
+Input:
+~~~
+9999.9
+~~~
+
+Result:
+~~~
+9999.9
+~~~
+
+### 6 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+0000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 6 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+1111.00
+~~~
+
+Result:
+~~~
+1111.0
+~~~
+
+### 6 digit, 2 fractional small decimal
+
+Input:
+~~~
+1111.11
+~~~
+
+Result:
+~~~
+1111.11
+~~~
+
+### 6 digit, 2 fractional large decimal
+
+Input:
+~~~
+9999.99
+~~~
+
+Result:
+~~~
+9999.99
+~~~
+
+### 7 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+0000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 7 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+1111.000
+~~~
+
+Result:
+~~~
+1111.0
+~~~
+
+### 7 digit, 3 fractional small decimal
+
+Input:
+~~~
+1111.111
+~~~
+
+Result:
+~~~
+1111.111
+~~~
+
+### 7 digit, 3 fractional large decimal
+
+Input:
+~~~
+9999.999
+~~~
+
+Result:
+~~~
+9999.999
+~~~
+
+### 6 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+00000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 6 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+11111.0
+~~~
+
+Result:
+~~~
+11111.0
+~~~
+
+### 6 digit, 1 fractional small decimal
+
+Input:
+~~~
+11111.1
+~~~
+
+Result:
+~~~
+11111.1
+~~~
+
+### 6 digit, 1 fractional large decimal
+
+Input:
+~~~
+99999.9
+~~~
+
+Result:
+~~~
+99999.9
+~~~
+
+### 7 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+00000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 7 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+11111.00
+~~~
+
+Result:
+~~~
+11111.0
+~~~
+
+### 7 digit, 2 fractional small decimal
+
+Input:
+~~~
+11111.11
+~~~
+
+Result:
+~~~
+11111.11
+~~~
+
+### 7 digit, 2 fractional large decimal
+
+Input:
+~~~
+99999.99
+~~~
+
+Result:
+~~~
+99999.99
+~~~
+
+### 8 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+00000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 8 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+11111.000
+~~~
+
+Result:
+~~~
+11111.0
+~~~
+
+### 8 digit, 3 fractional small decimal
+
+Input:
+~~~
+11111.111
+~~~
+
+Result:
+~~~
+11111.111
+~~~
+
+### 8 digit, 3 fractional large decimal
+
+Input:
+~~~
+99999.999
+~~~
+
+Result:
+~~~
+99999.999
+~~~
+
+### 7 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 7 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+111111.0
+~~~
+
+Result:
+~~~
+111111.0
+~~~
+
+### 7 digit, 1 fractional small decimal
+
+Input:
+~~~
+111111.1
+~~~
+
+Result:
+~~~
+111111.1
+~~~
+
+### 7 digit, 1 fractional large decimal
+
+Input:
+~~~
+999999.9
+~~~
+
+Result:
+~~~
+999999.9
+~~~
+
+### 8 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 8 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+111111.00
+~~~
+
+Result:
+~~~
+111111.0
+~~~
+
+### 8 digit, 2 fractional small decimal
+
+Input:
+~~~
+111111.11
+~~~
+
+Result:
+~~~
+111111.11
+~~~
+
+### 8 digit, 2 fractional large decimal
+
+Input:
+~~~
+999999.99
+~~~
+
+Result:
+~~~
+999999.99
+~~~
+
+### 9 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 9 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+111111.000
+~~~
+
+Result:
+~~~
+111111.0
+~~~
+
+### 9 digit, 3 fractional small decimal
+
+Input:
+~~~
+111111.111
+~~~
+
+Result:
+~~~
+111111.111
+~~~
+
+### 9 digit, 3 fractional large decimal
+
+Input:
+~~~
+999999.999
+~~~
+
+Result:
+~~~
+999999.999
+~~~
+
+### 8 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+0000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 8 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+1111111.0
+~~~
+
+Result:
+~~~
+1111111.0
+~~~
+
+### 8 digit, 1 fractional small decimal
+
+Input:
+~~~
+1111111.1
+~~~
+
+Result:
+~~~
+1111111.1
+~~~
+
+### 8 digit, 1 fractional large decimal
+
+Input:
+~~~
+9999999.9
+~~~
+
+Result:
+~~~
+9999999.9
+~~~
+
+### 9 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+0000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 9 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+1111111.00
+~~~
+
+Result:
+~~~
+1111111.0
+~~~
+
+### 9 digit, 2 fractional small decimal
+
+Input:
+~~~
+1111111.11
+~~~
+
+Result:
+~~~
+1111111.11
+~~~
+
+### 9 digit, 2 fractional large decimal
+
+Input:
+~~~
+9999999.99
+~~~
+
+Result:
+~~~
+9999999.99
+~~~
+
+### 10 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+0000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 10 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+1111111.000
+~~~
+
+Result:
+~~~
+1111111.0
+~~~
+
+### 10 digit, 3 fractional small decimal
+
+Input:
+~~~
+1111111.111
+~~~
+
+Result:
+~~~
+1111111.111
+~~~
+
+### 10 digit, 3 fractional large decimal
+
+Input:
+~~~
+9999999.999
+~~~
+
+Result:
+~~~
+9999999.999
+~~~
+
+### 9 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+00000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 9 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+11111111.0
+~~~
+
+Result:
+~~~
+11111111.0
+~~~
+
+### 9 digit, 1 fractional small decimal
+
+Input:
+~~~
+11111111.1
+~~~
+
+Result:
+~~~
+11111111.1
+~~~
+
+### 9 digit, 1 fractional large decimal
+
+Input:
+~~~
+99999999.9
+~~~
+
+Result:
+~~~
+99999999.9
+~~~
+
+### 10 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+00000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 10 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+11111111.00
+~~~
+
+Result:
+~~~
+11111111.0
+~~~
+
+### 10 digit, 2 fractional small decimal
+
+Input:
+~~~
+11111111.11
+~~~
+
+Result:
+~~~
+11111111.11
+~~~
+
+### 10 digit, 2 fractional large decimal
+
+Input:
+~~~
+99999999.99
+~~~
+
+Result:
+~~~
+99999999.99
+~~~
+
+### 11 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+00000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 11 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+11111111.000
+~~~
+
+Result:
+~~~
+11111111.0
+~~~
+
+### 11 digit, 3 fractional small decimal
+
+Input:
+~~~
+11111111.111
+~~~
+
+Result:
+~~~
+11111111.111
+~~~
+
+### 11 digit, 3 fractional large decimal
+
+Input:
+~~~
+99999999.999
+~~~
+
+Result:
+~~~
+99999999.999
+~~~
+
+### 10 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+000000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 10 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+111111111.0
+~~~
+
+Result:
+~~~
+111111111.0
+~~~
+
+### 10 digit, 1 fractional small decimal
+
+Input:
+~~~
+111111111.1
+~~~
+
+Result:
+~~~
+111111111.1
+~~~
+
+### 10 digit, 1 fractional large decimal
+
+Input:
+~~~
+999999999.9
+~~~
+
+Result:
+~~~
+999999999.9
+~~~
+
+### 11 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+000000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 11 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+111111111.00
+~~~
+
+Result:
+~~~
+111111111.0
+~~~
+
+### 11 digit, 2 fractional small decimal
+
+Input:
+~~~
+111111111.11
+~~~
+
+Result:
+~~~
+111111111.11
+~~~
+
+### 11 digit, 2 fractional large decimal
+
+Input:
+~~~
+999999999.99
+~~~
+
+Result:
+~~~
+999999999.99
+~~~
+
+### 12 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+000000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 12 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+111111111.000
+~~~
+
+Result:
+~~~
+111111111.0
+~~~
+
+### 12 digit, 3 fractional small decimal
+
+Input:
+~~~
+111111111.111
+~~~
+
+Result:
+~~~
+111111111.111
+~~~
+
+### 12 digit, 3 fractional large decimal
+
+Input:
+~~~
+999999999.999
+~~~
+
+Result:
+~~~
+999999999.999
+~~~
+
+### 11 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+0000000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 11 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+1111111111.0
+~~~
+
+Result:
+~~~
+1111111111.0
+~~~
+
+### 11 digit, 1 fractional small decimal
+
+Input:
+~~~
+1111111111.1
+~~~
+
+Result:
+~~~
+1111111111.1
+~~~
+
+### 11 digit, 1 fractional large decimal
+
+Input:
+~~~
+9999999999.9
+~~~
+
+Result:
+~~~
+9999999999.9
+~~~
+
+### 12 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+0000000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 12 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+1111111111.00
+~~~
+
+Result:
+~~~
+1111111111.0
+~~~
+
+### 12 digit, 2 fractional small decimal
+
+Input:
+~~~
+1111111111.11
+~~~
+
+Result:
+~~~
+1111111111.11
+~~~
+
+### 12 digit, 2 fractional large decimal
+
+Input:
+~~~
+9999999999.99
+~~~
+
+Result:
+~~~
+9999999999.99
+~~~
+
+### 13 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+0000000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 13 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+1111111111.000
+~~~
+
+Result:
+~~~
+1111111111.0
+~~~
+
+### 13 digit, 3 fractional small decimal
+
+Input:
+~~~
+1111111111.111
+~~~
+
+Result:
+~~~
+1111111111.111
+~~~
+
+### 13 digit, 3 fractional large decimal
+
+Input:
+~~~
+9999999999.999
+~~~
+
+Result:
+~~~
+9999999999.999
+~~~
+
+### 12 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+00000000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 12 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+11111111111.0
+~~~
+
+Result:
+~~~
+11111111111.0
+~~~
+
+### 12 digit, 1 fractional small decimal
+
+Input:
+~~~
+11111111111.1
+~~~
+
+Result:
+~~~
+11111111111.1
+~~~
+
+### 12 digit, 1 fractional large decimal
+
+Input:
+~~~
+99999999999.9
+~~~
+
+Result:
+~~~
+99999999999.9
+~~~
+
+### 13 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+00000000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 13 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+11111111111.00
+~~~
+
+Result:
+~~~
+11111111111.0
+~~~
+
+### 13 digit, 2 fractional small decimal
+
+Input:
+~~~
+11111111111.11
+~~~
+
+Result:
+~~~
+11111111111.11
+~~~
+
+### 13 digit, 2 fractional large decimal
+
+Input:
+~~~
+99999999999.99
+~~~
+
+Result:
+~~~
+99999999999.99
+~~~
+
+### 14 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+00000000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 14 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+11111111111.000
+~~~
+
+Result:
+~~~
+11111111111.0
+~~~
+
+### 14 digit, 3 fractional small decimal
+
+Input:
+~~~
+11111111111.111
+~~~
+
+Result:
+~~~
+11111111111.111
+~~~
+
+### 14 digit, 3 fractional large decimal
+
+Input:
+~~~
+99999999999.999
+~~~
+
+Result:
+~~~
+99999999999.999
+~~~
+
+### 13 digit 0, 1 fractional small decimal
+
+Input:
+~~~
+000000000000.1
+~~~
+
+Result:
+~~~
+0.1
+~~~
+
+### 13 digit, 1 fractional 0 decimal
+
+Input:
+~~~
+111111111111.0
+~~~
+
+Result:
+~~~
+111111111111.0
+~~~
+
+### 13 digit, 1 fractional small decimal
+
+Input:
+~~~
+111111111111.1
+~~~
+
+Result:
+~~~
+111111111111.1
+~~~
+
+### 13 digit, 1 fractional large decimal
+
+Input:
+~~~
+999999999999.9
+~~~
+
+Result:
+~~~
+999999999999.9
+~~~
+
+### 14 digit 0, 2 fractional small decimal
+
+Input:
+~~~
+000000000000.11
+~~~
+
+Result:
+~~~
+0.11
+~~~
+
+### 14 digit, 2 fractional 0 decimal
+
+Input:
+~~~
+111111111111.00
+~~~
+
+Result:
+~~~
+111111111111.0
+~~~
+
+### 14 digit, 2 fractional small decimal
+
+Input:
+~~~
+111111111111.11
+~~~
+
+Result:
+~~~
+111111111111.11
+~~~
+
+### 14 digit, 2 fractional large decimal
+
+Input:
+~~~
+999999999999.99
+~~~
+
+Result:
+~~~
+999999999999.99
+~~~
+
+### 15 digit 0, 3 fractional small decimal
+
+Input:
+~~~
+000000000000.111
+~~~
+
+Result:
+~~~
+0.111
+~~~
+
+### 15 digit, 3 fractional 0 decimal
+
+Input:
+~~~
+111111111111.000
+~~~
+
+Result:
+~~~
+111111111111.0
+~~~
+
+### 15 digit, 3 fractional small decimal
+
+Input:
+~~~
+111111111111.111
+~~~
+
+Result:
+~~~
+111111111111.111
+~~~
+
+### 15 digit, 3 fractional large decimal
+
+Input:
+~~~
+999999999999.999
+~~~
+
+Result:
+~~~
+999999999999.999
+~~~
+
+### too many digit 0 decimal
+
+Input:
+~~~
+000000000000000.0
+~~~
+
+Expects Parse Error
+~~~
+>>000000000000000.0<<
+  ---------------^ (0x2e) Illegal position for decimal point in Decimal after '000000000000000'
+~~~
+
+
+### too many fractional digits 0 decimal
+
+Input:
+~~~
+000000000000.0000
+~~~
+
+Expects Parse Error
+~~~
+>>000000000000.0000<<
+  ----------------^ (0x30) Decimal too long: 17 characters
+~~~
+
+
+### too many digit 9 decimal
+
+Input:
+~~~
+999999999999999.9
+~~~
+
+Expects Parse Error
+~~~
+>>999999999999999.9<<
+  ---------------^ (0x2e) Illegal position for decimal point in Decimal after '999999999999999'
+~~~
+
+
+### too many fractional digits 9 decimal
+
+Input:
+~~~
+999999999999.9999
+~~~
+
+Expects Parse Error
+~~~
+>>999999999999.9999<<
+  ----------------^ (0x39) Decimal too long: 17 characters
+~~~
+
+
+
+## param-dict
+
+
+### basic parameterised dict
+
+Input:
+~~~
+abc=123;a=1;b=2, def=456, ghi=789;q=9;r="+w"
+~~~
+
+Result:
+~~~
+abc=123;a=1;b=2, def=456, ghi=789;q=9;r="+w"
+~~~
+
+### single item parameterised dict
+
+Input:
+~~~
+a=b; q=1.0
+~~~
+
+Result:
+~~~
+a=b;q=1.0
+~~~
+
+### list item parameterised dictionary
+
+Input:
+~~~
+a=(1 2); q=1.0
+~~~
+
+Result:
+~~~
+a=(1 2);q=1.0
+~~~
+
+### missing parameter value parameterised dict
+
+Input:
+~~~
+a=3;c;d=5
+~~~
+
+Result:
+~~~
+a=3;c;d=5
+~~~
+
+### terminal missing parameter value parameterised dict
+
+Input:
+~~~
+a=3;c=5;d
+~~~
+
+Result:
+~~~
+a=3;c=5;d
+~~~
+
+### no whitespace parameterised dict
+
+Input:
+~~~
+a=b;c=1,d=e;f=2
+~~~
+
+Result:
+~~~
+a=b;c=1, d=e;f=2
+~~~
+
+### whitespace before = parameterised dict
+
+Input:
+~~~
+a=b;q =0.5
+~~~
+
+Expects Parse Error
+~~~
+>>a=b;q =0.5<<
+  ------^ (0x3d) Expected COMMA in Dictionary, found: '=' (\u003d)
+~~~
+
+
+### whitespace after = parameterised dict
+
+Input:
+~~~
+a=b;q= 0.5
+~~~
+
+Expects Parse Error
+~~~
+>>a=b;q= 0.5<<
+  ------^ (0x20) Unexpected start character in Bare Item: ' ' (\u0020)
+~~~
+
+
+### whitespace before ; parameterised dict
+
+Input:
+~~~
+a=b ;q=0.5
+~~~
+
+Expects Parse Error
+~~~
+>>a=b ;q=0.5<<
+  ----^ (0x3b) Expected COMMA in Dictionary, found: ';' (\u003b)
+~~~
+
+
+### whitespace after ; parameterised dict
+
+Input:
+~~~
+a=b; q=0.5
+~~~
+
+Result:
+~~~
+a=b;q=0.5
+~~~
+
+### extra whitespace parameterised dict
+
+Input:
+~~~
+a=b;  c=1  ,  d=e; f=2; g=3
+~~~
+
+Result:
+~~~
+a=b;c=1, d=e;f=2;g=3
+~~~
+
+### two lines parameterised list
+
+Input:
+~~~
+a=b;c=1
+d=e;f=2
+~~~
+
+Result:
+~~~
+a=b;c=1, d=e;f=2
+~~~
+
+### trailing comma parameterised list
+
+Input:
+~~~
+a=b; q=1.0,
+~~~
+
+Expects Parse Error
+~~~
+>>a=b; q=1.0,<<
+  -----------^ Found trailing COMMA in Dictionary
+~~~
+
+
+### empty item parameterised list
+
+Input:
+~~~
+a=b; q=1.0,,c=d
+~~~
+
+Expects Parse Error
+~~~
+>>a=b; q=1.0,,c=d<<
+  -----------^ (0x2c) Key must start with LCALPHA or '*': ',' (\u002c)
+~~~
+
+
+
+## param-list
+
+
+### basic parameterised list
+
+Input:
+~~~
+abc_123;a=1;b=2; cdef_456, ghi;q=9;r="+w"
+~~~
+
+Result:
+~~~
+abc_123;a=1;b=2;cdef_456, ghi;q=9;r="+w"
+~~~
+
+### single item parameterised list
+
+Input:
+~~~
+text/html;q=1.0
+~~~
+
+Result:
+~~~
+text/html;q=1.0
+~~~
+
+### missing parameter value parameterised list
+
+Input:
+~~~
+text/html;a;q=1.0
+~~~
+
+Result:
+~~~
+text/html;a;q=1.0
+~~~
+
+### missing terminal parameter value parameterised list
+
+Input:
+~~~
+text/html;q=1.0;a
+~~~
+
+Result:
+~~~
+text/html;q=1.0;a
+~~~
+
+### no whitespace parameterised list
+
+Input:
+~~~
+text/html,text/plain;q=0.5
+~~~
+
+Result:
+~~~
+text/html, text/plain;q=0.5
+~~~
+
+### whitespace before = parameterised list
+
+Input:
+~~~
+text/html, text/plain;q =0.5
+~~~
+
+Expects Parse Error
+~~~
+>>text/html, text/plain;q =0.5<<
+  ------------------------^ (0x3d) Expected COMMA in List, got: '=' (\u003d)
+~~~
+
+
+### whitespace after = parameterised list
+
+Input:
+~~~
+text/html, text/plain;q= 0.5
+~~~
+
+Expects Parse Error
+~~~
+>>text/html, text/plain;q= 0.5<<
+  ------------------------^ (0x20) Unexpected start character in Bare Item: ' ' (\u0020)
+~~~
+
+
+### whitespace before ; parameterised list
+
+Input:
+~~~
+text/html, text/plain ;q=0.5
+~~~
+
+Expects Parse Error
+~~~
+>>text/html, text/plain ;q=0.5<<
+  ----------------------^ (0x3b) Expected COMMA in List, got: ';' (\u003b)
+~~~
+
+
+### whitespace after ; parameterised list
+
+Input:
+~~~
+text/html, text/plain; q=0.5
+~~~
+
+Result:
+~~~
+text/html, text/plain;q=0.5
+~~~
+
+### extra whitespace parameterised list
+
+Input:
+~~~
+text/html  ,  text/plain;  q=0.5;  charset=utf-8
+~~~
+
+Result:
+~~~
+text/html, text/plain;q=0.5;charset=utf-8
+~~~
+
+### two lines parameterised list
+
+Input:
+~~~
+text/html
+text/plain;q=0.5
+~~~
+
+Result:
+~~~
+text/html, text/plain;q=0.5
+~~~
+
+### trailing comma parameterised list
+
+Input:
+~~~
+text/html,text/plain;q=0.5,
+~~~
+
+Expects Parse Error
+~~~
+>>text/html,text/plain;q=0.5,<<
+  ---------------------------^ Found trailing COMMA in List
+~~~
+
+
+### empty item parameterised list
+
+Input:
+~~~
+text/html,,text/plain;q=0.5,
+~~~
+
+Expects Parse Error
+~~~
+>>text/html,,text/plain;q=0.5,<<
+  ----------^ (0x2c) Unexpected start character in Bare Item: ',' (\u002c)
+~~~
+
+
+
+## param-listlist
+
+
+### parameterised inner list
+
+Input:
+~~~
+(abc_123);a=1;b=2, cdef_456
+~~~
+
+Result:
+~~~
+(abc_123);a=1;b=2, cdef_456
+~~~
+
+### parameterised inner list item
+
+Input:
+~~~
+(abc_123;a=1;b=2;cdef_456)
+~~~
+
+Result:
+~~~
+(abc_123;a=1;b=2;cdef_456)
+~~~
+
+### parameterised inner list with parameterised item
+
+Input:
+~~~
+(abc_123;a=1;b=2);cdef_456
+~~~
+
+Result:
+~~~
+(abc_123;a=1;b=2);cdef_456
+~~~
+
