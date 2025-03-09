@@ -1623,13 +1623,16 @@ Expects Parse Error
 
 Input:
 ~~~
-=1
+
+=1
 ~~~
 
 Expects Parse Error
 ~~~
->>=1<<
-  ^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
+>>
+=1<<
+  ^ (0x0d) Key must start with LCALPHA or '*': '
+' (\u000d)
 ~~~
 
 
@@ -3492,13 +3495,16 @@ Expects Parse Error
 
 Input:
 ~~~
-aa=1
+a
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>aa=1<<
-  -^ (0x0d) Expected COMMA in Dictionary, found: '' (\u000d)
+>>a
+a=1<<
+  -^ (0x0d) Expected COMMA in Dictionary, found: '
+' (\u000d)
 ~~~
 
 
@@ -5331,13 +5337,16 @@ Expects Parse Error
 
 Input:
 ~~~
-a=1
+
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>a=1<<
-  ^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
+>>
+a=1<<
+  ^ (0x0d) Key must start with LCALPHA or '*': '
+' (\u000d)
 ~~~
 
 
@@ -7198,13 +7207,16 @@ Expects Parse Error
 
 Input:
 ~~~
-foo; aa=1
+foo; a
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; aa=1<<
-  ------^ (0x0d) Expected COMMA in List, got: '' (\u000d)
+>>foo; a
+a=1<<
+  ------^ (0x0d) Expected COMMA in List, got: '
+' (\u000d)
 ~~~
 
 
@@ -9039,13 +9051,16 @@ Expects Parse Error
 
 Input:
 ~~~
-foo; a=1
+foo; 
+a=1
 ~~~
 
 Expects Parse Error
 ~~~
->>foo; a=1<<
-  -----^ (0x0d) Key must start with LCALPHA or '*': '' (\u000d)
+>>foo; 
+a=1<<
+  -----^ (0x0d) Key must start with LCALPHA or '*': '
+' (\u000d)
 ~~~
 
 
@@ -14931,12 +14946,14 @@ Expects Parse Error
 
 Input:
 ~~~
-"  "
+" 
+ "
 ~~~
 
 Expects Parse Error
 ~~~
->>"  "<<
+>>" 
+ "<<
   ---^ (0x20) Invalid character in String at position 3
 ~~~
 
@@ -16668,13 +16685,16 @@ Expects Parse Error
 
 Input:
 ~~~
-"\"
+"\
+"
 ~~~
 
 Expects Parse Error
 ~~~
->>"\"<<
-  --^ (0x0d) Invalid escape sequence character '' at position 2
+>>"\
+"<<
+  --^ (0x0d) Invalid escape sequence character '
+' at position 2
 ~~~
 
 
@@ -18672,12 +18692,14 @@ Expects Parse Error
 
 Input:
 ~~~
-aa
+a
+a
 ~~~
 
 Expects Parse Error
 ~~~
->>aa<<
+>>a
+a<<
   -^ (0x0d) Extra characters in string parsed as Item
 ~~~
 
@@ -20435,13 +20457,16 @@ Expects Parse Error
 
 Input:
 ~~~
-a
+
+a
 ~~~
 
 Expects Parse Error
 ~~~
->>a<<
-  ^ (0x0d) Unexpected start character in Bare Item: '' (\u000d)
+>>
+a<<
+  ^ (0x0d) Unexpected start character in Bare Item: '
+' (\u000d)
 ~~~
 
 
