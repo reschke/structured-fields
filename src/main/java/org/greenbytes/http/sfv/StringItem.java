@@ -5,8 +5,8 @@ import java.util.Objects;
 /**
  * Represents a String.
  * 
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#string">Section
- *      3.3.3 of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#string">Section
+ *      3.3.3 of RFC 9651</a>
  */
 public class StringItem implements Item<String> {
 

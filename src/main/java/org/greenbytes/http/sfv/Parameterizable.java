@@ -5,8 +5,8 @@ package org.greenbytes.http.sfv;
  * 
  * @param <T>
  *            represented Java type
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#param">Section
- *      3.1.2 of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#param">Section
+ *      3.1.2 of RFC 9651</a>
  */
 public interface Parameterizable<T> extends Type<T> {
 

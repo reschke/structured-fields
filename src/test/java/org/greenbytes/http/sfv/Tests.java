@@ -18,7 +18,7 @@ public class Tests {
         String[] tests = new String[] { "0", "1", "-1", "999999999999", "-999999999999", "3;a=b" };
 
         for (String s : tests) {
-            IntegerItem i = Parser.parseInteger(s);
+            IntegerItem i = (IntegerItem) Parser.parseIntegerOrDecimal(s);
             assertEquals("should round-trip", i.serialize(), s);
         }
     }
@@ -40,7 +40,7 @@ public class Tests {
 
         for (String s : tests) {
             try {
-                Parser.parseInteger(s);
+                Parser.parseIntegerOrDecimal(s);
                 fail("should not parse as integer: " + s);
             } catch (IllegalArgumentException expected) {
             }
@@ -53,7 +53,7 @@ public class Tests {
                 "3.14;this-is-pi" };
 
         for (String s : tests) {
-            DecimalItem i = Parser.parseDecimal(s);
+            DecimalItem i = (DecimalItem) Parser.parseIntegerOrDecimal(s);
             assertEquals("should round-trip", s, i.serialize());
         }
     }
@@ -64,7 +64,7 @@ public class Tests {
 
         for (String s : tests) {
             try {
-                Parser.parseDecimal(s);
+                Parser.parseIntegerOrDecimal(s);
                 fail("should not parse as decimal: " + s);
             } catch (IllegalArgumentException expected) {
             }

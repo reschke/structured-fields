@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Represents a Date.
+ *
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#date">Section
+ *      3.3.7 of RFC 9651</a>
  */
 public class DateItem implements NumberItem<Long> {
 

@@ -4,6 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
+ * Represents a Display String.
+ *
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#displaystring">Section
+ *      3.3.8 of RFC 9651</a>
  */
 public class DisplayStringItem implements Item<String> {
 
@@ -16,12 +20,12 @@ public class DisplayStringItem implements Item<String> {
     }
 
     /**
-     * Creates a {@link StringItem} instance representing the specified
+     * Creates a {@link DisplayStringItem} instance representing the specified
      * {@code String} value.
      * 
      * @param value
      *            a {@code String} value.
-     * @return a {@link StringItem} representing {@code value}.
+     * @return a {@link DisplayStringItem} representing {@code value}.
      */
     public static DisplayStringItem valueOf(String value) {
         return new DisplayStringItem(value, Parameters.EMPTY);

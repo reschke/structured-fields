@@ -6,8 +6,8 @@ import java.util.Objects;
 /**
  * Represents a List.
  * 
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#list">Section 3.1
- *      of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#list">Section 3.1
+ *      of RFC 9651</a>
  */
 public class OuterList implements Type<List<ListElement<?>>> {
 
