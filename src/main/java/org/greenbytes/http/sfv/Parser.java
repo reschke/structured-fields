@@ -626,35 +626,23 @@ public class Parser {
         return Dictionary.valueOf(result);
     }
 
-    // protected methods unit testing
-
-    static DateItem parseDate(String input) {
+    /**
+     * Implementation of "Parsing a Boolean" (assuming no extra characters left
+     * in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link Boolean}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-boolean">Section
+     *      4.2.8 of RFC 9651</a>
+     */
+    public static BooleanItem parseBoolean(String input) {
         Parser p = new Parser(input);
-        DateItem result = p.internalParseDate();
-        p.assertEmpty("Extra characters in string parsed as Date");
+        BooleanItem result = p.internalParseBoolean();
+        p.assertEmpty("Extra characters at position %d in string parsed as Boolean: '%s'");
         return result;
-    }
-
-    static IntegerItem parseInteger(String input) {
-        Parser p = new Parser(input);
-        Item<?> result = p.internalParseIntegerOrDecimal();
-        if (!(result instanceof IntegerItem)) {
-            throw p.complaint("String parsed as Integer '" + input + "' is a Decimal");
-        } else {
-            p.assertEmpty("Extra characters in string parsed as Integer");
-            return (IntegerItem) result;
-        }
-    }
-
-    static DecimalItem parseDecimal(String input) {
-        Parser p = new Parser(input);
-        Item<?> result = p.internalParseIntegerOrDecimal();
-        if (!(result instanceof DecimalItem)) {
-            throw p.complaint("String parsed as Decimal '" + input + "' is an Integer");
-        } else {
-            p.assertEmpty("Extra characters in string parsed as Decimal");
-            return (DecimalItem) result;
-        }
     }
 
     /**
@@ -669,14 +657,12 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-date">Section
      *      4.2.9 of RFC 9651</a>
      */
-    static BooleanItem parseBoolean(String input) {
+    static DateItem parseDate(String input) {
         Parser p = new Parser(input);
-        BooleanItem result = p.internalParseBoolean();
-        p.assertEmpty("Extra characters at position %d in string parsed as Boolean: '%s'");
+        DateItem result = p.internalParseDate();
+        p.assertEmpty("Extra characters at position %d in string parsed as Date: '%s'");
         return result;
     }
-
-    // public instance methods
 
     /**
      * Implementation of "Parsing a List"
