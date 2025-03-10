@@ -628,14 +628,14 @@ public class Parser {
 
     // protected methods unit testing
 
-    protected static DateItem parseDate(String input) {
+    static DateItem parseDate(String input) {
         Parser p = new Parser(input);
         DateItem result = p.internalParseDate();
         p.assertEmpty("Extra characters in string parsed as Date");
         return result;
     }
 
-    protected static IntegerItem parseInteger(String input) {
+    static IntegerItem parseInteger(String input) {
         Parser p = new Parser(input);
         Item<?> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof IntegerItem)) {
@@ -646,7 +646,7 @@ public class Parser {
         }
     }
 
-    protected static DecimalItem parseDecimal(String input) {
+    static DecimalItem parseDecimal(String input) {
         Parser p = new Parser(input);
         Item<?> result = p.internalParseIntegerOrDecimal();
         if (!(result instanceof DecimalItem)) {
@@ -655,6 +655,25 @@ public class Parser {
             p.assertEmpty("Extra characters in string parsed as Decimal");
             return (DecimalItem) result;
         }
+    }
+
+    /**
+     * Implementation of "Parsing a Date" (assuming no extra characters left
+     * in input string)
+     *
+     * @param input
+     *            {@link String} to parse.
+     * @return result of parse as {@link DateItem}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-date">Section
+     *      4.2.9 of RFC 9651</a>
+     */
+    static BooleanItem parseBoolean(String input) {
+        Parser p = new Parser(input);
+        BooleanItem result = p.internalParseBoolean();
+        p.assertEmpty("Extra characters at position %d in string parsed as Boolean: '%s'");
+        return result;
     }
 
     // public instance methods
@@ -956,25 +975,6 @@ public class Parser {
         Parser p = new Parser(input);
         ByteSequenceItem result = p.internalParseByteSequence();
         p.assertEmpty("Extra characters in string parsed as Byte Sequence");
-        return result;
-    }
-
-    /**
-     * Implementation of "Parsing a Boolean" (assuming no extra characters left
-     * in input string)
-     *
-     * @param input
-     *            {@link String} to parse.
-     * @return result of parse as {@link BooleanItem}.
-     *
-     * @see <a href=
-     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-boolean">Section
-     *      4.2.8 of RFC 9651</a>
-     */
-    public static BooleanItem parseBoolean(String input) {
-        Parser p = new Parser(input);
-        BooleanItem result = p.internalParseBoolean();
-        p.assertEmpty("Extra characters at position %d in string parsed as Boolean: '%s'");
         return result;
     }
 
