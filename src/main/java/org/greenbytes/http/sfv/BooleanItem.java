@@ -5,8 +5,8 @@ import java.util.Objects;
 /**
  * Represents a Boolean.
  * 
- * @see <a href= "https://www.rfc-editor.org/rfc/rfc8941.html#boolean">Section
- *      3.3.6 of RFC 8941</a>
+ * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#boolean">Section
+ *      3.3.6 of RFC 9651</a>
  */
 public class BooleanItem implements Item<Boolean> {
 

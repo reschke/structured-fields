@@ -8,11 +8,11 @@ import java.util.function.LongSupplier;
  * @param <T>
  *            represented Java type
  * @see <a href=
- *      "https://www.rfc-editor.org/rfc/rfc8941.html#integer">Section
- *      3.3.1 of RFC 8941</a>
+ *      "https://www.rfc-editor.org/rfc/rfc9651.html#integer">Section
+ *      3.3.1 of RFC 9651</a>
  * @see <a href=
- *      "https://www.rfc-editor.org/rfc/rfc8941.html#decimal">Section
- *      3.3.2 of RFC 8941</a>
+ *      "https://www.rfc-editor.org/rfc/rfc9651.html#decimal">Section
+ *      3.3.2 of RFC 9651</a>
  */
 public interface NumberItem<T> extends Item<T>, LongSupplier {
 
