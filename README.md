@@ -25,3 +25,4 @@ In the mid-term, this code might transition to the Apache HTTP Components projec
 
 
 ![Java CI with Maven](https://github.com/reschke/structured-fields/workflows/Java%20CI%20with%20Maven/badge.svg)
+
