@@ -83,13 +83,13 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         long left = abs / 1000;
         long right = abs % 1000;
 
-        if (right % 10 == 0) {
-            right /= 10;
+        sb.append(sign).append(left).append('.').append(right / 100);
+        if (right % 100 != 0) {
+            sb.append((right / 10) % 10);
+            if (right % 10 != 0) {
+                sb.append(right % 10);
+            }
         }
-        if (right % 10 == 0) {
-            right /= 10;
-        }
-        sb.append(sign).append(left).append('.').append(right);
 
         params.serializeTo(sb);
 
