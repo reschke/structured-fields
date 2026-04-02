@@ -81,6 +81,17 @@ public class ItemAPITests {
     }
 
     @Test
+    public void testDecimalSerializationLeadingZeros() {
+
+        String[] tests = new String[] { "100.012", "1.001", "0.01", "0.001", "-100.012" };
+
+        for (String s : tests) {
+            DecimalItem item = DecimalItem.valueOf(new BigDecimal(s));
+            assertEquals(s, item.serialize());
+        }
+    }
+
+    @Test
     public void testString() {
 
         String[] tests = new String[] { "", "'", "\"", "\\" };
