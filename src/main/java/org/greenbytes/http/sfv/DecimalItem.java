@@ -1,9 +1,6 @@
 package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -29,7 +26,6 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     private static final long MIN = -999999999999999L;
     private static final long MAX = 999999999999999L;
     private static final BigDecimal THOUSAND = new BigDecimal(1000);
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.0##", new DecimalFormatSymbols(Locale.US));
 
     private DecimalItem(long value, Parameters params) {
         if (value < MIN || value > MAX) {
@@ -80,8 +76,23 @@ public class DecimalItem implements NumberItem<BigDecimal> {
 
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
-        sb.append(DECIMAL_FORMAT.format(get()));
+
+        String sign = value < 0 ? "-" : "";
+
+        long abs = Math.abs(value);
+        long left = abs / 1000;
+        long right = abs % 1000;
+
+        if (right % 10 == 0) {
+            right /= 10;
+        }
+        if (right % 10 == 0) {
+            right /= 10;
+        }
+        sb.append(sign).append(left).append('.').append(right);
+
         params.serializeTo(sb);
+
         return sb;
     }
 
