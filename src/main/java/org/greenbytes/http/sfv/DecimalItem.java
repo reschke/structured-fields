@@ -29,7 +29,9 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     private static final long MIN = -999999999999999L;
     private static final long MAX = 999999999999999L;
     private static final BigDecimal THOUSAND = new BigDecimal(1000);
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.0##", new DecimalFormatSymbols(Locale.US));
+    private static final ThreadLocal<DecimalFormat> DECIMAL_FORMAT_TL = ThreadLocal.withInitial(() ->
+        new DecimalFormat("0.0##", new DecimalFormatSymbols(Locale.US))
+    );
 
     private DecimalItem(long value, Parameters params) {
         if (value < MIN || value > MAX) {
@@ -80,7 +82,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
 
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
-        sb.append(DECIMAL_FORMAT.format(get()));
+        sb.append(DECIMAL_FORMAT_TL.get().format(get()));
         params.serializeTo(sb);
         return sb;
     }
