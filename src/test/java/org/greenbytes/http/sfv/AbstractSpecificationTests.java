@@ -223,37 +223,45 @@ public abstract class AbstractSpecificationTests {
     }
 
     public void executeTest(StringBuilder out) {
+        Type<?> result = null;
+        ParseException parseException = null;
+
+        // try to parse; either keep parse result or thrown exception
+        try {
+            result = parse();
+        } catch (ParseException ex) {
+            parseException = ex;
+        }
+
         if (p.must_fail) {
             out.append("Expects Parse Error\n");
-            try {
-                Type<?> parsed = parse();
+            if (result != null) {
                 out.append("*FAIL*, got:\n");
                 out.append("~~~\n");
-                out.append(parsed.serialize()).append("\n");
+                out.append(result.serialize()).append("\n");
                 out.append("~~~\n");
-                fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + parsed.serialize() + "<<<");
-            } catch (ParseException expected) {
+                fail("should fail, but passed. Input >>>" + p.raw + "<<<, Output >>>" + result.serialize() + "<<<");
+            } else {
                 out.append("~~~\n");
-                out.append(expected.getDiagnostics());
+                out.append(parseException.getDiagnostics());
                 out.append("~~~\n");
                 out.append("\n");
             }
         } else {
-            Type<?> item = parse();
             out.append("Result:\n");
             out.append("~~~\n");
-            out.append(item.serialize()).append("\n");
+            out.append(result.serialize()).append("\n");
             out.append("~~~\n");
             if (p.expected_value instanceof JsonArray) {
                 JsonArray array = (JsonArray) p.expected_value;
-                if (item instanceof OuterList) {
+                if (result instanceof OuterList) {
                     for (int i = 0; i < array.size(); i++) {
                         JsonValue m = array.get(i);
-                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) item).get().get(i));
+                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) result).get().get(i));
                     }
-                } else if (item instanceof Dictionary) {
+                } else if (result instanceof Dictionary) {
                     int i = 0;
-                    for (Map.Entry<String, ListElement<?>> e : ((Dictionary) item).get().entrySet()) {
+                    for (Map.Entry<String, ListElement<?>> e : ((Dictionary) result).get().entrySet()) {
                         JsonArray m = (JsonArray) array.get(i);
                         JsonValue name = m.get(0);
                         JsonArray val = (JsonArray) m.get(1);
@@ -262,17 +270,17 @@ public abstract class AbstractSpecificationTests {
                         i += 1;
                     }
                 } else {
-                    fail("unexpected parse result: " + item.getClass());
+                    fail("unexpected parse result: " + result.getClass());
                 }
             } else {
-                match(out, p.expected_value, p.expected_params, item);
+                match(out, p.expected_value, p.expected_params, result);
             }
 
             if (p.canonical != null) {
-                assertEquals(p.canonical, item.serialize());
+                assertEquals(p.canonical, result.serialize());
             } else {
                 assertEquals("in absence of 'canonical', expect only one 'raw' value", 1, p.raw.size());
-                assertEquals(p.raw.get(0), item.serialize());
+                assertEquals(p.raw.get(0), result.serialize());
             }
         }
     }
