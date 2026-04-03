@@ -7,7 +7,9 @@ import java.nio.CharBuffer;
  */
 public class ParseException extends IllegalArgumentException {
 
+    /** position at which the parse error occurred */
     private final int position;
+    /** value that was parsed */
     private final String data;
 
     /**

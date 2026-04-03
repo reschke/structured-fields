@@ -23,6 +23,11 @@ public class Utils {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
+    /**
+     * Checks a key for validity
+     * @param value to check
+     * @return checked value
+     */
     protected static String checkKey(String value) {
         if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException("Key can not be null or empty");
@@ -38,6 +43,11 @@ public class Utils {
         return value;
     }
 
+    /**
+     * Checks all keys in map for validity
+     * @param value map to check
+     * @return checked map
+     */
     protected static Map<String, ListElement<?>> checkKeys(Map<String, ListElement<?>> value) {
         for (String key : Objects.requireNonNull(value, "value must not be null").keySet()) {
             checkKey(key);

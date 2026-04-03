@@ -22,6 +22,7 @@ public class Parameters implements Map<String, Item<?>> {
 
     private final Map<String, Item<?>> delegate;
 
+    /** Empty parameters instance. */
     public static final Parameters EMPTY = new Parameters(Collections.emptyMap());
 
     private Parameters(Map<String, Object> value) {
@@ -44,6 +45,11 @@ public class Parameters implements Map<String, Item<?>> {
         return new Parameters(value);
     }
 
+    /**
+     * Serialize this parameter to a {@linkplain StringBuilder}
+     * @param sb to serialize to
+     * @return updated {@linkplain StringBuilder}
+     */
     public StringBuilder serializeTo(StringBuilder sb) {
         for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
             sb.append(';').append(e.getKey());
@@ -195,6 +201,10 @@ public class Parameters implements Map<String, Item<?>> {
         return delegate.values();
     }
 
+    /**
+     * Serialize this parameter.
+     * @return serialization
+     */
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
     }
