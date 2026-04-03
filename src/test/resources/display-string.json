@@ -14,7 +14,6 @@
     {
         "name": "non-ascii display string (uppercase escaping)",
         "raw": ["%\"f%C3%BC%C3%BC\""],
-        "canonical": ["%\"f%c3%bc%c3%bc\""],
         "header_type": "item",
         "must_fail": true
     },
@@ -23,6 +22,12 @@
         "raw": ["%\"f%c3%bc%c3%bc\""],
         "header_type": "item",
         "expected": [{"__type": "displaystring", "value": "füü"}, []]
+    },
+    {
+        "name": "non-ascii display string (unescaped)",
+        "raw": ["%\"füü\""],
+        "header_type": "item",
+        "must_fail": true
     },
     {
         "name": "tab in display string",
@@ -107,5 +112,12 @@
         "raw": ["%\"BOM: %ef%bb%bf\""],
         "header_type": "item",
         "expected": [{"__type": "displaystring", "value": "BOM: \uFEFF"}, []]
+    },
+    {
+        "name": "two lines display string",
+        "raw": ["%\"foo", "bar\""],
+        "header_type": "item",
+        "can_fail": true,
+        "expected": [{"__type": "displaystring", "value": "foo, bar"}, []]
     }
 ]

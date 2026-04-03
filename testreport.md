@@ -819,6 +819,20 @@ Result:
 %"f%c3%bc%c3%bc"
 ~~~
 
+### non-ascii display string (unescaped)
+
+Input:
+~~~
+%"füü"
+~~~
+
+Expects Parse Error
+~~~
+>>%"füü"<<
+  ---^ (0xfc) Invalid character in field line at position 3: 'ü' (0x00fc) (input: %"füü")
+~~~
+
+
 ### tab in display string
 
 Input:
@@ -1012,6 +1026,21 @@ Result:
 ~~~
 %"BOM: %ef%bb%bf"
 ~~~
+
+### two lines display string
+
+Input:
+~~~
+%"foo
+bar"
+~~~
+
+Allows Parse Error
+~~~
+>>%"foo,bar"<<
+  -----^ (0x2c) Display String crosses field line boundary at position 5
+~~~
+
 
 
 ## examples
@@ -13770,6 +13799,21 @@ Expects Parse Error
 ~~~
 >>"foo \<<
   ------^ Incomplete escape sequence at position 6
+~~~
+
+
+### two lines string
+
+Input:
+~~~
+"foo
+bar"
+~~~
+
+Allows Parse Error
+~~~
+>>"foo,bar"<<
+  ----^ (0x2c) String crosses field line boundary at position 4
 ~~~
 
 
