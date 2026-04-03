@@ -29,7 +29,7 @@
 
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
-  <version>0.6-SNAPSHOT</version>
+  <version>0.5</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
   <url>https://github.com/reschke/structured-fields</url>
