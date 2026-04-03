@@ -31,6 +31,7 @@ public abstract class AbstractSpecificationTests {
         public List<String> raw;
         public String header_type;
         public boolean must_fail;
+        public boolean can_fail;
         public JsonValue expected_value;
         public JsonValue expected_params;
         public String canonical;
@@ -74,6 +75,7 @@ public abstract class AbstractSpecificationTests {
             p.raw.add(t);
         }
         p.header_type = v.getString("header_type");
+        p.can_fail = v.getBoolean("can_fail", false);
         p.must_fail = v.getBoolean("must_fail", false);
 
         JsonValue expected = v.get("expected");
@@ -247,6 +249,12 @@ public abstract class AbstractSpecificationTests {
                 out.append("~~~\n");
                 out.append("\n");
             }
+        } else if (p.can_fail && parseException != null) {
+            out.append("Allows Parse Error\n");
+            out.append("~~~\n");
+            out.append(parseException.getDiagnostics());
+            out.append("~~~\n");
+            out.append("\n");
         } else {
             out.append("Result:\n");
             out.append("~~~\n");
