@@ -20,7 +20,7 @@ In the mid-term, this code might transition to the Apache HTTP Components projec
     <dependency>
       <groupId>org.greenbytes.http</groupId>
       <artifactId>structured-fields</artifactId>
-      <version>0.4</version>
+      <version>0.5</version>
     </dependency>
 
 
