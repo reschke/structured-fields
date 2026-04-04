@@ -63,7 +63,7 @@ public class Parser {
 
         StringBuilder sb = null;
         String str = null;
-        List<Integer> startPositions = Collections.emptyList();
+        List<Integer> positions = Collections.emptyList();
 
         for (String s : Objects.requireNonNull(fieldLines, "fieldLines must not be null")) {
             Objects.requireNonNull(s, "field line must not be null");
@@ -74,10 +74,10 @@ public class Parser {
                     sb = new StringBuilder();
                     sb.append(str);
                 }
-                if (startPositions.isEmpty()) {
-                    startPositions = new ArrayList<>();
+                if (positions.isEmpty()) {
+                    positions = new ArrayList<>();
                 }
-                startPositions.add(sb.length());
+                positions.add(sb.length());
                 sb.append(",").append(checkASCII(s));
             }
         }
@@ -85,7 +85,7 @@ public class Parser {
             throw new ParseException("Empty input", "", 0);
         }
         this.input = CharBuffer.wrap(sb != null ? sb : str);
-        this.startPositions = startPositions;
+        this.startPositions = positions;
     }
 
     private static String checkASCII(String value) {
@@ -294,15 +294,13 @@ public class Parser {
                         char[] chars = new char[length];
                         input.position(startpos);
                         input.get(chars, 0, length);
-//                        System.err.println("s: " + new String(chars));
 
                         // map byte positions to input positions
                         int[] offsets = new int[blen];
                         for (int i = 0, j = 0; i < blen; i++) {
                             offsets[i] = j;
-//                            System.err.println(chars[j] + " " + i + " " + j);
                             if (chars[j] == '%') {
-                                j+=3;
+                                j += 3;
                             }else {
                                 j += 1;
                             }

@@ -87,10 +87,6 @@ public class DiagnosticsTests {
                 }
                 fail("Should not parse: " + Arrays.asList(test.input));
             } catch (ParseException ex) {
-                // System.out.println();
-                // System.out.println(Arrays.asList(test.input));
-                // System.out.println(ex.getPosition());
-                // System.out.println(ex.getMessage());
                 Assert.assertTrue("does not start with '" + test.message + "' : '" + ex.getMessage() + "'",
                         ex.getMessage().startsWith(test.message));
                 assertEquals(test.position, ex.getPosition());

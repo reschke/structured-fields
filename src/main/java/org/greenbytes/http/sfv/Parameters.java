@@ -23,7 +23,7 @@ public class Parameters implements Map<String, Item<?>> {
     private final Map<String, Item<?>> delegate;
 
     /** Empty parameters instance. */
-    public static final Parameters EMPTY = new Parameters(Collections.emptyMap());
+    protected static final Parameters EMPTY = new Parameters(Collections.emptyMap());
 
     private Parameters(Map<String, Object> value) {
         this.delegate = Collections.unmodifiableMap(checkAndTransformMap(value));
@@ -173,6 +173,7 @@ public class Parameters implements Map<String, Item<?>> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object key, Object value) {
         throw new UnsupportedOperationException();
     }

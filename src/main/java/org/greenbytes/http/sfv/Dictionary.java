@@ -48,14 +48,14 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
             separator = ", ";
 
             String name = e.getKey();
-            ListElement<?> value = e.getValue();
+            ListElement<?> dict = e.getValue();
 
             sb.append(name);
-            if (Boolean.TRUE.equals(value.get())) {
-                value.getParams().serializeTo(sb);
+            if (Boolean.TRUE.equals(dict.get())) {
+                dict.getParams().serializeTo(sb);
             } else {
                 sb.append("=");
-                value.serializeTo(sb);
+                dict.serializeTo(sb);
             }
         }
 
