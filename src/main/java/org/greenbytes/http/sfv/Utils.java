@@ -11,14 +11,17 @@ public class Utils {
     private Utils() {
     }
 
+    /** check for character to be a decimal digit */
     protected static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
     }
 
+    /** check for character to be lowercase alphanumeric */
     protected static boolean isLcAlpha(char c) {
         return (c >= 'a' && c <= 'z');
     }
 
+    /** check for character to be alphanumeric */
     protected static boolean isAlpha(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
