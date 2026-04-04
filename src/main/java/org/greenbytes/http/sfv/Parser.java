@@ -176,25 +176,30 @@ public class Parser {
             long l = Long.parseLong(inputNumber.toString());
             return IntegerItem.valueOf(sign * l);
         } else {
-            int dotPos = inputNumber.indexOf(".");
-            int fracLen = inputNumber.length() - dotPos - 1;
-
-            if (fracLen < 1) {
-                backout();
-                throw complaint("Decimal must not end in '.'");
-            } else if (fracLen == 1) {
-                inputNumber.append("00");
-            } else if (fracLen == 2) {
-                inputNumber.append("0");
-            } else if (fracLen > 3) {
-                backout();
-                throw complaint("Maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
-            }
-
-            inputNumber.deleteCharAt(dotPos);
-            long l = Long.parseLong(inputNumber.toString());
+            long l = computeLong(inputNumber);
             return DecimalItem.valueOf(sign * l);
         }
+    }
+
+    private long computeLong(StringBuilder inputNumber) {
+        int dotPos = inputNumber.indexOf(".");
+        int fracLen = inputNumber.length() - dotPos - 1;
+
+        if (fracLen < 1) {
+            backout();
+            throw complaint("Decimal must not end in '.'");
+        } else if (fracLen == 1) {
+            inputNumber.append("00");
+        } else if (fracLen == 2) {
+            inputNumber.append("0");
+        } else if (fracLen > 3) {
+            backout();
+            throw complaint("Maximum number of fractional digits is 3, found: " + fracLen + ", in: " + inputNumber);
+        }
+
+        inputNumber.deleteCharAt(dotPos);
+        long l = Long.parseLong(inputNumber.toString());
+        return l;
     }
 
     private DateItem internalParseDate() {
