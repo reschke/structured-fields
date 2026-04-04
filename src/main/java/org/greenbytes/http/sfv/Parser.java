@@ -320,8 +320,7 @@ public class Parser {
                 j += 1;
             }
         }
-        int failpos = startpos + offsets[blen - bytes.remaining()];
-        return failpos;
+        return startpos + offsets[blen - bytes.remaining()];
     }
 
     private StringItem internalParseString() {

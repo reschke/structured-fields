@@ -101,16 +101,19 @@ public class Parameters implements Map<String, Item<?>> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Item<?> compute(String key,
                            BiFunction<? super String, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Item<?> computeIfAbsent(String key,
                                    Function<? super String, ? extends Item<?>> mappingFunction) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Item<?> computeIfPresent(String key,
                                     BiFunction<? super String, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         throw new UnsupportedOperationException();
@@ -132,6 +135,7 @@ public class Parameters implements Map<String, Item<?>> {
         return Objects.equals(delegate, o);
     }
 
+    @Override
     public void forEach(BiConsumer<? super String, ? super Item<?>> action) {
         delegate.forEach(action);
     }
@@ -140,6 +144,7 @@ public class Parameters implements Map<String, Item<?>> {
         return delegate.get(key);
     }
 
+    @Override
     public Item<?> getOrDefault(Object key, Item<?> defaultValue) {
         return delegate.getOrDefault(key, defaultValue);
     }
@@ -156,6 +161,7 @@ public class Parameters implements Map<String, Item<?>> {
         return delegate.keySet();
     }
 
+    @Override
     public Item<?> merge(String key, Item<?> value,
             BiFunction<? super Item<?>, ? super Item<?>, ? extends Item<?>> remappingFunction) {
         throw new UnsupportedOperationException();
@@ -169,6 +175,7 @@ public class Parameters implements Map<String, Item<?>> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Item<?> putIfAbsent(String key, Item<?> value) {
         throw new UnsupportedOperationException();
     }
@@ -182,14 +189,17 @@ public class Parameters implements Map<String, Item<?>> {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean replace(String key, Item<?> oldValue, Item<?> newValue) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Item<?> replace(String key, Item<?> value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void replaceAll(BiFunction<? super String, ? super Item<?>, ? extends Item<?>> function) {
         throw new UnsupportedOperationException();
     }
