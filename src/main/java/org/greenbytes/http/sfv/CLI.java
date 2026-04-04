@@ -1,11 +1,15 @@
 package org.greenbytes.http.sfv;
 
+import java.beans.Visibility;
+
 public class CLI {
 
-    protected static final String ANSI_FAINT = "\u001B[2m";
-    protected static final String ANSI_GREEN = "\u001B[32m";
-    protected static final String ANSI_RED = "\u001B[31m";
-    protected static final String ANSI_RESET = "\u001B[0m";
+    static final boolean isInteractive = System.console() != null;
+
+    static final String ANSI_FAINT = isInteractive ? "\u001B[2m" : "";
+    static final String ANSI_GREEN = isInteractive ? "\u001B[32m" : "";
+    static final String ANSI_RED = isInteractive ? "\u001B[31m" : "";
+    static final String ANSI_RESET = isInteractive ? "\u001B[0m" : "";
 
     public static void main(String[] args) {
         int passed = 0;
@@ -50,7 +54,7 @@ public class CLI {
     }
 
     private static void diagnostics(String as, ParseException ex) {
-        System.err.println(as + ": " +
+        System.out.println(as + ": " +
                 ANSI_RED + ex.getDiagnostics().replace("\n", "\n      ") + ANSI_RESET);
     }
 }
