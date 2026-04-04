@@ -17,8 +17,7 @@ public class CLI {
             dump("Item", item);
             passed += 1;
         } catch (ParseException ex) {
-            System.err.print("Item: " + ANSI_RED + ex.getDiagnostics().replace("\n", "\n      "));
-            System.err.println(ANSI_RESET);
+            diagnostics("Item", ex);
         }
 
         System.out.println();
@@ -28,8 +27,7 @@ public class CLI {
             dump("List", list);
             passed += 1;
         } catch (ParseException ex) {
-            System.err.print("List: " + ANSI_RED + ex.getDiagnostics().replace("\n", "\n      "));
-            System.err.println(ANSI_RESET);
+            diagnostics("List", ex);
         }
 
         System.out.println();
@@ -39,8 +37,7 @@ public class CLI {
             dump("Dict", dict);
             passed += 1;
         } catch (ParseException ex) {
-            System.err.print("Dict: " + ANSI_RED + ex.getDiagnostics().replace("\n", "\n      "));
-            System.err.println(ANSI_RESET);
+            diagnostics("Dict", ex);
         }
 
         System.exit(passed > 0 ? 0 : 1);
@@ -50,5 +47,10 @@ public class CLI {
         System.out.println(as + ": " +
                 ANSI_GREEN + result.serialize() + " " + ANSI_RESET +
                 ANSI_FAINT + "(" + result.getClass().getSimpleName() + ")" + ANSI_RESET);
+    }
+
+    private static void diagnostics(String as, ParseException ex) {
+        System.err.println(as + ": " +
+                ANSI_RED + ex.getDiagnostics().replace("\n", "\n      ") + ANSI_RESET);
     }
 }
