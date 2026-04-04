@@ -1,12 +1,40 @@
 # structured-fields
 A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 
-Links:
+## Features
+- Parsing and Serialization
+- (Still) supports Java 8
+- Zero dependencies (except for tests)
+- Comprehensive parsing diagnostics
 
-- https://greenbytes.de/tech/webdav/rfc9651.html
+## Links
+
+- https://greenbytes.de/tech/specs/rfc9651.html
 - https://www.rfc-editor.org/rfc/rfc9651.html
 - https://github.com/httpwg/structured-header-tests
 - API docs: https://reschke.github.io/structured-fields/apidocs/
+
+## Minimal Example
+
+````java
+ {
+     Parser p = new Parser("a=?0, b, c; foo=bar");
+     Dictionary d = p.parseDictionary();
+     for (Map.Entry<String, Item<? extends Object>> e : d.get()) {
+         String key = e.getKey();
+         Item<? extends Object> item = e.getValue();
+         Object value = item.get();
+         Parameters params = item.getParams();
+         System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
+     }
+ }
+````
+gives:
+~~~
+ a -> false
+ b -> true
+ c -> true (;foo=bar)
+ ~~~
 
 ## Status
 
