@@ -290,22 +290,7 @@ public class Parser {
                     try {
                         return DisplayStringItem.valueOf(decoder.decode(bytes).toString());
                     } catch (CharacterCodingException ex) {
-                        int length = position() - startpos - 1;
-                        char[] chars = new char[length];
-                        input.position(startpos);
-                        input.get(chars, 0, length);
-
-                        // map byte positions to input positions
-                        int[] offsets = new int[blen];
-                        for (int i = 0, j = 0; i < blen; i++) {
-                            offsets[i] = j;
-                            if (chars[j] == '%') {
-                                j += 3;
-                            }else {
-                                j += 1;
-                            }
-                        }
-                        int failpos = startpos + offsets[blen - bytes.remaining()];
+                        int failpos = getFailpos(startpos, blen, bytes);
                         throw complaint("Invalid UTF-8 sequence (" + ex.getMessage() + ") before position " + failpos, failpos, ex);
                     }
                 } else if (c < 0x20 || c >= 0x7f) {
@@ -317,6 +302,26 @@ public class Parser {
         }
 
         throw complaint("Closing DQUOTE missing");
+    }
+
+    private int getFailpos(int startpos, int blen, ByteBuffer bytes) {
+        int length = position() - startpos - 1;
+        char[] chars = new char[length];
+        input.position(startpos);
+        input.get(chars, 0, length);
+
+        // map byte positions to input positions
+        int[] offsets = new int[blen];
+        for (int i = 0, j = 0; i < blen; i++) {
+            offsets[i] = j;
+            if (chars[j] == '%') {
+                j += 3;
+            }else {
+                j += 1;
+            }
+        }
+        int failpos = startpos + offsets[blen - bytes.remaining()];
+        return failpos;
     }
 
     private StringItem internalParseString() {
