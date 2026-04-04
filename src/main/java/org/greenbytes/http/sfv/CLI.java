@@ -45,7 +45,7 @@ public class CLI {
         System.exit(passed > 0 ? 0 : 1);
     }
 
-    private static void dump(String as, Type result) {
+    private static void dump(String as, Type<?> result) {
         System.out.println(as + ": " +
                 ANSI_GREEN + result.serialize() + " " + ANSI_RESET +
                 ANSI_FAINT + "(" + result.getClass().getSimpleName() + ")" + ANSI_RESET);
