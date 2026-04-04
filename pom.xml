@@ -34,10 +34,6 @@
   <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
   <url>https://github.com/reschke/structured-fields</url>
 
-  <prerequisites>
-    <maven>3.6.3</maven>
-  </prerequisites>
-
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -57,6 +53,7 @@
   <properties>
     <maven.compiler.release>8</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.outputTimestamp>${maven.build.timestamp}</project.build.outputTimestamp>
   </properties>
 
   <distributionManagement>
@@ -219,7 +216,6 @@
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
       <version>23.0.0</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 
