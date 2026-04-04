@@ -1,7 +1,5 @@
 package org.greenbytes.http.sfv;
 
-import java.beans.Visibility;
-
 public class CLI {
 
     static final boolean isInteractive = System.console() != null;
@@ -55,6 +53,6 @@ public class CLI {
 
     private static void diagnostics(String as, ParseException ex) {
         System.out.println(as + ": " +
-                ANSI_RED + ex.getDiagnostics().replace("\n", "\n      ") + ANSI_RESET);
+                ANSI_RED + ex.getDiagnostics().replace("\n", "\n      ").trim() + ANSI_RESET);
     }
 }

@@ -36,6 +36,24 @@ gives:
  c -> true (;foo=bar)
  ~~~
 
+## Testing Client
+
+Here's a command line tool which will feed all arguments into the parser (as if obtained
+from multiple field lines), parsed as Item, List, or Dictionary:
+
+```
+$ java -jar target/structured-fields-0.6-SNAPSHOT.jar ':cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:'  'x'
+
+Item: >>:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:,x<<
+        ----------------------------------------------^ (0x2c) Extra characters in string parsed as Item
+
+List: :cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:, x (OuterList)
+
+Dict: >>:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:,x<<
+        ^ (0x3a) Key must start with LCALPHA or '*': ':' (\u003a)
+```
+
+
 ## Status
 
 This implementation is experimental and makes no promises yet on API stability
