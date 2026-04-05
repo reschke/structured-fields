@@ -26,6 +26,7 @@ public class Parser {
 
     private final CharBuffer input;
     private final List<Integer> startPositions;
+    private boolean finished = false;
 
     /**
      * Creates {@link Parser} for the given input.
@@ -664,7 +665,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-date">Section
      *      4.2.9 of RFC 9651</a>
      */
-    static DateItem parseDate(String input) {
+    public static DateItem parseDate(String input) {
         Parser p = new Parser(input);
         DateItem result = p.internalParseDate();
         p.assertEmpty("Extra characters at position %d in string parsed as Date: '%s'");
@@ -681,6 +682,7 @@ public class Parser {
      *      4.2.1 of RFC 9651</a>
      */
     public OuterList parseList() {
+        assertNotFinished();
         removeLeadingSP();
         List<ListElement<?>> result = internalParseOuterList();
         removeLeadingSP();
@@ -698,6 +700,7 @@ public class Parser {
      *      4.2.2 of RFC 9651</a>
      */
     public Dictionary parseDictionary() {
+        assertNotFinished();
         removeLeadingSP();
         Dictionary result = internalParseDictionary();
         removeLeadingSP();
@@ -715,6 +718,7 @@ public class Parser {
      *      4.2.3 of RFC 9651</a>
      */
     public Item<?> parseItem() {
+        assertNotFinished();
         removeLeadingSP();
         Item<?> result = internalParseItem();
         removeLeadingSP();
@@ -1063,4 +1067,13 @@ public class Parser {
         }
         return String.format("%s (\\u%04x)", s, (int) c);
     }
+
+    private void assertNotFinished() {
+        if (finished) {
+            throw new IllegalStateException("Parser has alraedy been used");
+        } else {
+            finished = true;
+        }
+    }
+
 }
