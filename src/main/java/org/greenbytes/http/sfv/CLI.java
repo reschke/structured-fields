@@ -1,5 +1,7 @@
 package org.greenbytes.http.sfv;
 
+import java.io.PrintStream;
+
 public class CLI {
 
     static final boolean isInteractive = System.console() != null;
@@ -10,49 +12,59 @@ public class CLI {
     static final String ANSI_RESET = isInteractive ? "\u001B[0m" : "";
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("usage: all arguments will be passed to the SF parser - you passed none");
+            System.exit(2);
+        } else {
+            System.exit(cli(System.out, args));
+        }
+    }
+
+    protected static int cli(PrintStream out, String... args) {
+
         int passed = 0;
 
-        System.out.println();
+        out.println();
         try {
             Parser parser = new Parser(args);
             Item<?> item = parser.parseItem();
-            dump("Item", item);
+            dump(out, "Item", item);
             passed += 1;
         } catch (ParseException ex) {
-            diagnostics("Item", ex);
+            diagnostics(out, "Item", ex);
         }
 
-        System.out.println();
+        out.println();
         try {
             Parser parser = new Parser(args);
             OuterList list = parser.parseList();
-            dump("List", list);
+            dump(out, "List", list);
             passed += 1;
         } catch (ParseException ex) {
-            diagnostics("List", ex);
+            diagnostics(out, "List", ex);
         }
 
-        System.out.println();
+        out.println();
         try {
             Parser parser = new Parser(args);
             Dictionary dict = parser.parseDictionary();
-            dump("Dict", dict);
+            dump(out, "Dict", dict);
             passed += 1;
         } catch (ParseException ex) {
-            diagnostics("Dict", ex);
+            diagnostics(out, "Dict", ex);
         }
 
-        System.exit(passed > 0 ? 0 : 1);
+        return passed > 0 ? 0 : 1;
     }
 
-    private static void dump(String as, Type<?> result) {
-        System.out.println(as + ": " +
+    private static void dump(PrintStream out, String as, Type<?> result) {
+        out.println(as + ": " +
                 ANSI_GREEN + result.serialize() + " " + ANSI_RESET +
                 ANSI_FAINT + "(" + result.getClass().getSimpleName() + ")" + ANSI_RESET);
     }
 
-    private static void diagnostics(String as, ParseException ex) {
-        System.out.println(as + ": " +
+    private static void diagnostics(PrintStream out, String as, ParseException ex) {
+        out.println(as + ": " +
                 ANSI_RED + ex.getDiagnostics().replace("\n", "\n      ").trim() + ANSI_RESET);
     }
 }
