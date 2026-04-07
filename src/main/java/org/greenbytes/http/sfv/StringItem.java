@@ -79,4 +79,19 @@ public class StringItem implements Item<String> {
         }
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof StringItem)) {
+            return false;
+        } else {
+            StringItem that = (StringItem) o;
+            return Objects.equals(value, that.value) && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }
