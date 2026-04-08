@@ -320,4 +320,25 @@ public class ItemAPITests {
         assertFalse(d1 == d4);
         assertNotEquals(d1, d4);
     }
+
+    @Test
+    public void testDecimalItemEquality() {
+        DecimalItem d1 = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
+        DecimalItem d2 = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
+        DecimalItem d3 = DecimalItem.valueOf(BigDecimal.valueOf(10.6));
+
+        assertFalse(d1 == d2);
+        assertEquals(d1, d2);
+
+        assertFalse(d1 == d3);
+        assertNotEquals(d1, d3);
+
+        HashMap<String, Object> m4 = new LinkedHashMap<>();
+        m4.put("c", "d");
+        Parameters p4 = Parameters.valueOf(m4);
+
+        DecimalItem d4 = d1.withParams(p4);
+        assertFalse(d1 == d4);
+        assertNotEquals(d1, d4);
+    }
 }
