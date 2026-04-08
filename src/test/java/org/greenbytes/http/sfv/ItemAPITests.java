@@ -9,6 +9,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -426,5 +428,21 @@ public class ItemAPITests {
         IntegerItem d4 = i1.withParams(p4);
         assertFalse(i1 == d4);
         assertNotEquals(i1, d4);
+    }
+
+    @Test
+    public void testOuterListEquality() {
+        BooleanItem b = BooleanItem.valueOf(true);
+        DecimalItem d = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
+
+        OuterList l1 = OuterList.valueOf((Arrays.asList(b, d)));
+        OuterList l2 = OuterList.valueOf((Arrays.asList(b, d)));
+        OuterList l3 = OuterList.valueOf((Arrays.asList(b, d, b)));
+
+        assertFalse(l1 == l2);
+        assertEquals(l1, l2);
+
+        assertFalse(l1 == l3);
+        assertNotEquals(l1, l3);
     }
 }

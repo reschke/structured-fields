@@ -51,4 +51,19 @@ public class OuterList implements Type<List<ListElement<?>>> {
     public List<ListElement<?>> get() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof OuterList)) {
+            return false;
+        } else {
+            OuterList list = (OuterList) o;
+            return Objects.equals(value, list.value);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
 }
