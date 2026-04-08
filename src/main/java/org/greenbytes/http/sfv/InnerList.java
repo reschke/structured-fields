@@ -74,4 +74,19 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
     public List<Item<?>> get() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof InnerList)) {
+            return false;
+        } else {
+            InnerList innerList = (InnerList) o;
+            return Objects.equals(value, innerList.value) && Objects.equals(params, innerList.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }
