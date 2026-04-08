@@ -325,6 +325,26 @@ public class ItemAPITests {
     }
 
     @Test
+    public void testByteSequenceItemEquality() {
+        ByteSequenceItem b1 = ByteSequenceItem.valueOf("x".getBytes());
+        ByteSequenceItem b2 = ByteSequenceItem.valueOf("x".getBytes());
+        ByteSequenceItem b3 = ByteSequenceItem.valueOf("y".getBytes());
+
+        assertFalse(b1 == b2);
+        assertEquals(b1, b2);
+
+        assertFalse(b1 == b3);
+        assertNotEquals(b1, b3);
+
+        HashMap<String, Object> m4 = new LinkedHashMap<>();
+        m4.put("c", "d");
+        Parameters p4 = Parameters.valueOf(m4);
+        ByteSequenceItem b4 = b1.withParams(p4);
+        assertFalse(b1 == b4);
+        assertNotEquals(b1, b4);
+    }
+
+    @Test
     public void testDateItemEquality() {
         DateItem d1 = DateItem.valueOf(0);
         DateItem d2 = DateItem.valueOf(0);

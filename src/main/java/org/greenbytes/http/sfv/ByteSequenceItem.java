@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -67,5 +68,20 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         // this returns a wrapper around a copy so that the object itself
         // stays immutable
         return ByteBuffer.wrap(this.value.clone());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ByteSequenceItem)) {
+            return false;
+        } else {
+            ByteSequenceItem that = (ByteSequenceItem) o;
+            return Objects.deepEquals(value, that.value) && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(value), params);
     }
 }
