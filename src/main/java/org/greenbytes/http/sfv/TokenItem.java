@@ -74,4 +74,19 @@ public class TokenItem implements Item<String> {
         }
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TokenItem)) {
+            return false;
+        } else {
+            TokenItem tokenItem = (TokenItem) o;
+            return Objects.equals(value, tokenItem.value) && Objects.equals(params, tokenItem.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }

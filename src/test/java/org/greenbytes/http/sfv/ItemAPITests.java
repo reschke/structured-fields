@@ -280,6 +280,30 @@ public class ItemAPITests {
     }
 
     @Test
+    public void testTokenItemEquality() {
+        TokenItem t1 = TokenItem.valueOf("a");
+        TokenItem t = TokenItem.valueOf("a");
+        assertFalse(t1 == t);
+        assertEquals(t1, t);
+        TokenItem t3 = TokenItem.valueOf("b");
+        assertNotEquals(t1, t3);
+
+        HashMap<String, Object> m4 = new LinkedHashMap<>();
+        m4.put("a", "b");
+        Parameters p4 = Parameters.valueOf(m4);
+        TokenItem t4 = TokenItem.valueOf("a").withParams(p4);
+        assertFalse(t1 == t4);
+        assertNotEquals(t1, t4);
+
+        HashMap<String, Object> m5 = new LinkedHashMap<>();
+        m5.put("c", "d");
+        Parameters p5 = Parameters.valueOf(m5);
+        TokenItem t5 = TokenItem.valueOf("a").withParams(p5);
+        assertFalse(t4 == t5);
+        assertNotEquals(t4, t5);
+    }
+
+    @Test
     public void testBooleanItemEquality() {
         BooleanItem b1 = BooleanItem.valueOf(true);
         BooleanItem b2 = BooleanItem.valueOf(true);
