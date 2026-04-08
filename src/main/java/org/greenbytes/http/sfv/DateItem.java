@@ -77,4 +77,19 @@ public class DateItem implements NumberItem<Long> {
     public int getDivisor() {
         return 1;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DateItem)) {
+            return false;
+        } else {
+            DateItem dateItem = (DateItem) o;
+            return value == dateItem.value && Objects.equals(params, dateItem.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }

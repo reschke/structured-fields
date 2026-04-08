@@ -299,4 +299,25 @@ public class ItemAPITests {
         assertFalse(b1 == b4);
         assertNotEquals(b1, b4);
     }
+
+    @Test
+    public void testDateItemEquality() {
+        DateItem d1 = DateItem.valueOf(0);
+        DateItem d2 = DateItem.valueOf(0);
+        DateItem d3 = DateItem.valueOf(1000);
+
+        assertFalse(d1 == d2);
+        assertEquals(d1, d2);
+
+        assertFalse(d1 == d3);
+        assertNotEquals(d1, d3);
+
+        HashMap<String, Object> m4 = new LinkedHashMap<>();
+        m4.put("c", "d");
+        Parameters p4 = Parameters.valueOf(m4);
+
+        DateItem d4 = d1.withParams(p4);
+        assertFalse(d1 == d4);
+        assertNotEquals(d1, d4);
+    }
 }
