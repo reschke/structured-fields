@@ -76,4 +76,19 @@ public class IntegerItem implements NumberItem<Long> {
     public int getDivisor() {
         return 1;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof IntegerItem)) {
+            return false;
+        } else {
+            IntegerItem that = (IntegerItem) o;
+            return value == that.value && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }
