@@ -341,4 +341,25 @@ public class ItemAPITests {
         assertFalse(d1 == d4);
         assertNotEquals(d1, d4);
     }
+
+    @Test
+    public void testDisplayStringItemEquality() {
+        DisplayStringItem d1 = DisplayStringItem.valueOf("abc");
+        DisplayStringItem d2 = DisplayStringItem.valueOf("abc");
+        DisplayStringItem d3 = DisplayStringItem.valueOf("def");
+
+        assertFalse(d1 == d2);
+        assertEquals(d1, d2);
+
+        assertFalse(d1 == d3);
+        assertNotEquals(d1, d3);
+
+        HashMap<String, Object> m4 = new LinkedHashMap<>();
+        m4.put("c", "d");
+        Parameters p4 = Parameters.valueOf(m4);
+
+        DisplayStringItem d4 = d1.withParams(p4);
+        assertFalse(d1 == d4);
+        assertNotEquals(d1, d4);
+    }
 }

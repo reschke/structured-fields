@@ -72,4 +72,19 @@ public class DisplayStringItem implements Item<String> {
     public String get() {
         return this.value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DisplayStringItem)) {
+            return false;
+        } else {
+            DisplayStringItem that = (DisplayStringItem) o;
+            return Objects.equals(value, that.value) && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }
