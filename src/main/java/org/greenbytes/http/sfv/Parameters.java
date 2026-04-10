@@ -77,6 +77,12 @@ public class Parameters implements Map<String, Item<?>> {
 
     private static Item<?> asItem(String key, Object o) {
         if (o instanceof Item) {
+            if (o instanceof Parameterizable) {
+                Parameterizable p = ((Parameterizable)o);
+                if (!p.getParams().isEmpty()) {
+                    throw new IllegalArgumentException("Can't map value for parameter '" + key + "': " + o.getClass() + " carries parameters");
+                }
+            }
             return (Item<?>) o;
         } else if (o instanceof Integer) {
             return IntegerItem.valueOf(((Integer) o).longValue());

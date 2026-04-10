@@ -116,4 +116,20 @@ public class ParametersTest {
         TokenItem ti = Parser.parseToken("a;b");
         assertEquals("a;b", ti.serialize());
         assertEquals("a", ti.withParams(empty).serialize());
-    }}
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testParamsStrictnessReParametersInValues() {
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("foo", BooleanItem.valueOf(false));
+
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("qux", 0);
+
+        BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2));
+        map1.put("bar", BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2)));
+
+        // this needs to fail because the second parameter's value has parameters
+        Parameters.valueOf(map1);
+    }
+}
