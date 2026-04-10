@@ -38,11 +38,7 @@ public class DateItem implements NumberItem<Long> {
 
     @Override
     public DateItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
-            return this;
-        } else {
-            return new DateItem(this.value, params);
-        }
+        return new DateItem(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override

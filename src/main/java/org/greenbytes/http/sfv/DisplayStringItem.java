@@ -33,11 +33,7 @@ public class DisplayStringItem implements Item<String> {
 
     @Override
     public DisplayStringItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
-            return this;
-        } else {
-            return new DisplayStringItem(this.value, params);
-        }
+        return new DisplayStringItem(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override

@@ -32,11 +32,7 @@ public class StringItem implements Item<String> {
 
     @Override
     public StringItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
-            return this;
-        } else {
-            return new StringItem(this.value, params);
-        }
+        return new StringItem(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override

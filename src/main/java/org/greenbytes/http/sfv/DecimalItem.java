@@ -62,11 +62,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
 
     @Override
     public DecimalItem withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
-            return this;
-        } else {
-            return new DecimalItem(this.value, params);
-        }
+        return new DecimalItem(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override

@@ -2,8 +2,7 @@ package org.greenbytes.http.sfv;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,4 +80,40 @@ public class ParametersTest {
         assertFalse(p1 == p3);
         assertNotEquals(p1, p3);
     }
-}
+
+    @Test
+    public void canRemoveParams() {
+        Parameters empty = Parameters.valueOf(Collections.emptyMap());
+
+        BooleanItem boi = Parser.parseBoolean("?1;b");
+        assertEquals("?1;b", boi.serialize());
+        assertEquals("?1", boi.withParams(empty).serialize());
+
+        ByteSequenceItem byi = Parser.parseByteSequence(":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:;b");
+        assertEquals(":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:;b", byi.serialize());
+        assertEquals(":cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:", byi.withParams(empty).serialize());
+
+        DateItem dai = Parser.parseDate("@1;b");
+        assertEquals("@1;b", dai.serialize());
+        assertEquals("@1", dai.withParams(empty).serialize());
+
+        DisplayStringItem dsi = Parser.parseDisplayString("%\"This is intended for display to %c3%bcsers.\";b");
+        assertEquals("%\"This is intended for display to %c3%bcsers.\";b", dsi.serialize());
+        assertEquals("%\"This is intended for display to %c3%bcsers.\"", dsi.withParams(empty).serialize());
+
+        NumberItem dei = Parser.parseIntegerOrDecimal("0.3;b");
+        assertEquals("0.3;b", dei.serialize());
+        assertEquals("0.3", dei.withParams(empty).serialize());
+
+        NumberItem ini = Parser.parseIntegerOrDecimal("3;b");
+        assertEquals("3;b", ini.serialize());
+        assertEquals("3", ini.withParams(empty).serialize());
+
+        StringItem si = Parser.parseString("\"a\";b");
+        assertEquals("\"a\";b", si.serialize());
+        assertEquals("\"a\"", si.withParams(empty).serialize());
+
+        TokenItem ti = Parser.parseToken("a;b");
+        assertEquals("a;b", ti.serialize());
+        assertEquals("a", ti.withParams(empty).serialize());
+    }}

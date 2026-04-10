@@ -34,11 +34,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
 
     @Override
     public InnerList withParams(Parameters params) {
-        if (Objects.requireNonNull(params, "params must not be null").isEmpty()) {
-            return this;
-        } else {
-            return new InnerList(this.value, params);
-        }
+        return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override
