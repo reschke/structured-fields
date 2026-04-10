@@ -120,4 +120,19 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     public int getDivisor() {
         return 1000;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DecimalItem)) {
+            return false;
+        } else {
+            DecimalItem that = (DecimalItem) o;
+            return value == that.value && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }

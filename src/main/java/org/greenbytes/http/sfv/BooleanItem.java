@@ -63,4 +63,19 @@ public class BooleanItem implements Item<Boolean> {
     public Boolean get() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof BooleanItem)) {
+            return false;
+        } else {
+            BooleanItem that = (BooleanItem) o;
+            return value == that.value && Objects.equals(params, that.params);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, params);
+    }
 }
