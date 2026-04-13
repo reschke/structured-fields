@@ -65,6 +65,12 @@ public class DisplayStringItem implements Item<String> {
     }
 
     @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String s = String.format("%" + indentLevel + "s", "");
+        return sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+    }
+
+    @Override
     public String get() {
         return this.value;
     }

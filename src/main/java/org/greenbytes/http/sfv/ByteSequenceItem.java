@@ -60,6 +60,12 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        return sb.append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+    }
+
+
+    @Override
     public ByteBuffer get() {
         // this returns a wrapper around a copy so that the object itself
         // stays immutable

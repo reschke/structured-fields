@@ -56,6 +56,12 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String s =indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        return sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+    }
+
+    @Override
     public Boolean get() {
         return value;
     }

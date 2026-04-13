@@ -56,6 +56,17 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return sb;
     }
 
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String s = String.format("%" + indentLevel + "s", "");
+        sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+
+        for (ListElement<?> le : value) {
+            sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2));
+        }
+
+        return sb;
+    }
+
     @Override
     public Parameters getParams() {
         return params;

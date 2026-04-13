@@ -102,6 +102,12 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return serializeTo(new StringBuilder(20)).toString();
     }
 
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String s = String.format("%" + indentLevel + "s", "");
+        return sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2));
+    }
+
     @Override
     public BigDecimal get() {
         return BigDecimal.valueOf(value, 3);

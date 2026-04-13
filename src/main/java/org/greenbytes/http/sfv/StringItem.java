@@ -56,6 +56,13 @@ public class StringItem implements Item<String> {
     }
 
     @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String s = String.format("%" + indentLevel + "s", "");
+        return sb.append(s).append(value).append(" (").append(this.getClass().getSimpleName()).append(")\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2)).append("\n");
+    }
+
+    @Override
     public String serialize() {
         return serializeTo(new StringBuilder(2 + value.length())).toString();
     }

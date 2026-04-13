@@ -24,6 +24,8 @@ public interface Type<T> extends Supplier<T> {
      */
     StringBuilder serializeTo(StringBuilder sb);
 
+    StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel);
+
     /**
      * Serialize.
      * 

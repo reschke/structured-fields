@@ -52,6 +52,13 @@ public class TokenItem implements Item<String> {
         return serializeTo(new StringBuilder()).toString();
     }
 
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = " (" + this.getClass().getSimpleName() + ")";
+        return sb.append(indent).append(value).append(classn).append("\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2));
+    }
+
     @Override
     public String get() {
         return this.value;

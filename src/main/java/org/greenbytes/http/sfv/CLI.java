@@ -61,6 +61,7 @@ public class CLI {
         out.println(as + ": " +
                 ANSI_GREEN + result.serialize() + " " + ANSI_RESET +
                 ANSI_FAINT + "(" + result.getClass().getSimpleName() + ")" + ANSI_RESET);
+        out.println(result.serializeToForDebug(new StringBuilder(), 2));
     }
 
     private static void diagnostics(PrintStream out, String as, ParseException ex) {

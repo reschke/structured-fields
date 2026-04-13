@@ -60,6 +60,11 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+        return sb.append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+    }
+
+    @Override
     public Long get() {
         return value;
     }
