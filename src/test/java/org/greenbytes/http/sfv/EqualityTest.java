@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 public class EqualityTest {
 
@@ -23,7 +23,7 @@ public class EqualityTest {
         m2.put("a", "b");
         Parameters p1 = Parameters.valueOf(m1);
         Parameters p2 = Parameters.valueOf(m2);
-        assertFalse(p1 == p2);
+        assertNotSame(p1, p2);
         assertEquals(p1, p2);
     }
 
@@ -31,20 +31,20 @@ public class EqualityTest {
     public void testStringItemEquality() {
         StringItem s1 = StringItem.valueOf("a");
         StringItem s2 = StringItem.valueOf("a");
-        assertFalse(s1 == s2);
+        assertNotSame(s1, s2);
         assertEquals(s1, s2);
         StringItem s3 = StringItem.valueOf("b");
         assertNotEquals(s1, s3);
 
         StringItem s4 = StringItem.valueOf("a").withParams(getParameters("a", "b"));
-        assertFalse(s1 == s4);
+        assertNotSame(s1, s4);
         assertNotEquals(s1, s4);
 
         HashMap<String, Object> m5 = new LinkedHashMap<>();
         m5.put("c", "d");
         Parameters p5 = Parameters.valueOf(m5);
         StringItem s5 = StringItem.valueOf("a").withParams(p5);
-        assertFalse(s4 == s5);
+        assertNotSame(s4, s5);
         assertNotEquals(s4, s5);
     }
 
@@ -52,17 +52,17 @@ public class EqualityTest {
     public void testTokenItemEquality() {
         TokenItem t1 = TokenItem.valueOf("a");
         TokenItem t = TokenItem.valueOf("a");
-        assertFalse(t1 == t);
+        assertNotSame(t1, t);
         assertEquals(t1, t);
         TokenItem t3 = TokenItem.valueOf("b");
         assertNotEquals(t1, t3);
 
         TokenItem t4 = TokenItem.valueOf("a").withParams(getParameters("a", "b"));
-        assertFalse(t1 == t4);
+        assertNotSame(t1, t4);
         assertNotEquals(t1, t4);
 
         TokenItem t5 = TokenItem.valueOf("a").withParams(getParameters("c", "d"));
-        assertFalse(t4 == t5);
+        assertNotSame(t4, t5);
         assertNotEquals(t4, t5);
     }
 
@@ -73,14 +73,14 @@ public class EqualityTest {
         BooleanItem b3 = BooleanItem.valueOf(false);
 
         // FALSE and TRUE are singletons
-        assertTrue(b1 == b2);
+        assertSame(b1, b2);
         assertEquals(b1, b2);
 
-        assertFalse(b1 == b3);
+        assertNotSame(b1, b3);
         assertNotEquals(b1, b3);
 
         BooleanItem b4 = BooleanItem.valueOf(false).withParams(getParameters("c", "d"));
-        assertFalse(b1 == b4);
+        assertNotSame(b1, b4);
         assertNotEquals(b1, b4);
     }
 
@@ -90,14 +90,14 @@ public class EqualityTest {
         ByteSequenceItem b2 = ByteSequenceItem.valueOf("x".getBytes());
         ByteSequenceItem b3 = ByteSequenceItem.valueOf("y".getBytes());
 
-        assertFalse(b1 == b2);
+        assertNotSame(b1, b2);
         assertEquals(b1, b2);
 
-        assertFalse(b1 == b3);
+        assertNotSame(b1, b3);
         assertNotEquals(b1, b3);
 
         ByteSequenceItem b4 = b1.withParams(getParameters("c", "d"));
-        assertFalse(b1 == b4);
+        assertNotSame(b1, b4);
         assertNotEquals(b1, b4);
     }
 
@@ -107,14 +107,14 @@ public class EqualityTest {
         DateItem d2 = DateItem.valueOf(0);
         DateItem d3 = DateItem.valueOf(1000);
 
-        assertFalse(d1 == d2);
+        assertNotSame(d1, d2);
         assertEquals(d1, d2);
 
-        assertFalse(d1 == d3);
+        assertNotSame(d1, d3);
         assertNotEquals(d1, d3);
 
         DateItem d4 = d1.withParams(getParameters("c", "d"));
-        assertFalse(d1 == d4);
+        assertNotSame(d1, d4);
         assertNotEquals(d1, d4);
     }
 
@@ -124,14 +124,14 @@ public class EqualityTest {
         DecimalItem d2 = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
         DecimalItem d3 = DecimalItem.valueOf(BigDecimal.valueOf(10.6));
 
-        assertFalse(d1 == d2);
+        assertNotSame(d1, d2);
         assertEquals(d1, d2);
 
-        assertFalse(d1 == d3);
+        assertNotSame(d1, d3);
         assertNotEquals(d1, d3);
 
         DecimalItem d4 = d1.withParams(getParameters("c", "d"));
-        assertFalse(d1 == d4);
+        assertNotSame(d1, d4);
         assertNotEquals(d1, d4);
     }
 
@@ -141,14 +141,14 @@ public class EqualityTest {
         DisplayStringItem d2 = DisplayStringItem.valueOf("abc");
         DisplayStringItem d3 = DisplayStringItem.valueOf("def");
 
-        assertFalse(d1 == d2);
+        assertNotSame(d1, d2);
         assertEquals(d1, d2);
 
-        assertFalse(d1 == d3);
+        assertNotSame(d1, d3);
         assertNotEquals(d1, d3);
 
         DisplayStringItem d4 = d1.withParams(getParameters("c", "d"));
-        assertFalse(d1 == d4);
+        assertNotSame(d1, d4);
         assertNotEquals(d1, d4);
     }
 
@@ -158,14 +158,14 @@ public class EqualityTest {
         IntegerItem i2 = IntegerItem.valueOf(1);
         IntegerItem i3 = IntegerItem.valueOf(2);
 
-        assertFalse(i1 == i2);
+        assertNotSame(i1, i2);
         assertEquals(i1, i2);
 
-        assertFalse(i1 == i3);
+        assertNotSame(i1, i3);
         assertNotEquals(i1, i3);
 
         IntegerItem d4 = i1.withParams(getParameters("a", "b"));
-        assertFalse(i1 == d4);
+        assertNotSame(i1, d4);
         assertNotEquals(i1, d4);
     }
 
@@ -178,10 +178,10 @@ public class EqualityTest {
         OuterList l2 = OuterList.valueOf((Arrays.asList(b, d)));
         OuterList l3 = OuterList.valueOf((Arrays.asList(b, d, b)));
 
-        assertFalse(l1 == l2);
+        assertNotSame(l1, l2);
         assertEquals(l1, l2);
 
-        assertFalse(l1 == l3);
+        assertNotSame(l1, l3);
         assertNotEquals(l1, l3);
     }
 

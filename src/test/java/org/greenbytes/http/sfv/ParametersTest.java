@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class ParametersTest {
 
@@ -74,10 +74,10 @@ public class ParametersTest {
         Parameters p2 = Parameters.valueOf(m1);
         Parameters p3 = Parameters.valueOf(m2);
 
-        assertFalse(p1 == p2);
+        assertNotSame(p1, p2);
         assertEquals(p1, p2);
 
-        assertFalse(p1 == p3);
+        assertNotSame(p1, p3);
         assertNotEquals(p1, p3);
     }
 
