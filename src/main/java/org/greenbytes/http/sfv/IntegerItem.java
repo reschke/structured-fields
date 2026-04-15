@@ -63,7 +63,7 @@ public class IntegerItem implements NumberItem<Long> {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = " (" + this.getClass().getSimpleName() + ")";
         return sb.append(indent).append(value).append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2)).append("\n");
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2));
     }
 
     @Override

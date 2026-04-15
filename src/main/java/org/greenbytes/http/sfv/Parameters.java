@@ -75,7 +75,8 @@ public class Parameters implements Map<String, Item<?>> {
             String classn = " (" + this.getClass().getSimpleName() + ")";
             sb.append(indent).append(serialize()).append(classn).append("\n");
             for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
-                sb.append("  " + indent).append(e.getKey()).append(" -> ").append(e.getValue().serializeToForDebug(sb, 0)).append("\n");
+                sb.append("  " + indent).append(e.getKey()).append(" -> ");
+                e.getValue().serializeToForDebug(sb, 0);
             }
             return sb;
         } else {

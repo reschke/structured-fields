@@ -69,8 +69,15 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
 
     @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
-        String s = String.format("%" + indentLevel + "s", "");
-        sb = sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = " (" + this.getClass().getSimpleName() + ")";
+        sb.append(indent).append(serialize()).append(classn).append("\n");
+        for (Map.Entry<String, ListElement<?>> e : value.entrySet()) {
+            String name = e.getKey();
+            ListElement<?> dict = e.getValue();
+            sb.append("  " + indent).append(e.getKey()).append(" -> ");
+            e.getValue().serializeToForDebug(sb, indentLevel);
+        }
         return sb;
     }
 }

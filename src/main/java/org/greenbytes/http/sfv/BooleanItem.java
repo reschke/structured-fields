@@ -57,8 +57,10 @@ public class BooleanItem implements Item<Boolean> {
 
     @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
-        String s =indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        return sb.append(s).append(serialize()).append(" (").append(this.getClass().getSimpleName()).append(")\n");
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = " (" + this.getClass().getSimpleName() + ")";
+        return sb.append(indent).append(value ? "?1" : "?0").append(classn).append("\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2));
     }
 
     @Override
