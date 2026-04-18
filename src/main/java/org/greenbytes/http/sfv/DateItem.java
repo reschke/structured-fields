@@ -47,12 +47,13 @@ public class DateItem implements NumberItem<Long> {
         return params;
     }
 
+    public StringBuilder serializeToNoParams(StringBuilder sb) {
+        return sb.append('@').append(value);
+    }
+
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
-        sb.append('@');
-        sb.append(value);
-        params.serializeTo(sb);
-        return sb;
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
@@ -63,7 +64,8 @@ public class DateItem implements NumberItem<Long> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(serialize()).append(classn).append("\n");
+        return sb.append(indent).append(serializeToNoParams(new StringBuilder())).append(classn).append("\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter)).append("\n");
     }
 
     @Override
