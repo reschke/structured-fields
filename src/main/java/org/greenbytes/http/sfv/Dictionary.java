@@ -73,10 +73,8 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
         String classn = " (" + this.getClass().getSimpleName() + ")";
         sb.append(indent).append(serialize()).append(classn).append("\n");
         for (Map.Entry<String, ListElement<?>> e : value.entrySet()) {
-            String name = e.getKey();
-            ListElement<?> dict = e.getValue();
-            sb.append("  " + indent).append(e.getKey()).append(" -> ");
-            e.getValue().serializeToForDebug(sb, indentLevel);
+            sb.append(indent +" ").append(e.getKey()).append(" -> \n");
+            e.getValue().serializeToForDebug(sb, indentLevel + 2);
         }
         return sb;
     }
