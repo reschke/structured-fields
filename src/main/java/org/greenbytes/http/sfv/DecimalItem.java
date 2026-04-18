@@ -108,8 +108,10 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(serializeToNoParams(sb).append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter)));
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb = sb.append(classn).append("\n");
+        return params.serializeToForDebug(sb, indentLevel + 2, formatter);
     }
 
     @Override
