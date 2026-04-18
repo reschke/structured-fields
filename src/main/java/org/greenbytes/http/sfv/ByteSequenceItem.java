@@ -46,13 +46,16 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         sb.append(':');
         sb.append(ENCODER.encodeToString(this.value));
         sb.append(':');
-        params.serializeTo(sb);
         return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
@@ -64,7 +67,8 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(serialize()).append(classn).append("\n");
+        return sb.append(indent).append(serializeToNoParams(new StringBuilder())).append(classn).append("\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter)).append("\n");
     }
 
 
