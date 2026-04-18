@@ -71,8 +71,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    public StringBuilder serializeToNoParams(StringBuilder sb) {
 
         String sign = value < 0 ? "-" : "";
 
@@ -93,9 +92,12 @@ public class DecimalItem implements NumberItem<BigDecimal> {
             }
         }
 
-        params.serializeTo(sb);
-
         return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
@@ -106,8 +108,8 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(serialize()).append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
+        return sb.append(indent).append(serializeToNoParams(sb).append(classn).append("\n")
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter)));
     }
 
     @Override
