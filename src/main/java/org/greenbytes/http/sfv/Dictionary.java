@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Represents a Dictionary.
@@ -68,13 +69,13 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
     }
 
     @Override
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = " (" + this.getClass().getSimpleName() + ")";
+        String classn = formatter.apply(this.getClass());
         sb.append(indent).append(serialize()).append(classn).append("\n");
         for (Map.Entry<String, ListElement<?>> e : value.entrySet()) {
             sb.append(indent +" ").append(e.getKey()).append(" -> \n");
-            e.getValue().serializeToForDebug(sb, indentLevel + 2);
+            e.getValue().serializeToForDebug(sb, indentLevel + 2, formatter);
         }
         return sb;
     }

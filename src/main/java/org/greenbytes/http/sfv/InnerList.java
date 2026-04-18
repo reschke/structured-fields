@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents an Inner List.
@@ -56,13 +57,13 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return sb;
     }
 
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = " (" + this.getClass().getSimpleName() + ")";
+        String classn = formatter.apply(this.getClass());
         sb.append(indent).append(serialize()).append(classn).append("\n");
 
         for (ListElement<?> le : value) {
-            sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2));
+            sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
         }
 
         return sb;

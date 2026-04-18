@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Date.
@@ -59,10 +60,9 @@ public class DateItem implements NumberItem<Long> {
         return serializeTo(new StringBuilder()).toString();
     }
 
-    @Override
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = " (" + this.getClass().getSimpleName() + ")";
+        String classn = formatter.apply(this.getClass());
         return sb.append(indent).append(serialize()).append(classn).append("\n");
     }
 

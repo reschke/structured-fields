@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a String.
@@ -56,11 +57,11 @@ public class StringItem implements Item<String> {
     }
 
     @Override
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = " (" + this.getClass().getSimpleName() + ")";
+        String classn = formatter.apply(this.getClass());
         return sb.append(indent).append(value).append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2)).append("\n");
+                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter)).append("\n");
     }
 
     @Override

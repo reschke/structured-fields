@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -24,7 +25,7 @@ public interface Type<T> extends Supplier<T> {
      */
     StringBuilder serializeTo(StringBuilder sb);
 
-    StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel);
+    StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> classFormatter);
 
     /**
      * Serialize.

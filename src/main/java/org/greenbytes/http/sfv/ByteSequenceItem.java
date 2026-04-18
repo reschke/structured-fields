@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Byte Sequence.
@@ -60,9 +61,9 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     @Override
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel) {
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = " (" + this.getClass().getSimpleName() + ")";
+        String classn = formatter.apply(this.getClass());
         return sb.append(indent).append(serialize()).append(classn).append("\n");
     }
 
