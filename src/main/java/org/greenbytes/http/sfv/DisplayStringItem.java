@@ -42,8 +42,7 @@ public class DisplayStringItem implements Item<String> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         sb.append("%\"");
         byte[] octets = value.getBytes(StandardCharsets.UTF_8);
         for (byte b : octets) {
@@ -56,7 +55,13 @@ public class DisplayStringItem implements Item<String> {
             }
         }
         sb.append('"');
-        params.serializeTo(sb);
+        return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        sb = serializeToNoParams(sb);
+        sb = params.serializeTo(sb);
         return sb;
     }
 
@@ -69,7 +74,12 @@ public class DisplayStringItem implements Item<String> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(serialize()).append(classn).append("\n");
+
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb.append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override
