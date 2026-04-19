@@ -60,8 +60,10 @@ public class BooleanItem implements Item<Boolean> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(value ? "?1" : "?0").append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
+
+        sb.append(indent).append(value ? "?1" : "?0").append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override
