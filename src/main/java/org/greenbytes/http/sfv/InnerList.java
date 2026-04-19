@@ -38,8 +38,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         String separator = "";
 
         sb.append('(');
@@ -52,21 +51,27 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
 
         sb.append(')');
 
-        params.serializeTo(sb);
-
         return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+       return params.serializeTo(serializeToNoParams(sb));
     }
 
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        sb.append(indent).append(serialize()).append(classn).append("\n");
+
+        sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb.append(classn).append("\n");
 
         for (ListElement<?> le : value) {
             sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
         }
 
-        return sb;
+        return params.serializeToForDebug(sb, indentLevel, formatter);
     }
 
     @Override
