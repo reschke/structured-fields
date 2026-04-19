@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Decimal.
@@ -70,8 +71,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    public StringBuilder serializeToNoParams(StringBuilder sb) {
 
         String sign = value < 0 ? "-" : "";
 
@@ -92,14 +92,28 @@ public class DecimalItem implements NumberItem<BigDecimal> {
             }
         }
 
-        params.serializeTo(sb);
-
         return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder(20)).toString();
+    }
+
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb = sb.append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override

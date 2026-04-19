@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a List.
@@ -45,6 +46,19 @@ public class OuterList implements Type<List<ListElement<?>>> {
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
+    }
+
+    @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+        sb.append(indent).append(serialize()).append(classn).append("\n");
+
+        for (ListElement<?> le : value) {
+            sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
+        }
+
+        return sb;
     }
 
     @Override

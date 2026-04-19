@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Display String.
@@ -41,8 +42,7 @@ public class DisplayStringItem implements Item<String> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         sb.append("%\"");
         byte[] octets = value.getBytes(StandardCharsets.UTF_8);
         for (byte b : octets) {
@@ -55,13 +55,31 @@ public class DisplayStringItem implements Item<String> {
             }
         }
         sb.append('"');
-        params.serializeTo(sb);
+        return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        sb = serializeToNoParams(sb);
+        sb = params.serializeTo(sb);
         return sb;
     }
 
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder(2 + value.length())).toString();
+    }
+
+    @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb.append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override

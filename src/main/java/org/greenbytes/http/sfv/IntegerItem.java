@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents an Integer.
@@ -56,6 +57,16 @@ public class IntegerItem implements NumberItem<Long> {
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
+    }
+
+    @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb = sb.append(indent).append(value).append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override

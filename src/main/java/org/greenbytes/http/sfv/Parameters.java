@@ -61,6 +61,29 @@ public class Parameters implements Map<String, Item<?>> {
         return sb;
     }
 
+    /**
+     * Serialize this parameter.
+     * @return serialization
+     */
+    public String serialize() {
+        return serializeTo(new StringBuilder()).toString();
+    }
+
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        if (!delegate.isEmpty()) {
+            String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+            String classn = formatter.apply(this.getClass());
+            sb.append(indent).append(serialize()).append(classn).append("\n");
+            for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
+                sb.append("  " + indent).append(e.getKey()).append(" -> ");
+                e.getValue().serializeToForDebug(sb, 0, formatter);
+            }
+            return sb;
+        } else {
+            return sb;
+        }
+    }
+
     private static Map<String, Item<?>> checkAndTransformMap(Map<String, Object> map) {
         Map<String, Item<?>> result = new LinkedHashMap<>(
                 Objects.requireNonNull(map, "Map must not be null").size());
@@ -216,13 +239,5 @@ public class Parameters implements Map<String, Item<?>> {
 
     public Collection<Item<?>> values() {
         return delegate.values();
-    }
-
-    /**
-     * Serialize this parameter.
-     * @return serialization
-     */
-    public String serialize() {
-        return serializeTo(new StringBuilder()).toString();
     }
 }

@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Byte Sequence.
@@ -45,19 +46,35 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         return params;
     }
 
-    @Override
-    public StringBuilder serializeTo(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         sb.append(':');
         sb.append(ENCODER.encodeToString(this.value));
         sb.append(':');
-        params.serializeTo(sb);
         return sb;
+    }
+
+    @Override
+    public StringBuilder serializeTo(StringBuilder sb) {
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
     }
+
+    @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb.append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
+    }
+
 
     @Override
     public ByteBuffer get() {

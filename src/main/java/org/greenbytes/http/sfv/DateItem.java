@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Date.
@@ -46,17 +47,29 @@ public class DateItem implements NumberItem<Long> {
         return params;
     }
 
+    public StringBuilder serializeToNoParams(StringBuilder sb) {
+        return sb.append('@').append(value);
+    }
+
     @Override
     public StringBuilder serializeTo(StringBuilder sb) {
-        sb.append('@');
-        sb.append(value);
-        params.serializeTo(sb);
-        return sb;
+        return params.serializeTo(serializeToNoParams(sb));
     }
 
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
+    }
+
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb = sb.append(indent);
+        sb = serializeToNoParams(sb);
+        sb.append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override

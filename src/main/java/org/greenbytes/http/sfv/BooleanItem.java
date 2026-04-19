@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents a Boolean.
@@ -53,6 +54,16 @@ public class BooleanItem implements Item<Boolean> {
     @Override
     public String serialize() {
         return serializeTo(new StringBuilder()).toString();
+    }
+
+    @Override
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+        String classn = formatter.apply(this.getClass());
+
+        sb.append(indent).append(value ? "?1" : "?0").append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override
