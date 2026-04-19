@@ -6,9 +6,11 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -190,12 +192,36 @@ public class ItemAPITests {
         m.put("o", new byte[0]);
         m.put("d", new BigDecimal("0.1"));
         Parameters p = Parameters.valueOf(m);
+
         assertEquals(StringItem.class, p.get("*").getClass());
         assertEquals(IntegerItem.class, p.get("i").getClass());
         assertEquals(IntegerItem.class, p.get("l").getClass());
         assertEquals(BooleanItem.class, p.get("b").getClass());
         assertEquals(ByteSequenceItem.class, p.get("o").getClass());
         assertEquals(DecimalItem.class, p.get("d").getClass());
+    }
+
+    @Test
+    public void testParameters2() {
+
+        Parameters p = Parameters.valueOf("*", "star", "i", 1, "l", 2L, "b", false,
+                "o", new byte[0], "d", 0.155d, "d2", BigDecimal.valueOf(12345), "d3", 3.14f);
+
+        assertEquals(StringItem.class, p.get("*").getClass());
+        assertEquals(IntegerItem.class, p.get("i").getClass());
+        assertEquals(IntegerItem.class, p.get("l").getClass());
+        assertEquals(BooleanItem.class, p.get("b").getClass());
+        assertEquals(ByteSequenceItem.class, p.get("o").getClass());
+        assertEquals(DecimalItem.class, p.get("d").getClass());
+        assertEquals(DecimalItem.class, p.get("d2").getClass());
+
+        assertEquals(";*=\"star\";i=1;l=2;b=?0;o=::;d=0.155;d2=12345.0;d3=3.14", p.serialize());
+
+        Map<String, String> sermap = p.entrySet().stream().
+                collect(Collectors.toMap(Map.Entry::getKey, x -> x.getValue().serialize()));
+
+        assertEquals("?0", sermap.get("b"));
+        assertEquals("12345.0", sermap.get("d2"));
     }
 
     @Test

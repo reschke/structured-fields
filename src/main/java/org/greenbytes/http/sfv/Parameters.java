@@ -45,6 +45,22 @@ public class Parameters implements Map<String, Item<?>> {
         return new Parameters(value);
     }
 
+    public static Parameters valueOf(Object... obs) {
+        if (obs.length % 2 != 0) {
+            throw new IllegalArgumentException("requires even number of arguments");
+        } else {
+            Map<String, Object> map = new LinkedHashMap<>();
+            for (int i = 0; i < obs.length; i += 2) {
+                String key = obs[i].toString();
+                if (map.containsKey(key)) {
+                    throw new IllegalArgumentException("key " + key + " already exists");
+                }
+                map.put(key, obs[i + 1]);
+            }
+            return valueOf(map);
+        }
+    }
+
     /**
      * Serialize this parameter to a {@linkplain StringBuilder}
      * @param sb to serialize to
@@ -119,6 +135,10 @@ public class Parameters implements Map<String, Item<?>> {
             return ByteSequenceItem.valueOf((byte[]) o);
         } else if (o instanceof BigDecimal) {
             return DecimalItem.valueOf((BigDecimal)o);
+        } else if (o instanceof Double) {
+            return DecimalItem.valueOf(BigDecimal.valueOf((Double)o));
+        } else if (o instanceof Float) {
+            return DecimalItem.valueOf(BigDecimal.valueOf((Float)o));
         } else {
             throw new IllegalArgumentException("Can't map value for parameter '" + key + "': " + o.getClass());
         }
