@@ -56,8 +56,10 @@ public class TokenItem implements Item<String> {
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
-        return sb.append(indent).append(value).append(classn).append("\n")
-                .append(params.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
+
+        sb = sb.append(indent).append(value).append(classn).append("\n");
+        sb = params.serializeToForDebug(sb, indentLevel + 2, formatter);
+        return sb;
     }
 
     @Override
