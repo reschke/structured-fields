@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -183,15 +182,7 @@ public class ItemAPITests {
 
     @Test
     public void testParameters() {
-
-        Map<String, Object> m = new LinkedHashMap<>();
-        m.put("*", "star");
-        m.put("i", 1);
-        m.put("l", 2L);
-        m.put("b", false);
-        m.put("o", new byte[0]);
-        m.put("d", new BigDecimal("0.1"));
-        Parameters p = Parameters.valueOf(m);
+        Parameters p = createParams1();
 
         assertEquals(StringItem.class, p.get("*").getClass());
         assertEquals(IntegerItem.class, p.get("i").getClass());
@@ -204,8 +195,7 @@ public class ItemAPITests {
     @Test
     public void testParameters2() {
 
-        Parameters p = Parameters.valueOf("*", "star", "i", 1, "l", 2L, "b", false,
-                "o", new byte[0], "d", 0.155d, "d2", BigDecimal.valueOf(12345), "d3", 3.14f);
+        Parameters p = createParams2();
 
         assertEquals(StringItem.class, p.get("*").getClass());
         assertEquals(IntegerItem.class, p.get("i").getClass());
@@ -222,6 +212,32 @@ public class ItemAPITests {
 
         assertEquals("?0", sermap.get("b"));
         assertEquals("12345.0", sermap.get("d2"));
+    }
+
+    @Test
+    public void testParametersEquals() {
+        Parameters p1 = createParams1();
+        Parameters p2 = createParams2();
+        assertEquals(p1.serialize(), p2.serialize());
+        assertEquals(p1, p2);
+    }
+
+    private static Parameters createParams1() {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("*", "star");
+        m.put("i", 1);
+        m.put("l", 2L);
+        m.put("b", false);
+        m.put("o", new byte[0]);
+        m.put("d", new BigDecimal("0.155"));
+        m.put("d2", BigDecimal.valueOf(12345));
+        m.put("d3", 3.14f);
+       return Parameters.valueOf(m);
+    }
+
+    private static Parameters createParams2() {
+        return Parameters.valueOf("*", "star", "i", 1, "l", 2L, "b", false,
+                "o", new byte[0], "d", 0.155d, "d2", BigDecimal.valueOf(12345), "d3", 3.14f);
     }
 
     @Test

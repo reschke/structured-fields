@@ -180,10 +180,6 @@ public class Parameters implements Map<String, Item<?>> {
         return delegate.entrySet();
     }
 
-    public boolean equals(Object o) {
-        return Objects.equals(delegate, o);
-    }
-
     @Override
     public void forEach(BiConsumer<? super String, ? super Item<?>> action) {
         delegate.forEach(action);
@@ -196,10 +192,6 @@ public class Parameters implements Map<String, Item<?>> {
     @Override
     public Item<?> getOrDefault(Object key, Item<?> defaultValue) {
         return delegate.getOrDefault(key, defaultValue);
-    }
-
-    public int hashCode() {
-        return delegate.hashCode();
     }
 
     public boolean isEmpty() {
@@ -259,5 +251,20 @@ public class Parameters implements Map<String, Item<?>> {
 
     public Collection<Item<?>> values() {
         return delegate.values();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Parameters)) {
+            return false;
+        } else {
+            Parameters that = (Parameters) o;
+            return Objects.equals(delegate, that.delegate);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(delegate);
     }
 }
