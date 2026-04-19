@@ -71,7 +71,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
             sb.append(le.serializeToForDebug(new StringBuilder(), indentLevel + 2, formatter));
         }
 
-        return params.serializeToForDebug(sb, indentLevel, formatter);
+        return params.serializeToForDebug(sb, indentLevel + 2, formatter);
     }
 
     @Override

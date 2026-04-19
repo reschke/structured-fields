@@ -39,18 +39,31 @@ gives:
 ## Testing Client
 
 Here's a command line tool which will feed all arguments into the parser (as if obtained
-from multiple field lines), parsed as Item, List, or Dictionary:
+from multiple field lines), parsed as Item, List, or Dictionary, and return diagnostic
+information.
 
 ```
-$ java -jar target/structured-fields-0.6-SNAPSHOT.jar ':cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:'  'x'
+$ $ java -jar target/structured-fields-0.6-SNAPSHOT.jar 'date;v=@1' 'number;v=123' '( token );bool'
 
-Item: >>:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:,x<<
-        ----------------------------------------------^ (0x2c) Extra characters in string parsed as Item
+Item: >>date;v=@1,number;v=123,( token );bool<<
+        ---------^ (0x2c) Extra characters in string parsed as Item
 
-List: :cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:, x (OuterList)
+List: date;v=@1, number;v=123, (token);bool (OuterList)
+  date;v=@1, number;v=123, (token);bool (OuterList)
+    date (TokenItem)
+      ;v=@1 (Parameters)
+        v -> @1 (DateItem)
+    number (TokenItem)
+      ;v=123 (Parameters)
+        v -> 123 (IntegerItem)
+    (token) (InnerList)
+      token (TokenItem)
+      ;bool (Parameters)
+        bool -> ?1 (BooleanItem)
 
-Dict: >>:cHJldGVuZCB0aGlzIGlzIGJpbmFyeSBjb250ZW50Lg==:,x<<
-        ^ (0x3a) Key must start with LCALPHA or '*': ':' (\u003a)
+
+Dict: >>date;v=@1,number;v=123,( token );bool<<
+        -----------------------^ (0x28) Key must start with LCALPHA or '*': '(' (\u0028)
 ```
 
 
