@@ -6,8 +6,10 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -280,5 +282,28 @@ public class ItemAPITests {
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    @Test
+    public void testListConstruction() {
+        // RFC 9651, Section 3.1
+        OuterList l1 = createList1();
+        OuterList l2 = createList2();
+        assertEquals("\"sugar\", \"tee\", \"rum\"", l2.serialize());
+        assertEquals(l1.serialize(), l2.serialize());
+        assertEquals(l1, l2);
+    }
+
+    private static OuterList createList1() {
+        List<ListElement<?>> list = new ArrayList<>();
+        list.add(StringItem.valueOf("sugar"));
+        list.add(StringItem.valueOf("tee"));
+        list.add(StringItem.valueOf("rum"));
+
+        return OuterList.of(list);
+    }
+
+    private static OuterList createList2() {
+        return OuterList.of(StringItem.of("sugar"), StringItem.of("tee"), StringItem.of("rum"));
     }
 }

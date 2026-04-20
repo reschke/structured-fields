@@ -1,8 +1,11 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Represents a List.
@@ -19,15 +22,35 @@ public class OuterList implements Type<List<ListElement<?>>> {
     }
 
     /**
+     * @deprecated use {@link #of(List)} instead.
+     */
+    @Deprecated
+    public static OuterList valueOf(List<ListElement<?>> value) {
+        return new OuterList(value);
+    }
+
+    /**
      * Creates an {@link OuterList} instance representing the specified
      * {@code List<Item>} value.
-     * 
+     *
      * @param value
      *            a {@code List<Item>} value.
      * @return a {@link OuterList} representing {@code value}.
      */
-    public static OuterList valueOf(List<ListElement<?>> value) {
+    public static OuterList of(List<ListElement<?>> value) {
         return new OuterList(value);
+    }
+
+    /**
+     * Creates an {@link OuterList} instance representing the specified
+     * {@code ListElement<Item>} values.
+     *
+     * @param values
+     *            {@code ListItem<Item>} values.
+     * @return a {@link OuterList} representing {@code values}.
+     */
+    public static OuterList of(ListElement<?>... values) {
+        return of(Arrays.stream(values).collect(Collectors.toList()));
     }
 
     @Override

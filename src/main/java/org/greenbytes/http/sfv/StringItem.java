@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -20,14 +21,22 @@ public class StringItem implements Item<String> {
     }
 
     /**
-     * Creates a {@link StringItem} instance representing the specified
-     * {@code String} value.
-     * 
-     * @param value
-     *            a {@code String} value.
-     * @return a {@link StringItem} representing {@code value}.
+     * @deprecated use {@link #of(String)} instead.
      */
+    @Deprecated
     public static StringItem valueOf(String value) {
+        return new StringItem(value, Parameters.EMPTY);
+    }
+
+    /**
+    * Creates a {@link StringItem} instance representing the specified
+    * {@code String} value.
+    *
+    * @param value
+    *            a {@code String} value.
+    * @return a {@link StringItem} representing {@code value}.
+    */
+    public static StringItem of(String value) {
         return new StringItem(value, Parameters.EMPTY);
     }
 
