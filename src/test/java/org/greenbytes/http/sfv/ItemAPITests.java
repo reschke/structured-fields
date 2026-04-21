@@ -304,6 +304,6 @@ public class ItemAPITests {
     }
 
     private static OuterList createList2() {
-        return OuterList.of(StringItem.of("sugar"), StringItem.of("tee"), StringItem.of("rum"));
+        return OuterList.valueOf("sugar", "tee", "rum");
     }
 }

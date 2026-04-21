@@ -1,7 +1,6 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -31,7 +30,19 @@ public class OuterList implements Type<List<ListElement<?>>> {
 
     /**
      * Creates an {@link OuterList} instance representing the specified
-     * {@code List<Item>} value.
+     * {@linkplain Object} values after best-effort conversiob to {@linkplain Item}.
+     *
+     * @param values {@link Object}s to populate the list with
+     * @return a {@link OuterList} representing {@code values}.
+     */
+    public static OuterList valueOf(Object... values) {
+        return of(Arrays.stream(values).map(v -> Utils.asBareItem(v))
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * Creates an {@link OuterList} instance representing the specified
+     * {@linkplain List} value.
      *
      * @param value
      *            a {@code List<Item>} value.

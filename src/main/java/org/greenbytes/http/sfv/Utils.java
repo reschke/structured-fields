@@ -78,7 +78,11 @@ public class Utils {
         } else if (o instanceof Long) {
             return IntegerItem.valueOf((Long) o);
         } else if (o instanceof String) {
-            return StringItem.valueOf((String) o);
+            try {
+                return StringItem.valueOf((String) o);
+            } catch (IllegalArgumentException ia) {
+                return DisplayStringItem.valueOf((String) o);
+            }
         } else if (o instanceof Boolean) {
             return BooleanItem.valueOf((Boolean) o);
         } else if (o instanceof byte[]) {
