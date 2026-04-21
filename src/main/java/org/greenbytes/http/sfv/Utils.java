@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,5 +57,40 @@ public class Utils {
             checkKey(key);
         }
         return value;
+    }
+
+    /**
+     * Converts from native Java object
+     * @param o to convert
+     * @return convert to {@linkplain Item}
+     */
+    protected static Item<?> asBareItem(Object o) {
+        if (o instanceof Item) {
+            if (o instanceof Parameterizable) {
+                Parameterizable p = ((Parameterizable)o);
+                if (!p.getParams().isEmpty()) {
+                    throw new IllegalArgumentException("Can't map value " + o + " (" + o.getClass() + "): carries parameters.");
+                }
+            }
+            return (Item<?>) o;
+        } else if (o instanceof Integer) {
+            return IntegerItem.valueOf(((Integer) o).longValue());
+        } else if (o instanceof Long) {
+            return IntegerItem.valueOf((Long) o);
+        } else if (o instanceof String) {
+            return StringItem.valueOf((String) o);
+        } else if (o instanceof Boolean) {
+            return BooleanItem.valueOf((Boolean) o);
+        } else if (o instanceof byte[]) {
+            return ByteSequenceItem.valueOf((byte[]) o);
+        } else if (o instanceof BigDecimal) {
+            return DecimalItem.valueOf((BigDecimal)o);
+        } else if (o instanceof Double) {
+            return DecimalItem.valueOf(BigDecimal.valueOf((Double)o));
+        } else if (o instanceof Float) {
+            return DecimalItem.valueOf(BigDecimal.valueOf((Float)o));
+        } else {
+            throw new IllegalArgumentException("Can't map value " + o.toString() + " (" + o.getClass() + "): carries parameters.");
+        }
     }
 }
