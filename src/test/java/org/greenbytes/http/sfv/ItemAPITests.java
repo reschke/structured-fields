@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -285,16 +286,16 @@ public class ItemAPITests {
     }
 
     @Test
-    public void testListConstruction() {
+    public void testListConstructionBareItems() {
         // RFC 9651, Section 3.1
-        OuterList l1 = createList1();
-        OuterList l2 = createList2();
+        OuterList l1 = createListBareItems1();
+        OuterList l2 = createListBareItems2();
         assertEquals("\"sugar\", \"tee\", \"rum\"", l2.serialize());
         assertEquals(l1.serialize(), l2.serialize());
         assertEquals(l1, l2);
     }
 
-    private static OuterList createList1() {
+    private static OuterList createListBareItems1() {
         List<ListElement<?>> list = new ArrayList<>();
         list.add(StringItem.valueOf("sugar"));
         list.add(StringItem.valueOf("tee"));
@@ -303,7 +304,32 @@ public class ItemAPITests {
         return OuterList.of(list);
     }
 
-    private static OuterList createList2() {
+    private static OuterList createListBareItems2() {
         return OuterList.valueOf("sugar", "tee", "rum");
+    }
+
+    @Test
+    public void testListConstructionWithInnerLists() {
+        // RFC 9651, Section 3.1.1
+        List<Item<?>> inner1 = new ArrayList<>();
+        inner1.add(StringItem.of("foo"));
+        inner1.add(StringItem.of("bar"));
+
+        List<Item<?>> inner2 = Collections.singletonList(StringItem.of("baz"));
+
+        List<Item<?>> inner3 = new ArrayList<>();
+        inner3.add(StringItem.of("bat"));
+        inner3.add(StringItem.of("one"));
+
+        List<Item<?>> inner4 = Collections.emptyList();
+
+        List<ListElement<?>> combined = new ArrayList<>();
+        combined.add(InnerList.valueOf(inner1));
+        combined.add(InnerList.valueOf(inner2));
+        combined.add(InnerList.valueOf(inner3));
+        combined.add(InnerList.valueOf(inner4));
+
+        OuterList ol = OuterList.of(combined);
+        assertEquals("(\"foo\" \"bar\"), (\"baz\"), (\"bat\" \"one\"), ()", ol.serialize());
     }
 }
