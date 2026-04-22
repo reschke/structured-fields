@@ -341,9 +341,9 @@ public class ItemAPITests {
     }
 
     private static OuterList createListBareInnerLists2() {
-        InnerList inner1 = InnerList.of(StringItem.of("foo"), StringItem.of("bar"));
-        InnerList inner2 = InnerList.of(StringItem.of("baz"));
-        InnerList inner3 = InnerList.of(StringItem.of("bat"), StringItem.of("one"));
+        InnerList inner1 = InnerList.valueOf("foo", "bar");
+        InnerList inner2 = InnerList.valueOf("baz");
+        InnerList inner3 = InnerList.valueOf("bat", "one");
         InnerList inner4 = InnerList.of();
 
         return OuterList.of(inner1, inner2, inner3, inner4);

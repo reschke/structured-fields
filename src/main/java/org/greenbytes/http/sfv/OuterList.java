@@ -30,7 +30,7 @@ public class OuterList implements Type<List<ListElement<?>>> {
 
     /**
      * Creates an {@link OuterList} instance representing the specified
-     * {@linkplain Object} values after best-effort conversiob to {@linkplain Item}.
+     * {@linkplain Object} values after best-effort conversion to {@linkplain Item}.
      *
      * @param values {@link Object}s to populate the list with
      * @return a {@link OuterList} representing {@code values}.

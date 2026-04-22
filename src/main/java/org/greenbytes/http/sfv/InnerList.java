@@ -55,6 +55,18 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return of(Arrays.stream(values).collect(Collectors.toList()));
     }
 
+    /**
+     * Creates an {@link InnerList} instance representing the specified
+     * {@linkplain Object} values after best-effort conversion to {@linkplain Item}s.
+     *
+     * @param values {@link Object}s to populate the list with
+     * @return a {@link InnerList} representing {@code values}.
+     */
+    public static InnerList valueOf(Object... values) {
+        return of(Arrays.stream(values).map(v -> Utils.asBareItem(v))
+                .collect(Collectors.toList()));
+    }
+
     @Override
     public InnerList withParams(Parameters params) {
         return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
