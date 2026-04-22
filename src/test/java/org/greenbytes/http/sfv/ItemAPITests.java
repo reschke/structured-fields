@@ -353,23 +353,24 @@ public class ItemAPITests {
     public void testListConstructionWithInnerListsWithParams() {
         // RFC 9651, Section 3.1.1
         OuterList ol1 = createParametrizedInnerLists1();
+        OuterList ol2 = createParametrizedInnerLists2();
         assertEquals("(\"foo\";a=1;b=2);lvl=5, (\"bar\");lvl=1", ol1.serialize());
+        assertEquals("(\"foo\";a=1;b=2);lvl=5, (\"bar\");lvl=1", ol2.serialize());
+        assertEquals(ol1, ol2);
     }
 
     private static OuterList createParametrizedInnerLists1() {
         List<Item<?>> inner1 = new ArrayList<>();
         Map<String, Object> itemParam1 = new LinkedHashMap<>();
-        itemParam1.put("a", IntegerItem.valueOf(1));
-        itemParam1.put("b", IntegerItem.valueOf(2));
+        itemParam1.put("a", 1);
+        itemParam1.put("b", 2);
         inner1.add(StringItem.of("foo").withParams(Parameters.valueOf(itemParam1)));
-        Map<String, Object> itemParamOuter1 = new LinkedHashMap<>();
-        itemParamOuter1.put("lvl", IntegerItem.valueOf(5));
+        Map<String, Object> itemParamOuter1 = Collections.singletonMap("lvl", 5);
         InnerList linner1 = InnerList.of(inner1).withParams(Parameters.valueOf(itemParamOuter1));
 
-        List<Item<?>> inner2 = new ArrayList<>();
-        inner2.add(StringItem.of("bar"));
+        List<Item<?>> inner2 = Collections.singletonList(StringItem.of("bar"));
         Map<String, Object> itemParamOuter2 = new LinkedHashMap<>();
-        itemParamOuter2.put("lvl", IntegerItem.valueOf(1));
+        itemParamOuter2.put("lvl", 1);
         InnerList linner2 = InnerList.of(inner2).withParams(Parameters.valueOf(itemParamOuter2));
 
         List<ListElement<?>> combined = new ArrayList<>();
@@ -377,5 +378,15 @@ public class ItemAPITests {
         combined.add(linner2);
 
         return OuterList.of(combined);
+    }
+
+    private static OuterList createParametrizedInnerLists2() {
+        InnerList linner1 = InnerList.of(
+                StringItem.of("foo").withParams(Parameters.valueOf("a", 1, "b", 2)))
+                    .withParams(Parameters.valueOf("lvl", 5));
+
+        InnerList linner2 = InnerList.valueOf("bar").withParams(Parameters.valueOf("lvl", 1));
+
+        return OuterList.of(linner1, linner2);
     }
 }

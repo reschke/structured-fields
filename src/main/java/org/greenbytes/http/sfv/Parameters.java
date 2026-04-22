@@ -29,18 +29,26 @@ public class Parameters implements Map<String, Item<?>> {
     }
 
     /**
+     * @deprecated use {@linkplain #of(Map)}
+     */
+    @Deprecated
+    public static Parameters valueOf(Map<String, Object> value) {
+        return new Parameters(value);
+    }
+
+    /**
      * Creates an unmodifiable {@link Parameters} instance representing the
      * specified {@code Map<String, Item>} value.
      * <p>
      * Note that the {@link Map} implementation that is used here needs to
      * iterate predictably based on insertion order, such as
      * {@link java.util.LinkedHashMap}.
-     * 
+     *
      * @param value
      *            a {@code Map<String, Item>} value
      * @return a {@link Parameters} representing {@code value}.
      */
-    public static Parameters valueOf(Map<String, Object> value) {
+    public static Parameters of(Map<String, Object> value) {
         return new Parameters(value);
     }
 
