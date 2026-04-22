@@ -341,19 +341,11 @@ public class ItemAPITests {
     }
 
     private static OuterList createListBareInnerLists2() {
-        List<Item<?>> inner1 = new ArrayList<>();
-        inner1.add(StringItem.of("foo"));
-        inner1.add(StringItem.of("bar"));
+        InnerList inner1 = InnerList.of(StringItem.of("foo"), StringItem.of("bar"));
+        InnerList inner2 = InnerList.of(StringItem.of("baz"));
+        InnerList inner3 = InnerList.of(StringItem.of("bat"), StringItem.of("one"));
+        InnerList inner4 = InnerList.of();
 
-        List<Item<?>> inner2 = Collections.singletonList(StringItem.of("baz"));
-
-        List<Item<?>> inner3 = new ArrayList<>();
-        inner3.add(StringItem.of("bat"));
-        inner3.add(StringItem.of("one"));
-
-        List<Item<?>> inner4 = Collections.emptyList();
-
-        return OuterList.of(InnerList.valueOf(inner1), InnerList.valueOf(inner2),
-                InnerList.valueOf(inner3), InnerList.valueOf(inner4));
+        return OuterList.of(inner1, inner2, inner3, inner4);
     }
 }

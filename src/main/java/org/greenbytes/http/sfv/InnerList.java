@@ -1,8 +1,10 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Represents an Inner List.
@@ -39,6 +41,18 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
      */
     public static InnerList of(List<Item<?>> value) {
         return new InnerList(value, Parameters.EMPTY);
+    }
+
+    /**
+     * Creates an {@link InnerList} instance representing the specified
+     * {@code Item} values.
+     *
+     * @param values
+     *            {@code Item} values.
+     * @return a {@link InnerList} representing {@code values}.
+     */
+    public static InnerList of(Item<?>... values) {
+        return of(Arrays.stream(values).collect(Collectors.toList()));
     }
 
     @Override
