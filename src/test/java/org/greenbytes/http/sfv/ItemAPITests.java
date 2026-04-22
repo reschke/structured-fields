@@ -348,4 +348,34 @@ public class ItemAPITests {
 
         return OuterList.of(inner1, inner2, inner3, inner4);
     }
+
+    @Test
+    public void testListConstructionWithInnerListsWithParams() {
+        // RFC 9651, Section 3.1.1
+        OuterList ol1 = createParametrizedInnerLists1();
+        assertEquals("(\"foo\";a=1;b=2);lvl=5, (\"bar\");lvl=1", ol1.serialize());
+    }
+
+    private static OuterList createParametrizedInnerLists1() {
+        List<Item<?>> inner1 = new ArrayList<>();
+        Map<String, Object> itemParam1 = new LinkedHashMap<>();
+        itemParam1.put("a", IntegerItem.valueOf(1));
+        itemParam1.put("b", IntegerItem.valueOf(2));
+        inner1.add(StringItem.of("foo").withParams(Parameters.valueOf(itemParam1)));
+        Map<String, Object> itemParamOuter1 = new LinkedHashMap<>();
+        itemParamOuter1.put("lvl", IntegerItem.valueOf(5));
+        InnerList linner1 = InnerList.of(inner1).withParams(Parameters.valueOf(itemParamOuter1));
+
+        List<Item<?>> inner2 = new ArrayList<>();
+        inner2.add(StringItem.of("bar"));
+        Map<String, Object> itemParamOuter2 = new LinkedHashMap<>();
+        itemParamOuter2.put("lvl", IntegerItem.valueOf(1));
+        InnerList linner2 = InnerList.of(inner2).withParams(Parameters.valueOf(itemParamOuter2));
+
+        List<ListElement<?>> combined = new ArrayList<>();
+        combined.add(linner1);
+        combined.add(linner2);
+
+        return OuterList.of(combined);
+    }
 }
