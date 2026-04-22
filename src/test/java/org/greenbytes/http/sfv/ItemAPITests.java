@@ -311,6 +311,14 @@ public class ItemAPITests {
     @Test
     public void testListConstructionWithInnerLists() {
         // RFC 9651, Section 3.1.1
+        OuterList ol1 = createListBareInnerLists1();
+        OuterList ol2 = createListBareInnerLists2();
+        assertEquals("(\"foo\" \"bar\"), (\"baz\"), (\"bat\" \"one\"), ()", ol1.serialize());
+        assertEquals("(\"foo\" \"bar\"), (\"baz\"), (\"bat\" \"one\"), ()", ol2.serialize());
+        assertEquals(ol1, ol2);
+    }
+
+    private static OuterList createListBareInnerLists1() {
         List<Item<?>> inner1 = new ArrayList<>();
         inner1.add(StringItem.of("foo"));
         inner1.add(StringItem.of("bar"));
@@ -329,7 +337,23 @@ public class ItemAPITests {
         combined.add(InnerList.valueOf(inner3));
         combined.add(InnerList.valueOf(inner4));
 
-        OuterList ol = OuterList.of(combined);
-        assertEquals("(\"foo\" \"bar\"), (\"baz\"), (\"bat\" \"one\"), ()", ol.serialize());
+        return OuterList.of(combined);
+    }
+
+    private static OuterList createListBareInnerLists2() {
+        List<Item<?>> inner1 = new ArrayList<>();
+        inner1.add(StringItem.of("foo"));
+        inner1.add(StringItem.of("bar"));
+
+        List<Item<?>> inner2 = Collections.singletonList(StringItem.of("baz"));
+
+        List<Item<?>> inner3 = new ArrayList<>();
+        inner3.add(StringItem.of("bat"));
+        inner3.add(StringItem.of("one"));
+
+        List<Item<?>> inner4 = Collections.emptyList();
+
+        return OuterList.of(InnerList.valueOf(inner1), InnerList.valueOf(inner2),
+                InnerList.valueOf(inner3), InnerList.valueOf(inner4));
     }
 }
