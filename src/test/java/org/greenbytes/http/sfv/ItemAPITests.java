@@ -394,10 +394,23 @@ public class ItemAPITests {
     @Test
     public void testDictConstruction() {
         // RFC 9651, Section 3.2
+        Dictionary dict1 = createDictionarySimple1();
+        Dictionary dict2 = createDictionarySimple2();
+        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict1.serialize());
+        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    private static Dictionary createDictionarySimple1() {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
         map.put("en", StringItem.of("Applepie"));
         map.put("da", ByteSequenceItem.valueOf("Æbletærte".getBytes(StandardCharsets.UTF_8)));
-        Dictionary dict = Dictionary.valueOf(map);
-        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict.serialize());
+        return Dictionary.of(map);
+    }
+
+    private static Dictionary  createDictionarySimple2() {
+        return Dictionary.valueOf(
+                "en", "Applepie",
+                "da", "Æbletærte".getBytes(StandardCharsets.UTF_8));
     }
 }

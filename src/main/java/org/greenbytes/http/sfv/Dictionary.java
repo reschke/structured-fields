@@ -1,7 +1,9 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -31,8 +33,32 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
      *            a {@code Map<String, Item>} value
      * @return a {@link Dictionary} representing {@code value}.
      */
-    public static Dictionary valueOf(Map<String, ListElement<?>> value) {
+    public static Dictionary of(Map<String, ListElement<?>> value) {
         return new Dictionary(value);
+    }
+
+    /**
+     * Creates a {@link Dictionary} instance representing the values
+     * (key/value pairs)
+     *
+     * @param obs
+     *            a sequence of key/value pairs
+     * @return a {@link Dictionary} representing the {@code values}.
+     */
+    public static Dictionary valueOf(Object... obs) {
+        if (obs.length % 2 != 0) {
+            throw new IllegalArgumentException("requires even number of arguments, got: " + obs.length);
+        } else {
+            Map<String, ListElement<?>> map = new LinkedHashMap<>();
+            for (int i = 0; i < obs.length; i += 2) {
+                String key = obs[i].toString();
+                if (map.containsKey(key)) {
+                    throw new IllegalArgumentException("key " + key + " already exists");
+                }
+                map.put(key, Utils.asBareItem(obs[i + 1]));
+            }
+            return of(map);
+        }
     }
 
     @Override
@@ -78,5 +104,20 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
             e.getValue().serializeToForDebug(sb, indentLevel + 2, formatter);
         }
         return sb;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Dictionary)) {
+            return false;
+        } else {
+            Dictionary that = (Dictionary) o;
+            return Objects.equals(value, that.value);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }

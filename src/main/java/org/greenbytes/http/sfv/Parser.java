@@ -631,7 +631,7 @@ public class Parser {
             }
         }
 
-        return Dictionary.valueOf(result);
+        return Dictionary.of(result);
     }
 
     /**
