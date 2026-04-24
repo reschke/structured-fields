@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -388,5 +389,15 @@ public class ItemAPITests {
         InnerList linner2 = InnerList.valueOf("bar").withParams(Parameters.valueOf("lvl", 1));
 
         return OuterList.of(linner1, linner2);
+    }
+
+    @Test
+    public void testDictConstruction() {
+        // RFC 9651, Section 3.2
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+        map.put("en", StringItem.of("Applepie"));
+        map.put("da", ByteSequenceItem.valueOf("Æbletærte".getBytes(StandardCharsets.UTF_8)));
+        Dictionary dict = Dictionary.valueOf(map);
+        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict.serialize());
     }
 }
