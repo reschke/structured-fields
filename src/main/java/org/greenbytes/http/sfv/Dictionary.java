@@ -55,7 +55,7 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
                 if (map.containsKey(key)) {
                     throw new IllegalArgumentException("key " + key + " already exists");
                 }
-                map.put(key, Utils.asBareItem(obs[i + 1]));
+                map.put(key, Utils.asItem(obs[i + 1]));
             }
             return of(map);
         }

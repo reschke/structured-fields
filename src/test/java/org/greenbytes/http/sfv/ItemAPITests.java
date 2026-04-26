@@ -392,7 +392,7 @@ public class ItemAPITests {
     }
 
     @Test
-    public void testDictConstruction() {
+    public void testDictConstructionSimple() {
         // RFC 9651, Section 3.2
         Dictionary dict1 = createDictionarySimple1();
         Dictionary dict2 = createDictionarySimple2();
@@ -412,5 +412,31 @@ public class ItemAPITests {
         return Dictionary.valueOf(
                 "en", "Applepie",
                 "da", "Æbletærte".getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Test
+    public void testDictConstruction() {
+        // RFC 9651, Section 3.2
+        // Example-Dict: a=?0, b, c; foo=bar
+        Dictionary dict1 = createDictionary1();
+        Dictionary dict2 = createDictionary2();
+        assertEquals("a=?0, b, c;foo=bar",  dict1.serialize());
+        assertEquals("a=?0, b, c;foo=bar",  dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    private static Dictionary createDictionary1() {
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+        map.put("a", BooleanItem.valueOf(false));
+        map.put("b", BooleanItem.valueOf(true));
+        map.put("c", BooleanItem.valueOf(true).withParams(Parameters.valueOf(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
+        return Dictionary.of(map);
+    }
+
+    private static Dictionary createDictionary2() {
+        return Dictionary.valueOf(
+                "a", false,
+                "b", true,
+                "c", BooleanItem.of(true).withParams(Parameters.valueOf("foo", TokenItem.valueOf("bar"))));
     }
 }

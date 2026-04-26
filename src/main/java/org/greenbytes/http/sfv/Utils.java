@@ -72,6 +72,19 @@ public class Utils {
                     throw new IllegalArgumentException("Can't map value " + o + " (" + o.getClass() + "): carries parameters.");
                 }
             }
+        }
+        return asItem(o);
+    }
+
+    /**
+     * Converts from native Java object
+     * <p>
+     * Samae as {@linkplain #asBareItem(Object)}, but allowing {@linkplain Parameters}
+     * @param o to convert
+     * @return convert to {@linkplain Item}
+     */
+    protected static Item<?> asItem(Object o) {
+        if (o instanceof Item) {
             return (Item<?>) o;
         } else if (o instanceof Integer) {
             return IntegerItem.valueOf(((Integer) o).longValue());
