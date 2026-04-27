@@ -1,5 +1,6 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -52,10 +53,15 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
             Map<String, ListElement<?>> map = new LinkedHashMap<>();
             for (int i = 0; i < obs.length; i += 2) {
                 String key = obs[i].toString();
+                Object value = obs[i + 1];
                 if (map.containsKey(key)) {
                     throw new IllegalArgumentException("key " + key + " already exists");
                 }
-                map.put(key, Utils.asItem(obs[i + 1]));
+                if (value instanceof ListElement) {
+                    map.put(key, (ListElement<?>) value);
+                } else {
+                    map.put(key, Utils.asItem(obs[i + 1]));
+                }
             }
             return of(map);
         }

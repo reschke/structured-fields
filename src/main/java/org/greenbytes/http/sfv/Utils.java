@@ -107,7 +107,7 @@ public class Utils {
         } else if (o instanceof Float) {
             return DecimalItem.valueOf(BigDecimal.valueOf((Float)o));
         } else {
-            throw new IllegalArgumentException("Can't map value " + o.toString() + " (" + o.getClass() + "): carries parameters.");
+            throw new IllegalArgumentException("Can't map value " + o.toString() + " (" + o.getClass() + ")");
         }
     }
 }

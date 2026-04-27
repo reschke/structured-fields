@@ -61,6 +61,18 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return valueOf(permille.longValue());
     }
 
+    /**
+     * Creates a {@link DecimalItem} instance representing the specified
+     * {@code Double} value, with potential rounding.
+     *
+     * @param value
+     *            a {@code Double} value.
+     * @return a {@link DecimalItem} representing {@code value}.
+     */
+    public static DecimalItem valueOf(double value) {
+        return valueOf(BigDecimal.valueOf(value));
+    }
+
     @Override
     public DecimalItem withParams(Parameters params) {
         return new DecimalItem(this.value, Objects.requireNonNull(params, "params must not be null"));
