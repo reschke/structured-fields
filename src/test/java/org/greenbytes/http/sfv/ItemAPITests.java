@@ -465,4 +465,39 @@ public class ItemAPITests {
         return Dictionary.valueOf("rating", 1.5f,
                 "feelings", InnerList.of(TokenItem.valueOf("joy"), TokenItem.valueOf("sadness")));
     }
+
+    @Test
+    public void testDictConstructionMix() {
+        // RFC 9651, Section 3.2
+        // Example-Dict: aa=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+
+        List<Item<?>> inner1 = new ArrayList<>();
+        inner1.add(IntegerItem.valueOf(1));
+        inner1.add(IntegerItem.valueOf(2));
+        InnerList linner1 = InnerList.of(inner1);
+
+        Map<String, Object> p3 = new LinkedHashMap<>();
+        p3.put("aa", TokenItem.valueOf("bb"));
+        Parameters params3 = Parameters.of(p3);
+
+        List<Item<?>> inner4 = new ArrayList<>();
+        inner4.add(IntegerItem.valueOf(5));
+        inner4.add(IntegerItem.valueOf(6));
+        InnerList linner4 = InnerList.of(inner4);
+
+        Map<String, Object> p4 = new LinkedHashMap<>();
+        p4.put("valid", BooleanItem.valueOf(true));
+        Parameters params4 = Parameters.of(p4);
+
+        map.put("aa", linner1);
+        map.put("b", IntegerItem.valueOf(3));
+        map.put("c", IntegerItem.valueOf(4).withParams(params3));
+        map.put("d", linner4.withParams(params4));
+
+        Dictionary dict1 = Dictionary.of(map);
+        assertEquals("aa=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict1.serialize());
+//        assertEquals("a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict2.serialize());
+//        assertEquals(dict1, dict2);
+    }
 }
