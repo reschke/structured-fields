@@ -469,7 +469,15 @@ public class ItemAPITests {
     @Test
     public void testDictConstructionMix() {
         // RFC 9651, Section 3.2
-        // Example-Dict: aa=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
+        // Example-Dict: a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
+        Dictionary dict1 = createDictionaryMix1();
+        Dictionary dict2 = createDictionaryMix2();
+        assertEquals("a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict1.serialize());
+        assertEquals("a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    private static Dictionary createDictionaryMix1() {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
 
         List<Item<?>> inner1 = new ArrayList<>();
@@ -479,7 +487,7 @@ public class ItemAPITests {
 
         Map<String, Object> p3 = new LinkedHashMap<>();
         p3.put("aa", TokenItem.valueOf("bb"));
-        Parameters params3 = Parameters.of(p3);
+        Parameters params3 = Parameters.valueOf(p3);
 
         List<Item<?>> inner4 = new ArrayList<>();
         inner4.add(IntegerItem.valueOf(5));
@@ -490,14 +498,20 @@ public class ItemAPITests {
         p4.put("valid", BooleanItem.valueOf(true));
         Parameters params4 = Parameters.of(p4);
 
-        map.put("aa", linner1);
+        map.put("a", linner1);
         map.put("b", IntegerItem.valueOf(3));
         map.put("c", IntegerItem.valueOf(4).withParams(params3));
         map.put("d", linner4.withParams(params4));
 
-        Dictionary dict1 = Dictionary.of(map);
-        assertEquals("aa=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict1.serialize());
-//        assertEquals("a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid",  dict2.serialize());
-//        assertEquals(dict1, dict2);
+        return Dictionary.of(map);
+    }
+
+    private static Dictionary createDictionaryMix2() {
+        return Dictionary.valueOf("a", InnerList.valueOf(1, 2),
+                "b", 3,
+                "c", IntegerItem.valueOf(4).
+                        withParams(Parameters.valueOf("aa", TokenItem.valueOf("bb"))),
+                "d", InnerList.valueOf(5, 6).
+                        withParams(Parameters.valueOf("valid", true)));
     }
 }
