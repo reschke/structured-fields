@@ -175,12 +175,10 @@ public class RFC9651ExamplesTest {
         TokenItem l1 = TokenItem.of("abc").
                 withParamValuesOf("a", 1, "b", 2, "cde_456", true);
 
-        List<Item<?>> lc2 = new ArrayList<>();
-        TokenItem t21 = TokenItem.of("ghi").withParamValuesOf("jk", 4);
-        lc2.add(t21);
-        lc2.add(TokenItem.of("l"));
-
-        InnerList l2 = InnerList.valueOf(lc2).withParamValuesOf("q", "9", "r", TokenItem.of("w"));
+        InnerList l2 = InnerList.valueOf(
+                TokenItem.of("ghi").withParamValuesOf("jk", 4),
+                TokenItem.of("l")).
+                    withParamValuesOf("q", "9", "r", TokenItem.of("w"));
 
         List<ListElement<?>> value = new LinkedList<>();
         value.add(l1);

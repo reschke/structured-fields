@@ -63,7 +63,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
      * @return a {@link InnerList} representing {@code values}.
      */
     public static InnerList valueOf(Object... values) {
-        return of(Arrays.stream(values).map(v -> Utils.asBareItem(v))
+        return of(Arrays.stream(values).map(v -> Utils.asItem(v))
                 .collect(Collectors.toList()));
     }
 
