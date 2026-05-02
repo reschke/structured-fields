@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -127,5 +128,39 @@ public class RFC9651ExamplesTest {
         InnerList linner2 = InnerList.valueOf("bar").withParams(Parameters.valueOf("lvl", 1));
 
         return OuterList.of(linner1, linner2);
+    }
+
+    // RFC 9651, Section 3.1.2
+    // Example-List: abc;a=1;b=2; cde_456, (ghi;jk=4 l);q="9";r=w
+
+    @Test
+    public void testParameters() {
+        Map<String, Object> map1 = new LinkedHashMap<>();
+        map1.put("a", IntegerItem.valueOf(1));
+        map1.put("b", IntegerItem.valueOf(2));
+        map1.put("cde_456", BooleanItem.valueOf(true));
+        TokenItem l1 = TokenItem.valueOf("abc").
+                withParams(Parameters.valueOf(map1));
+
+        List<Item<?>> lc2 = new ArrayList<>();
+        TokenItem t21 = TokenItem.valueOf("ghi").
+                withParams(Parameters.valueOf(
+                    Collections.singletonMap("jk", IntegerItem.valueOf(4))));
+
+        lc2.add(t21);
+        lc2.add(TokenItem.valueOf("l"));
+
+        Map<String, Object> map2 = new LinkedHashMap<>();
+        map2.put("q", StringItem.valueOf("9"));
+        map2.put("r", TokenItem.valueOf("w"));
+        Parameters p2 = Parameters.valueOf(map2);
+        InnerList l2 = InnerList.of(lc2).withParams(p2);
+
+        List<ListElement<?>> value = new LinkedList<>();
+        value.add(l1);
+        value.add(l2);
+
+        OuterList ol1 = OuterList.valueOf(value);
+        assertEquals("abc;a=1;b=2;cde_456, (ghi;jk=4 l);q=\"9\";r=w", ol1.serialize());
     }
 }
