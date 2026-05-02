@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -238,5 +239,34 @@ public class RFC9651ExamplesTest {
                 "a", false,
                 "b", true,
                 "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
+    }
+
+    // RFC 9651, Section 3.2
+    // Example-Dict: rating=1.5, feelings=(joy sadness)
+
+    @Test
+    public void testDictConstructionWithInnerList() {
+        Dictionary dict1 = createDictionaryWithInnerList1();
+        Dictionary dict2 = createDictionaryWithInnerList2();
+        assertEquals("rating=1.5, feelings=(joy sadness)",  dict1.serialize());
+        assertEquals("rating=1.5, feelings=(joy sadness)",  dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    // chatty API
+    private static Dictionary createDictionaryWithInnerList1() {
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+        map.put("rating", DecimalItem.valueOf(BigDecimal.valueOf(1.5f)));
+        List<Item<?>> li = new ArrayList<>();
+        li.add(TokenItem.valueOf("joy"));
+        li.add(TokenItem.valueOf("sadness"));
+        map.put("feelings", InnerList.of(li));
+        return Dictionary.of(map);
+    }
+
+    // concise API
+    private static Dictionary createDictionaryWithInnerList2() {
+        return Dictionary.valueOf("rating", 1.5f,
+                "feelings", InnerList.of(TokenItem.valueOf("joy"), TokenItem.valueOf("sadness")));
     }
 }
