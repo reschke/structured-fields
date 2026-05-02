@@ -77,9 +77,9 @@ public class Utils {
     }
 
     /**
-     * Converts from native Java object
+     * Converts from [{@linkplain Item} or native Java object
      * <p>
-     * Samae as {@linkplain #asBareItem(Object)}, but allowing {@linkplain Parameters}
+     * Same as {@linkplain #asBareItem(Object)}, but allowing {@linkplain Parameters}
      * @param o to convert
      * @return convert to {@linkplain Item}
      */
@@ -108,6 +108,19 @@ public class Utils {
             return DecimalItem.valueOf(BigDecimal.valueOf((Float)o));
         } else {
             throw new IllegalArgumentException("Can't map value " + o.toString() + " (" + o.getClass() + ")");
+        }
+    }
+
+    /**
+     * Same as {@linkplain #asItem(Object)}, but allowing also allowing {@linkplain InnerList}
+     * @param o to convert
+     * @return convert to {@linkplain ListElement}
+     */
+    protected static ListElement<?> asListElement(Object o) {
+        if (o instanceof InnerList) {
+            return (InnerList) o;
+        } else {
+            return asItem(o);
         }
     }
 }

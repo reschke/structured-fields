@@ -180,10 +180,6 @@ public class RFC9651ExamplesTest {
                 TokenItem.of("l")).
                     withParamValuesOf("q", "9", "r", TokenItem.of("w"));
 
-        List<ListElement<?>> value = new LinkedList<>();
-        value.add(l1);
-        value.add(l2);
-
-        return OuterList.of(value);
+        return OuterList.valueOf(l1, l2);
     }
 }
