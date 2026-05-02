@@ -6,9 +6,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -284,56 +282,6 @@ public class ItemAPITests {
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }
-    }
-
-
-    @Test
-    public void testDictConstructionSimple() {
-        // RFC 9651, Section 3.2
-        Dictionary dict1 = createDictionarySimple1();
-        Dictionary dict2 = createDictionarySimple2();
-        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict1.serialize());
-        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict2.serialize());
-        assertEquals(dict1, dict2);
-    }
-
-    private static Dictionary createDictionarySimple1() {
-        Map<String, ListElement<?>> map = new LinkedHashMap<>();
-        map.put("en", StringItem.of("Applepie"));
-        map.put("da", ByteSequenceItem.valueOf("Æbletærte".getBytes(StandardCharsets.UTF_8)));
-        return Dictionary.of(map);
-    }
-
-    private static Dictionary  createDictionarySimple2() {
-        return Dictionary.valueOf(
-                "en", "Applepie",
-                "da", "Æbletærte".getBytes(StandardCharsets.UTF_8));
-    }
-
-    @Test
-    public void testDictConstruction() {
-        // RFC 9651, Section 3.2
-        // Example-Dict: a=?0, b, c; foo=bar
-        Dictionary dict1 = createDictionary1();
-        Dictionary dict2 = createDictionary2();
-        assertEquals("a=?0, b, c;foo=bar",  dict1.serialize());
-        assertEquals("a=?0, b, c;foo=bar",  dict2.serialize());
-        assertEquals(dict1, dict2);
-    }
-
-    private static Dictionary createDictionary1() {
-        Map<String, ListElement<?>> map = new LinkedHashMap<>();
-        map.put("a", BooleanItem.valueOf(false));
-        map.put("b", BooleanItem.valueOf(true));
-        map.put("c", BooleanItem.valueOf(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
-        return Dictionary.of(map);
-    }
-
-    private static Dictionary createDictionary2() {
-        return Dictionary.valueOf(
-                "a", false,
-                "b", true,
-                "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
     }
 
     @Test

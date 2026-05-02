@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -181,5 +182,61 @@ public class RFC9651ExamplesTest {
                     withParamValuesOf("q", "9", "r", TokenItem.of("w"));
 
         return OuterList.valueOf(l1, l2);
+    }
+
+    // RFC 9651, Section 3.2
+    // Example-Dict: en="Applepie", da=:w4ZibGV0w6ZydGU=:
+
+    @Test
+    public void testDictConstructionSimple() {
+        Dictionary dict1 = createDictionarySimple1();
+        Dictionary dict2 = createDictionarySimple2();
+        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict1.serialize());
+        assertEquals("en=\"Applepie\", da=:w4ZibGV0w6ZydGU=:", dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    // chatty API
+    private static Dictionary createDictionarySimple1() {
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+        map.put("en", StringItem.of("Applepie"));
+        map.put("da", ByteSequenceItem.valueOf("Æbletærte".getBytes(StandardCharsets.UTF_8)));
+        return Dictionary.of(map);
+    }
+
+    // concise API
+    private static Dictionary  createDictionarySimple2() {
+        return Dictionary.valueOf(
+                "en", "Applepie",
+                "da", "Æbletærte".getBytes(StandardCharsets.UTF_8));
+    }
+
+    // RFC 9651, Section 3.2
+    // Example-Dict: a=?0, b, c; foo=bar
+
+    @Test
+    public void testDictConstruction() {
+        Dictionary dict1 = createDictionary1();
+        Dictionary dict2 = createDictionary2();
+        assertEquals("a=?0, b, c;foo=bar",  dict1.serialize());
+        assertEquals("a=?0, b, c;foo=bar",  dict2.serialize());
+        assertEquals(dict1, dict2);
+    }
+
+    // chatty API
+    private static Dictionary createDictionary1() {
+        Map<String, ListElement<?>> map = new LinkedHashMap<>();
+        map.put("a", BooleanItem.valueOf(false));
+        map.put("b", BooleanItem.valueOf(true));
+        map.put("c", BooleanItem.valueOf(true).withParams(Parameters.of(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
+        return Dictionary.of(map);
+    }
+
+    // concise API
+    private static Dictionary createDictionary2() {
+        return Dictionary.valueOf(
+                "a", false,
+                "b", true,
+                "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
     }
 }
