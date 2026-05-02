@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class RRFC9651ExamplesTest {
+public class RFC9651ExamplesTest {
 
     // RFC 9651, Section 3.1
     // Example-List: sugar, tea, rum
