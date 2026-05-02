@@ -134,7 +134,16 @@ public class RFC9651ExamplesTest {
     // Example-List: abc;a=1;b=2; cde_456, (ghi;jk=4 l);q="9";r=w
 
     @Test
-    public void testParameters() {
+    public void testComplexListOfParams() {
+        OuterList ol1 = createComplexListOfParams1();
+        OuterList ol2 = createComplexListOfParams2();
+        assertEquals("abc;a=1;b=2;cde_456, (ghi;jk=4 l);q=\"9\";r=w", ol1.serialize());
+        assertEquals("abc;a=1;b=2;cde_456, (ghi;jk=4 l);q=\"9\";r=w", ol2.serialize());
+        assertEquals(ol1, ol2);
+    }
+
+    // chatty API
+    private static OuterList createComplexListOfParams1() {
         Map<String, Object> map1 = new LinkedHashMap<>();
         map1.put("a", IntegerItem.valueOf(1));
         map1.put("b", IntegerItem.valueOf(2));
@@ -145,7 +154,7 @@ public class RFC9651ExamplesTest {
         List<Item<?>> lc2 = new ArrayList<>();
         TokenItem t21 = TokenItem.valueOf("ghi").
                 withParams(Parameters.valueOf(
-                    Collections.singletonMap("jk", IntegerItem.valueOf(4))));
+                        Collections.singletonMap("jk", IntegerItem.valueOf(4))));
 
         lc2.add(t21);
         lc2.add(TokenItem.valueOf("l"));
@@ -160,7 +169,36 @@ public class RFC9651ExamplesTest {
         value.add(l1);
         value.add(l2);
 
-        OuterList ol1 = OuterList.valueOf(value);
-        assertEquals("abc;a=1;b=2;cde_456, (ghi;jk=4 l);q=\"9\";r=w", ol1.serialize());
+        return OuterList.valueOf(value);
+    }
+
+    // concise API
+    private static OuterList createComplexListOfParams2() {
+        Map<String, Object> map1 = new LinkedHashMap<>();
+        map1.put("a", IntegerItem.valueOf(1));
+        map1.put("b", IntegerItem.valueOf(2));
+        map1.put("cde_456", BooleanItem.valueOf(true));
+        TokenItem l1 = TokenItem.valueOf("abc").
+                withParams(Parameters.valueOf(map1));
+
+        List<Item<?>> lc2 = new ArrayList<>();
+        TokenItem t21 = TokenItem.valueOf("ghi").
+                withParams(Parameters.valueOf(
+                        Collections.singletonMap("jk", IntegerItem.valueOf(4))));
+
+        lc2.add(t21);
+        lc2.add(TokenItem.valueOf("l"));
+
+        Map<String, Object> map2 = new LinkedHashMap<>();
+        map2.put("q", StringItem.valueOf("9"));
+        map2.put("r", TokenItem.valueOf("w"));
+        Parameters p2 = Parameters.valueOf(map2);
+        InnerList l2 = InnerList.of(lc2).withParams(p2);
+
+        List<ListElement<?>> value = new LinkedList<>();
+        value.add(l1);
+        value.add(l2);
+
+        return OuterList.valueOf(value);
     }
 }
