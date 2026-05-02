@@ -77,12 +77,10 @@ public class RFC9651ExamplesTest {
 
     // concise API
     private static OuterList createListBareInnerLists2() {
-        InnerList inner1 = InnerList.valueOf("foo", "bar");
-        InnerList inner2 = InnerList.valueOf("baz");
-        InnerList inner3 = InnerList.valueOf("bat", "one");
-        InnerList inner4 = InnerList.of();
-
-        return OuterList.of(inner1, inner2, inner3, inner4);
+        return OuterList.of(InnerList.valueOf("foo", "bar"),
+                InnerList.valueOf("baz"),
+                InnerList.valueOf("bat", "one"),
+                InnerList.of());
     }
 
     // RFC 9651, Section 3.1.1
@@ -174,31 +172,20 @@ public class RFC9651ExamplesTest {
 
     // concise API
     private static OuterList createComplexListOfParams2() {
-        Map<String, Object> map1 = new LinkedHashMap<>();
-        map1.put("a", IntegerItem.valueOf(1));
-        map1.put("b", IntegerItem.valueOf(2));
-        map1.put("cde_456", BooleanItem.valueOf(true));
-        TokenItem l1 = TokenItem.valueOf("abc").
-                withParams(Parameters.valueOf(map1));
+        TokenItem l1 = TokenItem.of("abc").
+                withParamValuesOf("a", 1, "b", 2, "cde_456", true);
 
         List<Item<?>> lc2 = new ArrayList<>();
-        TokenItem t21 = TokenItem.valueOf("ghi").
-                withParams(Parameters.valueOf(
-                        Collections.singletonMap("jk", IntegerItem.valueOf(4))));
-
+        TokenItem t21 = TokenItem.of("ghi").withParamValuesOf("jk", 4);
         lc2.add(t21);
-        lc2.add(TokenItem.valueOf("l"));
+        lc2.add(TokenItem.of("l"));
 
-        Map<String, Object> map2 = new LinkedHashMap<>();
-        map2.put("q", StringItem.valueOf("9"));
-        map2.put("r", TokenItem.valueOf("w"));
-        Parameters p2 = Parameters.valueOf(map2);
-        InnerList l2 = InnerList.of(lc2).withParams(p2);
+        InnerList l2 = InnerList.valueOf(lc2).withParamValuesOf("q", "9", "r", TokenItem.of("w"));
 
         List<ListElement<?>> value = new LinkedList<>();
         value.add(l1);
         value.add(l2);
 
-        return OuterList.valueOf(value);
+        return OuterList.of(value);
     }
 }

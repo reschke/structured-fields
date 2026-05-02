@@ -38,6 +38,11 @@ public class DisplayStringItem implements Item<String> {
     }
 
     @Override
+    public DisplayStringItem withParamValuesOf(Object... obs) {
+        return new DisplayStringItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public Parameters getParams() {
         return params;
     }

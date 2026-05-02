@@ -20,6 +20,8 @@ public interface Parameterizable<T> extends Type<T> {
      */
     Parameterizable<T> withParams(Parameters params);
 
+    Parameterizable<T> withParamValuesOf(Object... obs);
+
     /**
      * Get the {@link Parameters} of this {@link Item}.
      * 

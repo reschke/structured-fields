@@ -53,6 +53,11 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     @Override
+    public BooleanItem withParamValuesOf(Object... obs) {
+        return new BooleanItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public StringBuilder serializeTo(StringBuilder sb) {
         sb.append(value ? "?1" : "?0");
         params.serializeTo(sb);

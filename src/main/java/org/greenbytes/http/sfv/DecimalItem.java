@@ -79,6 +79,11 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     }
 
     @Override
+    public DecimalItem withParamValuesOf(Object... obs) {
+        return new DecimalItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public Parameters getParams() {
         return params;
     }

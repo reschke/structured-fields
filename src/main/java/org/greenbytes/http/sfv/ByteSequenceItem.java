@@ -42,6 +42,11 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     @Override
+    public ByteSequenceItem withParamValuesOf(Object... obs) {
+        return new ByteSequenceItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public Parameters getParams() {
         return params;
     }

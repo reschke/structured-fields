@@ -325,7 +325,7 @@ public class ItemAPITests {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
         map.put("a", BooleanItem.valueOf(false));
         map.put("b", BooleanItem.valueOf(true));
-        map.put("c", BooleanItem.valueOf(true).withParams(Parameters.valueOf(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
+        map.put("c", BooleanItem.valueOf(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
         return Dictionary.of(map);
     }
 
@@ -333,7 +333,7 @@ public class ItemAPITests {
         return Dictionary.valueOf(
                 "a", false,
                 "b", true,
-                "c", BooleanItem.of(true).withParams(Parameters.valueOf("foo", TokenItem.valueOf("bar"))));
+                "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
     }
 
     @Test
@@ -377,8 +377,8 @@ public class ItemAPITests {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
 
         List<Item<?>> inner1 = new ArrayList<>();
-        inner1.add(IntegerItem.valueOf(1));
-        inner1.add(IntegerItem.valueOf(2));
+        inner1.add(IntegerItem.of(1));
+        inner1.add(IntegerItem.of(2));
         InnerList linner1 = InnerList.of(inner1);
 
         Map<String, Object> p3 = new LinkedHashMap<>();
@@ -406,8 +406,8 @@ public class ItemAPITests {
         return Dictionary.valueOf("a", InnerList.valueOf(1, 2),
                 "b", 3,
                 "c", IntegerItem.valueOf(4).
-                        withParams(Parameters.valueOf("aa", TokenItem.valueOf("bb"))),
+                        withParamValuesOf("aa", TokenItem.valueOf("bb")),
                 "d", InnerList.valueOf(5, 6).
-                        withParams(Parameters.valueOf("valid", true)));
+                        withParamValuesOf("valid", true));
     }
 }

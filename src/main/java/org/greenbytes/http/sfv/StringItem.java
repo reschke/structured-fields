@@ -45,6 +45,11 @@ public class StringItem implements Item<String> {
     }
 
     @Override
+    public StringItem withParamValuesOf(Object... obs) {
+        return new StringItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public Parameters getParams() {
         return params;
     }

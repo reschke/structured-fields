@@ -20,20 +20,33 @@ public class TokenItem implements Item<String> {
     }
 
     /**
+     * @deprecated use {@link #of(String)} instead.
+     */
+    @Deprecated
+    public static TokenItem valueOf(String value) {
+        return new TokenItem(value, Parameters.EMPTY);
+    }
+
+    /**
      * Creates a {@link TokenItem} instance representing the specified
      * {@code String} value.
-     * 
+     *
      * @param value
      *            a {@code String} value.
      * @return a {@link TokenItem} representing {@code value}.
      */
-    public static TokenItem valueOf(String value) {
+    public static TokenItem of(String value) {
         return new TokenItem(value, Parameters.EMPTY);
     }
 
     @Override
     public TokenItem withParams(Parameters params) {
         return new TokenItem(this.value, Objects.requireNonNull(params, "params must not be null"));
+    }
+
+    @Override
+    public TokenItem withParamValuesOf(Object... obs) {
+        return new TokenItem(this.value, Parameters.valueOf(obs));
     }
 
     @Override

@@ -26,20 +26,32 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     /**
+     * @deprecated use {@link #of(long)} instead.
+     */
+    public static IntegerItem valueOf(long value) {
+        return new IntegerItem(value, Parameters.EMPTY);
+    }
+
+    /**
      * Creates an {@link IntegerItem} instance representing the specified
      * {@code long} value.
-     * 
+     *
      * @param value
      *            a {@code long} value.
      * @return a {@link IntegerItem} representing {@code value}.
      */
-    public static IntegerItem valueOf(long value) {
+    public static IntegerItem of(long value) {
         return new IntegerItem(value, Parameters.EMPTY);
     }
 
     @Override
     public IntegerItem withParams(Parameters params) {
         return new IntegerItem(this.value, Objects.requireNonNull(params, "params must not be null"));
+    }
+
+    @Override
+    public IntegerItem withParamValuesOf(Object... obs) {
+        return new IntegerItem(this.value, Parameters.valueOf(obs));
     }
 
     @Override

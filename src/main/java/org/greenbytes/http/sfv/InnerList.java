@@ -72,6 +72,11 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
+    @Override
+    public InnerList withParamValuesOf(Object... obs) {
+        return new InnerList(this.value, Parameters.valueOf(obs));
+    }
+
     private StringBuilder serializeToNoParams(StringBuilder sb) {
         String separator = "";
 

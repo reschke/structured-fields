@@ -43,6 +43,11 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
+    public DateItem withParamValuesOf(Object... obs) {
+        return new DateItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
     public Parameters getParams() {
         return params;
     }
