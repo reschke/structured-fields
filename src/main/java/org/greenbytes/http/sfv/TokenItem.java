@@ -20,14 +20,6 @@ public class TokenItem implements Item<String> {
     }
 
     /**
-     * @deprecated use {@link #of(String)} instead.
-     */
-    @Deprecated
-    public static TokenItem valueOf(String value) {
-        return new TokenItem(value, Parameters.EMPTY);
-    }
-
-    /**
      * Creates a {@link TokenItem} instance representing the specified
      * {@code String} value.
      *

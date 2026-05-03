@@ -136,7 +136,7 @@ public class ItemAPITests {
         String[] tests = new String[] { "*", "x", "*-/", "foo.bar-qux" };
 
         for (String s : tests) {
-            TokenItem item = TokenItem.valueOf(s);
+            TokenItem item = TokenItem.of(s);
             assertEquals(s, item.get());
             // TODO: figure out how to check the serialization without copying
             // the actual impl code
@@ -150,7 +150,7 @@ public class ItemAPITests {
 
         for (String s : tests) {
             try {
-                TokenItem item = TokenItem.valueOf(s);
+                TokenItem item = TokenItem.of(s);
                 fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }

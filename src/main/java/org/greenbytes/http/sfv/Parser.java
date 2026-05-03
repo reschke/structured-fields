@@ -362,7 +362,7 @@ public class Parser {
             }
         }
 
-        return TokenItem.valueOf(outputString.toString());
+        return TokenItem.of(outputString.toString());
     }
 
     private TokenItem internalParseToken() {

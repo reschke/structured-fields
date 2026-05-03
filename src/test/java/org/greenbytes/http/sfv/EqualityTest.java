@@ -50,18 +50,18 @@ public class EqualityTest {
 
     @Test
     public void testTokenItemEquality() {
-        TokenItem t1 = TokenItem.valueOf("a");
-        TokenItem t = TokenItem.valueOf("a");
+        TokenItem t1 = TokenItem.of("a");
+        TokenItem t = TokenItem.of("a");
         assertNotSame(t1, t);
         assertEquals(t1, t);
-        TokenItem t3 = TokenItem.valueOf("b");
+        TokenItem t3 = TokenItem.of("b");
         assertNotEquals(t1, t3);
 
-        TokenItem t4 = TokenItem.valueOf("a").withParams(getParameters("a", "b"));
+        TokenItem t4 = TokenItem.of("a").withParams(getParameters("a", "b"));
         assertNotSame(t1, t4);
         assertNotEquals(t1, t4);
 
-        TokenItem t5 = TokenItem.valueOf("a").withParams(getParameters("c", "d"));
+        TokenItem t5 = TokenItem.of("a").withParams(getParameters("c", "d"));
         assertNotSame(t4, t5);
         assertNotEquals(t4, t5);
     }

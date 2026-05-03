@@ -148,20 +148,20 @@ public class RFC9651ExamplesTest {
         map1.put("a", IntegerItem.valueOf(1));
         map1.put("b", IntegerItem.valueOf(2));
         map1.put("cde_456", BooleanItem.of(true));
-        TokenItem l1 = TokenItem.valueOf("abc").
+        TokenItem l1 = TokenItem.of("abc").
                 withParams(Parameters.of(map1));
 
         List<Item<?>> lc2 = new ArrayList<>();
-        TokenItem t21 = TokenItem.valueOf("ghi").
+        TokenItem t21 = TokenItem.of("ghi").
                 withParams(Parameters.of(
                         Collections.singletonMap("jk", IntegerItem.valueOf(4))));
 
         lc2.add(t21);
-        lc2.add(TokenItem.valueOf("l"));
+        lc2.add(TokenItem.of("l"));
 
         Map<String, Object> map2 = new LinkedHashMap<>();
         map2.put("q", StringItem.of("9"));
-        map2.put("r", TokenItem.valueOf("w"));
+        map2.put("r", TokenItem.of("w"));
         Parameters p2 = Parameters.of(map2);
         InnerList l2 = InnerList.of(lc2).withParams(p2);
 
@@ -229,7 +229,7 @@ public class RFC9651ExamplesTest {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
         map.put("a", BooleanItem.of(false));
         map.put("b", BooleanItem.of(true));
-        map.put("c", BooleanItem.of(true).withParams(Parameters.of(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
+        map.put("c", BooleanItem.of(true).withParams(Parameters.of(Collections.singletonMap("foo", TokenItem.of("bar")))));
         return Dictionary.of(map);
     }
 
@@ -238,7 +238,7 @@ public class RFC9651ExamplesTest {
         return Dictionary.valueOf(
                 "a", false,
                 "b", true,
-                "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.valueOf("bar")));
+                "c", BooleanItem.of(true).withParamValuesOf("foo", TokenItem.of("bar")));
     }
 
     // RFC 9651, Section 3.2
@@ -258,8 +258,8 @@ public class RFC9651ExamplesTest {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
         map.put("rating", DecimalItem.valueOf(BigDecimal.valueOf(1.5f)));
         List<Item<?>> li = new ArrayList<>();
-        li.add(TokenItem.valueOf("joy"));
-        li.add(TokenItem.valueOf("sadness"));
+        li.add(TokenItem.of("joy"));
+        li.add(TokenItem.of("sadness"));
         map.put("feelings", InnerList.of(li));
         return Dictionary.of(map);
     }
@@ -267,7 +267,7 @@ public class RFC9651ExamplesTest {
     // concise API
     private static Dictionary createDictionaryWithInnerList2() {
         return Dictionary.valueOf("rating", 1.5f,
-                "feelings", InnerList.of(TokenItem.valueOf("joy"), TokenItem.valueOf("sadness")));
+                "feelings", InnerList.of(TokenItem.of("joy"), TokenItem.of("sadness")));
     }
 
     // RFC 9651, Section 3.2
@@ -292,7 +292,7 @@ public class RFC9651ExamplesTest {
         InnerList linner1 = InnerList.of(inner1);
 
         Map<String, Object> p3 = new LinkedHashMap<>();
-        p3.put("aa", TokenItem.valueOf("bb"));
+        p3.put("aa", TokenItem.of("bb"));
         Parameters params3 = Parameters.of(p3);
 
         List<Item<?>> inner4 = new ArrayList<>();
@@ -317,7 +317,7 @@ public class RFC9651ExamplesTest {
         return Dictionary.valueOf("a", InnerList.valueOf(1, 2),
                 "b", 3,
                 "c", IntegerItem.valueOf(4).
-                        withParamValuesOf("aa", TokenItem.valueOf("bb")),
+                        withParamValuesOf("aa", TokenItem.of("bb")),
                 "d", InnerList.valueOf(5, 6).
                         withParamValuesOf("valid", true));
     }
