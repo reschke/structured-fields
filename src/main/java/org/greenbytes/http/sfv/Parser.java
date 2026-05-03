@@ -137,7 +137,7 @@ public class Parser {
         return DateItem.valueOf(sign * l);
     }
 
-    private NumberItem<?> internalParseBareIntegerOrDecimal() {
+    private NumberItem internalParseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
