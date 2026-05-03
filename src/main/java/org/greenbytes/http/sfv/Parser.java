@@ -240,7 +240,7 @@ public class Parser {
                 outputString.append(c);
             } else {
                 if (c == '"') {
-                    return StringItem.valueOf(outputString.toString());
+                    return StringItem.of(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw complaint("Invalid character in String at position " + position());
                 } else {

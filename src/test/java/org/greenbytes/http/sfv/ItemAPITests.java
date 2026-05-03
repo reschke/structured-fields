@@ -109,7 +109,7 @@ public class ItemAPITests {
         String[] tests = new String[] { "", "'", "\"", "\\" };
 
         for (String s : tests) {
-            StringItem item = StringItem.valueOf(s);
+            StringItem item = StringItem.of(s);
             assertEquals(s, item.get());
             // TODO: figure out how to check the serialization without copying
             // the actual impl code
@@ -123,7 +123,7 @@ public class ItemAPITests {
 
         for (String s : tests) {
             try {
-                StringItem item = StringItem.valueOf(s);
+                StringItem item = StringItem.of(s);
                 fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }

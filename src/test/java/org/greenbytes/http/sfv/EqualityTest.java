@@ -29,21 +29,21 @@ public class EqualityTest {
 
     @Test
     public void testStringItemEquality() {
-        StringItem s1 = StringItem.valueOf("a");
-        StringItem s2 = StringItem.valueOf("a");
+        StringItem s1 = StringItem.of("a");
+        StringItem s2 = StringItem.of("a");
         assertNotSame(s1, s2);
         assertEquals(s1, s2);
-        StringItem s3 = StringItem.valueOf("b");
+        StringItem s3 = StringItem.of("b");
         assertNotEquals(s1, s3);
 
-        StringItem s4 = StringItem.valueOf("a").withParams(getParameters("a", "b"));
+        StringItem s4 = StringItem.of("a").withParams(getParameters("a", "b"));
         assertNotSame(s1, s4);
         assertNotEquals(s1, s4);
 
         HashMap<String, Object> m5 = new LinkedHashMap<>();
         m5.put("c", "d");
         Parameters p5 = Parameters.valueOf(m5);
-        StringItem s5 = StringItem.valueOf("a").withParams(p5);
+        StringItem s5 = StringItem.of("a").withParams(p5);
         assertNotSame(s4, s5);
         assertNotEquals(s4, s5);
     }

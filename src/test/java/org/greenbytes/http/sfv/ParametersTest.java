@@ -68,7 +68,7 @@ public class ParametersTest {
         m1.put("a", BooleanItem.of(true));
         Map m2 = new HashMap();
         m2.put("b", IntegerItem.valueOf(12));
-        m2.put("c", StringItem.valueOf("hello"));
+        m2.put("c", StringItem.of("hello"));
 
         Parameters p1 = Parameters.valueOf(m1);
         Parameters p2 = Parameters.valueOf(m1);

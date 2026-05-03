@@ -20,14 +20,6 @@ public class StringItem implements Item<String> {
     }
 
     /**
-     * @deprecated use {@link #of(String)} instead.
-     */
-    @Deprecated
-    public static StringItem valueOf(String value) {
-        return new StringItem(value, Parameters.EMPTY);
-    }
-
-    /**
     * Creates a {@link StringItem} instance representing the specified
     * {@code String} value.
     *

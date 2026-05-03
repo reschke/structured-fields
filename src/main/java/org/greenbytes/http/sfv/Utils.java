@@ -92,7 +92,7 @@ public class Utils {
             return IntegerItem.valueOf((Long) o);
         } else if (o instanceof String) {
             try {
-                return StringItem.valueOf((String) o);
+                return StringItem.of((String) o);
             } catch (IllegalArgumentException ia) {
                 return DisplayStringItem.valueOf((String) o);
             }

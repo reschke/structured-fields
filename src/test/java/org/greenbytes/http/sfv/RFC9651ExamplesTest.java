@@ -30,9 +30,9 @@ public class RFC9651ExamplesTest {
     // chatty API
     private static OuterList createListBareItems1() {
         List<ListElement<?>> list = new ArrayList<>();
-        list.add(StringItem.valueOf("sugar"));
-        list.add(StringItem.valueOf("tee"));
-        list.add(StringItem.valueOf("rum"));
+        list.add(StringItem.of("sugar"));
+        list.add(StringItem.of("tee"));
+        list.add(StringItem.of("rum"));
 
         return OuterList.of(list);
     }
@@ -160,7 +160,7 @@ public class RFC9651ExamplesTest {
         lc2.add(TokenItem.valueOf("l"));
 
         Map<String, Object> map2 = new LinkedHashMap<>();
-        map2.put("q", StringItem.valueOf("9"));
+        map2.put("q", StringItem.of("9"));
         map2.put("r", TokenItem.valueOf("w"));
         Parameters p2 = Parameters.valueOf(map2);
         InnerList l2 = InnerList.of(lc2).withParams(p2);
