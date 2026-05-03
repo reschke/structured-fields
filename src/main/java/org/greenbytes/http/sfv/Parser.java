@@ -893,7 +893,7 @@ public class Parser {
      */
     public static NumberItem parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
-        NumberItem<?> result = p.internalParseIntegerOrDecimal();
+        NumberItem result = p.internalParseIntegerOrDecimal();
         p.assertEmpty("Extra characters in string parsed as Integer or Decimal");
         return result;
     }
