@@ -743,7 +743,7 @@ public class Parser {
         Parser p = new Parser(input);
         List<ListElement<?>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
-        return OuterList.valueOf(result);
+        return OuterList.of(result);
     }
 
     /**

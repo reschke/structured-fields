@@ -169,7 +169,7 @@ public class RFC9651ExamplesTest {
         value.add(l1);
         value.add(l2);
 
-        return OuterList.valueOf(value);
+        return OuterList.of(value);
     }
 
     // concise API

@@ -21,14 +21,6 @@ public class OuterList implements Type<List<ListElement<?>>> {
     }
 
     /**
-     * @deprecated use {@link #of(List)} instead.
-     */
-    @Deprecated
-    public static OuterList valueOf(List<ListElement<?>> value) {
-        return new OuterList(value);
-    }
-
-    /**
      * Creates an {@link OuterList} instance representing the specified
      * {@linkplain Object} values after best-effort conversion to {@linkplain Item}.
      *
