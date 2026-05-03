@@ -33,7 +33,7 @@ public class ItemAPITests {
         long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L };
 
         for (long l : tests) {
-            IntegerItem item = IntegerItem.valueOf(l);
+            IntegerItem item = IntegerItem.of(l);
             assertEquals(Long.valueOf(l), item.get());
             assertEquals(l, item.getAsLong());
             assertEquals(Long.valueOf(l).toString(), item.serialize());
@@ -48,7 +48,7 @@ public class ItemAPITests {
 
         for (Long l : tests) {
             try {
-                IntegerItem item = IntegerItem.valueOf(l);
+                IntegerItem item = IntegerItem.of(l);
                 fail("should fail for " + l + " but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
@@ -259,7 +259,7 @@ public class ItemAPITests {
         Map<String, Object> m = new LinkedHashMap<>();
         for (String key : tests) {
             m.clear();
-            m.put(key, IntegerItem.valueOf(1));
+            m.put(key, IntegerItem.of(1));
             assertThrows("should throe",
                     IllegalArgumentException.class,
                     () -> Parameters.valueOf(m));
@@ -270,8 +270,8 @@ public class ItemAPITests {
     public void testInvalidParameterValues() {
 
         Map<String, Object> itemParam = new LinkedHashMap<>();
-        itemParam.put("foo", IntegerItem.valueOf(2));
-        IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.of(itemParam));
+        itemParam.put("foo", IntegerItem.of(2));
+        IntegerItem iitem = IntegerItem.of(1).withParams(Parameters.of(itemParam));
 
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("bar", iitem);

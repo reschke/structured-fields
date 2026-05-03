@@ -154,9 +154,9 @@ public class EqualityTest {
 
     @Test
     public void testIntegerItemEquality() {
-        IntegerItem i1 = IntegerItem.valueOf(1);
-        IntegerItem i2 = IntegerItem.valueOf(1);
-        IntegerItem i3 = IntegerItem.valueOf(2);
+        IntegerItem i1 = IntegerItem.of(1);
+        IntegerItem i2 = IntegerItem.of(1);
+        IntegerItem i3 = IntegerItem.of(2);
 
         assertNotSame(i1, i2);
         assertEquals(i1, i2);

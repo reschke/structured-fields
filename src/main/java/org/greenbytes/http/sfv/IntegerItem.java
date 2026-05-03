@@ -26,13 +26,6 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     /**
-     * @deprecated use {@link #of(long)} instead.
-     */
-    public static IntegerItem valueOf(long value) {
-        return new IntegerItem(value, Parameters.EMPTY);
-    }
-
-    /**
      * Creates an {@link IntegerItem} instance representing the specified
      * {@code long} value.
      *

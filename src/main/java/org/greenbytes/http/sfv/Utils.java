@@ -87,9 +87,9 @@ public class Utils {
         if (o instanceof Item) {
             return (Item<?>) o;
         } else if (o instanceof Integer) {
-            return IntegerItem.valueOf(((Integer) o).longValue());
+            return IntegerItem.of(((Integer) o).longValue());
         } else if (o instanceof Long) {
-            return IntegerItem.valueOf((Long) o);
+            return IntegerItem.of((Long) o);
         } else if (o instanceof String) {
             try {
                 return StringItem.of((String) o);

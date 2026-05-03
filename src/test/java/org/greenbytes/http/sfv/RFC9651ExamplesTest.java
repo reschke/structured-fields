@@ -145,8 +145,8 @@ public class RFC9651ExamplesTest {
     // chatty API
     private static OuterList createComplexListOfParams1() {
         Map<String, Object> map1 = new LinkedHashMap<>();
-        map1.put("a", IntegerItem.valueOf(1));
-        map1.put("b", IntegerItem.valueOf(2));
+        map1.put("a", IntegerItem.of(1));
+        map1.put("b", IntegerItem.of(2));
         map1.put("cde_456", BooleanItem.of(true));
         TokenItem l1 = TokenItem.of("abc").
                 withParams(Parameters.of(map1));
@@ -154,7 +154,7 @@ public class RFC9651ExamplesTest {
         List<Item<?>> lc2 = new ArrayList<>();
         TokenItem t21 = TokenItem.of("ghi").
                 withParams(Parameters.of(
-                        Collections.singletonMap("jk", IntegerItem.valueOf(4))));
+                        Collections.singletonMap("jk", IntegerItem.of(4))));
 
         lc2.add(t21);
         lc2.add(TokenItem.of("l"));
@@ -296,8 +296,8 @@ public class RFC9651ExamplesTest {
         Parameters params3 = Parameters.of(p3);
 
         List<Item<?>> inner4 = new ArrayList<>();
-        inner4.add(IntegerItem.valueOf(5));
-        inner4.add(IntegerItem.valueOf(6));
+        inner4.add(IntegerItem.of(5));
+        inner4.add(IntegerItem.of(6));
         InnerList linner4 = InnerList.of(inner4);
 
         Map<String, Object> p4 = new LinkedHashMap<>();
@@ -305,8 +305,8 @@ public class RFC9651ExamplesTest {
         Parameters params4 = Parameters.of(p4);
 
         map.put("a", linner1);
-        map.put("b", IntegerItem.valueOf(3));
-        map.put("c", IntegerItem.valueOf(4).withParams(params3));
+        map.put("b", IntegerItem.of(3));
+        map.put("c", IntegerItem.of(4).withParams(params3));
         map.put("d", linner4.withParams(params4));
 
         return Dictionary.of(map);
@@ -316,7 +316,7 @@ public class RFC9651ExamplesTest {
     private static Dictionary createDictionaryMix2() {
         return Dictionary.valueOf("a", InnerList.valueOf(1, 2),
                 "b", 3,
-                "c", IntegerItem.valueOf(4).
+                "c", IntegerItem.of(4).
                         withParamValuesOf("aa", TokenItem.of("bb")),
                 "d", InnerList.valueOf(5, 6).
                         withParamValuesOf("valid", true));

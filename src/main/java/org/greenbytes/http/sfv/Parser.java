@@ -175,7 +175,7 @@ public class Parser {
 
         if (!isDecimal) {
             long l = Long.parseLong(inputNumber.toString());
-            return IntegerItem.valueOf(sign * l);
+            return IntegerItem.of(sign * l);
         } else {
             long l = computeLong(inputNumber);
             return DecimalItem.valueOf(sign * l);
