@@ -434,7 +434,7 @@ public class Parser {
             throw complaint(String.format("Expected '0' or '1' in Boolean, found '%c'", c));
         }
 
-        return BooleanItem.valueOf(c == '1');
+        return BooleanItem.of(c == '1');
     }
 
     private BooleanItem internalParseBoolean() {
@@ -483,7 +483,7 @@ public class Parser {
                 advance();
                 removeLeadingSP();
                 String name = internalParseKey();
-                Item<?> value = BooleanItem.valueOf(true);
+                Item<?> value = BooleanItem.of(true);
                 if (peek() == '=') {
                     advance();
                     value = internalParseBareItem();
@@ -612,7 +612,7 @@ public class Parser {
                 advance();
                 member = internalParseItemOrInnerList();
             } else {
-                member = BooleanItem.valueOf(true).withParams(internalParseParameters());
+                member = BooleanItem.of(true).withParams(internalParseParameters());
             }
 
             result.put(name, member);
@@ -687,7 +687,7 @@ public class Parser {
         List<ListElement<?>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
-        return OuterList.valueOf(result);
+        return OuterList.of(result);
     }
 
     /**

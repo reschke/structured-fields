@@ -97,7 +97,7 @@ public class Utils {
                 return DisplayStringItem.valueOf((String) o);
             }
         } else if (o instanceof Boolean) {
-            return BooleanItem.valueOf((Boolean) o);
+            return BooleanItem.of((Boolean) o);
         } else if (o instanceof byte[]) {
             return ByteSequenceItem.valueOf((byte[]) o);
         } else if (o instanceof BigDecimal) {

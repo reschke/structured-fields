@@ -68,9 +68,9 @@ public class EqualityTest {
 
     @Test
     public void testBooleanItemEquality() {
-        BooleanItem b1 = BooleanItem.valueOf(true);
-        BooleanItem b2 = BooleanItem.valueOf(true);
-        BooleanItem b3 = BooleanItem.valueOf(false);
+        BooleanItem b1 = BooleanItem.of(true);
+        BooleanItem b2 = BooleanItem.of(true);
+        BooleanItem b3 = BooleanItem.of(false);
 
         // FALSE and TRUE are singletons
         assertSame(b1, b2);
@@ -79,7 +79,7 @@ public class EqualityTest {
         assertNotSame(b1, b3);
         assertNotEquals(b1, b3);
 
-        BooleanItem b4 = BooleanItem.valueOf(false).withParams(getParameters("c", "d"));
+        BooleanItem b4 = BooleanItem.of(false).withParams(getParameters("c", "d"));
         assertNotSame(b1, b4);
         assertNotEquals(b1, b4);
     }
@@ -171,7 +171,7 @@ public class EqualityTest {
 
     @Test
     public void testOuterListEquality() {
-        BooleanItem b = BooleanItem.valueOf(true);
+        BooleanItem b = BooleanItem.of(true);
         DecimalItem d = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
 
         OuterList l1 = OuterList.valueOf((Arrays.asList(b, d)));

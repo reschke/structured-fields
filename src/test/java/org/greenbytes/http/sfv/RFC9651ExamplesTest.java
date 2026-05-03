@@ -147,7 +147,7 @@ public class RFC9651ExamplesTest {
         Map<String, Object> map1 = new LinkedHashMap<>();
         map1.put("a", IntegerItem.valueOf(1));
         map1.put("b", IntegerItem.valueOf(2));
-        map1.put("cde_456", BooleanItem.valueOf(true));
+        map1.put("cde_456", BooleanItem.of(true));
         TokenItem l1 = TokenItem.valueOf("abc").
                 withParams(Parameters.valueOf(map1));
 
@@ -227,9 +227,9 @@ public class RFC9651ExamplesTest {
     // chatty API
     private static Dictionary createDictionary1() {
         Map<String, ListElement<?>> map = new LinkedHashMap<>();
-        map.put("a", BooleanItem.valueOf(false));
-        map.put("b", BooleanItem.valueOf(true));
-        map.put("c", BooleanItem.valueOf(true).withParams(Parameters.of(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
+        map.put("a", BooleanItem.of(false));
+        map.put("b", BooleanItem.of(true));
+        map.put("c", BooleanItem.of(true).withParams(Parameters.of(Collections.singletonMap("foo", TokenItem.valueOf("bar")))));
         return Dictionary.of(map);
     }
 
@@ -301,7 +301,7 @@ public class RFC9651ExamplesTest {
         InnerList linner4 = InnerList.of(inner4);
 
         Map<String, Object> p4 = new LinkedHashMap<>();
-        p4.put("valid", BooleanItem.valueOf(true));
+        p4.put("valid", BooleanItem.of(true));
         Parameters params4 = Parameters.of(p4);
 
         map.put("a", linner1);

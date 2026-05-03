@@ -23,14 +23,6 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     /**
-     * @deprecated - use {#{@linkplain #of(boolean)} instead.
-     */
-    @Deprecated
-    public static BooleanItem valueOf(boolean value) {
-        return value ? TRUE : FALSE;
-    }
-
-    /**
      * Creates a {@link BooleanItem} instance representing the specified
      * {@code boolean} value.
      *

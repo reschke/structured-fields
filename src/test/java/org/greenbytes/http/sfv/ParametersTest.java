@@ -65,7 +65,7 @@ public class ParametersTest {
     @Test
     public void testParametersEquality() {
         Map m1 = new HashMap();
-        m1.put("a", BooleanItem.valueOf(true));
+        m1.put("a", BooleanItem.of(true));
         Map m2 = new HashMap();
         m2.put("b", IntegerItem.valueOf(12));
         m2.put("c", StringItem.valueOf("hello"));
@@ -121,13 +121,13 @@ public class ParametersTest {
     @Test(expected = IllegalArgumentException.class)
     public void testParamsStrictnessReParametersInValues() {
         Map<String, Object> map1 = new HashMap<>();
-        map1.put("foo", BooleanItem.valueOf(false));
+        map1.put("foo", BooleanItem.of(false));
 
         Map<String, Object> map2 = new HashMap<>();
         map2.put("qux", 0);
 
-        BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2));
-        map1.put("bar", BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2)));
+        BooleanItem.of(true).withParams(Parameters.valueOf(map2));
+        map1.put("bar", BooleanItem.of(true).withParams(Parameters.valueOf(map2)));
 
         // this needs to fail because the second parameter's value has parameters
         Parameters.valueOf(map1);
