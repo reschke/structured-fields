@@ -69,10 +69,10 @@ public class RFC9651ExamplesTest {
         List<Item<?>> inner4 = Collections.emptyList();
 
         List<ListElement<?>> combined = new ArrayList<>();
-        combined.add(InnerList.valueOf(inner1));
-        combined.add(InnerList.valueOf(inner2));
-        combined.add(InnerList.valueOf(inner3));
-        combined.add(InnerList.valueOf(inner4));
+        combined.add(InnerList.of(inner1));
+        combined.add(InnerList.of(inner2));
+        combined.add(InnerList.of(inner3));
+        combined.add(InnerList.of(inner4));
 
         return OuterList.of(combined);
     }

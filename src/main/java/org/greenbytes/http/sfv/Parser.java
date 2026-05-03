@@ -594,7 +594,7 @@ public class Parser {
     private InnerList internalParseInnerList() {
         List<Item<?>> result = internalParseBareInnerList();
         Parameters params = internalParseParameters();
-        return InnerList.valueOf(result).withParams(params);
+        return InnerList.of(result).withParams(params);
     }
 
     private Dictionary internalParseDictionary() {

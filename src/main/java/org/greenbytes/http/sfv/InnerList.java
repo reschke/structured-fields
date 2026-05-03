@@ -24,14 +24,6 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
     }
 
     /**
-     * @deprecated  - use {@linkplain #of(List)} instead.
-     */
-    @Deprecated
-    public static InnerList valueOf(List<Item<?>> value) {
-        return new InnerList(value, Parameters.EMPTY);
-    }
-
-    /**
      * Creates an {@link InnerList} instance representing the specified
      * {@code List<Item>} value.
      *
