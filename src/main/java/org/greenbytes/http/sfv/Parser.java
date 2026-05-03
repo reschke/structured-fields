@@ -891,7 +891,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-number">Section
      *      4.2.4 of RFC 9651</a>
      */
-    public static NumberItem<?> parseIntegerOrDecimal(String input) {
+    public static NumberItem parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
         NumberItem<?> result = p.internalParseIntegerOrDecimal();
         p.assertEmpty("Extra characters in string parsed as Integer or Decimal");
