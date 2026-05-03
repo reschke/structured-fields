@@ -28,8 +28,7 @@ public class OuterList implements Type<List<ListElement<?>>> {
      * @return a {@link OuterList} representing {@code values}.
      */
     public static OuterList valueOf(Object... values) {
-        return of(Arrays.stream(values).map(v -> Utils.asListElement(v))
-                .collect(Collectors.toList()));
+        return of(Arrays.stream(values).map(Utils::asListElement).collect(Collectors.toList()));
     }
 
     /**
