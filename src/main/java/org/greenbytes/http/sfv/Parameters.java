@@ -29,14 +29,6 @@ public class Parameters implements Map<String, Item<?>> {
     }
 
     /**
-     * @deprecated use {@linkplain #of(Map)}
-     */
-    @Deprecated
-    public static Parameters valueOf(Map<String, Object> value) {
-        return new Parameters(value);
-    }
-
-    /**
      * Creates an unmodifiable {@link Parameters} instance representing the
      * specified {@code Map<String, Item>} value.
      * <p>
@@ -52,9 +44,20 @@ public class Parameters implements Map<String, Item<?>> {
         return new Parameters(value);
     }
 
+    /**
+     * Creates an unmodifiable {@link Parameters} instance representing
+     * the specified {@linkplain Object}s.
+     * <p>
+     * @param obs (needs to be an even-number of {@linkplain Object}s)
+     * @return a {@link Parameters} representing {@code obs}.
+     */
     public static Parameters valueOf(Object... obs) {
+        if (obs.length == 1 && obs[0] instanceof Map) {
+            throw new IllegalArgumentException("requires even number of arguments, got: " +
+                    obs[0].getClass().getName() + " - did you mean to use 'of()'?");
+        }
         if (obs.length % 2 != 0) {
-            throw new IllegalArgumentException("requires even number of arguments");
+            throw new IllegalArgumentException("requires even number of arguments, got: " + obs.length);
         } else {
             Map<String, Object> map = new LinkedHashMap<>();
             for (int i = 0; i < obs.length; i += 2) {
@@ -64,7 +67,7 @@ public class Parameters implements Map<String, Item<?>> {
                 }
                 map.put(key, obs[i + 1]);
             }
-            return valueOf(map);
+            return of(map);
         }
     }
 

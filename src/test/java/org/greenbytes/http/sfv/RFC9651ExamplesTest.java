@@ -103,14 +103,14 @@ public class RFC9651ExamplesTest {
         Map<String, Object> itemParam1 = new LinkedHashMap<>();
         itemParam1.put("a", 1);
         itemParam1.put("b", 2);
-        inner1.add(StringItem.of("foo").withParams(Parameters.valueOf(itemParam1)));
+        inner1.add(StringItem.of("foo").withParams(Parameters.of(itemParam1)));
         Map<String, Object> itemParamOuter1 = Collections.singletonMap("lvl", 5);
-        InnerList linner1 = InnerList.of(inner1).withParams(Parameters.valueOf(itemParamOuter1));
+        InnerList linner1 = InnerList.of(inner1).withParams(Parameters.of(itemParamOuter1));
 
         List<Item<?>> inner2 = Collections.singletonList(StringItem.of("bar"));
         Map<String, Object> itemParamOuter2 = new LinkedHashMap<>();
         itemParamOuter2.put("lvl", 1);
-        InnerList linner2 = InnerList.of(inner2).withParams(Parameters.valueOf(itemParamOuter2));
+        InnerList linner2 = InnerList.of(inner2).withParams(Parameters.of(itemParamOuter2));
 
         List<ListElement<?>> combined = new ArrayList<>();
         combined.add(linner1);
@@ -149,11 +149,11 @@ public class RFC9651ExamplesTest {
         map1.put("b", IntegerItem.valueOf(2));
         map1.put("cde_456", BooleanItem.of(true));
         TokenItem l1 = TokenItem.valueOf("abc").
-                withParams(Parameters.valueOf(map1));
+                withParams(Parameters.of(map1));
 
         List<Item<?>> lc2 = new ArrayList<>();
         TokenItem t21 = TokenItem.valueOf("ghi").
-                withParams(Parameters.valueOf(
+                withParams(Parameters.of(
                         Collections.singletonMap("jk", IntegerItem.valueOf(4))));
 
         lc2.add(t21);
@@ -162,7 +162,7 @@ public class RFC9651ExamplesTest {
         Map<String, Object> map2 = new LinkedHashMap<>();
         map2.put("q", StringItem.of("9"));
         map2.put("r", TokenItem.valueOf("w"));
-        Parameters p2 = Parameters.valueOf(map2);
+        Parameters p2 = Parameters.of(map2);
         InnerList l2 = InnerList.of(lc2).withParams(p2);
 
         List<ListElement<?>> value = new LinkedList<>();
@@ -293,7 +293,7 @@ public class RFC9651ExamplesTest {
 
         Map<String, Object> p3 = new LinkedHashMap<>();
         p3.put("aa", TokenItem.valueOf("bb"));
-        Parameters params3 = Parameters.valueOf(p3);
+        Parameters params3 = Parameters.of(p3);
 
         List<Item<?>> inner4 = new ArrayList<>();
         inner4.add(IntegerItem.valueOf(5));

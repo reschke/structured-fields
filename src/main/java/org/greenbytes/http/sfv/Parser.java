@@ -492,7 +492,7 @@ public class Parser {
             }
         }
 
-        return Parameters.valueOf(result);
+        return Parameters.of(result);
     }
 
     private Item<?> internalParseBareItem() {
@@ -582,7 +582,6 @@ public class Parser {
                     throw complaint("Expected SP or ')' in Inner List, got: " + format(c));
                 }
             }
-
         }
 
         if (!done) {

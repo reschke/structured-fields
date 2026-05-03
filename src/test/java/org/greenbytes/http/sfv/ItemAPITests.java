@@ -232,7 +232,7 @@ public class ItemAPITests {
         m.put("d", new BigDecimal("0.155"));
         m.put("d2", BigDecimal.valueOf(12345));
         m.put("d3", 3.14f);
-       return Parameters.valueOf(m);
+       return Parameters.of(m);
     }
 
     private static Parameters createParams2() {
@@ -245,7 +245,7 @@ public class ItemAPITests {
 
         Map<String, Object> m = new HashMap<>();
         m.put("test", "test");
-        Parameters p = Parameters.valueOf(m);
+        Parameters p = Parameters.of(m);
 
         assertThrows(
                 UnsupportedOperationException.class,
@@ -271,12 +271,12 @@ public class ItemAPITests {
 
         Map<String, Object> itemParam = new LinkedHashMap<>();
         itemParam.put("foo", IntegerItem.valueOf(2));
-        IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
+        IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.of(itemParam));
 
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("bar", iitem);
         try {
-            Parameters test = Parameters.valueOf(m);
+            Parameters test = Parameters.of(m);
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }

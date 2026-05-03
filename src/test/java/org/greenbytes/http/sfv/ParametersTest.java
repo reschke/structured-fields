@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNotSame;
 
 public class ParametersTest {
 
-    Parameters params = Parameters.valueOf(new HashMap<>());
+    Parameters params = Parameters.of(Collections.emptyMap());
 
     // Test that all write operations fail
 
@@ -70,9 +70,9 @@ public class ParametersTest {
         m2.put("b", IntegerItem.valueOf(12));
         m2.put("c", StringItem.of("hello"));
 
-        Parameters p1 = Parameters.valueOf(m1);
-        Parameters p2 = Parameters.valueOf(m1);
-        Parameters p3 = Parameters.valueOf(m2);
+        Parameters p1 = Parameters.of(m1);
+        Parameters p2 = Parameters.of(m1);
+        Parameters p3 = Parameters.of(m2);
 
         assertNotSame(p1, p2);
         assertEquals(p1, p2);
@@ -83,7 +83,7 @@ public class ParametersTest {
 
     @Test
     public void canRemoveParams() {
-        Parameters empty = Parameters.valueOf(Collections.emptyMap());
+        Parameters empty = Parameters.of(Collections.emptyMap());
 
         BooleanItem boi = Parser.parseBoolean("?1;b");
         assertEquals("?1;b", boi.serialize());

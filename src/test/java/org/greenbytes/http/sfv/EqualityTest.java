@@ -21,8 +21,8 @@ public class EqualityTest {
         m1.put("a", "b");
         HashMap<String, Object> m2 = new LinkedHashMap<>();
         m2.put("a", "b");
-        Parameters p1 = Parameters.valueOf(m1);
-        Parameters p2 = Parameters.valueOf(m2);
+        Parameters p1 = Parameters.of(m1);
+        Parameters p2 = Parameters.of(m2);
         assertNotSame(p1, p2);
         assertEquals(p1, p2);
     }
@@ -42,7 +42,7 @@ public class EqualityTest {
 
         HashMap<String, Object> m5 = new LinkedHashMap<>();
         m5.put("c", "d");
-        Parameters p5 = Parameters.valueOf(m5);
+        Parameters p5 = Parameters.of(m5);
         StringItem s5 = StringItem.of("a").withParams(p5);
         assertNotSame(s4, s5);
         assertNotEquals(s4, s5);
@@ -188,6 +188,6 @@ public class EqualityTest {
     private static Parameters getParameters(String a, String b) {
         HashMap<String, Object> m = new LinkedHashMap<>();
         m.put(a, b);
-        return Parameters.valueOf(m);
+        return Parameters.of(m);
     }
 }
