@@ -3,6 +3,7 @@ package org.greenbytes.http.sfv;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 public class RFC9651ExamplesTest {
 
@@ -320,5 +323,92 @@ public class RFC9651ExamplesTest {
                         withParamValuesOf("aa", TokenItem.of("bb")),
                 "d", InnerList.valueOf(5, 6).
                         withParamValuesOf("valid", true));
+    }
+
+    // RFC 9651, Section 3.2
+    // Foo-Example: 2; foourl="https://foo.example.com/"
+    // (parse and validate)
+
+    @Test
+    public void testParseAndValidateExample() {
+
+        {
+            Foo foo = parseAndValidateExample("2; foourl=\"https://foo.example.com/\"", null);
+            assertEquals(2, foo.amount);
+            assertEquals("https://foo.example.com/", foo.url.toString());
+        }
+
+        {
+            Foo foo = parseAndValidateExample("5", null);
+            assertEquals(5, foo.amount);
+            assertNull(foo.url);
+        }
+
+        {
+            Foo foo = parseAndValidateExample("5; foourl=\"foo\"", URI.create("https://example.org/"));
+            assertEquals(5, foo.amount);
+            assertEquals("https://example.org/foo", foo.url.toString());
+        }
+
+        try {
+            parseAndValidateExample("11; foourl=\"https://foo.example.com/\"", null);
+            fail();
+        } catch (IllegalArgumentException expected) {
+        }
+
+        try {
+            parseAndValidateExample("9.0; foourl=\"https://foo.example.com/\"", null);
+            fail();
+        } catch (IllegalArgumentException expected) {
+        }
+
+        try {
+            parseAndValidateExample("2; foourl=\"https:oh no//foo.example.com/\"", null);
+            fail();
+        } catch (IllegalArgumentException expected) {
+        }
+
+        try {
+            parseAndValidateExample("2; foourl=\"relative\"", null);
+            fail();
+        } catch (NullPointerException expected) {
+        }
+    }
+
+    private static class Foo {
+        int amount;
+        URI url;
+    }
+
+    private static Foo parseAndValidateExample(String serialization, URI baseUri) {
+        Item<?> item = Parser.parseItem(serialization);
+
+        if (! (item instanceof IntegerItem)) {
+            throw new IllegalArgumentException("not a IntegerItem (was " + item.getClass().getSimpleName() + ")");
+        }
+
+        long amountOfFoo = ((IntegerItem) item).get();
+
+        if (amountOfFoo < 0 || amountOfFoo > 10) {
+            throw new IllegalArgumentException("invalid amountOfFoo (was " + amountOfFoo + ")");
+        }
+
+        Item<?> fooURLParam = item.getParams().get("foourl");
+        if (fooURLParam != null && !(fooURLParam instanceof StringItem)) {
+            throw new IllegalArgumentException("foourl not a StringItem (was " + fooURLParam.getClass().getSimpleName() + ")");
+        }
+
+        URI url = null;
+        if (fooURLParam != null) {
+            url = URI.create(((StringItem) fooURLParam).get());
+            if (! url.isAbsolute()) {
+                url = baseUri.resolve(url);
+            }
+        }
+
+        Foo foo = new Foo();
+        foo.amount = (int)  amountOfFoo;
+        foo.url = url;
+        return foo;
     }
 }
