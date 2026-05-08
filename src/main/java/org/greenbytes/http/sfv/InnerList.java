@@ -4,10 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-<<<<<<< api
 import java.util.stream.Collectors;
-=======
->>>>>>> main
 
 /**
  * Represents an Inner List.
@@ -66,14 +63,11 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
-<<<<<<< api
     @Override
     public InnerList withParamValuesOf(Object... obs) {
         return new InnerList(this.value, Parameters.valueOf(obs));
     }
 
-=======
->>>>>>> main
     private StringBuilder serializeToNoParams(StringBuilder sb) {
         String separator = "";
 

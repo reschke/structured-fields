@@ -3,10 +3,7 @@ package org.greenbytes.http.sfv;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-<<<<<<< api
 import java.util.Objects;
-=======
->>>>>>> main
 import java.util.function.Function;
 
 /**
@@ -113,7 +110,6 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
         }
         return sb;
     }
-<<<<<<< api
 
     @Override
     public boolean equals(Object o) {
@@ -129,6 +125,4 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
     public int hashCode() {
         return Objects.hashCode(value);
     }
-=======
->>>>>>> main
 }

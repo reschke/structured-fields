@@ -232,7 +232,6 @@ public class Parameters implements Map<String, Item<?>> {
     public Collection<Item<?>> values() {
         return delegate.values();
     }
-<<<<<<< api
 
     @Override
     public boolean equals(Object o) {
@@ -248,6 +247,4 @@ public class Parameters implements Map<String, Item<?>> {
     public int hashCode() {
         return Objects.hashCode(delegate);
     }
-=======
->>>>>>> main
 }

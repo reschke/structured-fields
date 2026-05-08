@@ -4,10 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-<<<<<<< api
 import java.util.stream.Collectors;
-=======
->>>>>>> main
 
 /**
  * Represents a List.
