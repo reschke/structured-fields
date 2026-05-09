@@ -47,7 +47,6 @@ public class Parameters implements Map<String, Item<?>> {
     /**
      * Creates an unmodifiable {@link Parameters} instance representing
      * the specified {@linkplain Object}s.
-     * <p>
      * @param obs (needs to be an even-number of {@linkplain Object}s)
      * @return a {@link Parameters} representing {@code obs}.
      */
