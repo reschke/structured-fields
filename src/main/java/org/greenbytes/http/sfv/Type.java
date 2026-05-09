@@ -26,7 +26,7 @@ public interface Type<T> extends Supplier<T> {
     StringBuilder serializeTo(StringBuilder sb);
 
     /**
-     * Serialize debubg information to an existing {@link StringBuilder}.
+     * Serialize debug information to an existing {@link StringBuilder}.
      *
      * @param sb
      *            where to serialize to

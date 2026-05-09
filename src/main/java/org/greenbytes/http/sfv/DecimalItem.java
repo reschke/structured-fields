@@ -122,6 +122,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return serializeTo(new StringBuilder(20)).toString();
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());

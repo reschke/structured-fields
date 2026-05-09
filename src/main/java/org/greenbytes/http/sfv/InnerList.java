@@ -89,6 +89,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
        return params.serializeTo(serializeToNoParams(sb));
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());

@@ -94,14 +94,23 @@ public class Parameters implements Map<String, Item<?>> {
         return serializeTo(new StringBuilder()).toString();
     }
 
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
+    /**
+     * Serialize debug information to an existing {@link StringBuilder}.
+     *
+     * @param sb
+     *            where to serialize to
+     * @param indentLevel how much to indent
+     * @param classFormatter to format the classname when desires (can be a function that returns an empty string)
+     * @return the {@link StringBuilder} so calls can be chained.
+     */
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> classFormatter) {
         if (!delegate.isEmpty()) {
             String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-            String classn = formatter.apply(this.getClass());
+            String classn = classFormatter.apply(this.getClass());
             sb.append(indent).append(serialize()).append(classn).append("\n");
             for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
                 sb.append("  " + indent).append(e.getKey()).append(" -> ");
-                e.getValue().serializeToForDebug(sb, 0, formatter);
+                e.getValue().serializeToForDebug(sb, 0, classFormatter);
             }
             return sb;
         } else {
