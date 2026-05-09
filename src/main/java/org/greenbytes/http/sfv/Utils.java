@@ -109,7 +109,6 @@ public class Utils {
      *     <li>{@linkplain Float} → {@linkplain DecimalItem}</li>
      * </ul>
      * Same as {@linkplain #asBareItem(Object)}, but allowing {@linkplain Parameters}
-     * <p>
      * @param o to convert
      * @return converted to {@linkplain Item}
      * @throws IllegalArgumentException when it can't be converted
