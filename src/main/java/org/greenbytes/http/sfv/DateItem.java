@@ -66,6 +66,7 @@ public class DateItem implements NumberItem<Long> {
         return serializeTo(new StringBuilder()).toString();
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());

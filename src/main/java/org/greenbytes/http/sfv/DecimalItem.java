@@ -88,7 +88,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return params;
     }
 
-    public StringBuilder serializeToNoParams(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
 
         String sign = value < 0 ? "-" : "";
 
