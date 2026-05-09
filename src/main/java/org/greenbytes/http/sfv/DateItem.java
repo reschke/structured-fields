@@ -52,7 +52,7 @@ public class DateItem implements NumberItem<Long> {
         return params;
     }
 
-    public StringBuilder serializeToNoParams(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         return sb.append('@').append(value);
     }
 
