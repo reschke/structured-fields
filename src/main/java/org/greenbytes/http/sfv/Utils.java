@@ -96,7 +96,20 @@ public class Utils {
     /**
      * Converts an {@linkplain Object} to an {@link Item} (on a best-effort basis).
      * <p>
+     * Currently mapped:
+     * <ul>
+     *     <li>{@linkplain Item} → {@linkplain Item}</li>
+     *     <li>{@linkplain Integer} → {@linkplain IntegerItem}</li>
+     *     <li>{@linkplain Long} → {@linkplain IntegerItem}</li>
+     *     <li>{@linkplain String} → {@linkplain StringItem} or {@linkplain DisplayStringItem}</li>
+     *     <li>{@linkplain Boolean} → {@linkplain BooleanItem}</li>
+     *     <li>{@code byte[]} → {@linkplain ByteSequenceItem}</li>
+     *     <li>{@linkplain BigDecimal} → {@linkplain DecimalItem}</li>
+     *     <li>{@linkplain Double} → {@linkplain DecimalItem}</li>
+     *     <li>{@linkplain Float} → {@linkplain DecimalItem}</li>
+     * </ul>
      * Same as {@linkplain #asBareItem(Object)}, but allowing {@linkplain Parameters}
+     * <p>
      * @param o to convert
      * @return converted to {@linkplain Item}
      * @throws IllegalArgumentException when it can't be converted
