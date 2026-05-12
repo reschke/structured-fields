@@ -19,6 +19,11 @@ public class StringItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.STRING;
+    }
+
     /**
     * Creates a {@link StringItem} instance representing the specified
     * {@code String} value.

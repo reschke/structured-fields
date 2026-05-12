@@ -22,6 +22,11 @@ public class BooleanItem implements Item<Boolean> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.BOOLEAN;
+    }
+
     /**
      * Creates a {@link BooleanItem} instance representing the specified
      * {@code boolean} value.

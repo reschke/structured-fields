@@ -25,6 +25,11 @@ public class DateItem implements NumberItem<Long> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DATE;
+    }
+
     /**
      * Creates an {@link DateItem} instance representing the specified
      * {@code long} value.

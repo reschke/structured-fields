@@ -19,6 +19,11 @@ public class TokenItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.TOKEN;
+    }
+
     /**
      * Creates a {@link TokenItem} instance representing the specified
      * {@code String} value.

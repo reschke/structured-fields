@@ -23,6 +23,11 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.INNERLIST;
+    }
+
     /**
      * Creates an {@link InnerList} instance representing the specified
      * {@code List<Item>} value.

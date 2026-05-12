@@ -24,6 +24,11 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.BYTESEQUENCE;
+    }
+
     /**
      * Creates a {@link ByteSequenceItem} instance representing the specified
      * {@code byte[]} value.

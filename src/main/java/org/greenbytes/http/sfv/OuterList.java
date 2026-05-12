@@ -20,6 +20,11 @@ public class OuterList implements Type<List<ListElement<?>>> {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.LIST;
+    }
+
     /**
      * Creates an {@link OuterList} instance representing the specified
      * {@linkplain Object} values after best-effort conversion to {@linkplain Item}.

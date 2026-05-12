@@ -21,6 +21,11 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
         this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DICTIONARY;
+    }
+
     /**
      * Creates a {@link Dictionary} instance representing the specified
      * {@code Map<String, Item>} value.

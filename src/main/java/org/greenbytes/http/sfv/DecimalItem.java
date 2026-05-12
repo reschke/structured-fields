@@ -36,6 +36,11 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DECIMAL;
+    }
+
     /**
      * Creates a {@link DecimalItem} instance representing the specified
      * {@code long} value, where the implied divisor is {@code 1000}.

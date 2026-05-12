@@ -383,7 +383,7 @@ public class RFC9651ExamplesTest {
     private static Foo parseAndValidateExample(String serialization, URI baseUri) {
         Item<?> item = Parser.parseItem(serialization);
 
-        if (! (item instanceof IntegerItem)) {
+        if (SfDataType.INTEGER != item.getType()) {
             throw new IllegalArgumentException("not a IntegerItem (was " + item.getClass().getSimpleName() + ")");
         }
 
@@ -394,7 +394,7 @@ public class RFC9651ExamplesTest {
         }
 
         Item<?> fooURLParam = item.getParams().get("foourl");
-        if (fooURLParam != null && !(fooURLParam instanceof StringItem)) {
+        if (fooURLParam != null && SfDataType.INTEGER != item.getType()) {
             throw new IllegalArgumentException("foourl not a StringItem (was " + fooURLParam.getClass().getSimpleName() + ")");
         }
 
@@ -407,7 +407,7 @@ public class RFC9651ExamplesTest {
         }
 
         Foo foo = new Foo();
-        foo.amount = (int)  amountOfFoo;
+        foo.amount = (int) amountOfFoo;
         foo.url = url;
         return foo;
     }

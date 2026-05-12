@@ -20,6 +20,11 @@ public class DisplayStringItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DISPLAYSTRING;
+    }
+
     /**
      * Creates a {@link DisplayStringItem} instance representing the specified
      * {@code String} value.

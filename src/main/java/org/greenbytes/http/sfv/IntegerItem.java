@@ -25,6 +25,11 @@ public class IntegerItem implements NumberItem<Long> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.INTEGER;
+    }
+
     /**
      * Creates an {@link IntegerItem} instance representing the specified
      * {@code long} value.

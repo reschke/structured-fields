@@ -17,6 +17,11 @@ import java.util.function.Supplier;
 public interface Type<T> extends Supplier<T> {
 
     /**
+     * @return Structured Field Data Type
+     */
+    SfDataType getType();
+
+    /**
      * Serialize to an existing {@link StringBuilder}.
      * 
      * @param sb
