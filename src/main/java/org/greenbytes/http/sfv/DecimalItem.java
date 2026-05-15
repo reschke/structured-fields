@@ -89,7 +89,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -146,6 +146,11 @@ public class DecimalItem implements NumberItem<BigDecimal> {
 
     @Override
     public long getAsLong() {
+        return value;
+    }
+
+    @Override
+    public double doubleValue() {
         return value;
     }
 

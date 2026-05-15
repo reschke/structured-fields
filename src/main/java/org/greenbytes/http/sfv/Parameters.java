@@ -124,7 +124,7 @@ public class Parameters implements Map<String, Item<?>> {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String key = Utils.checkKey(entry.getKey());
             Item<?> value = Utils.asBareItem(entry.getValue());
-            if (!value.getParams().isEmpty()) {
+            if (!value.params().isEmpty()) {
                 throw new IllegalArgumentException("Parameter value for '" + key + "' must be bare item (no parameters)");
             }
             result.put(entry.getKey(), value);

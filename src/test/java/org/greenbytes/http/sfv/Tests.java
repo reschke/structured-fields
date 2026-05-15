@@ -209,7 +209,7 @@ public class Tests {
             assertEquals("unexpected list length for: " + e.getKey(), list.get().size(), expected.length / 2);
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
-                Parameters p = list.get().get(i).getParams();
+                Parameters p = list.get().get(i).params();
                 assertEquals(expected[i * 2 + 1], p.serialize());
             }
         }
@@ -228,10 +228,10 @@ public class Tests {
             assertEquals(list.get().size(), (expected.length - 1) / 2);
             for (int i = 0; i < (expected.length - 1) / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
-                Parameters p = list.get().get(i).getParams();
+                Parameters p = list.get().get(i).params();
                 assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
-            assertEquals(list.getParams().serialize(), expected[expected.length - 1]);
+            assertEquals(list.params().serialize(), expected[expected.length - 1]);
         }
     }
 
@@ -267,7 +267,7 @@ public class Tests {
             String key = e.getKey();
             Parameterizable<?> item = e.getValue();
             Object value = item.get();
-            Parameters params = item.getParams();
+            Parameters params = item.params();
             System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
         }
     }

@@ -52,7 +52,7 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -91,6 +91,11 @@ public class ByteSequenceItem implements Item<ByteBuffer> {
         // this returns a wrapper around a copy so that the object itself
         // stays immutable
         return ByteBuffer.wrap(this.value.clone());
+    }
+
+    @Override
+    public ByteBuffer byteBufferValue() {
+        return get();
     }
 
     @Override

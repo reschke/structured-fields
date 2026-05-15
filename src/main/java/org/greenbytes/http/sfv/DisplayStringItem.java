@@ -48,7 +48,7 @@ public class DisplayStringItem implements Item<String> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 

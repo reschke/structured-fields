@@ -40,7 +40,7 @@ public class BooleanItem implements Item<Boolean> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -79,6 +79,11 @@ public class BooleanItem implements Item<Boolean> {
     @Override
     public Boolean get() {
         return value;
+    }
+
+    @Override
+    public boolean booleanValue() {
+        return this.value;
     }
 
     @Override

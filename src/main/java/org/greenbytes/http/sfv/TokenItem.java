@@ -47,7 +47,7 @@ public class TokenItem implements Item<String> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -75,6 +75,11 @@ public class TokenItem implements Item<String> {
 
     @Override
     public String get() {
+        return this.value;
+    }
+
+    @Override
+    public String tokenValue() {
         return this.value;
     }
 

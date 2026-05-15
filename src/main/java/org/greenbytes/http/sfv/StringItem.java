@@ -47,7 +47,7 @@ public class StringItem implements Item<String> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -83,6 +83,11 @@ public class StringItem implements Item<String> {
 
     @Override
     public String get() {
+        return this.value;
+    }
+
+    @Override
+    public String stringValue() {
         return this.value;
     }
 

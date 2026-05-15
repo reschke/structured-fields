@@ -21,10 +21,14 @@ public class ItemAPITests {
         BooleanItem b0 = BooleanItem.of(false);
         assertEquals(false, b0.get());
         assertEquals("?0", b0.serialize());
+        assertEquals(false, b0.booleanValue());
 
         BooleanItem b1 = BooleanItem.of(true);
         assertEquals(true, b1.get());
         assertEquals("?1", b1.serialize());
+
+        StringItem s = StringItem.of("");
+        assertThrows(UnsupportedOperationException.class, () -> s.booleanValue());
     }
 
     @Test
@@ -36,6 +40,7 @@ public class ItemAPITests {
             IntegerItem item = IntegerItem.of(l);
             assertEquals(Long.valueOf(l), item.get());
             assertEquals(l, item.getAsLong());
+            assertEquals(l, item.longValue());
             assertEquals(Long.valueOf(l).toString(), item.serialize());
             assertEquals(1, item.getDivisor());
         }
@@ -64,6 +69,7 @@ public class ItemAPITests {
             DecimalItem item = DecimalItem.valueOf(l);
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
             assertEquals(l, item.getAsLong());
+            assertEquals("got: " + item.doubleValue() + ", expected: " + Double.valueOf(l), Double.valueOf(l), item.doubleValue(), 0.0);
             assertEquals(1000, item.getDivisor());
         }
     }
@@ -111,8 +117,7 @@ public class ItemAPITests {
         for (String s : tests) {
             StringItem item = StringItem.of(s);
             assertEquals(s, item.get());
-            // TODO: figure out how to check the serialization without copying
-            // the actual impl code
+            assertEquals(s, item.stringValue());
         }
     }
 
@@ -138,8 +143,8 @@ public class ItemAPITests {
         for (String s : tests) {
             TokenItem item = TokenItem.of(s);
             assertEquals(s, item.get());
-            // TODO: figure out how to check the serialization without copying
-            // the actual impl code
+            assertEquals(SfDataType.TOKEN, item.getType());
+            assertEquals(s, item.tokenValue());
         }
     }
 
@@ -167,6 +172,7 @@ public class ItemAPITests {
             ByteSequenceItem item = ByteSequenceItem.valueOf(tests[i]);
             assertArrayEquals(tests[i], item.get().array());
             assertEquals(results[i], item.serialize());
+            assertArrayEquals(tests[i], item.byteBufferValue().array());
         }
     }
 

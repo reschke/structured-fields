@@ -47,5 +47,5 @@ public interface Parameterizable<T> extends Type<T> {
      * 
      * @return the parameters.
      */
-    Parameters getParams();
+    Parameters params();
 }

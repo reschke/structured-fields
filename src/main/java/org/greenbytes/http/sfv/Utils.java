@@ -85,7 +85,7 @@ public class Utils {
         if (o instanceof Item) {
             if (o instanceof Parameterizable) {
                 Parameterizable p = ((Parameterizable)o);
-                if (!p.getParams().isEmpty()) {
+                if (!p.params().isEmpty()) {
                     throw new IllegalArgumentException("Can't map value " + o + " (" + o.getClass() + "): carries parameters.");
                 }
             }

@@ -204,7 +204,7 @@ public abstract class AbstractSpecificationTests {
         }
         if (params != null) {
             assertTrue(item instanceof Parameterizable);
-            Map<String, Item<?>> result = ((Parameterizable<?>) item).getParams();
+            Map<String, Item<?>> result = ((Parameterizable<?>) item).params();
 
             if (params instanceof JsonArray) {
                 // new format

@@ -53,7 +53,7 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
@@ -86,6 +86,11 @@ public class IntegerItem implements NumberItem<Long> {
 
     @Override
     public long getAsLong() {
+        return value;
+    }
+
+    @Override
+    public long longValue() {
         return value;
     }
 

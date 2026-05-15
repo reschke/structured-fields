@@ -354,12 +354,14 @@ public class RFC9651ExamplesTest {
             parseAndValidateExample("11; foourl=\"https://foo.example.com/\"", null);
             fail();
         } catch (IllegalArgumentException expected) {
+        } catch (UnsupportedOperationException expected) {
         }
 
         try {
             parseAndValidateExample("9.0; foourl=\"https://foo.example.com/\"", null);
             fail();
         } catch (IllegalArgumentException expected) {
+        } catch (UnsupportedOperationException expected) {
         }
 
         try {
@@ -383,24 +385,16 @@ public class RFC9651ExamplesTest {
     private static Foo parseAndValidateExample(String serialization, URI baseUri) {
         Item<?> item = Parser.parseItem(serialization);
 
-        if (SfDataType.INTEGER != item.getType()) {
-            throw new IllegalArgumentException("not a IntegerItem (was " + item.getClass().getSimpleName() + ")");
-        }
-
-        long amountOfFoo = ((IntegerItem) item).get();
-
+        long amountOfFoo = item.longValue();
         if (amountOfFoo < 0 || amountOfFoo > 10) {
             throw new IllegalArgumentException("invalid amountOfFoo (was " + amountOfFoo + ")");
         }
 
-        Item<?> fooURLParam = item.getParams().get("foourl");
-        if (fooURLParam != null && SfDataType.INTEGER != item.getType()) {
-            throw new IllegalArgumentException("foourl not a StringItem (was " + fooURLParam.getClass().getSimpleName() + ")");
-        }
+        Item<?> fooURLParam = item.params().get("foourl");
 
         URI url = null;
         if (fooURLParam != null) {
-            url = URI.create(((StringItem) fooURLParam).get());
+            url = URI.create(fooURLParam.stringValue());
             if (! url.isAbsolute()) {
                 url = baseUri.resolve(url);
             }

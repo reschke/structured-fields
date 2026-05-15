@@ -111,7 +111,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 

@@ -44,7 +44,7 @@ public class ParserAPITests {
         Item<?> parsed =  Parser.parseItem("\"123\"; a=1");
         assertEquals(StringItem.class, parsed.getClass());
         assertEquals("123", parsed.get());
-        assertEquals(";a=1", parsed.getParams().serialize());
+        assertEquals(";a=1", parsed.params().serialize());
     }
 
     @Test

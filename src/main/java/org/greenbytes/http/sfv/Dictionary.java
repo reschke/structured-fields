@@ -89,7 +89,7 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
 
             sb.append(name);
             if (Boolean.TRUE.equals(dict.get())) {
-                dict.getParams().serializeTo(sb);
+                dict.params().serializeTo(sb);
             } else {
                 sb.append("=");
                 dict.serializeTo(sb);

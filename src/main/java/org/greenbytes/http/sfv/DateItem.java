@@ -53,7 +53,7 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
