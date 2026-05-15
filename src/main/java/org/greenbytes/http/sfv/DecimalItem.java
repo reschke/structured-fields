@@ -145,13 +145,8 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     }
 
     @Override
-    public long getAsLong() {
-        return value;
-    }
-
-    @Override
     public double doubleValue() {
-        return value;
+        return (double) value / 1000;
     }
 
     @Override

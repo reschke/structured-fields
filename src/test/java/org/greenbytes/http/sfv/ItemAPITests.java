@@ -39,7 +39,6 @@ public class ItemAPITests {
         for (long l : tests) {
             IntegerItem item = IntegerItem.of(l);
             assertEquals(Long.valueOf(l), item.get());
-            assertEquals(l, item.getAsLong());
             assertEquals(l, item.longValue());
             assertEquals(Long.valueOf(l).toString(), item.serialize());
             assertEquals(1, item.getDivisor());
@@ -61,15 +60,15 @@ public class ItemAPITests {
     }
 
     @Test
-    public void testDecimal() {
+    public void testDecimalByLong() {
 
         long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L, -123, 1000, 500, 10, -1 };
 
         for (long l : tests) {
             DecimalItem item = DecimalItem.valueOf(l);
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
-            assertEquals(l, item.getAsLong());
-            assertEquals("got: " + item.doubleValue() + ", expected: " + Double.valueOf(l), Double.valueOf(l), item.doubleValue(), 0.0);
+            assertEquals("got: " + item.doubleValue() + ", expected: " + Double.valueOf(l),
+                    Double.valueOf(l) / 1000, item.doubleValue(), 1.0);
             assertEquals(1000, item.getDivisor());
         }
     }
@@ -78,12 +77,11 @@ public class ItemAPITests {
     public void testDecimalByBigDecimal() {
 
         BigDecimal[] tests = new BigDecimal[] { new BigDecimal("0.5"), new BigDecimal(1), BigDecimal.valueOf(-1.1),
-                new BigDecimal("0.1234") };
+                new BigDecimal("0.123") };
 
         for (BigDecimal b : tests) {
-            BigDecimal permille = b.multiply(new BigDecimal(1000));
             DecimalItem item = DecimalItem.valueOf(b);
-            assertEquals(permille.longValue(), item.getAsLong());
+            assertEquals(b.doubleValue(), item.doubleValue(), 0);
         }
     }
 

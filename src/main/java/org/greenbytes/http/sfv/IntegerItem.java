@@ -85,11 +85,6 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     @Override
-    public long getAsLong() {
-        return value;
-    }
-
-    @Override
     public long longValue() {
         return value;
     }

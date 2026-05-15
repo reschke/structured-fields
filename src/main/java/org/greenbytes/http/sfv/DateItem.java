@@ -89,11 +89,6 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
-    public long getAsLong() {
-        return value;
-    }
-
-    @Override
     public int getDivisor() {
         return 1;
     }
