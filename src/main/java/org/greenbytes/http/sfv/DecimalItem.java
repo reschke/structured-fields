@@ -13,9 +13,8 @@ import java.util.function.Function;
  * as {@code long} with value {@code 500}. The only difference to
  * {@link IntegerItem} is that {@link #get()} will return a {@link BigDecimal},
  * and that the implied divisor is taken into account when serializing the
- * value. {@link #getAsLong()} provides access to the raw value when the
- * overhead of {@link BigDecimal} is not needed.
- * 
+ * value.
+ *
  * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#decimal">Section
  *      3.3.2 of RFC 9651</a>
  */
