@@ -28,6 +28,12 @@ jobs:
       - name: Build + test + JaCoCo report
         run: mvn clean verify
 
+      - name: Generate coverage badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          badges-directory: site
+
       - name: Prepare coverage site
         run: |
           mkdir -p site
