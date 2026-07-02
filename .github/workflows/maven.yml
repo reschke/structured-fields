@@ -36,8 +36,9 @@ jobs:
 
       - name: Prepare coverage site
         run: |
-          mkdir -p site
-          cp -r target/site/jacoco site/coverage
+          find target
+          mkdir -p site/coverage
+          cp -rv target/site/jacoco/* site/coverage
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
