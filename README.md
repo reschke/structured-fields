@@ -12,8 +12,8 @@ A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 - https://greenbytes.de/tech/specs/rfc9651.html
 - https://www.rfc-editor.org/rfc/rfc9651.html
 - https://github.com/httpwg/structured-header-tests
-- API docs: https://reschke.github.io/structured-fields/apidocs/
-- Coverage: https://reschke.github.io/structured-fields/coverage/
+- https://reschke.github.io/structured-fields/apidocs/
+- https://reschke.github.io/structured-fields/coverage/
 
 ## Minimal Example
 
