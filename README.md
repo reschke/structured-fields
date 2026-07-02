@@ -13,6 +13,7 @@ A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 - https://www.rfc-editor.org/rfc/rfc9651.html
 - https://github.com/httpwg/structured-header-tests
 - API docs: https://reschke.github.io/structured-fields/apidocs/
+- Coverage: https://reschke.github.io/structured-fields/coverage/
 
 ## Minimal Example
 
@@ -86,8 +87,3 @@ In the mid-term, this code might transition to the Apache HTTP Components projec
 ![Java CI with Maven](https://github.com/reschke/structured-fields/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![MvnRepository](https://badges.mvnrepository.com/badge/org.greenbytes.http/structured-fields/badge.svg?label=MvnRepository)](https://mvnrepository.com/artifact/org.greenbytes.http/structured-fields)
 [![javadoc](https://javadoc.io/badge2/org.greenbytes.http/structured-fields/javadoc.svg)](https://javadoc.io/doc/org.greenbytes.http/structured-fields) 
-![Coverage](https://img.shields.io/endpoint?url=https://reschke.github.io/structured-fields/coverage/badge.json)
-
-
-# test jacoco (2)
-
