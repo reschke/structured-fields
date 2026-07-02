@@ -29,68 +29,10 @@ jobs:
         run: mvn clean verify
 
       - name: Generate coverage badge
-        run: |
-          python3 <<'PY'
-          import csv
-          from pathlib import Path
-          from xml.sax.saxutils import escape
-      
-          csv_file = Path("target/site/jacoco/jacoco.csv")
-      
-          covered = missed = 0
-          with csv_file.open() as f:
-              for row in csv.DictReader(f):
-                  covered += int(row["LINE_COVERED"])
-                  missed += int(row["LINE_MISSED"])
-      
-          pct = 100.0 * covered / (covered + missed)
-      
-          if pct >= 90:
-              color = "#4c1"
-          elif pct >= 80:
-              color = "#97ca00"
-          elif pct >= 70:
-              color = "#dfb317"
-          elif pct >= 60:
-              color = "#fe7d37"
-          else:
-              color = "#e05d44"
-      
-          left = "coverage"
-          right = f"{pct:.1f}%"
-      
-          left_width = 9 + 7 * len(left)
-          right_width = 9 + 7 * len(right)
-          total_width = left_width + right_width
-      
-          svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20">
-            <linearGradient id="b" x2="0" y2="100%">
-              <stop offset="0" stop-color="#fff" stop-opacity=".7"/>
-              <stop offset=".1" stop-color="#aaa" stop-opacity=".1"/>
-              <stop offset=".9" stop-color="#000" stop-opacity=".3"/>
-              <stop offset="1" stop-color="#000" stop-opacity=".5"/>
-            </linearGradient>
-            <mask id="a">
-              <rect width="{total_width}" height="20" rx="3" fill="#fff"/>
-            </mask>
-            <g mask="url(#a)">
-              <rect width="{left_width}" height="20" fill="#555"/>
-              <rect x="{left_width}" width="{right_width}" height="20" fill="{color}"/>
-              <rect width="{total_width}" height="20" fill="url(#b)"/>
-            </g>
-            <g fill="#fff" text-anchor="middle"
-               font-family="DejaVu Sans,Verdana,Geneva,sans-serif"
-               font-size="11">
-              <text x="{left_width/2}" y="15">{escape(left)}</text>
-              <text x="{left_width + right_width/2}" y="15">{escape(right)}</text>
-            </g>
-          </svg>
-          '''
-      
-          Path("site").mkdir(exist_ok=True)
-          Path("site/jacoco.svg").write_text(svg)
-          print(f"Coverage: {pct:.1f}%")
-          PY
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          badges-directory: site
 
       - name: Prepare coverage site
         run: |
