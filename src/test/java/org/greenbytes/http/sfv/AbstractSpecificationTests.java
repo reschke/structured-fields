@@ -110,14 +110,13 @@ public abstract class AbstractSpecificationTests {
     }
 
     public Type<?> parse() {
-        Parser parser = new Parser(p.raw);
         switch (p.header_type) {
             case "item":
-                return parser.parseItem();
+                return Item.parse(p.raw);
             case "list":
-                return parser.parseList();
+                return SfList.parse(p.raw);
             case "dictionary":
-                return parser.parseDictionary();
+                return Dictionary.parse(p.raw);
             default:
                 fail("unsupported header type");
                 return null;

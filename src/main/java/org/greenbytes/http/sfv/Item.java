@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * Common  {@linkplain Item} methods.
@@ -22,6 +23,13 @@ public interface Item<T> extends ListElement<T>, Parameterizable<T> {
     }
 
     /**
+     * @see #parse(String...)
+     */
+    static Item<?> parse(List<String> input) {
+        return new Parser(input).parseItem();
+    }
+
+    /**
      * Implementation of "Parsing an Item"
      *
      * @param input values of file values.
@@ -30,7 +38,8 @@ public interface Item<T> extends ListElement<T>, Parameterizable<T> {
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-item">Section
      *      4.2.3 of RFC 9651</a>
-     */    static Item<?> parse(String... input) {
+     */
+    static Item<?> parse(String... input) {
         return new Parser(input).parseItem();
     }
 

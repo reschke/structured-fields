@@ -28,6 +28,13 @@ public class SfList implements Type<List<ListElement<?>>> {
     /**
      * @see #parse(String...)
      */
+    public static SfList parse(List<String> input) {
+        return new Parser(input).parseList();
+    }
+
+    /**
+     * @see #parse(String...)
+     */
     public static SfList parse(String input) {
         return new Parser(input).parseList();
     }

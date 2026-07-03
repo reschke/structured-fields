@@ -2,6 +2,7 @@ package org.greenbytes.http.sfv;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -30,6 +31,13 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
      * @see #parse(String...)
      */
     public static Dictionary parse(String input) {
+        return new Parser(input).parseDictionary();
+    }
+
+    /**
+     * @see #parse(String...)
+     */
+    public static Dictionary parse(List<String> input) {
         return new Parser(input).parseDictionary();
     }
 
