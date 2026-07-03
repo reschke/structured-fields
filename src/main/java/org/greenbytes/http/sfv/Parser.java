@@ -674,19 +674,19 @@ public class Parser {
     /**
      * Implementation of "Parsing a List"
      *
-     * @return result of parse as {@link OuterList}.
+     * @return result of parse as {@link SfList}.
      *
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public OuterList parseList() {
+    public SfList parseList() {
         assertNotFinished();
         removeLeadingSP();
         List<ListElement<?>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
-        return OuterList.of(result);
+        return SfList.of(result);
     }
 
     /**
@@ -733,17 +733,17 @@ public class Parser {
      *
      * @param input
      *            {@link String} to parse.
-     * @return result of parse as {@link OuterList}.
+     * @return result of parse as {@link SfList}.
      *
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public static OuterList parseList(String input) {
+    public static SfList parseList(String input) {
         Parser p = new Parser(input);
         List<ListElement<?>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
-        return OuterList.of(result);
+        return SfList.of(result);
     }
 
     /**

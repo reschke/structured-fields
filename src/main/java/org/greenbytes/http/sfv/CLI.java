@@ -35,7 +35,7 @@ public class CLI {
 
         out.println();
         try {
-            OuterList list = OuterList.parse(args);
+            SfList list = SfList.parse(args);
             dump(out, "List", list);
             passed += 1;
         } catch (ParseException ex) {

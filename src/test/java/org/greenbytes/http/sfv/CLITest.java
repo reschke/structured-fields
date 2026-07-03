@@ -19,7 +19,7 @@ public class CLITest extends TestCase {
         // parse failure
         assertTrue(output.contains("Item: >>foo,bar<<"));
         // parse success
-        assertTrue(output.contains("List: foo, bar (OuterList)"));
+        assertTrue(output.contains("List: foo, bar (SfList)"));
         assertTrue(output.contains("Dict: foo, bar (Dictionary)"));
     }
 

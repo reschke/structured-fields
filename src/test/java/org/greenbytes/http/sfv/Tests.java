@@ -203,9 +203,9 @@ public class Tests {
         tests.put("@12345, 123;created=@-1, 12.3", new Object[] { 12345L, EMPTY, 123L, ";created=@-1", BigDecimal.valueOf(12300, 3), EMPTY });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
-            OuterList list = Parser.parseList(e.getKey());
+            SfList list = Parser.parseList(e.getKey());
             Object[] expected = e.getValue();
-            assertTrue(list instanceof OuterList);
+            assertTrue(list instanceof SfList);
             assertEquals("unexpected list length for: " + e.getKey(), list.get().size(), expected.length / 2);
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
@@ -277,7 +277,7 @@ public class Tests {
 
         for (String[] t : tests) {
             try {
-                OuterList.parse(t);
+                SfList.parse(t);
                 fail("should fail");
             } catch (IllegalArgumentException ex) {
             }

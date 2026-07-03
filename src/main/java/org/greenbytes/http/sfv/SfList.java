@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
  * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#list">Section 3.1
  *      of RFC 9651</a>
  */
-public class OuterList implements Type<List<ListElement<?>>> {
+public class SfList implements Type<List<ListElement<?>>> {
 
     private final List<ListElement<?>> value;
 
-    private OuterList(List<ListElement<?>> value) {
+    private SfList(List<ListElement<?>> value) {
         this.value = Objects.requireNonNull(value, "value must not be null");
     }
 
@@ -28,7 +28,7 @@ public class OuterList implements Type<List<ListElement<?>>> {
     /**
      * @see #parse(String...)
      */
-    public static OuterList parse(String input) {
+    public static SfList parse(String input) {
         return new Parser(input).parseList();
     }
 
@@ -36,48 +36,48 @@ public class OuterList implements Type<List<ListElement<?>>> {
      * Implementation of "Parsing a List"
      *
      * @param input values of field values.
-     * @return result of parse as {@link OuterList}.
+     * @return result of parse as {@link SfList}.
      *
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public static OuterList parse(String... input) {
+    public static SfList parse(String... input) {
         return new Parser(input).parseList();
     }
 
     /**
-     * Creates an {@link OuterList} instance representing the specified
+     * Creates an {@link SfList} instance representing the specified
      * {@linkplain Object} values after best-effort conversion to {@linkplain Item}.
      *
      * @param values {@link Object}s to populate the list with
-     * @return a {@link OuterList} representing {@code values}.
+     * @return a {@link SfList} representing {@code values}.
      */
-    public static OuterList valueOf(Object... values) {
+    public static SfList valueOf(Object... values) {
         return of(Arrays.stream(values).map(Utils::asListElement).collect(Collectors.toList()));
     }
 
     /**
-     * Creates an {@link OuterList} instance representing the specified
+     * Creates an {@link SfList} instance representing the specified
      * {@linkplain List} value.
      *
      * @param value
      *            a {@code List<Item>} value.
-     * @return a {@link OuterList} representing {@code value}.
+     * @return a {@link SfList} representing {@code value}.
      */
-    public static OuterList of(List<ListElement<?>> value) {
-        return new OuterList(value);
+    public static SfList of(List<ListElement<?>> value) {
+        return new SfList(value);
     }
 
     /**
-     * Creates an {@link OuterList} instance representing the specified
+     * Creates an {@link SfList} instance representing the specified
      * {@code ListElement<Item>} values.
      *
      * @param values
      *            {@code ListItem<Item>} values.
-     * @return a {@link OuterList} representing {@code values}.
+     * @return a {@link SfList} representing {@code values}.
      */
-    public static OuterList of(ListElement<?>... values) {
+    public static SfList of(ListElement<?>... values) {
         return of(Arrays.stream(values).collect(Collectors.toList()));
     }
 
@@ -119,10 +119,10 @@ public class OuterList implements Type<List<ListElement<?>>> {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof OuterList)) {
+        if (!(o instanceof SfList)) {
             return false;
         } else {
-            OuterList list = (OuterList) o;
+            SfList list = (SfList) o;
             return Objects.equals(value, list.value);
         }
     }

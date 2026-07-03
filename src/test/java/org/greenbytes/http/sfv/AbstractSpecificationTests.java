@@ -262,10 +262,10 @@ public abstract class AbstractSpecificationTests {
             out.append("~~~\n");
             if (p.expected_value instanceof JsonArray) {
                 JsonArray array = (JsonArray) p.expected_value;
-                if (result instanceof OuterList) {
+                if (result instanceof SfList) {
                     for (int i = 0; i < array.size(); i++) {
                         JsonValue m = array.get(i);
-                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) result).get().get(i));
+                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((SfList) result).get().get(i));
                     }
                 } else if (result instanceof Dictionary) {
                     int i = 0;

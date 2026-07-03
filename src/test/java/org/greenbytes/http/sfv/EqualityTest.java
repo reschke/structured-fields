@@ -174,9 +174,9 @@ public class EqualityTest {
         BooleanItem b = BooleanItem.of(true);
         DecimalItem d = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
 
-        OuterList l1 = OuterList.of((Arrays.asList(b, d)));
-        OuterList l2 = OuterList.of((Arrays.asList(b, d)));
-        OuterList l3 = OuterList.of((Arrays.asList(b, d, b)));
+        SfList l1 = SfList.of((Arrays.asList(b, d)));
+        SfList l2 = SfList.of((Arrays.asList(b, d)));
+        SfList l3 = SfList.of((Arrays.asList(b, d, b)));
 
         assertNotSame(l1, l2);
         assertEquals(l1, l2);
