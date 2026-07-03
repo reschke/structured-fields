@@ -24,6 +24,20 @@ public class CLITest extends TestCase {
     }
 
     @Test
+    public void testCLIStringWithParam() {
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(os);
+        int ret = CLI.cli(out, "\"string\";x=y");
+        assertEquals(0, ret);
+        String output = os.toString();
+        // parse failure
+        assertTrue(output.contains("Dict: >>"));
+        // parse success
+        assertTrue(output, output.contains("Item: \"string\""));
+        assertTrue(output.contains(";x=y (Parameters)"));
+    }
+
+    @Test
     public void testCLILineBoundary() {
         OutputStream os = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(os);
