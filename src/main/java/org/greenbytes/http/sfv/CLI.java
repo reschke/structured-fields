@@ -35,8 +35,7 @@ public class CLI {
 
         out.println();
         try {
-            Parser parser = new Parser(args);
-            OuterList list = parser.parseList();
+            OuterList list = OuterList.parse(args);
             dump(out, "List", list);
             passed += 1;
         } catch (ParseException ex) {

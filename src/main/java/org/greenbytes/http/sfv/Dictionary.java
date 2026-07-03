@@ -36,7 +36,7 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
     /**
      * Implementation of "Parsing a Dictionary"
      *
-     * @param input values of file values.
+     * @param input values of field values.
      * @return result of parse as {@link Dictionary}.
      *
      * @see <a href=

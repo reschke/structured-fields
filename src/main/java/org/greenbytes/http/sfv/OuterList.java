@@ -26,6 +26,27 @@ public class OuterList implements Type<List<ListElement<?>>> {
     }
 
     /**
+     * @see #parse(String...)
+     */
+    public static OuterList parse(String input) {
+        return new Parser(input).parseList();
+    }
+
+    /**
+     * Implementation of "Parsing a List"
+     *
+     * @param input values of field values.
+     * @return result of parse as {@link OuterList}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
+     *      4.2.1 of RFC 9651</a>
+     */
+    public static OuterList parse(String... input) {
+        return new Parser(input).parseList();
+    }
+
+    /**
      * Creates an {@link OuterList} instance representing the specified
      * {@linkplain Object} values after best-effort conversion to {@linkplain Item}.
      *
