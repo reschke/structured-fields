@@ -46,8 +46,7 @@ public class CLI {
 
         out.println();
         try {
-            Parser parser = new Parser(args);
-            Dictionary dict = parser.parseDictionary();
+            Dictionary dict = Dictionary.parse(args);
             dump(out, "Dict", dict);
             passed += 1;
         } catch (ParseException ex) {

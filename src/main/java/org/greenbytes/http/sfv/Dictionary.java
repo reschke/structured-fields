@@ -27,6 +27,27 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
     }
 
     /**
+     * @see #parse(String...)
+     */
+    public static Dictionary parse(String input) {
+        return new Parser(input).parseDictionary();
+    }
+
+    /**
+     * Implementation of "Parsing a Dictionary"
+     *
+     * @param input values of file values.
+     * @return result of parse as {@link Dictionary}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-dictionary">Section
+     *      4.2.2 of RFC 9651</a>
+     */
+    public static Dictionary parse(String... input) {
+        return new Parser(input).parseDictionary();
+    }
+
+    /**
      * Creates a {@link Dictionary} instance representing the specified
      * {@code Map<String, Item>} value.
      * <p>

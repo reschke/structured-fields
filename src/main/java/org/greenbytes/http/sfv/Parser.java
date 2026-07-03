@@ -698,7 +698,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-dictionary">Section
      *      4.2.2 of RFC 9651</a>
      */
-    public Dictionary parseDictionary() {
+    protected Dictionary parseDictionary() {
         assertNotFinished();
         removeLeadingSP();
         Dictionary result = internalParseDictionary();
