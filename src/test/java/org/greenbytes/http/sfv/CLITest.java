@@ -27,14 +27,14 @@ public class CLITest extends TestCase {
     public void testCLIStringWithParam() {
         OutputStream os = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(os);
-        int ret = CLI.cli(out, "\"string\";x=y");
+        int ret = CLI.cli(out, "\"string\";date=@0");
         assertEquals(0, ret);
         String output = os.toString();
         // parse failure
         assertTrue(output.contains("Dict: >>"));
         // parse success
         assertTrue(output, output.contains("Item: \"string\""));
-        assertTrue(output.contains(";x=y (Parameters)"));
+        assertTrue(output.contains(";date=@0 (Parameters)"));
     }
 
     @Test
