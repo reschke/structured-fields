@@ -261,8 +261,7 @@ public class Tests {
 
     @Test
     public void parserAPI() {
-        Parser p = new Parser("a=?0, b, c; foo=bar");
-        Dictionary d = p.parseDictionary();
+        Dictionary d = Dictionary.parse("a=?0, b, c; foo=bar");
         for (Map.Entry<String, ListElement<?>> e : d.get().entrySet()) {
             String key = e.getKey();
             Parameterizable<?> item = e.getValue();
@@ -277,9 +276,8 @@ public class Tests {
         String[][] tests = new String[][] { new String[] { "\"foo", "bar\"" }, new String[] { "a", "", "b" } };
 
         for (String[] t : tests) {
-            Parser p = new Parser(t);
             try {
-                p.parseList();
+                OuterList.parse(t);
                 fail("should fail");
             } catch (IllegalArgumentException ex) {
             }
