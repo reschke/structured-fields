@@ -15,6 +15,26 @@ public interface Item<T> extends ListElement<T>, Parameterizable<T> {
     Item<T> withParams(Parameters params);
 
     /**
+     * @see #parse(String...)
+     */
+    static Item<?> parse(String input) {
+        return new Parser(input).parseItem();
+    }
+
+    /**
+     * Implementation of "Parsing an Item"
+     *
+     * @param input values of file values.
+     * @return result of parse as {@link Item}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-item">Section
+     *      4.2.3 of RFC 9651</a>
+     */    static Item<?> parse(String... input) {
+        return new Parser(input).parseItem();
+    }
+
+    /**
      * @return the ByteBuffer value of this item if and only if of type {@linkplain SfDataType#BOOLEAN}
      * @throws UnsupportedOperationException otherwise
      */

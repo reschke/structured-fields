@@ -716,7 +716,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-item">Section
      *      4.2.3 of RFC 9651</a>
      */
-    public Item<?> parseItem() {
+    protected Item<?> parseItem() {
         assertNotFinished();
         removeLeadingSP();
         Item<?> result = internalParseItem();

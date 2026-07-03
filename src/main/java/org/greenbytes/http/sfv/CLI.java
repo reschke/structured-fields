@@ -26,8 +26,7 @@ public class CLI {
 
         out.println();
         try {
-            Parser parser = new Parser(args);
-            Item<?> item = parser.parseItem();
+            Item<?> item = Item.parse(args);
             dump(out, "Item", item);
             passed += 1;
         } catch (ParseException ex) {
