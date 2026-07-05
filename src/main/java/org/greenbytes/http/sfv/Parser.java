@@ -8,7 +8,6 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -38,18 +37,6 @@ public class Parser {
      */
     public Parser(String input) {
         this(Collections.singletonList(Objects.requireNonNull(input, "input must not be null")));
-    }
-
-    /**
-     * Creates {@link Parser} for the given input.
-     * 
-     * @param input
-     *            field lines
-     * @throws ParseException
-     *             for non-ASCII characters
-     */
-    public Parser(String... input) {
-        this(Arrays.asList(input));
     }
 
     /**
