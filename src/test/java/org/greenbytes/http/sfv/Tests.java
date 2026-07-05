@@ -303,10 +303,10 @@ public class Tests {
         }
 
         try {
-            new Parser(Arrays.asList("x", null, "y"));
+            Dictionary.parse(Arrays.asList("a", null, "b"));
             fail("should not get here");
         } catch (NullPointerException ex) {
             assertTrue(ex.getMessage().contains("must not be null"));
         }
-}
+    }
 }
