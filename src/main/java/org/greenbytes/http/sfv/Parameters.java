@@ -116,6 +116,7 @@ public class Parameters implements Map<String, Item<?>> {
         } else {
             return sb;
         }
+        return sb;
     }
 
     private static Map<String, Item<?>> checkAndTransformMap(Map<String, Object> map) {

@@ -118,6 +118,20 @@
         "raw": ["%\"foo", "bar\""],
         "header_type": "item",
         "can_fail": true,
-        "expected": [{"__type": "displaystring", "value": "foo, bar"}, []]
+        "expected": [{"__type": "displaystring", "value": "foo, bar"}, []],
+        "canonical": ["%\"foo, bar\""]
+    },
+    {
+        "name": "truncated display string escape (zero digits)",
+        "raw": ["%\"%\""],
+        "header_type": "item",
+        "must_fail": true
+    },
+    {
+        "name": "over-encoded display string",
+        "raw": ["%\"%61\""],
+        "header_type": "item",
+        "expected": [{"__type": "displaystring", "value": "a"}, []],
+        "canonical": ["%\"a\""]
     }
 ]
