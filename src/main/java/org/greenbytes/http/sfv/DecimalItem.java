@@ -13,9 +13,8 @@ import java.util.function.Function;
  * as {@code long} with value {@code 500}. The only difference to
  * {@link IntegerItem} is that {@link #get()} will return a {@link BigDecimal},
  * and that the implied divisor is taken into account when serializing the
- * value. {@link #getAsLong()} provides access to the raw value when the
- * overhead of {@link BigDecimal} is not needed.
- * 
+ * value.
+ *
  * @see <a href= "https://www.rfc-editor.org/rfc/rfc9651.html#decimal">Section
  *      3.3.2 of RFC 9651</a>
  */
@@ -34,6 +33,11 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         }
         this.value = value;
         this.params = Objects.requireNonNull(params, "params must not be null");
+    }
+
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DECIMAL;
     }
 
     /**
@@ -61,17 +65,34 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return valueOf(permille.longValue());
     }
 
+    /**
+     * Creates a {@link DecimalItem} instance representing the specified
+     * {@code Double} value, with potential rounding.
+     *
+     * @param value
+     *            a {@code Double} value.
+     * @return a {@link DecimalItem} representing {@code value}.
+     */
+    public static DecimalItem valueOf(double value) {
+        return valueOf(BigDecimal.valueOf(value));
+    }
+
     @Override
     public DecimalItem withParams(Parameters params) {
         return new DecimalItem(this.value, Objects.requireNonNull(params, "params must not be null"));
     }
 
     @Override
-    public Parameters getParams() {
+    public DecimalItem withParamValuesOf(Object... obs) {
+        return new DecimalItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
+    public Parameters params() {
         return params;
     }
 
-    public StringBuilder serializeToNoParams(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
 
         String sign = value < 0 ? "-" : "";
 
@@ -105,6 +126,7 @@ public class DecimalItem implements NumberItem<BigDecimal> {
         return serializeTo(new StringBuilder(20)).toString();
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
@@ -122,8 +144,8 @@ public class DecimalItem implements NumberItem<BigDecimal> {
     }
 
     @Override
-    public long getAsLong() {
-        return value;
+    public double doubleValue() {
+        return (double) value / 1000;
     }
 
     @Override

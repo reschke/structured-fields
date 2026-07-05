@@ -19,15 +19,20 @@ public class TokenItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.TOKEN;
+    }
+
     /**
      * Creates a {@link TokenItem} instance representing the specified
      * {@code String} value.
-     * 
+     *
      * @param value
      *            a {@code String} value.
      * @return a {@link TokenItem} representing {@code value}.
      */
-    public static TokenItem valueOf(String value) {
+    public static TokenItem of(String value) {
         return new TokenItem(value, Parameters.EMPTY);
     }
 
@@ -37,7 +42,12 @@ public class TokenItem implements Item<String> {
     }
 
     @Override
-    public Parameters getParams() {
+    public TokenItem withParamValuesOf(Object... obs) {
+        return new TokenItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
+    public Parameters params() {
         return params;
     }
 
@@ -53,6 +63,7 @@ public class TokenItem implements Item<String> {
         return serializeTo(new StringBuilder()).toString();
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
@@ -64,6 +75,11 @@ public class TokenItem implements Item<String> {
 
     @Override
     public String get() {
+        return this.value;
+    }
+
+    @Override
+    public String tokenValue() {
         return this.value;
     }
 

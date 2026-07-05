@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -17,13 +18,17 @@ public class ItemAPITests {
     @Test
     public void testBoolean() {
 
-        BooleanItem b0 = BooleanItem.valueOf(false);
+        BooleanItem b0 = BooleanItem.of(false);
         assertEquals(false, b0.get());
         assertEquals("?0", b0.serialize());
+        assertEquals(false, b0.booleanValue());
 
-        BooleanItem b1 = BooleanItem.valueOf(true);
+        BooleanItem b1 = BooleanItem.of(true);
         assertEquals(true, b1.get());
         assertEquals("?1", b1.serialize());
+
+        StringItem s = StringItem.of("");
+        assertThrows(UnsupportedOperationException.class, () -> s.booleanValue());
     }
 
     @Test
@@ -32,9 +37,9 @@ public class ItemAPITests {
         long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L };
 
         for (long l : tests) {
-            IntegerItem item = IntegerItem.valueOf(l);
+            IntegerItem item = IntegerItem.of(l);
             assertEquals(Long.valueOf(l), item.get());
-            assertEquals(l, item.getAsLong());
+            assertEquals(l, item.longValue());
             assertEquals(Long.valueOf(l).toString(), item.serialize());
             assertEquals(1, item.getDivisor());
         }
@@ -47,7 +52,7 @@ public class ItemAPITests {
 
         for (Long l : tests) {
             try {
-                IntegerItem item = IntegerItem.valueOf(l);
+                IntegerItem item = IntegerItem.of(l);
                 fail("should fail for " + l + " but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
@@ -55,14 +60,15 @@ public class ItemAPITests {
     }
 
     @Test
-    public void testDecimal() {
+    public void testDecimalByLong() {
 
         long[] tests = new long[] { 0L, -0L, 999999999999999L, -999999999999999L, -123, 1000, 500, 10, -1 };
 
         for (long l : tests) {
             DecimalItem item = DecimalItem.valueOf(l);
             assertEquals(BigDecimal.valueOf(l, 3), item.get());
-            assertEquals(l, item.getAsLong());
+            assertEquals("got: " + item.doubleValue() + ", expected: " + Double.valueOf(l),
+                    Double.valueOf(l) / 1000, item.doubleValue(), 1.0);
             assertEquals(1000, item.getDivisor());
         }
     }
@@ -71,12 +77,11 @@ public class ItemAPITests {
     public void testDecimalByBigDecimal() {
 
         BigDecimal[] tests = new BigDecimal[] { new BigDecimal("0.5"), new BigDecimal(1), BigDecimal.valueOf(-1.1),
-                new BigDecimal("0.1234") };
+                new BigDecimal("0.123") };
 
         for (BigDecimal b : tests) {
-            BigDecimal permille = b.multiply(new BigDecimal(1000));
             DecimalItem item = DecimalItem.valueOf(b);
-            assertEquals(permille.longValue(), item.getAsLong());
+            assertEquals(b.doubleValue(), item.doubleValue(), 0);
         }
     }
 
@@ -108,10 +113,9 @@ public class ItemAPITests {
         String[] tests = new String[] { "", "'", "\"", "\\" };
 
         for (String s : tests) {
-            StringItem item = StringItem.valueOf(s);
+            StringItem item = StringItem.of(s);
             assertEquals(s, item.get());
-            // TODO: figure out how to check the serialization without copying
-            // the actual impl code
+            assertEquals(s, item.stringValue());
         }
     }
 
@@ -122,7 +126,7 @@ public class ItemAPITests {
 
         for (String s : tests) {
             try {
-                StringItem item = StringItem.valueOf(s);
+                StringItem item = StringItem.of(s);
                 fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
@@ -135,10 +139,10 @@ public class ItemAPITests {
         String[] tests = new String[] { "*", "x", "*-/", "foo.bar-qux" };
 
         for (String s : tests) {
-            TokenItem item = TokenItem.valueOf(s);
+            TokenItem item = TokenItem.of(s);
             assertEquals(s, item.get());
-            // TODO: figure out how to check the serialization without copying
-            // the actual impl code
+            assertEquals(SfDataType.TOKEN, item.getType());
+            assertEquals(s, item.tokenValue());
         }
     }
 
@@ -149,7 +153,7 @@ public class ItemAPITests {
 
         for (String s : tests) {
             try {
-                TokenItem item = TokenItem.valueOf(s);
+                TokenItem item = TokenItem.of(s);
                 fail("should fail for '" + s + "' but got '" + item.get() + "'");
             } catch (IllegalArgumentException expected) {
             }
@@ -166,6 +170,7 @@ public class ItemAPITests {
             ByteSequenceItem item = ByteSequenceItem.valueOf(tests[i]);
             assertArrayEquals(tests[i], item.get().array());
             assertEquals(results[i], item.serialize());
+            assertArrayEquals(tests[i], item.byteBufferValue().array());
         }
     }
 
@@ -181,15 +186,8 @@ public class ItemAPITests {
 
     @Test
     public void testParameters() {
+        Parameters p = createParams1();
 
-        Map<String, Object> m = new LinkedHashMap<>();
-        m.put("*", "star");
-        m.put("i", 1);
-        m.put("l", 2L);
-        m.put("b", false);
-        m.put("o", new byte[0]);
-        m.put("d", new BigDecimal("0.1"));
-        Parameters p = Parameters.valueOf(m);
         assertEquals(StringItem.class, p.get("*").getClass());
         assertEquals(IntegerItem.class, p.get("i").getClass());
         assertEquals(IntegerItem.class, p.get("l").getClass());
@@ -199,11 +197,59 @@ public class ItemAPITests {
     }
 
     @Test
+    public void testParameters2() {
+
+        Parameters p = createParams2();
+
+        assertEquals(StringItem.class, p.get("*").getClass());
+        assertEquals(IntegerItem.class, p.get("i").getClass());
+        assertEquals(IntegerItem.class, p.get("l").getClass());
+        assertEquals(BooleanItem.class, p.get("b").getClass());
+        assertEquals(ByteSequenceItem.class, p.get("o").getClass());
+        assertEquals(DecimalItem.class, p.get("d").getClass());
+        assertEquals(DecimalItem.class, p.get("d2").getClass());
+
+        assertEquals(";*=\"star\";i=1;l=2;b=?0;o=::;d=0.155;d2=12345.0;d3=3.14", p.serialize());
+
+        Map<String, String> sermap = p.entrySet().stream().
+                collect(Collectors.toMap(Map.Entry::getKey, x -> x.getValue().serialize()));
+
+        assertEquals("?0", sermap.get("b"));
+        assertEquals("12345.0", sermap.get("d2"));
+    }
+
+    @Test
+    public void testParametersEquals() {
+        Parameters p1 = createParams1();
+        Parameters p2 = createParams2();
+        assertEquals(p1.serialize(), p2.serialize());
+        assertEquals(p1, p2);
+    }
+
+    private static Parameters createParams1() {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("*", "star");
+        m.put("i", 1);
+        m.put("l", 2L);
+        m.put("b", false);
+        m.put("o", new byte[0]);
+        m.put("d", new BigDecimal("0.155"));
+        m.put("d2", BigDecimal.valueOf(12345));
+        m.put("d3", 3.14f);
+       return Parameters.of(m);
+    }
+
+    private static Parameters createParams2() {
+        return Parameters.valueOf("*", "star", "i", 1, "l", 2L, "b", false,
+                "o", new byte[0], "d", 0.155d, "d2", BigDecimal.valueOf(12345), "d3", 3.14f);
+    }
+
+    @Test
     public void testParametersUnmodifiable() {
 
         Map<String, Object> m = new HashMap<>();
         m.put("test", "test");
-        Parameters p = Parameters.valueOf(m);
+        Parameters p = Parameters.of(m);
 
         assertThrows(
                 UnsupportedOperationException.class,
@@ -217,7 +263,7 @@ public class ItemAPITests {
         Map<String, Object> m = new LinkedHashMap<>();
         for (String key : tests) {
             m.clear();
-            m.put(key, IntegerItem.valueOf(1));
+            m.put(key, IntegerItem.of(1));
             assertThrows("should throe",
                     IllegalArgumentException.class,
                     () -> Parameters.valueOf(m));
@@ -228,13 +274,13 @@ public class ItemAPITests {
     public void testInvalidParameterValues() {
 
         Map<String, Object> itemParam = new LinkedHashMap<>();
-        itemParam.put("foo", IntegerItem.valueOf(2));
-        IntegerItem iitem = IntegerItem.valueOf(1).withParams(Parameters.valueOf(itemParam));
+        itemParam.put("foo", IntegerItem.of(2));
+        IntegerItem iitem = IntegerItem.of(1).withParams(Parameters.of(itemParam));
 
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("bar", iitem);
         try {
-            Parameters test = Parameters.valueOf(m);
+            Parameters test = Parameters.of(m);
             fail("Parameters containing non-bare Item should fail, but got: " + test.serialize());
         } catch (IllegalArgumentException expected) {
         }

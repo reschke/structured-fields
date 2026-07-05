@@ -19,15 +19,20 @@ public class StringItem implements Item<String> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.STRING;
+    }
+
     /**
-     * Creates a {@link StringItem} instance representing the specified
-     * {@code String} value.
-     * 
-     * @param value
-     *            a {@code String} value.
-     * @return a {@link StringItem} representing {@code value}.
-     */
-    public static StringItem valueOf(String value) {
+    * Creates a {@link StringItem} instance representing the specified
+    * {@code String} value.
+    *
+    * @param value
+    *            a {@code String} value.
+    * @return a {@link StringItem} representing {@code value}.
+    */
+    public static StringItem of(String value) {
         return new StringItem(value, Parameters.EMPTY);
     }
 
@@ -37,7 +42,12 @@ public class StringItem implements Item<String> {
     }
 
     @Override
-    public Parameters getParams() {
+    public StringItem withParamValuesOf(Object... obs) {
+        return new StringItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
+    public Parameters params() {
         return params;
     }
 
@@ -73,6 +83,11 @@ public class StringItem implements Item<String> {
 
     @Override
     public String get() {
+        return this.value;
+    }
+
+    @Override
+    public String stringValue() {
         return this.value;
     }
 

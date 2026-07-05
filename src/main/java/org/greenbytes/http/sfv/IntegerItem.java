@@ -25,15 +25,20 @@ public class IntegerItem implements NumberItem<Long> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.INTEGER;
+    }
+
     /**
      * Creates an {@link IntegerItem} instance representing the specified
      * {@code long} value.
-     * 
+     *
      * @param value
      *            a {@code long} value.
      * @return a {@link IntegerItem} representing {@code value}.
      */
-    public static IntegerItem valueOf(long value) {
+    public static IntegerItem of(long value) {
         return new IntegerItem(value, Parameters.EMPTY);
     }
 
@@ -43,7 +48,12 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     @Override
-    public Parameters getParams() {
+    public IntegerItem withParamValuesOf(Object... obs) {
+        return new IntegerItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
+    public Parameters params() {
         return params;
     }
 
@@ -75,7 +85,7 @@ public class IntegerItem implements NumberItem<Long> {
     }
 
     @Override
-    public long getAsLong() {
+    public long longValue() {
         return value;
     }
 

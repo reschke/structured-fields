@@ -14,7 +14,7 @@ import java.util.function.LongSupplier;
  *      "https://www.rfc-editor.org/rfc/rfc9651.html#decimal">Section
  *      3.3.2 of RFC 9651</a>
  */
-public interface NumberItem<T> extends Item<T>, LongSupplier {
+public interface NumberItem<T> extends Item<T> {
 
     /**
      * Returns the divisor to be used to obtain the actual numerical value (as

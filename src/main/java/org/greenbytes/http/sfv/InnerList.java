@@ -1,8 +1,10 @@
 package org.greenbytes.http.sfv;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Represents an Inner List.
@@ -21,21 +23,54 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.INNERLIST;
+    }
+
     /**
      * Creates an {@link InnerList} instance representing the specified
      * {@code List<Item>} value.
-     * 
+     *
      * @param value
      *            a {@code List<Item>} value.
      * @return a {@link InnerList} representing {@code value}.
      */
-    public static InnerList valueOf(List<Item<?>> value) {
+    public static InnerList of(List<Item<?>> value) {
         return new InnerList(value, Parameters.EMPTY);
+    }
+
+    /**
+     * Creates an {@link InnerList} instance representing the specified
+     * {@code Item} values.
+     *
+     * @param values
+     *            {@code Item} values.
+     * @return a {@link InnerList} representing {@code values}.
+     */
+    public static InnerList of(Item<?>... values) {
+        return of(Arrays.stream(values).collect(Collectors.toList()));
+    }
+
+    /**
+     * Creates an {@link InnerList} instance representing the specified
+     * {@linkplain Object} values after best-effort conversion to {@linkplain Item}s.
+     *
+     * @param values {@link Object}s to populate the list with
+     * @return a {@link InnerList} representing {@code values}.
+     */
+    public static InnerList valueOf(Object... values) {
+        return of(Arrays.stream(values).map(Utils::asItem).collect(Collectors.toList()));
     }
 
     @Override
     public InnerList withParams(Parameters params) {
         return new InnerList(this.value, Objects.requireNonNull(params, "params must not be null"));
+    }
+
+    @Override
+    public InnerList withParamValuesOf(Object... obs) {
+        return new InnerList(this.value, Parameters.valueOf(obs));
     }
 
     private StringBuilder serializeToNoParams(StringBuilder sb) {
@@ -59,6 +94,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
        return params.serializeTo(serializeToNoParams(sb));
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
@@ -75,7 +111,7 @@ public class InnerList implements ListElement<List<Item<?>>>, Parameterizable<Li
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 

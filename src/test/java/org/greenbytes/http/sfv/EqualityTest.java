@@ -21,56 +21,56 @@ public class EqualityTest {
         m1.put("a", "b");
         HashMap<String, Object> m2 = new LinkedHashMap<>();
         m2.put("a", "b");
-        Parameters p1 = Parameters.valueOf(m1);
-        Parameters p2 = Parameters.valueOf(m2);
+        Parameters p1 = Parameters.of(m1);
+        Parameters p2 = Parameters.of(m2);
         assertNotSame(p1, p2);
         assertEquals(p1, p2);
     }
 
     @Test
     public void testStringItemEquality() {
-        StringItem s1 = StringItem.valueOf("a");
-        StringItem s2 = StringItem.valueOf("a");
+        StringItem s1 = StringItem.of("a");
+        StringItem s2 = StringItem.of("a");
         assertNotSame(s1, s2);
         assertEquals(s1, s2);
-        StringItem s3 = StringItem.valueOf("b");
+        StringItem s3 = StringItem.of("b");
         assertNotEquals(s1, s3);
 
-        StringItem s4 = StringItem.valueOf("a").withParams(getParameters("a", "b"));
+        StringItem s4 = StringItem.of("a").withParams(getParameters("a", "b"));
         assertNotSame(s1, s4);
         assertNotEquals(s1, s4);
 
         HashMap<String, Object> m5 = new LinkedHashMap<>();
         m5.put("c", "d");
-        Parameters p5 = Parameters.valueOf(m5);
-        StringItem s5 = StringItem.valueOf("a").withParams(p5);
+        Parameters p5 = Parameters.of(m5);
+        StringItem s5 = StringItem.of("a").withParams(p5);
         assertNotSame(s4, s5);
         assertNotEquals(s4, s5);
     }
 
     @Test
     public void testTokenItemEquality() {
-        TokenItem t1 = TokenItem.valueOf("a");
-        TokenItem t = TokenItem.valueOf("a");
+        TokenItem t1 = TokenItem.of("a");
+        TokenItem t = TokenItem.of("a");
         assertNotSame(t1, t);
         assertEquals(t1, t);
-        TokenItem t3 = TokenItem.valueOf("b");
+        TokenItem t3 = TokenItem.of("b");
         assertNotEquals(t1, t3);
 
-        TokenItem t4 = TokenItem.valueOf("a").withParams(getParameters("a", "b"));
+        TokenItem t4 = TokenItem.of("a").withParams(getParameters("a", "b"));
         assertNotSame(t1, t4);
         assertNotEquals(t1, t4);
 
-        TokenItem t5 = TokenItem.valueOf("a").withParams(getParameters("c", "d"));
+        TokenItem t5 = TokenItem.of("a").withParams(getParameters("c", "d"));
         assertNotSame(t4, t5);
         assertNotEquals(t4, t5);
     }
 
     @Test
     public void testBooleanItemEquality() {
-        BooleanItem b1 = BooleanItem.valueOf(true);
-        BooleanItem b2 = BooleanItem.valueOf(true);
-        BooleanItem b3 = BooleanItem.valueOf(false);
+        BooleanItem b1 = BooleanItem.of(true);
+        BooleanItem b2 = BooleanItem.of(true);
+        BooleanItem b3 = BooleanItem.of(false);
 
         // FALSE and TRUE are singletons
         assertSame(b1, b2);
@@ -79,7 +79,7 @@ public class EqualityTest {
         assertNotSame(b1, b3);
         assertNotEquals(b1, b3);
 
-        BooleanItem b4 = BooleanItem.valueOf(false).withParams(getParameters("c", "d"));
+        BooleanItem b4 = BooleanItem.of(false).withParams(getParameters("c", "d"));
         assertNotSame(b1, b4);
         assertNotEquals(b1, b4);
     }
@@ -154,9 +154,9 @@ public class EqualityTest {
 
     @Test
     public void testIntegerItemEquality() {
-        IntegerItem i1 = IntegerItem.valueOf(1);
-        IntegerItem i2 = IntegerItem.valueOf(1);
-        IntegerItem i3 = IntegerItem.valueOf(2);
+        IntegerItem i1 = IntegerItem.of(1);
+        IntegerItem i2 = IntegerItem.of(1);
+        IntegerItem i3 = IntegerItem.of(2);
 
         assertNotSame(i1, i2);
         assertEquals(i1, i2);
@@ -171,12 +171,12 @@ public class EqualityTest {
 
     @Test
     public void testOuterListEquality() {
-        BooleanItem b = BooleanItem.valueOf(true);
+        BooleanItem b = BooleanItem.of(true);
         DecimalItem d = DecimalItem.valueOf(BigDecimal.valueOf(10.5));
 
-        OuterList l1 = OuterList.valueOf((Arrays.asList(b, d)));
-        OuterList l2 = OuterList.valueOf((Arrays.asList(b, d)));
-        OuterList l3 = OuterList.valueOf((Arrays.asList(b, d, b)));
+        SfList l1 = SfList.of((Arrays.asList(b, d)));
+        SfList l2 = SfList.of((Arrays.asList(b, d)));
+        SfList l3 = SfList.of((Arrays.asList(b, d, b)));
 
         assertNotSame(l1, l2);
         assertEquals(l1, l2);
@@ -188,6 +188,6 @@ public class EqualityTest {
     private static Parameters getParameters(String a, String b) {
         HashMap<String, Object> m = new LinkedHashMap<>();
         m.put(a, b);
-        return Parameters.valueOf(m);
+        return Parameters.of(m);
     }
 }

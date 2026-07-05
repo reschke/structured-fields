@@ -110,14 +110,13 @@ public abstract class AbstractSpecificationTests {
     }
 
     public Type<?> parse() {
-        Parser parser = new Parser(p.raw);
         switch (p.header_type) {
             case "item":
-                return parser.parseItem();
+                return Item.parse(p.raw);
             case "list":
-                return parser.parseList();
+                return SfList.parse(p.raw);
             case "dictionary":
-                return parser.parseDictionary();
+                return Dictionary.parse(p.raw);
             default:
                 fail("unsupported header type");
                 return null;
@@ -204,7 +203,7 @@ public abstract class AbstractSpecificationTests {
         }
         if (params != null) {
             assertTrue(item instanceof Parameterizable);
-            Map<String, Item<?>> result = ((Parameterizable<?>) item).getParams();
+            Map<String, Item<?>> result = ((Parameterizable<?>) item).params();
 
             if (params instanceof JsonArray) {
                 // new format
@@ -262,10 +261,10 @@ public abstract class AbstractSpecificationTests {
             out.append("~~~\n");
             if (p.expected_value instanceof JsonArray) {
                 JsonArray array = (JsonArray) p.expected_value;
-                if (result instanceof OuterList) {
+                if (result instanceof SfList) {
                     for (int i = 0; i < array.size(); i++) {
                         JsonValue m = array.get(i);
-                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((OuterList) result).get().get(i));
+                        match(out, ((JsonArray) m).get(0), ((JsonArray) m).get(1), ((SfList) result).get().get(i));
                     }
                 } else if (result instanceof Dictionary) {
                     int i = 0;

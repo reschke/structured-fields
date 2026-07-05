@@ -25,6 +25,11 @@ public class DateItem implements NumberItem<Long> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DATE;
+    }
+
     /**
      * Creates an {@link DateItem} instance representing the specified
      * {@code long} value.
@@ -43,11 +48,16 @@ public class DateItem implements NumberItem<Long> {
     }
 
     @Override
-    public Parameters getParams() {
+    public DateItem withParamValuesOf(Object... obs) {
+        return new DateItem(this.value, Parameters.valueOf(obs));
+    }
+
+    @Override
+    public Parameters params() {
         return params;
     }
 
-    public StringBuilder serializeToNoParams(StringBuilder sb) {
+    private StringBuilder serializeToNoParams(StringBuilder sb) {
         return sb.append('@').append(value);
     }
 
@@ -61,6 +71,7 @@ public class DateItem implements NumberItem<Long> {
         return serializeTo(new StringBuilder()).toString();
     }
 
+    @Override
     public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
         String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
         String classn = formatter.apply(this.getClass());
@@ -74,11 +85,6 @@ public class DateItem implements NumberItem<Long> {
 
     @Override
     public Long get() {
-        return value;
-    }
-
-    @Override
-    public long getAsLong() {
         return value;
     }
 

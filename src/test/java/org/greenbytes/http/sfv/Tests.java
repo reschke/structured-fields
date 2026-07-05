@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -203,13 +204,13 @@ public class Tests {
         tests.put("@12345, 123;created=@-1, 12.3", new Object[] { 12345L, EMPTY, 123L, ";created=@-1", BigDecimal.valueOf(12300, 3), EMPTY });
 
         for (Map.Entry<String, Object[]> e : tests.entrySet()) {
-            OuterList list = Parser.parseList(e.getKey());
+            SfList list = Parser.parseList(e.getKey());
             Object[] expected = e.getValue();
-            assertTrue(list instanceof OuterList);
+            assertTrue(list instanceof SfList);
             assertEquals("unexpected list length for: " + e.getKey(), list.get().size(), expected.length / 2);
             for (int i = 0; i < expected.length / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
-                Parameters p = list.get().get(i).getParams();
+                Parameters p = list.get().get(i).params();
                 assertEquals(expected[i * 2 + 1], p.serialize());
             }
         }
@@ -228,10 +229,10 @@ public class Tests {
             assertEquals(list.get().size(), (expected.length - 1) / 2);
             for (int i = 0; i < (expected.length - 1) / 2; i++) {
                 assertEquals(expected[i * 2], list.get().get(i).get());
-                Parameters p = list.get().get(i).getParams();
+                Parameters p = list.get().get(i).params();
                 assertEquals(expected[i * 2 + 1], p == null ? null : p.serialize());
             }
-            assertEquals(list.getParams().serialize(), expected[expected.length - 1]);
+            assertEquals(list.params().serialize(), expected[expected.length - 1]);
         }
     }
 
@@ -261,13 +262,12 @@ public class Tests {
 
     @Test
     public void parserAPI() {
-        Parser p = new Parser("a=?0, b, c; foo=bar");
-        Dictionary d = p.parseDictionary();
+        Dictionary d = Dictionary.parse("a=?0, b, c; foo=bar");
         for (Map.Entry<String, ListElement<?>> e : d.get().entrySet()) {
             String key = e.getKey();
             Parameterizable<?> item = e.getValue();
             Object value = item.get();
-            Parameters params = item.getParams();
+            Parameters params = item.params();
             System.out.println(key + " -> " + value + (params.isEmpty() ? "" : (" (" + params.serialize() + ")")));
         }
     }
@@ -277,9 +277,8 @@ public class Tests {
         String[][] tests = new String[][] { new String[] { "\"foo", "bar\"" }, new String[] { "a", "", "b" } };
 
         for (String[] t : tests) {
-            Parser p = new Parser(t);
             try {
-                p.parseList();
+                SfList.parse(Arrays.asList(t));
                 fail("should fail");
             } catch (IllegalArgumentException ex) {
             }
@@ -297,17 +296,17 @@ public class Tests {
     @Test
     public void testConstructor() {
         try {
-            new Parser((String) null);
+            Dictionary.parse((String) null);
             fail("should not get here");
         } catch (NullPointerException ex) {
             assertTrue(ex.getMessage().contains("must not be null"));
         }
 
         try {
-            new Parser("x", null, "y");
+            Dictionary.parse(Arrays.asList("a", null, "b"));
             fail("should not get here");
         } catch (NullPointerException ex) {
             assertTrue(ex.getMessage().contains("must not be null"));
         }
-}
+    }
 }

@@ -22,26 +22,36 @@ public class BooleanItem implements Item<Boolean> {
         this.params = Objects.requireNonNull(params, "params must not be null");
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.BOOLEAN;
+    }
+
     /**
      * Creates a {@link BooleanItem} instance representing the specified
      * {@code boolean} value.
-     * 
+     *
      * @param value
      *            a {@code boolean} value.
      * @return a {@link BooleanItem} representing {@code value}.
      */
-    public static BooleanItem valueOf(boolean value) {
+    public static BooleanItem of(boolean value) {
         return value ? TRUE : FALSE;
     }
 
     @Override
-    public Parameters getParams() {
+    public Parameters params() {
         return params;
     }
 
     @Override
     public BooleanItem withParams(Parameters params) {
         return new BooleanItem(this.value, Objects.requireNonNull(params, "params must not be null"));
+    }
+
+    @Override
+    public BooleanItem withParamValuesOf(Object... obs) {
+        return new BooleanItem(this.value, Parameters.valueOf(obs));
     }
 
     @Override
@@ -69,6 +79,11 @@ public class BooleanItem implements Item<Boolean> {
     @Override
     public Boolean get() {
         return value;
+    }
+
+    @Override
+    public boolean booleanValue() {
+        return this.value;
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -38,18 +37,6 @@ public class Parser {
      */
     public Parser(String input) {
         this(Collections.singletonList(Objects.requireNonNull(input, "input must not be null")));
-    }
-
-    /**
-     * Creates {@link Parser} for the given input.
-     * 
-     * @param input
-     *            field lines
-     * @throws ParseException
-     *             for non-ASCII characters
-     */
-    public Parser(String... input) {
-        this(Arrays.asList(input));
     }
 
     /**
@@ -137,7 +124,7 @@ public class Parser {
         return DateItem.valueOf(sign * l);
     }
 
-    private NumberItem<?> internalParseBareIntegerOrDecimal() {
+    private NumberItem internalParseBareIntegerOrDecimal() {
         boolean isDecimal = false;
         int sign = 1;
         StringBuilder inputNumber = new StringBuilder(20);
@@ -175,7 +162,7 @@ public class Parser {
 
         if (!isDecimal) {
             long l = Long.parseLong(inputNumber.toString());
-            return IntegerItem.valueOf(sign * l);
+            return IntegerItem.of(sign * l);
         } else {
             long l = computeLong(inputNumber);
             return DecimalItem.valueOf(sign * l);
@@ -240,7 +227,7 @@ public class Parser {
                 outputString.append(c);
             } else {
                 if (c == '"') {
-                    return StringItem.valueOf(outputString.toString());
+                    return StringItem.of(outputString.toString());
                 } else if (c < 0x20 || c >= 0x7f) {
                     throw complaint("Invalid character in String at position " + position());
                 } else {
@@ -362,7 +349,7 @@ public class Parser {
             }
         }
 
-        return TokenItem.valueOf(outputString.toString());
+        return TokenItem.of(outputString.toString());
     }
 
     private TokenItem internalParseToken() {
@@ -434,7 +421,7 @@ public class Parser {
             throw complaint(String.format("Expected '0' or '1' in Boolean, found '%c'", c));
         }
 
-        return BooleanItem.valueOf(c == '1');
+        return BooleanItem.of(c == '1');
     }
 
     private BooleanItem internalParseBoolean() {
@@ -483,7 +470,7 @@ public class Parser {
                 advance();
                 removeLeadingSP();
                 String name = internalParseKey();
-                Item<?> value = BooleanItem.valueOf(true);
+                Item<?> value = BooleanItem.of(true);
                 if (peek() == '=') {
                     advance();
                     value = internalParseBareItem();
@@ -492,7 +479,7 @@ public class Parser {
             }
         }
 
-        return Parameters.valueOf(result);
+        return Parameters.of(result);
     }
 
     private Item<?> internalParseBareItem() {
@@ -582,7 +569,6 @@ public class Parser {
                     throw complaint("Expected SP or ')' in Inner List, got: " + format(c));
                 }
             }
-
         }
 
         if (!done) {
@@ -595,7 +581,7 @@ public class Parser {
     private InnerList internalParseInnerList() {
         List<Item<?>> result = internalParseBareInnerList();
         Parameters params = internalParseParameters();
-        return InnerList.valueOf(result).withParams(params);
+        return InnerList.of(result).withParams(params);
     }
 
     private Dictionary internalParseDictionary() {
@@ -612,7 +598,7 @@ public class Parser {
                 advance();
                 member = internalParseItemOrInnerList();
             } else {
-                member = BooleanItem.valueOf(true).withParams(internalParseParameters());
+                member = BooleanItem.of(true).withParams(internalParseParameters());
             }
 
             result.put(name, member);
@@ -631,7 +617,7 @@ public class Parser {
             }
         }
 
-        return Dictionary.valueOf(result);
+        return Dictionary.of(result);
     }
 
     /**
@@ -675,19 +661,19 @@ public class Parser {
     /**
      * Implementation of "Parsing a List"
      *
-     * @return result of parse as {@link OuterList}.
+     * @return result of parse as {@link SfList}.
      *
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public OuterList parseList() {
+    public SfList parseList() {
         assertNotFinished();
         removeLeadingSP();
         List<ListElement<?>> result = internalParseOuterList();
         removeLeadingSP();
         assertEmpty("Extra characters in string parsed as List");
-        return OuterList.valueOf(result);
+        return SfList.of(result);
     }
 
     /**
@@ -699,7 +685,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-dictionary">Section
      *      4.2.2 of RFC 9651</a>
      */
-    public Dictionary parseDictionary() {
+    protected Dictionary parseDictionary() {
         assertNotFinished();
         removeLeadingSP();
         Dictionary result = internalParseDictionary();
@@ -717,7 +703,7 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-item">Section
      *      4.2.3 of RFC 9651</a>
      */
-    public Item<?> parseItem() {
+    protected Item<?> parseItem() {
         assertNotFinished();
         removeLeadingSP();
         Item<?> result = internalParseItem();
@@ -734,17 +720,17 @@ public class Parser {
      *
      * @param input
      *            {@link String} to parse.
-     * @return result of parse as {@link OuterList}.
+     * @return result of parse as {@link SfList}.
      *
      * @see <a href=
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public static OuterList parseList(String input) {
+    public static SfList parseList(String input) {
         Parser p = new Parser(input);
         List<ListElement<?>> result = p.internalParseOuterList();
         p.assertEmpty("Extra characters in string parsed as List");
-        return OuterList.valueOf(result);
+        return SfList.of(result);
     }
 
     /**
@@ -892,9 +878,9 @@ public class Parser {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-number">Section
      *      4.2.4 of RFC 9651</a>
      */
-    public static NumberItem<?> parseIntegerOrDecimal(String input) {
+    public static NumberItem parseIntegerOrDecimal(String input) {
         Parser p = new Parser(input);
-        NumberItem<?> result = p.internalParseIntegerOrDecimal();
+        NumberItem result = p.internalParseIntegerOrDecimal();
         p.assertEmpty("Extra characters in string parsed as Integer or Decimal");
         return result;
     }

@@ -21,9 +21,31 @@ public interface Parameterizable<T> extends Type<T> {
     Parameterizable<T> withParams(Parameters params);
 
     /**
+     * Given an existing {@link Item}, return a new instance with the specified
+     * {@link Parameters}, specified as a sequence of {@linkplain Object}s.
+     * <p>
+     * The sequence consists of name/value pairs, where the length needs to be
+     * even-numbered. Each pair consist of a parameter name (thus will
+     * be converted to a {@link String}), and an {@linkplain Object} that
+     * will be converted on a best-effort to an {@link Item}.
+     * <p>
+     * Example from <a href=
+     *  "https://www.rfc-editor.org/rfc/rfc9651.html#example">Section 2.1 of RFC 9651</a>
+     * <pre>
+     * IntegerItem fooWithParams = IntegerItem.of(2).
+     *                               withParamsOfValue("foourl", "https://foo.example.com");
+     * </pre>
+     *
+     * @param obs sequence of name/valid pairs
+     * @return new instance with specified {@link Parameters}, as converted from
+     * the Object sequence..
+     */
+    Parameterizable<T> withParamValuesOf(Object... obs);
+
+    /**
      * Get the {@link Parameters} of this {@link Item}.
      * 
      * @return the parameters.
      */
-    Parameters getParams();
+    Parameters params();
 }

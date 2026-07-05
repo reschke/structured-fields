@@ -1,6 +1,5 @@
 package org.greenbytes.http.sfv;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -36,13 +35,39 @@ public class Parameters implements Map<String, Item<?>> {
      * Note that the {@link Map} implementation that is used here needs to
      * iterate predictably based on insertion order, such as
      * {@link java.util.LinkedHashMap}.
-     * 
+     *
      * @param value
      *            a {@code Map<String, Item>} value
      * @return a {@link Parameters} representing {@code value}.
      */
-    public static Parameters valueOf(Map<String, Object> value) {
+    public static Parameters of(Map<String, Object> value) {
         return new Parameters(value);
+    }
+
+    /**
+     * Creates an unmodifiable {@link Parameters} instance representing
+     * the specified {@linkplain Object}s.
+     * @param obs (needs to be an even-number of {@linkplain Object}s)
+     * @return a {@link Parameters} representing {@code obs}.
+     */
+    public static Parameters valueOf(Object... obs) {
+        if (obs.length == 1 && obs[0] instanceof Map) {
+            throw new IllegalArgumentException("requires even number of arguments, got: " +
+                    obs[0].getClass().getName() + " - did you mean to use 'of()'?");
+        }
+        if (obs.length % 2 != 0) {
+            throw new IllegalArgumentException("requires even number of arguments, got: " + obs.length);
+        } else {
+            Map<String, Object> map = new LinkedHashMap<>();
+            for (int i = 0; i < obs.length; i += 2) {
+                String key = obs[i].toString();
+                if (map.containsKey(key)) {
+                    throw new IllegalArgumentException("key " + key + " already exists");
+                }
+                map.put(key, obs[i + 1]);
+            }
+            return of(map);
+        }
     }
 
     /**
@@ -69,13 +94,27 @@ public class Parameters implements Map<String, Item<?>> {
         return serializeTo(new StringBuilder()).toString();
     }
 
-    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> formatter) {
-        String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
-        String classn = formatter.apply(this.getClass());
-        sb.append(indent).append(serialize()).append(classn).append("\n");
-        for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
-            sb.append("  " + indent).append(e.getKey()).append(" -> ");
-            e.getValue().serializeToForDebug(sb, 0, formatter);
+    /**
+     * Serialize debug information to an existing {@link StringBuilder}.
+     *
+     * @param sb
+     *            where to serialize to
+     * @param indentLevel how much to indent
+     * @param classFormatter to format the classname when desires (can be a function that returns an empty string)
+     * @return the {@link StringBuilder} so calls can be chained.
+     */
+    public StringBuilder serializeToForDebug(StringBuilder sb, int indentLevel, Function<Class, String> classFormatter) {
+        if (!delegate.isEmpty()) {
+            String indent = indentLevel != 0 ? String.format("%" + indentLevel + "s", "") : "";
+            String classn = classFormatter.apply(this.getClass());
+            sb.append(indent).append(serialize()).append(classn).append("\n");
+            for (Map.Entry<String, Item<?>> e : delegate.entrySet()) {
+                sb.append("  " + indent).append(e.getKey()).append(" -> ");
+                e.getValue().serializeToForDebug(sb, 0, classFormatter);
+            }
+            return sb;
+        } else {
+            return sb;
         }
         return sb;
     }
@@ -85,39 +124,13 @@ public class Parameters implements Map<String, Item<?>> {
                 Objects.requireNonNull(map, "Map must not be null").size());
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String key = Utils.checkKey(entry.getKey());
-            Item<?> value = asItem(key, entry.getValue());
-            if (!value.getParams().isEmpty()) {
+            Item<?> value = Utils.asBareItem(entry.getValue());
+            if (!value.params().isEmpty()) {
                 throw new IllegalArgumentException("Parameter value for '" + key + "' must be bare item (no parameters)");
             }
             result.put(entry.getKey(), value);
         }
         return result;
-    }
-
-    private static Item<?> asItem(String key, Object o) {
-        if (o instanceof Item) {
-            if (o instanceof Parameterizable) {
-                Parameterizable p = ((Parameterizable)o);
-                if (!p.getParams().isEmpty()) {
-                    throw new IllegalArgumentException("Can't map value for parameter '" + key + "': " + o.getClass() + " carries parameters");
-                }
-            }
-            return (Item<?>) o;
-        } else if (o instanceof Integer) {
-            return IntegerItem.valueOf(((Integer) o).longValue());
-        } else if (o instanceof Long) {
-            return IntegerItem.valueOf((Long) o);
-        } else if (o instanceof String) {
-            return StringItem.valueOf((String) o);
-        } else if (o instanceof Boolean) {
-            return BooleanItem.valueOf((Boolean) o);
-        } else if (o instanceof byte[]) {
-            return ByteSequenceItem.valueOf((byte[]) o);
-        } else if (o instanceof BigDecimal) {
-            return DecimalItem.valueOf((BigDecimal)o);
-        } else {
-            throw new IllegalArgumentException("Can't map value for parameter '" + key + "': " + o.getClass());
-        }
     }
 
     // delegate methods, autogenerated
@@ -156,10 +169,6 @@ public class Parameters implements Map<String, Item<?>> {
         return delegate.entrySet();
     }
 
-    public boolean equals(Object o) {
-        return Objects.equals(delegate, o);
-    }
-
     @Override
     public void forEach(BiConsumer<? super String, ? super Item<?>> action) {
         delegate.forEach(action);
@@ -172,10 +181,6 @@ public class Parameters implements Map<String, Item<?>> {
     @Override
     public Item<?> getOrDefault(Object key, Item<?> defaultValue) {
         return delegate.getOrDefault(key, defaultValue);
-    }
-
-    public int hashCode() {
-        return delegate.hashCode();
     }
 
     public boolean isEmpty() {
@@ -235,5 +240,20 @@ public class Parameters implements Map<String, Item<?>> {
 
     public Collection<Item<?>> values() {
         return delegate.values();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Parameters)) {
+            return false;
+        } else {
+            Parameters that = (Parameters) o;
+            return Objects.equals(delegate, that.delegate);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(delegate);
     }
 }

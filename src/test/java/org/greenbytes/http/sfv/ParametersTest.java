@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNotSame;
 
 public class ParametersTest {
 
-    Parameters params = Parameters.valueOf(new HashMap<>());
+    Parameters params = Parameters.of(Collections.emptyMap());
 
     // Test that all write operations fail
 
@@ -65,14 +65,14 @@ public class ParametersTest {
     @Test
     public void testParametersEquality() {
         Map m1 = new HashMap();
-        m1.put("a", BooleanItem.valueOf(true));
+        m1.put("a", BooleanItem.of(true));
         Map m2 = new HashMap();
-        m2.put("b", IntegerItem.valueOf(12));
-        m2.put("c", StringItem.valueOf("hello"));
+        m2.put("b", IntegerItem.of(12));
+        m2.put("c", StringItem.of("hello"));
 
-        Parameters p1 = Parameters.valueOf(m1);
-        Parameters p2 = Parameters.valueOf(m1);
-        Parameters p3 = Parameters.valueOf(m2);
+        Parameters p1 = Parameters.of(m1);
+        Parameters p2 = Parameters.of(m1);
+        Parameters p3 = Parameters.of(m2);
 
         assertNotSame(p1, p2);
         assertEquals(p1, p2);
@@ -83,7 +83,7 @@ public class ParametersTest {
 
     @Test
     public void canRemoveParams() {
-        Parameters empty = Parameters.valueOf(Collections.emptyMap());
+        Parameters empty = Parameters.of(Collections.emptyMap());
 
         BooleanItem boi = Parser.parseBoolean("?1;b");
         assertEquals("?1;b", boi.serialize());
@@ -121,13 +121,13 @@ public class ParametersTest {
     @Test(expected = IllegalArgumentException.class)
     public void testParamsStrictnessReParametersInValues() {
         Map<String, Object> map1 = new HashMap<>();
-        map1.put("foo", BooleanItem.valueOf(false));
+        map1.put("foo", BooleanItem.of(false));
 
         Map<String, Object> map2 = new HashMap<>();
         map2.put("qux", 0);
 
-        BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2));
-        map1.put("bar", BooleanItem.valueOf(true).withParams(Parameters.valueOf(map2)));
+        BooleanItem.of(true).withParams(Parameters.valueOf(map2));
+        map1.put("bar", BooleanItem.of(true).withParams(Parameters.valueOf(map2)));
 
         // this needs to fail because the second parameter's value has parameters
         Parameters.valueOf(map1);

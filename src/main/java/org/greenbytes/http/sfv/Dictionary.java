@@ -1,7 +1,10 @@
 package org.greenbytes.http.sfv;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -19,6 +22,32 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
         this.value = Collections.unmodifiableMap(Utils.checkKeys(value));
     }
 
+    @Override
+    public SfDataType getType() {
+        return SfDataType.DICTIONARY;
+    }
+
+    /**
+     * @see #parse(List<String>)
+     */
+    public static Dictionary parse(String input) {
+        return new Parser(input).parseDictionary();
+    }
+
+    /**
+     * Implementation of "Parsing a Dictionary"
+     *
+     * @param input values of field values.
+     * @return result of parse as {@link Dictionary}.
+     *
+     * @see <a href=
+     *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-dictionary">Section
+     *      4.2.2 of RFC 9651</a>
+     */
+    public static Dictionary parse(List<String> input) {
+        return new Parser(input).parseDictionary();
+    }
+
     /**
      * Creates a {@link Dictionary} instance representing the specified
      * {@code Map<String, Item>} value.
@@ -31,8 +60,37 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
      *            a {@code Map<String, Item>} value
      * @return a {@link Dictionary} representing {@code value}.
      */
-    public static Dictionary valueOf(Map<String, ListElement<?>> value) {
+    public static Dictionary of(Map<String, ListElement<?>> value) {
         return new Dictionary(value);
+    }
+
+    /**
+     * Creates a {@link Dictionary} instance representing the values
+     * (key/value pairs)
+     *
+     * @param obs
+     *            a sequence of key/value pairs
+     * @return a {@link Dictionary} representing the {@code values}.
+     */
+    public static Dictionary valueOf(Object... obs) {
+        if (obs.length % 2 != 0) {
+            throw new IllegalArgumentException("requires even number of arguments, got: " + obs.length);
+        } else {
+            Map<String, ListElement<?>> map = new LinkedHashMap<>();
+            for (int i = 0; i < obs.length; i += 2) {
+                String key = obs[i].toString();
+                Object value = obs[i + 1];
+                if (map.containsKey(key)) {
+                    throw new IllegalArgumentException("key " + key + " already exists");
+                }
+                if (value instanceof ListElement) {
+                    map.put(key, (ListElement<?>) value);
+                } else {
+                    map.put(key, Utils.asItem(obs[i + 1]));
+                }
+            }
+            return of(map);
+        }
     }
 
     @Override
@@ -53,7 +111,7 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
 
             sb.append(name);
             if (Boolean.TRUE.equals(dict.get())) {
-                dict.getParams().serializeTo(sb);
+                dict.params().serializeTo(sb);
             } else {
                 sb.append("=");
                 dict.serializeTo(sb);
@@ -78,5 +136,20 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
             e.getValue().serializeToForDebug(sb, indentLevel + 2, formatter);
         }
         return sb;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Dictionary)) {
+            return false;
+        } else {
+            Dictionary that = (Dictionary) o;
+            return Objects.equals(value, that.value);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }

@@ -32,8 +32,8 @@ public class DiagnosticsTests {
     @Test
     public void diagnostics() {
 
-        TestCase[] tests = new TestCase[] {new TestCase("\u0080", null, 0, "Invalid character in field line "),
-                new TestCase("   \u0080", null, 3, "Invalid character in field line "),
+        TestCase[] tests = new TestCase[] {new TestCase("\u0080", "", 0, "Invalid character in field line "),
+                new TestCase("   \u0080", "", 3, "Invalid character in field line "),
                 new TestCase("-a", "item", 1, "Illegal start for Integer or Decimal:"),
                 new TestCase("1234567890123.2", "item", 13, "Illegal position for decimal point in Decimal after "),
                 new TestCase("12345678901234567", "item", 15, "Integer too long: "),
@@ -74,19 +74,21 @@ public class DiagnosticsTests {
 
         for (TestCase test : tests) {
             try {
-                Parser p = new Parser(test.input);
                 switch (test.type) {
                     case "item":
-                        p.parseItem();
+                        Item.parse(Arrays.asList(test.input));
                         break;
                     case "list":
-                        p.parseList();
+                        SfList.parse(Arrays.asList(test.input));
                         break;
                     case "dictionary":
-                        p.parseDictionary();
+                        Dictionary.parse(Arrays.asList(test.input));
                         break;
                     default:
-                        fail("unknown type: " + test.type);
+                        // such as "", type does not matter
+                        // we are really only interested into the parse error, so type does not matter
+                        SfList.parse(Arrays.asList(test.input));
+                        break;
                 }
                 fail("Should not parse: " + Arrays.asList(test.input));
             } catch (ParseException ex) {
