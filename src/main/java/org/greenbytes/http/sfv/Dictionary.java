@@ -28,16 +28,9 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
     }
 
     /**
-     * @see #parse(String...)
+     * @see #parse(List<String>)
      */
     public static Dictionary parse(String input) {
-        return new Parser(input).parseDictionary();
-    }
-
-    /**
-     * @see #parse(String...)
-     */
-    public static Dictionary parse(List<String> input) {
         return new Parser(input).parseDictionary();
     }
 
@@ -51,7 +44,7 @@ public class Dictionary implements Type<Map<String, ListElement<?>>> {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-dictionary">Section
      *      4.2.2 of RFC 9651</a>
      */
-    public static Dictionary parse(String... input) {
+    public static Dictionary parse(List<String> input) {
         return new Parser(input).parseDictionary();
     }
 

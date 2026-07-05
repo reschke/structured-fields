@@ -26,20 +26,6 @@ public class SfList implements Type<List<ListElement<?>>> {
     }
 
     /**
-     * @see #parse(String...)
-     */
-    public static SfList parse(List<String> input) {
-        return new Parser(input).parseList();
-    }
-
-    /**
-     * @see #parse(String...)
-     */
-    public static SfList parse(String input) {
-        return new Parser(input).parseList();
-    }
-
-    /**
      * Implementation of "Parsing a List"
      *
      * @param input values of field values.
@@ -49,7 +35,14 @@ public class SfList implements Type<List<ListElement<?>>> {
      *      "https://www.rfc-editor.org/rfc/rfc9651.html#parse-list">Section
      *      4.2.1 of RFC 9651</a>
      */
-    public static SfList parse(String... input) {
+    public static SfList parse(List<String> input) {
+        return new Parser(input).parseList();
+    }
+
+    /**
+     * @see #parse(List<String>)
+     */
+    public static SfList parse(String input) {
         return new Parser(input).parseList();
     }
 

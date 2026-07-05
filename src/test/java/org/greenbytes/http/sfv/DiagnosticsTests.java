@@ -86,7 +86,8 @@ public class DiagnosticsTests {
                         p.parseDictionary();
                         break;
                     default:
-                        fail("unknown type: " + test.type);
+                        // such as "", type does not matter
+                        // we are really only interested into the parse error, so type does not
                 }
                 fail("Should not parse: " + Arrays.asList(test.input));
             } catch (ParseException ex) {

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -277,7 +278,7 @@ public class Tests {
 
         for (String[] t : tests) {
             try {
-                SfList.parse(t);
+                SfList.parse(Arrays.asList(t));
                 fail("should fail");
             } catch (IllegalArgumentException ex) {
             }

@@ -1,6 +1,7 @@
 package org.greenbytes.http.sfv;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class CLI {
 
@@ -26,7 +27,7 @@ public class CLI {
 
         out.println();
         try {
-            Item<?> item = Item.parse(args);
+            Item<?> item = Item.parse(Arrays.asList(args));
             dump(out, "Item", item);
             passed += 1;
         } catch (ParseException ex) {
@@ -35,7 +36,7 @@ public class CLI {
 
         out.println();
         try {
-            SfList list = SfList.parse(args);
+            SfList list = SfList.parse(Arrays.asList(args));
             dump(out, "List", list);
             passed += 1;
         } catch (ParseException ex) {
@@ -44,7 +45,7 @@ public class CLI {
 
         out.println();
         try {
-            Dictionary dict = Dictionary.parse(args);
+            Dictionary dict = Dictionary.parse(Arrays.asList(args));
             dump(out, "Dict", dict);
             passed += 1;
         } catch (ParseException ex) {
