@@ -296,14 +296,14 @@ public class Tests {
     @Test
     public void testConstructor() {
         try {
-            new Parser((String) null);
+            Dictionary.parse((String) null);
             fail("should not get here");
         } catch (NullPointerException ex) {
             assertTrue(ex.getMessage().contains("must not be null"));
         }
 
         try {
-            new Parser("x", null, "y");
+            new Parser(Arrays.asList("x", null, "y"));
             fail("should not get here");
         } catch (NullPointerException ex) {
             assertTrue(ex.getMessage().contains("must not be null"));
