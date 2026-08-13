@@ -68,37 +68,6 @@
   </distributionManagement>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -217,7 +186,7 @@
   <scm>
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/reschke/structured-fields.git</developerConnection>
-    <url>https://github.com/reschke/structured-fields/tree/master</url>
+    <url>https://github.com/reschke/structured-fields/tree/main</url>
     <tag>structured-fields-0.5</tag>
   </scm>
 </project>
