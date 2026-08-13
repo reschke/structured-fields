@@ -3,6 +3,9 @@ package org.greenbytes.http.sfv;
 import java.io.PrintStream;
 import java.util.Arrays;
 
+/**
+ * A command line tool executing the parser against the supplied argument(s).
+ */
 public class CLI {
 
     static final boolean isInteractive = System.console() != null;
