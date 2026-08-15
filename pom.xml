@@ -29,7 +29,7 @@
 
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
-  <version>0.6</version>
+  <version>0.7-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A parser for HTTP Structured Field Values (RFC 9651).</description>
   <url>https://github.com/reschke/structured-fields</url>
@@ -53,7 +53,7 @@
   <properties>
     <maven.compiler.release>8</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.build.outputTimestamp>2026-08-15T15:38:23Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2026-08-15T15:38:44Z</project.build.outputTimestamp>
   </properties>
 
   <build>
@@ -166,6 +166,6 @@
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/reschke/structured-fields.git</developerConnection>
     <url>https://github.com/reschke/structured-fields</url>
-    <tag>structured-fields-0.6</tag>
+    <tag>structured-fields-0.5</tag>
   </scm>
 </project>
