@@ -31,7 +31,7 @@
   <artifactId>structured-fields</artifactId>
   <version>0.6-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
-  <description>A parser for HTTP Structured Field Values (RFC 8941).</description>
+  <description>A parser for HTTP Structured Field Values (RFC 9651).</description>
   <url>https://github.com/reschke/structured-fields</url>
 
   <licenses>
@@ -118,16 +118,6 @@
       <id>release</id>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>false</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
             <executions>
