@@ -165,7 +165,7 @@
   <scm>
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/reschke/structured-fields.git</developerConnection>
-    <url>https://github.com/reschke/structured-fields/tree/main</url>
+    <url>https://github.com/reschke/structured-fields</url>
     <tag>structured-fields-0.5</tag>
   </scm>
 </project>
