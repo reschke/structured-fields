@@ -29,6 +29,7 @@
 
   <groupId>org.greenbytes.http</groupId>
   <artifactId>structured-fields</artifactId>
+  <packaging>bundle</packaging>
   <version>0.7-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A parser for HTTP Structured Field Values (RFC 9651).</description>
@@ -58,6 +59,19 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+            <instructions>
+              <Bundle-Name>${project.name}</Bundle-Name>
+              <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+              <Bundle-SCM>url=${project.scm.url}, connection=${project.scm.connection}, developerConnection=${project.scm.developerConnection}, tag=${project.scm.tag}</Bundle-SCM>
+              <_removeheaders>Bundle-DocURL, Bundle-Vendor</_removeheaders>
+            </instructions>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -137,6 +151,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation.versioning</artifactId>
+      <version>1.1.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
@@ -166,6 +186,6 @@
     <connection>scm:git:git://github.com/reschke/structured-fields.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/reschke/structured-fields.git</developerConnection>
     <url>https://github.com/reschke/structured-fields</url>
-    <tag>structured-fields-0.5</tag>
+    <tag>structured-fields-0.7-SNAPSHOT</tag>
   </scm>
 </project>
