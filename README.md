@@ -1,5 +1,5 @@
 # structured-fields
-A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
+A parser (and serializer) for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 
 ## Features
 - Parsing and Serialization
@@ -9,9 +9,22 @@ A parser for the HTTP Structured Fields syntax defined in IETF RFC 9651.
 
 ## Links
 
+### Specifications
+
 - https://greenbytes.de/tech/specs/rfc9651.html
 - https://www.rfc-editor.org/rfc/rfc9651.html
+
+### used in...
+
+- https://datatracker.ietf.org/doc/rfc8941/referencedby/
+- https://datatracker.ietf.org/doc/rfc9651/referencedby/
+
+### Test Data (used in unit tests)
+
 - https://github.com/httpwg/structured-header-tests
+
+### API docs and Coverage
+
 - https://reschke.github.io/structured-fields/apidocs/
 - https://reschke.github.io/structured-fields/coverage/
 
@@ -47,18 +60,18 @@ private static Foo parseAndValidateExample(String serialization, URI baseUri) {
     return foo;
 }
 ````
-Serializing (https://www.rfc-editor.org/info/rfc9651/#section-3.2-14):
+Serializing (https://www.rfc-editor.org/info/rfc9651/#text-serialize):
 ~~~
 Example-Dict: a=(1 2), b=3, c=4;aa=bb, d=(5 6);valid
 ~~~~
 ````java
-private static Dictionary createDictionaryMix2() {
+private static String createDictionaryMix() {
     return Dictionary.valueOf("a", InnerList.valueOf(1, 2),
             "b", 3,
             "c", IntegerItem.of(4).
                     withParamValuesOf("aa", TokenItem.of("bb")),
             "d", InnerList.valueOf(5, 6).
-                    withParamValuesOf("valid", true));
+                    withParamValuesOf("valid", true)).serialize();
 }
 ````
 
@@ -96,17 +109,17 @@ Dict: >>date;v=@1,number;v=123,( token );bool<<
 
 ## Status
 
-This implementation is experimental and makes no promises yet on API stability
-(feedback on what might be missing is appreciated).
+This is now an OSGi bundle with proper semantic versioning. I'll try to avoid any breaking API
+changes starting with version 0.7.
 
-In the mid-term, this code might transition to the Apache HTTP Components project.
+In the mid-term, this code might transition to an ASF (Apache Software Foundation) project.
 
 ## Maven Coordinates
 
     <dependency>
       <groupId>org.greenbytes.http</groupId>
       <artifactId>structured-fields</artifactId>
-      <version>0.5</version>
+      <version>0.6</version>
     </dependency>
 
 
