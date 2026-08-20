@@ -83,7 +83,7 @@ from multiple field lines), parsed as Item, List, or Dictionary, and return diag
 information.
 
 ```
-$ java -jar target/structured-fields-0.6-SNAPSHOT.jar 'date;v=@1' 'number;v=123' '( token );bool'
+$ java -jar target/structured-fields-0.6.jar 'date;v=@1' 'number;v=123' '( token );bool'
 
 Item: >>date;v=@1,number;v=123,( token );bool<<
         ---------^ (0x2c) Extra characters in string parsed as Item
