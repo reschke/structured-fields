@@ -14,8 +14,8 @@ public class BooleanItem implements Item<Boolean> {
     private final boolean value;
     private final Parameters params;
 
-    private static final BooleanItem TRUE = new BooleanItem(true, Parameters.EMPTY);
-    private static final BooleanItem FALSE = new BooleanItem(false, Parameters.EMPTY);
+    public static final BooleanItem TRUE = new BooleanItem(true, Parameters.EMPTY);
+    public static final BooleanItem FALSE = new BooleanItem(false, Parameters.EMPTY);
 
     private BooleanItem(boolean value, Parameters params) {
         this.value = value;

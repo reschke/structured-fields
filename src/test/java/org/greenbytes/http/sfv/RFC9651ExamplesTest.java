@@ -219,6 +219,32 @@ public class RFC9651ExamplesTest {
     // Example-Dict: a=?0, b, c; foo=bar
 
     @Test
+    public void testParseNativeAPI() {
+        Map<String, ListElement<?>> dict = Parser.parseDictionary("a=?0, b, c; foo=bar").get();
+        assertEquals(3, dict.size());
+        assertEquals(BooleanItem.FALSE, dict.get("a"));
+        assertEquals(BooleanItem.TRUE, dict.get("b"));
+        ListElement c = dict.get("c");
+        if (c instanceof BooleanItem) {
+            assertEquals(true, c.get());
+            assertEquals(1, c.params().size());
+            assertEquals(TokenItem.of("bar"), c.params().get("foo"));
+        } else {
+            fail("unexpected type: " + c);
+        }
+    }
+
+    @Test
+    public void testParseConvenientAPI() {
+        Map<String, ListElement<?>> dict = Parser.parseDictionary("a=?0, b, c; foo=bar").get();
+        assertEquals(3, dict.size());
+        assertEquals(false, dict.get("a").booleanValue());
+        assertEquals(true, dict.get("b").booleanValue());
+        assertEquals(true, dict.get("c").booleanValue());
+        assertEquals("bar", dict.get("c").params().get("foo").tokenValue());
+    }
+
+    @Test
     public void testDictConstruction() {
         Dictionary dict1 = createDictionary1();
         Dictionary dict2 = createDictionary2();
