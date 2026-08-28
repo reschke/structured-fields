@@ -9,7 +9,7 @@
  * 
  * <pre><code>
  * {
- *     Dictionary d = Dictionaty.parse("a=?0, b, c; foo=bar");
+ *     Dictionary d = Dictionary.parse("a=?0, b, c; foo=bar");
  *     for (Map.Entry&lt;String, Item&lt;? extends Object&gt;&gt; e : d.get()) {
  *         String key = e.getKey();
  *         Item&lt;? extends Object&gt; item = e.getValue();
